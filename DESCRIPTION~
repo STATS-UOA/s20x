@@ -1,0 +1,8 @@
+Package: s20x
+Version: 3.1-8
+Date: 2010-04-22
+Title: Stats 20x
+Author: Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike Forster, Charlotte Maia, Brendan McArdle, Chris Wild
+Maintainer: James Curran <curran@stat.auckland.ac.nz>
+Description: Stats 20x functions.
+License: GPL (>= 2)

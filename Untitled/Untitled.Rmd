@@ -1,0 +1,23 @@
+---
+title: "STATS 201/8 Assignment"
+student:
+  name: A Student
+  studentID: 123456789
+output:
+  html_document:
+    fig_caption: true
+    number_sections: true
+    css: "styles.css"
+---
+
+# Question 1 here
+
+```{r}
+## your R code here
+x = rnorm(100)
+hist(x)
+```
+This is a histogram *James*
+
+
+# Question 2 here

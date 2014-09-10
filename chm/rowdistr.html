@@ -1,0 +1,84 @@
+<html><head><title>Row distributions from a cross-tabulation of two variables</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>rowdistr(s20x)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   rowdistr">
+<param name="keyword" value=" Row distributions from a cross-tabulation of two variables">
+</object>
+
+
+<h2>Row distributions from a cross-tabulation of two variables</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Produces summaries and plots from a cross-tabulation.  The output produced depends on the parameter "comp". Columns relate to response categories and rows to different populations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>rowdistr(crosstablist, comp="basic", conf.level=0.95)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>crosstablist</code></td>
+<td>
+a list produced by "crosstabs" or a matrix containing a 2-way table of counts (without marginal totals).</td></tr>
+<tr valign="top"><td><code>comp</code></td>
+<td>
+three options: "basic" (default), "within", and "between".</td></tr>
+<tr valign="top"><td><code>conf.level</code></td>
+<td>
+confidence level of the intervals.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The "basic" option (default) produces the response distribution for each row population together with comparative bar charts.
+</p>
+<p>
+If comp="between" the resulting output displays how the probability of falling into a response class (column) differs between populations.  Confidence intervals for differences in proportions are produced together with a set of barcharts with LSD intervals.
+</p>
+<p>
+If comp="within" the resulting output shows the extent to which the component probabilities of the same row distribution differ. Separate Chi-square tests for uniformity are produced for each row distribution as are confidence intervals for differences in proportions within the same distribution.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+A matrix of row proportions, i.e cell counts divided by row marginals.</p>
+
+<h3>See Also</h3>
+
+<p>
+"crosstabs"
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(body.df)
+z &lt;- crosstabs(~ ethnicity + married, data = body.df)
+rowdistr(z)
+rowdistr(z, comp="between")
+rowdistr(z, comp="within")
+
+##from matrix of counts
+z &lt;- matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
+rowdistr(z)</pre>
+
+
+
+<hr><div align="center">[Package <em>s20x</em> version 3.1-6 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

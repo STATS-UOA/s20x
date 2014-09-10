@@ -1,0 +1,54 @@
+<html><head><title>Autocorrelation Plot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>autocor.plot(s20x)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   autocor.plot">
+<param name="keyword" value=" Autocorrelation Plot">
+</object>
+
+
+<h2>Autocorrelation Plot</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Plots current vs lagged residuals along with quadrants dividing these residuals about the value zero.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>autocor.plot(fit)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>fit</code></td>
+<td>
+output from the function "lm()".</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Plots current vs lagged residuals along with quadrants dividing these residuals about the value zero.</p>
+
+<h3>Examples</h3>
+
+<pre>
+data(airpass.df)
+time&lt;-1:144
+airpass.fit&lt;-lm(passengers~time, data = airpass.df)
+autocor.plot(airpass.fit)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>s20x</em> version 3.1-6 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

@@ -1,0 +1,133 @@
+<html><head><title>Testing for equality of variance plot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>eovcheck(s20x)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   eovcheck">
+<param name="keyword" value="R:   eovcheck.formula">
+<param name="keyword" value="R:   eovcheck.lm">
+<param name="keyword" value=" Testing for equality of variance plot">
+</object>
+
+
+<h2>Testing for equality of variance plot</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Plots the residuals versus the fitted (or predicted) values from a
+linear model. A horizontal line is drawn at y = 0,
+reflecting the fact that we expect the residuals to have a mean of
+zero. An optional lowess line is drawn if smoother is set to
+TRUE. This can be useful in determining whether a trend still exists
+in the residuals. An optional pair of lines is drawn at +/- 2 times
+the standard deviation of the residuals - which is estimated from the
+Residual Mean Sqare (Within group mean square = WGMS). This can be
+useful in highlighting potential outliers. If the model
+has one or two factors and no continous variables, i.e. if it is a
+oneway or twoway ANOVA model then the P-value from Levene's test for
+equality variance is displayed in the top left hand corner,as long as
+the number of observations per group exceeds two.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+eovcheck(object, ...)
+## S3 method for class 'formula':
+eovcheck (object, data = NULL, xlab = NULL, col = NULL
+                            ,smoother = FALSE, twosd = FALSE,  ...)
+## S3 method for class 'lm':
+eovcheck (object, smoother = FALSE, twosd = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+A linear model formula. Alternatively, a fitted
+lm object from a linear model.</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+A data frame in which to evaluate the formula.</td></tr>
+<tr valign="top"><td><code>xlab</code></td>
+<td>
+a title for the x axis: see <code><a onclick="findlink('graphics', 'title.html')" style="text-decoration: underline; color: blue; cursor: hand">title</a></code>.</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+a color for the lowess smoother line.</td></tr>
+<tr valign="top"><td><code>smoother</code></td>
+<td>
+if TRUE then a smoothed lowess line will be added to
+the plot</td></tr>
+<tr valign="top"><td><code>twosd</code></td>
+<td>
+if TRUE then horizontal dotted lines will be drawn at +/-2sd</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Optional arguments</td></tr>
+</table>
+
+<h3>See Also</h3>
+
+<p>
+"levene.test"
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# one way ANOVA - oysters
+data(oysters.df)
+oyster.fit&lt;-lm(Oysters~Site, data = oysters.df)
+eovcheck(oyster.fit)
+
+# Same model as the previous example, but using eovcheck.formula
+data(oysters.df)
+eovcheck(Oysters~Site, data = oysters.df)
+
+# A two-way model without interaction
+data(soyabean.df)
+soya.fit&lt;-lm(yield~planttime+cultivar, data = soyabean.df)
+eovcheck(soya.fit)
+
+# A two-way model with interaction
+data(arousal.df)
+arousal.fit&lt;-lm(arousal~gender*picture, data = arousal.df)
+eovcheck(arousal.fit)
+
+# A regression model
+data(peru.df)
+peru.fit&lt;-lm(BP~height+weight+age+years, data = peru.df)
+eovcheck(peru.fit)
+
+# A time series model
+data(airpass.df)
+t&lt;-1:144
+month&lt;-factor(rep(1:12,12))
+airpass.df&lt;-data.frame(passengers = airpass.df$passengers, t = t, month = month)
+airpass.fit&lt;-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passengers)[-144], data  = airpass.df)
+eovcheck(airpass.fit)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>s20x</em> version 3.1-6 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

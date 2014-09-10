@@ -1,0 +1,132 @@
+<html><head><title>Summary Statistics</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>summaryStats(s20x)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   summaryStats">
+<param name="keyword" value="R:   summaryStats.default">
+<param name="keyword" value="R:   summaryStats.formula">
+<param name="keyword" value=" Summary Statistics">
+</object>
+
+
+<h2>Summary Statistics</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Produces a table of summary statistics for the data. If the
+argument "group" is missing, calculates a matrix of summary statistics
+for the data in "data". If "group" is present, the elements of "group"
+are interpreted as group labels and the summary statistics are
+displayed for each group separately.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+summaryStats(x, ...)
+## Default S3 method:
+summaryStats (x, group = rep("Data", length(x)), data.order = TRUE, digits = 2, ...)
+## S3 method for class 'formula':
+summaryStats (x, data, data.order = TRUE, digits = 2, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+either a single vector of values, or a formula of the form data~group.</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+an optional data frame containing the variables in the model.</td></tr>
+<tr valign="top"><td><code>group</code></td>
+<td>
+a vector of group labels.</td></tr>
+<tr valign="top"><td><code>data.order</code></td>
+<td>
+if T, the group order is the order which the groups are first encountered in the vector "group". If F, the order is alphabetical.</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+the number of decimal places to display.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Optional arguments.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns a matrix containing the following components:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>Minimum value</code></td>
+<td>
+</td></tr>
+<tr valign="top"><td><code>Maximum value</code></td>
+<td>
+</td></tr>
+<tr valign="top"><td><code>Mean value</code></td>
+<td>
+the average value.</td></tr>
+<tr valign="top"><td><code>Median</code></td>
+<td>
+the middle value when the batch is ordered.</td></tr>
+<tr valign="top"><td><code>Upper quartile</code></td>
+<td>
+</td></tr>
+<tr valign="top"><td><code>Lower quartile</code></td>
+<td>
+</td></tr>
+<tr valign="top"><td><code>Variance</code></td>
+<td>
+the average of the squares of the deviations of the data values from the sample mean.</td></tr>
+<tr valign="top"><td><code>Standard deviation</code></td>
+<td>
+the square root of the variance.</td></tr>
+<tr valign="top"><td><code>Midspread (IQR)</code></td>
+<td>
+the range spanned by central half of data; the
+interquartile range</td></tr>
+<tr valign="top"><td><code>Skewness</code></td>
+<td>
+indicates how skewed the data set is. Positive values indicate right-skew data.</td></tr>
+<tr valign="top"><td><code>Symmetry statistic(alpha=0.05)</code></td>
+<td>
+another symmetry measure, values close to 0.5 correspond to reasonably symmetric data.</td></tr>
+<tr valign="top"><td><code>Symmetry statistic(alpha=0.10)</code></td>
+<td>
+alpha by default.</td></tr>
+<tr valign="top"><td><code>Number of data values</code></td>
+<td>
+size of the data set.</td></tr>
+</table>
+
+<h3>Examples</h3>
+
+<pre>
+## STATS20x data:
+data(course.df)
+attach(course.df)
+summaryStats(Exam)
+detach(course.df)
+
+summaryStats(Exam~Stage1, course.df)
+
+## Note this usage is deprecated.
+attach(course.df)
+summaryStats(Exam,Stage1)
+detach(course.df)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>s20x</em> version 3.1-6 <a href="00Index.html">Index</a>]</div>
+
+</body></html>
