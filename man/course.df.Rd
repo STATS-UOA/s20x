@@ -1,0 +1,30 @@
+\name{course.df}
+\docType{data}
+\alias{course.df}
+\title{Stats 20x Summer School Data}
+\description{
+Data from a summer school Stats 20x course. Each observation represents a single student.
+}
+\usage{data (course.df)}
+\format{
+ A data frame with 146 observations on 15 variables.
+\tabular{rlll}{
+[,1] \tab Grade \tab factor \tab Final grade for the course (A, B, C, D)\cr
+[,2] \tab Pass  \tab factor \tab Passed the course (No, Yes)\cr
+[,3] \tab Exam  \tab numeric \tab Mark in the final exam \cr
+[,4] \tab Degree \tab factor \tab Degree enrolled in (BA, BCom, BSc, Other)\cr
+[,5] \tab Gender \tab factor \tab Gender (Female, Male) \cr
+[,6] \tab Attend \tab factor \tab Regularly attended class (No, Yes)\cr
+[,7] \tab Assign \tab numeric \tab Assignment mark \cr
+[,8] \tab Test   \tab numeric \tab Test mark \cr
+[,9] \tab B   \tab numeric \tab Mark for the short answer section of the exam \cr
+[,10] \tab C  \tab numeric \tab Mark for the long answer section of the exam \cr
+[,11] \tab MC \tab numeric \tab Mark for the multiple choice section of the exam \cr
+[,12] \tab Colour \tab factor \tab Colour of the exam booklet (Blue, Green, Pink, Yellow)\cr
+[,13] \tab Stage1 \tab factor \tab Stage one grade (A, B, C)\cr
+[,14] \tab Years.Since \tab numeric \tab Number of years since doing Stage 1 \cr
+[,15] \tab Repeat \tab factor \tab Repeating the paper (No, Yes)
+}
+}
+\keyword{datasets}
+

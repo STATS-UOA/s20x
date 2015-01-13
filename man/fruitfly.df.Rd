@@ -1,0 +1,25 @@
+\name{fruitfly.df}
+\docType{data}
+\alias{fruitfly.df}
+\title{Fruitfly Data}
+\description{
+This data gives fecundity for female fruitflies, Drosophila melanogaster. The fecundity is the number of eggs laid, per day, for the fruitfly's first 14 days of life. There are three strains: A control group, NS, Nonselected Strain, as well as RS, a strain bred for resistance to DDT and SS, a strain bred for susceptibility to DDT. Each strain contains 25 measurements. It is of interest to compare the level of fecundity across strains.  
+}
+\usage{data (fruitfly.df)}
+\format{
+A data frame with 75 observations on 2 variables.
+\tabular{rlll}{
+[,1] \tab fecundity \tab numeric \tab Number of eggs laid, per day, per fruitfly \cr
+[,2] \tab strain  \tab factor \tab Strain of fruitfly (NS, RS, SS)
+}
+}
+\source{A Handbook of Small Data Sets}
+\references{
+Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. \& Ostrowski, E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida: Chapman and Hall/CRC.
+
+Sokal, R.R. \& Rohlf, F.J. (1981). \emph{Biometry}, 2nd edition. San Francisco: W.H. Freeman, 239.
+}
+
+\keyword{datasets}
+
+

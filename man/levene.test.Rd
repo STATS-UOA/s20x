@@ -1,0 +1,33 @@
+\name{levene.test}
+\alias{levene.test}
+\title{Levene test for the ANOVA Assumption}
+\usage{levene.test(formula, data, digit = 5, show.table = TRUE)}
+
+\arguments{
+  \item{formula}{a symbolic description of the model to be fitted: response ~ fac1 + fac2.}
+  \item{data}{an optional data frame containing the variables in the model.}
+  \item{digit}{the number of decimal places to display.}
+  \item{show.table}{If this argument is FALSE then the output will be suppressed}
+}
+
+\description{Perform a Levene test for equal group variances in both
+  one-way and two-way ANOVA. A table with the results is (normally) displayed.}
+
+\value{
+  \item{df}{degrees of freedom.}
+  \item{ss}{sum squares.}
+  \item{ms}{mean squares.}
+  \item{f.value}{F-statistic value.}
+  \item{p.value}{P-value.}
+}
+
+\seealso{"crossFactors", "anova".}
+
+\examples{
+##
+data(computer.df)
+levene.test(score ~ factor(selfassess), computer.df)
+}
+
+\keyword{htest}
+
