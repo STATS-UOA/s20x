@@ -11,7 +11,6 @@ normcheck(x, \dots)
 \arguments{
   \item{x}{the residuals from fitting a linear model.
     Alternatively, a fitted lm object.}
-
   \item{xlab}{a title for the x axis: see \code{\link{title}}.}
   \item{main}{a title for the x axis: see \code{\link{title}}.}
   \item{col}{a color for the bars of the histogram.}
@@ -51,4 +50,3 @@ normcheck(lm(BP~weight, data=peru.df))
 }
 
 \keyword{hplot}
-

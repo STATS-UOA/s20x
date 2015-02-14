@@ -17,6 +17,7 @@
 
 \details{The "basic" option (default) produces the response distribution for each row population together with comparative bar charts.
 
+<<<<<<< HEAD
 If comp = "between" the resulting output displays how the probability of falling into a response class (column) differs between populations.  Confidence intervals for differences in proportions are produced together with a set of barcharts with LSD intervals.
 
 If comp = "within" the resulting output shows the extent to which the component probabilities of the same row distribution differ. Separate Chi-square tests for uniformity are produced for each row distribution as are confidence intervals for differences in proportions within the same distribution.

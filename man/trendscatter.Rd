@@ -53,4 +53,3 @@ with(peru.df,trendscatter(weight,BP))
 }
 
 \keyword{hplot}
-

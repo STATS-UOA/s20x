@@ -75,4 +75,3 @@ airpass.fit<-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passengers)[-144], data 
 eovcheck(airpass.fit)
 }
 \keyword{hplot}
-
