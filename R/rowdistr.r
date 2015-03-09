@@ -44,16 +44,17 @@ drawPlot = function(crosstablist, comp = "basic", conf.level = 0.95){
   
   propmat  =  crosstablist$row.props
   n  =  nrow(propmat)
+  opar = NULL
   
   if (comp == "basic" | comp == "within")
-    par(mfrow = c(n, 1), mar = c(1.5, 1.5, 1.5, 1.5), oma = c(3, 3, 4, 3))
+    opar = par(mfrow = c(n, 1), mar = c(1.5, 1.5, 1.5, 1.5), oma = c(3, 3, 4, 3))
   
   if (comp == "between")
-    par(mfrow = c(1, 1))
+    opar = par(mfrow = c(1, 1))
   
   chiuse  =  chiadd  =  NULL
   pvaluse  =  pvaladd  =  NULL
-  cexval  =  2/n
+  cexval  =  2 / n
   
   for (rowcol in 1:n) {
     maxpl  =  1.17 * max(propmat)
@@ -110,7 +111,7 @@ drawPlot = function(crosstablist, comp = "basic", conf.level = 0.95){
   if (comp == "between")
     propslsd.new(crosstablist, conf.level = 1-(1-conf.level)/choose(n,2))
   
-  par(mfrow = c(1, 1))
+  par(opar)
   
 }
 
@@ -130,7 +131,7 @@ printOutput = function(crosstablist, comp = "basic", conf.level = 0.95){
   
   chiuse  =  chiadd  =  NULL
   pvaluse  =  pvaladd  =  NULL
-  cexval  =  2/n
+  cexval  =  2 / n
   
   p  =  propmat
   ns  =  crosstablist$Totals[, ncol(crosstablist$Totals)][1:(nrow(crosstablist$Totals) -
