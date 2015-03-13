@@ -1,7 +1,8 @@
 \name{summary2way}
 \alias{summary2way}
 \title{Two-way Analysis of Variance Summary}
-\usage{summary2way(fit, page = "table", digit = 5, conf.level = 0.95, print.out = TRUE, \dots)
+\usage{summary2way(fit, page = "table", digit = 5, conf.level = 0.95, 
+                   print.out = TRUE, \dots)
 }
 \arguments{
 \item{fit}{an lm object, i.e. the output from "lm()".}
