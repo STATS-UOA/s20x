@@ -10,7 +10,13 @@ normcheck.default = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wi
   if(is.null(col))
       col = "light blue"
 
-  par(mfrow=c(1,2),xaxs = "i", yaxs = "i", pty = "s")
+  oldPar = par(no.readonly = TRUE)
+    
+  ## change the layout of the plotting window only if it has not already been set
+  if(all(oldPar$mfrow == c(1, 1))){
+    par(mfrow = c(1, 2), xaxs = "i", yaxs = "i", pty = "s")
+    on.exit(par(oldPar))
+  }
 
   mx = mean(x)
   sx = sd(x)
@@ -42,12 +48,9 @@ normcheck.default = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wi
   x1 = seq(xmin,xmax, length = 100)
   y1 = dnorm(x1, mx, sx)
   lines(x1,y1, lwd = 1.5, lty = 3)
-
-  par(mfrow=c(1,1),xaxs="r",yaxs="r", pty="m")
 }
 
-normcheck.lm = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wilk = FALSE, ... )
-{	
+normcheck.lm = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wilk = FALSE, ... ){	
   if (missing(x) || (class(x) != "lm") )
 		stop ("missing or incorrect lm object")
 
