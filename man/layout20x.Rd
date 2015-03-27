@@ -1,16 +1,16 @@
 \name{layout20x}
 \alias{layout20x}
 \title{Layout}
-\usage{layout20x(x,y)}
+\usage{layout20x(numRows, numCols)}
 
 \arguments{
-\item{x}{number of rows in plot array.}
-\item{y}{number of columns in plot array.}
+\item{numRows}{number of rows in plot array}
+\item{numCols}{number of columns in plot array}
 }
 
-\description{Specifies an m*n array of plots in the graphics window.}
+\description{Allows an \code{numRows} by \code{numCols} matrix of plots to be displayed in a single plot. If the function is called with no arguments, then the plotting device layout will be reset to a single plot.}
 
-\value{Function returns no value.}
+\value{Function returns no value}
 
 \examples{
 data(course.df)

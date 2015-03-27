@@ -10,12 +10,15 @@ normcheck.default = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wi
   if(is.null(col))
       col = "light blue"
 
-  oldPar = par(no.readonly = TRUE)
-    
+  ## only grab the parameters that are going to be set
+  oldPar = par(c("mfrow", "xaxs", "yaxs", "pty"))
+  
+  
+
   ## change the layout of the plotting window only if it has not already been set
   if(all(oldPar$mfrow == c(1, 1))){
     par(mfrow = c(1, 2), xaxs = "i", yaxs = "i", pty = "s")
-    on.exit(par(oldPar))
+    on.exit(par(mfrow = oldPar))
   }
 
   mx = mean(x)

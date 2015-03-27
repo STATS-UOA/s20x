@@ -1,5 +1,4 @@
-layout20x <- function (x, y) 
-{
-    par(mfrow = c(x, y))
+layout20x = function (numRows = 1, numCols = 1) {
+    par(mfrow = c(numRows, numCols))
 }
 
