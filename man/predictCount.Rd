@@ -3,7 +3,7 @@
 \title{Predicted Counts for a Generalized Linear Model}
 \usage{
 predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
-           ...)
+             \dots)
 }
 \arguments{
   \item{object}{a glm object, i.e. the output from "glm()".}
@@ -29,10 +29,6 @@ Note: The data frame, newdata, must have the same column order and data types (e
   }
 }
 \seealso{"predict", "predict.glm", "as.data.frame".}
-
-\examples{
-
-}
 
 \keyword{htest}
 

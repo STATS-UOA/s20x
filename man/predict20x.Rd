@@ -3,7 +3,7 @@
 \title{Model Predictions for a Linear Model}
 \usage{
 predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
-           ...)
+           \dots)
 }
 \arguments{
   \item{object}{an lm object, i.e. the output from "lm()".}
