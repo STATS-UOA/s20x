@@ -34,20 +34,18 @@ Note: The data frame, newdata, must have the same column order and data types (e
 \examples{
 # Zoo data
 data(zoo.df)
-attach(zoo.df)
-day.type<-factor(day.type)
-fit1<-lm(log(attendance) ~ time + sun.yesterday + nice.day + day.type + tv.ads)
-pred.zoo<-data.frame(8,10.8,0,factor(3),1.181)
-predict20x(fit1,pred.zoo)
-detach(zoo.df)
+zoo.df = within(zoo.df, {day.type = factor(day.type)})
+zoo.fit = lm(log(attendance) ~ time + sun.yesterday + nice.day + day.type + tv.ads,
+             data = zoo.df)
+pred.zoo = data.frame(time = 8, sun.yesterday = 10.8, nice.day = 0,
+                      day.type = factor(3), tv.ads = 1.181)
+predict20x(zoo.fit, pred.zoo)
 
 # Peruvian Indians data
 data(peru.df)
-attach(peru.df)
-fit2<-lm(BP ~ age + years + I(years^2) + weight + height)
-pred.peru<-data.frame(21,2,2^2,71,1629)
-predict20x(fit2,pred.peru)
-detach(peru.df)
+peru.fit = lm(BP ~ age + years + I(years^2) + weight + height, data = peru.df)
+pred.peru = data.frame(age = 21, years = 2, `I(years^2)` = 2, weight = 71, height = 1629)
+predict20x(peru.fit, pred.peru)
 }
 
 \keyword{htest}
