@@ -1,0 +1,73 @@
+\name{summaryStats}
+\alias{summaryStats}
+\alias{summaryStats.default}
+\alias{summaryStats.formula}
+\alias{summaryStats.matrix}
+\title{Summary Statistics}
+\usage{
+  summaryStats(x, \dots)
+  \method{summaryStats}{default} (x, group = rep("Data", length(x)), data.order = TRUE,
+                                  digits = 2, \dots)
+  \method{summaryStats}{formula} (x, data, data.order = TRUE, digits = 2, \dots)
+  \method{summaryStats}{matrix} (x, data.order = TRUE, digits = 2, \dots)
+}
+
+\arguments{
+  \item{x}{either a single vector of values, or a formula of the form data~group, or a   matrix.}
+  \item{data}{an optional data frame containing the variables in the model.}
+  \item{group}{a vector of group labels.}
+  \item{data.order}{if T, the group order is the order which the groups are first encountered in the vector "group". If F, the order is alphabetical.}
+  \item{digits}{the number of decimal places to display.}
+  \item{\dots}{Optional arguments.}
+}
+
+\description{Produces a table of summary statistics for the data. If the
+  argument \code{group} is missing, calculates a matrix of summary statistics
+  for the data in \code{x}. If \code{group} is present, the elements of \code{group}
+  are interpreted as group labels and the summary statistics are
+  displayed for each group separately.
+}
+
+\value{If \code{x} is a single variable, i.e. there are no groups, then a single list is invisibly returned with the following named items:
+\item{min}{Minimum value.}
+\item{max}{Maximum value.}
+\item{mean}{Mean value.}
+\item{var}{Variance -- the average of the squares of the deviations of the data values from the sample mean.}
+\item{sd}{Standard deviation -- the square root of the variance.}
+\item{n}{Number of data values -- size of the data set.}
+\item{iqr}{Midspread (IQR) -- the range spanned by central half of data; the
+    interquartile range.}
+\item{skewness}{Skewness statistic -- indicates how skewed the data set is. Positive values indicate right-skew data. Negative values indicate left-skew data.}
+\item{lq}{Lower quartile}
+\item{median}{Median -- the middle value when the batch is ordered.}
+\item{uq}{Upper quartile}
+If grouping is provided, either by using the \code{group} argument, or providing a factor in a formula, or by passing a matrix where the different columns represent the groups, then the function will return a \code{data.frame} a row containing all the statistics above for each group.
+}
+
+\examples{
+## STATS20x data:
+data(course.df)
+
+## Single variable summary
+with(course.df, summaryStats(Exam))
+
+## Using a formula
+summaryStats(Exam~Stage1, course.df)
+
+## Using a matrix
+X = cbind(rnorm(50), rnorm(50))
+summaryStats(X)
+
+## Saving and extracting the information
+sumStats = summaryStats(Exam~Degree, course.df)
+sumStats
+
+## Just the BAs
+sumStats["BA", ]
+
+## Just the means
+sumStats$mean
+}
+\keyword{multivariate}
+
+

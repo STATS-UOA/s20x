@@ -1,0 +1,1113 @@
+
+R version 3.2.4 (2016-03-10) -- "Very Secure Dishes"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "s20x"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> base::assign(".ExTimings", "s20x-Ex.timings", pos = 'CheckExEnv')
+> base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+> base::assign(".format_ptime",
++ function(x) {
++   if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
++   if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
++   options(OutDec = '.')
++   format(x[1L:3L], digits = 7L)
++ },
++ pos = 'CheckExEnv')
+> 
+> ### * </HEADER>
+> library('s20x')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("autocor.plot")
+> ### * autocor.plot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: autocor.plot
+> ### Title: Autocorrelation Plot
+> ### Aliases: autocor.plot
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> data(airpass.df)
+> time<-1:144
+> airpass.fit<-lm(passengers~time, data = airpass.df)
+> autocor.plot(airpass.fit)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("autocor.plot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("boxqq")
+> ### * boxqq
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: boxqq
+> ### Title: Box plots and normal quantile-quantile plots
+> ### Aliases: boxqq boxqq.formula
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> ## Zoo data
+> data(zoo.df)
+> boxqq(attendance~day.type, data = zoo.df)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("boxqq", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("ciReg")
+> ### * ciReg
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: ciReg
+> ### Title: Confidence Intervals for Regression models
+> ### Aliases: ciReg
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> ##Peruvian Indians data
+> data(peru.df)
+> fit<-lm(BP ~ age + years + weight + height, data = peru.df)
+> ciReg(fit)
+            95 % C.I.lower    95 % C.I.upper
+(Intercept)      -16.46474         196.81961
+age               -0.72930           0.40664
+years             -0.98412          -0.09194
+weight             0.85391           2.14339
+height            -0.10227           0.04705
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("ciReg", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("cooks20x")
+> ### * cooks20x
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: cooks20x
+> ### Title: Cook's distance plot
+> ### Aliases: cooks20x
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> # Peruvian Indians data
+> data(peru.df)
+> fit1<-lm(BP~age+years+I(years^2)+weight+height, data = peru.df)
+> cooks20x(fit1)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("cooks20x", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("crossFactors")
+> ### * crossFactors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: crossFactors
+> ### Title: Crossed Factors
+> ### Aliases: crossFactors crossFactors.default crossFactors.formula
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> ## arousal data:
+> data(arousal.df)
+> gender.picture<-factor(crossFactors(arousal.df$gender,arousal.df$picture))
+> gender.picture
+  [1] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+  [5] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+  [9] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+ [13] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+ [17] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+ [21] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [25] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [29] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [33] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [37] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [41] male.infant      male.infant      male.infant      male.infant     
+ [45] male.infant      male.infant      male.infant      male.infant     
+ [49] male.infant      male.infant      male.infant      male.infant     
+ [53] male.infant      male.infant      male.infant      male.infant     
+ [57] male.infant      male.infant      male.infant      male.infant     
+ [61] male.landscape   male.landscape   male.landscape   male.landscape  
+ [65] male.landscape   male.landscape   male.landscape   male.landscape  
+ [69] male.landscape   male.landscape   male.landscape   male.landscape  
+ [73] male.landscape   male.landscape   male.landscape   male.landscape  
+ [77] male.landscape   male.landscape   male.landscape   male.landscape  
+ [81] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [85] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [89] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [93] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [97] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+[101] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[105] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[109] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[113] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[117] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[121] female.infant    female.infant    female.infant    female.infant   
+[125] female.infant    female.infant    female.infant    female.infant   
+[129] female.infant    female.infant    female.infant    female.infant   
+[133] female.infant    female.infant    female.infant    female.infant   
+[137] female.infant    female.infant    female.infant    female.infant   
+[141] female.landscape female.landscape female.landscape female.landscape
+[145] female.landscape female.landscape female.landscape female.landscape
+[149] female.landscape female.landscape female.landscape female.landscape
+[153] female.landscape female.landscape female.landscape female.landscape
+[157] female.landscape female.landscape female.landscape female.landscape
+8 Levels: female.infant female.landscape female.nude.f ... male.nude.m
+> 
+> ## arousal data:
+> data(arousal.df)
+> gender.picture<-factor(crossFactors(~gender*picture, data = arousal.df))
+> gender.picture
+  [1] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+  [5] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+  [9] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+ [13] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+ [17] male.nude.m      male.nude.m      male.nude.m      male.nude.m     
+ [21] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [25] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [29] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [33] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [37] male.nude.f      male.nude.f      male.nude.f      male.nude.f     
+ [41] male.infant      male.infant      male.infant      male.infant     
+ [45] male.infant      male.infant      male.infant      male.infant     
+ [49] male.infant      male.infant      male.infant      male.infant     
+ [53] male.infant      male.infant      male.infant      male.infant     
+ [57] male.infant      male.infant      male.infant      male.infant     
+ [61] male.landscape   male.landscape   male.landscape   male.landscape  
+ [65] male.landscape   male.landscape   male.landscape   male.landscape  
+ [69] male.landscape   male.landscape   male.landscape   male.landscape  
+ [73] male.landscape   male.landscape   male.landscape   male.landscape  
+ [77] male.landscape   male.landscape   male.landscape   male.landscape  
+ [81] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [85] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [89] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [93] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+ [97] female.nude.m    female.nude.m    female.nude.m    female.nude.m   
+[101] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[105] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[109] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[113] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[117] female.nude.f    female.nude.f    female.nude.f    female.nude.f   
+[121] female.infant    female.infant    female.infant    female.infant   
+[125] female.infant    female.infant    female.infant    female.infant   
+[129] female.infant    female.infant    female.infant    female.infant   
+[133] female.infant    female.infant    female.infant    female.infant   
+[137] female.infant    female.infant    female.infant    female.infant   
+[141] female.landscape female.landscape female.landscape female.landscape
+[145] female.landscape female.landscape female.landscape female.landscape
+[149] female.landscape female.landscape female.landscape female.landscape
+[153] female.landscape female.landscape female.landscape female.landscape
+[157] female.landscape female.landscape female.landscape female.landscape
+8 Levels: female.infant female.landscape female.nude.f ... male.nude.m
+> 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("crossFactors", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("crosstabs")
+> ### * crosstabs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: crosstabs
+> ### Title: Crosstabulation of two variables
+> ### Aliases: crosstabs
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> ##body image data:
+> data(body.df)
+> crosstabs(~ ethnicity + married, body.df)
+         married
+ethnicity   1  2  3  4 Total
+  Asian    40  1  2  7    50
+  Europn   62 10  6 22   100
+  Maori    47  3  4 11    65
+  Pacific  20  0  3  8    31
+  Total   169 14 15 48   246
+Chisq = 11.1035  df = 9   p-value = 0.26868 
+Warning in crosstabs(~ethnicity + married, body.df) :
+  Chi-square approximation may be incorrect
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("crosstabs", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("eovcheck")
+> ### * eovcheck
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: eovcheck
+> ### Title: Testing for equality of variance plot
+> ### Aliases: eovcheck eovcheck.formula eovcheck.lm
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> # one way ANOVA - oysters
+> data(oysters.df)
+> oyster.fit = lm(Oysters~Site, data = oysters.df)
+> eovcheck(oyster.fit)
+> 
+> # Same model as the previous example, but using eovcheck.formula
+> data(oysters.df)
+> eovcheck(Oysters~Site, data = oysters.df)
+> 
+> 
+> # A two-way model without interaction
+> data(soyabean.df)
+> soya.fit<-lm(yield~planttime+cultivar, data = soyabean.df)
+> eovcheck(soya.fit)
+> 
+> # A two-way model with interaction
+> data(arousal.df)
+> arousal.fit<-lm(arousal~gender*picture, data = arousal.df)
+> eovcheck(arousal.fit)
+> 
+> # A regression model
+> data(peru.df)
+> peru.fit<-lm(BP~height+weight+age+years, data = peru.df)
+> eovcheck(peru.fit)
+> 
+> 
+> # A time series model
+> data(airpass.df)
+> t<-1:144
+> month<-factor(rep(1:12,12))
+> airpass.df<-data.frame(passengers = airpass.df$passengers, t = t, month = month)
+> airpass.fit<-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passengers)[-144], data  = airpass.df)
+> eovcheck(airpass.fit)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("eovcheck", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("estimateContrasts")
+> ### * estimateContrasts
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: estimateContrasts
+> ### Title: Contrast Estimates
+> ### Aliases: estimateContrasts estimateContrasts1 estimateContrasts2
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> ## computer data:
+> data(computer.df)
+> computer.df <- within(computer.df, {selfassess <- factor(selfassess)})
+> computer.fit <- lm(score ~ selfassess, data = computer.df)
+> contrast.matrix <- matrix(c(-1/2,-1/2,1),byrow=TRUE,nrow=1,ncol=3)
+> contrast.matrix
+     [,1] [,2] [,3]
+[1,] -0.5 -0.5    1
+> estimateContrasts(contrast.matrix,computer.fit)
+           Estimate Tukey.L Tukey.U Tukey.p
+Contrast 1 39.07143 18.5861 59.5568   4e-04
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("estimateContrasts", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("freq1way")
+> ### * freq1way
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: freq1way
+> ### Title: Analysis of 1-dimensional frequency tables
+> ### Aliases: freq1way
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> ##Body image data:
+> data(body.df)
+> eth.table <- with(body.df, table(ethnicity))
+> freq1way(eth.table)
+data:  eth.table    n = 246 
+
+Individual (large sample) 95% CIs 
+ (adjusted for 4 multiple comparisons) 
+        sample prop conf.lower conf.upper
+Asian         0.203      0.139      0.267
+Europn        0.407      0.328      0.485
+Maori         0.264      0.194      0.334
+Pacific       0.126      0.073      0.179
+
+Chi-square test for uniformity 
+    X-squared = 41.5772, df = 3, p-value = 4.933e-09 
+
+95% CIs for differences in true proportions (rowname-colname) 
+ (adjusted for 6 multiple comparisons) 
+       Europn          Maori          Pacific       
+Asian  (-0.33,-0.076)* (-0.176,0.054) (-0.018,0.173)
+Europn                 (0.007,0.278)* (0.167,0.394)*
+Maori                                 (0.036,0.241)*
+> freq1way(eth.table,hypothprob=c(0.2,0.4,0.3,0.1))
+data:  eth.table    n = 246 
+
+Individual (large sample) 95% CIs 
+ (adjusted for 4 multiple comparisons) 
+        sample prop conf.lower conf.upper hypoth prob
+Asian         0.203      0.139      0.267         0.2
+Europn        0.407      0.328      0.485         0.4
+Maori         0.264      0.194      0.334         0.3
+Pacific       0.126      0.073      0.179         0.1
+
+Chi-square test for hypothesized probabilities 
+    X-squared = 2.7534, df = 3, p-value = 0.4312 
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("freq1way", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("getVersion")
+> ### * getVersion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: getVersion
+> ### Title: s20x pacakge version number
+> ### Aliases: getVersion
+> ### Keywords: debugging
+> 
+> ### ** Examples
+> 
+> getVersion()
+Package: s20x
+Version: 3.1-17
+Date: 2016-04-14
+Title: Functions for University of Auckland Course STATS 201/208 Data
+        Analysis
+Author: Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike
+        Forster, Brendan McArdle, Chris Wild
+Maintainer: James Curran <j.curran@auckland.ac.nz>
+Description: A set of functions used in teaching STATS 201/208 Data
+        Analysis at the University of Auckland. The functions are
+        designed to make parts of R more accessible to a large
+        undergraduate population who are mostly not statistics majors.
+Imports: stats, graphics
+License: GPL-2 | file LICENSE
+NeedsCompilation: no
+Packaged: 2016-04-14 07:43:35 UTC; jcur002
+Built: R 3.2.4; ; 2016-04-14 07:43:37 UTC; unix
+
+-- File: /Users/jcur002/Dropbox/Code/git/s20x/s20x.Rcheck/s20x/Meta/package.rds 
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("getVersion", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("interactionPlots")
+> ### * interactionPlots
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: interactionPlots
+> ### Title: Interactions Plot for Two-way Analysis of Variance
+> ### Aliases: interactionPlots interactionPlots.default
+> ###   interactionPlots.formula
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> data(mtcars)
+> interactionPlots(wt~vs+gear, mtcars)
+> 
+> ## note this usage is deprecated
+> data(mtcars)
+> with(mtcars, interactionPlots(wt,vs,gear))
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("interactionPlots", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("layout20x")
+> ### * layout20x
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: layout20x
+> ### Title: Layout
+> ### Aliases: layout20x
+> ### Keywords: device
+> 
+> ### ** Examples
+> 
+> data(course.df)
+> layout20x(1,2)
+> stripchart(course.df$Exam)
+> boxplot(course.df$Exam)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("layout20x", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("levene.test")
+> ### * levene.test
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: levene.test
+> ### Title: Levene test for the ANOVA Assumption
+> ### Aliases: levene.test
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> ##
+> data(computer.df)
+> levene.test(score ~ factor(selfassess), computer.df)
+                Df  Sum Squares  Mean Square  F-statistic  p-value   
+Between Groups  2   54.55827     27.27914     0.24192      0.78794   
+Within Groups   16  1804.17857   112.76116                           
+Total           18  1858.73684                                       
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("levene.test", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("multipleComp")
+> ### * multipleComp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: multipleComp
+> ### Title: Multiple Comparisons
+> ### Aliases: multipleComp
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> ## computer data
+> data(computer.df)
+> fit <- lm(score ~ factor(selfassess), data = computer.df)
+> multipleComp(fit)
+         Estimate  Tukey.L  Tukey.U Tukey.p
+1  -  2 -26.35714 -45.1889  -7.5254  0.0063
+1  -  3 -52.25000 -74.5320 -29.9680  0.0000
+2  -  3 -25.89286 -48.6992  -3.0865  0.0252
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("multipleComp", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("normcheck")
+> ### * normcheck
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: normcheck
+> ### Title: Testing for normality plot
+> ### Aliases: normcheck normcheck.default normcheck.lm
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> # An exponential growth curve
+> e<-rnorm(100,0,0.1)
+> x<-rnorm(100)
+> y<-exp(5+3*x+e)
+> fit<-lm(y~x)
+> normcheck(fit)
+> 
+> # An exponential growth curve with the correct transformation
+> fit<-lm(log(y)~x)
+> normcheck(fit)
+> 
+> # Same example as above except we use normcheck.default
+> normcheck(residuals(fit))
+> 
+> # Peruvian Indians data
+> data(peru.df)
+> normcheck(lm(BP~weight, data=peru.df))
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("normcheck", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("onewayPlot")
+> ### * onewayPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: onewayPlot
+> ### Title: One-way Analysis of Variance Plot
+> ### Aliases: twosampPlot onewayPlot onewayPlot.default onewayPlot.formula
+> ###   onewayPlot.lm
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> ##see example in "summary1way"
+> 
+> ##computer data:
+> data(computer.df)
+> onewayPlot(score~selfassess, data = computer.df)
+> 
+> 
+> ##apple data:
+> data(apples.df)
+> twosampPlot(Weight~Propagated, data = apples.df)
+> 
+> ##oyster data:
+> data(oysters.df)
+> onewayPlot(log(Oysters)~Site, data = oysters.df)
+> 
+> ##oyster data:
+> data(oysters.df)
+> oyster.fit = lm(log(Oysters)~Site, data = oysters.df)
+> onewayPlot(oyster.fit)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("onewayPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("pairs20x")
+> ### * pairs20x
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: pairs20x
+> ### Title: Pairwise Scatter Plots with Histograms and Correlations
+> ### Aliases: pairs20x
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> ##peruvian indians
+> data(peru.df)
+> pairs20x(peru.df)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("pairs20x", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("predict20x")
+> ### * predict20x
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: predict20x
+> ### Title: Model Predictions for a Linear Model
+> ### Aliases: predict20x
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> # Zoo data
+> data(zoo.df)
+> zoo.df = within(zoo.df, {day.type = factor(day.type)})
+> zoo.fit = lm(log(attendance) ~ time + sun.yesterday + nice.day + day.type + tv.ads,
++              data = zoo.df)
+> pred.zoo = data.frame(time = 8, sun.yesterday = 10.8, nice.day = 0,
++                       day.type = factor(3), tv.ads = 1.181)
+> predict20x(zoo.fit, pred.zoo)
+  Predicted  Conf.lower Conf.upper  Pred.lower  Pred.upper
+1     6.758       6.567       6.95       5.738       7.778
+> 
+> # Peruvian Indians data
+> data(peru.df)
+> peru.fit = lm(BP ~ age + years + I(years^2) + weight + height, data = peru.df)
+> pred.peru = data.frame(age = 21, years = 2, `I(years^2)` = 2, weight = 71, height = 1629)
+> predict20x(peru.fit, pred.peru)
+  Predicted  Conf.lower Conf.upper  Pred.lower  Pred.upper
+1   149.437     138.811    160.064     126.924     171.951
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("predict20x", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("residPlot")
+> ### * residPlot
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: residPlot
+> ### Title: Fitted values versus residuals plot
+> ### Aliases: residPlot
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> # Peruvian Indians data
+> data(peru.df)
+> fit<-lm(BP~age+years+weight+height, data = peru.df)
+> residPlot(fit)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("residPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("rowdistr")
+> ### * rowdistr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: rowdistr
+> ### Title: Row distributions from a cross-tabulation of two variables
+> ### Aliases: rowdistr
+> ### Keywords: htest
+> 
+> ### ** Examples
+> 
+> data(body.df)
+> z <- crosstabs(~ ethnicity + married, data = body.df)
+         married
+ethnicity   1  2  3  4 Total
+  Asian    40  1  2  7    50
+  Europn   62 10  6 22   100
+  Maori    47  3  4 11    65
+  Pacific  20  0  3  8    31
+  Total   169 14 15 48   246
+Chisq = 11.1035  df = 9   p-value = 0.26868 
+Warning in crosstabs(~ethnicity + married, data = body.df) :
+  Chi-square approximation may be incorrect
+> rowdistr(z)
+Row Proportions
+           1    2    3    4 Totals   n
+Asian   0.80 0.02 0.04 0.14      1  50
+Europn  0.62 0.10 0.06 0.22      1 100
+Maori   0.72 0.05 0.06 0.17      1  65
+Pacific 0.65 0.00 0.10 0.26      1  31
+> rowdistr(z, comp="between")
+Row Proportions
+           1    2    3    4 Totals   n
+Asian   0.80 0.02 0.04 0.14      1  50
+Europn  0.62 0.10 0.06 0.22      1 100
+Maori   0.72 0.05 0.06 0.17      1  65
+Pacific 0.65 0.00 0.10 0.26      1  31
+
+95% CIs for diffs between proportions with married = 1 
+(rowname-colname) 
+       Europn         Maori          Pacific       
+Asian  (-0.017,0.377) (-0.132,0.286) (-0.117,0.426)
+Europn                (-0.298,0.091) (-0.286,0.235)
+Maori                                (-0.192,0.348)
+
+95% CIs for diffs between proportions with married = 2 
+(rowname-colname) 
+       Europn         Maori          Pacific       
+Asian  (-0.175,0.015) (-0.112,0.06)  (-0.032,0.072)
+Europn                (-0.051,0.159) (0.021,0.179)*
+Maori                                (-0.023,0.115)
+
+95% CIs for diffs between proportions with married = 3 
+(rowname-colname) 
+       Europn         Maori          Pacific       
+Asian  (-0.116,0.076) (-0.129,0.086) (-0.215,0.101)
+Europn                (-0.102,0.099) (-0.19,0.117) 
+Maori                                (-0.196,0.125)
+
+95% CIs for diffs between proportions with married = 4 
+(rowname-colname) 
+       Europn         Maori          Pacific       
+Asian  (-0.249,0.089) (-0.208,0.149) (-0.363,0.126)
+Europn                (-0.114,0.215) (-0.272,0.196)
+Maori                                (-0.33,0.152) 
+> rowdistr(z, comp="within")
+Row Proportions
+           1    2    3    4 Totals   n
+Asian   0.80 0.02 0.04 0.14      1  50
+Europn  0.62 0.10 0.06 0.22      1 100
+Maori   0.72 0.05 0.06 0.17      1  65
+Pacific 0.65 0.00 0.10 0.26      1  31
+     1      2      3      4 Totals      n 
+  0.80   0.02   0.04   0.14   1.00  50.00 
+
+Chisq test for uniformity: chisq =   , df = 3 , p-value =  
+95% CIs for diffs in propns within the ethnicity = Asian distribution 
+(rowname-colname) 
+  2              3              4             
+1 (0.608,0.952)* (0.569,0.951)* (0.395,0.925)*
+2                (-0.111,0.071) (-0.262,0.022)
+3                               (-0.254,0.054)
+
+----------------------------------------------------------------------
+     1      2      3      4 Totals      n 
+  0.62   0.10   0.06   0.22   1.00 100.00 
+
+Chisq test for uniformity: chisq =   , df = 3 , p-value =  
+95% CIs for diffs in propns within the ethnicity = Europn distribution 
+(rowname-colname) 
+  2              3              4               
+1 (0.343,0.697)* (0.4,0.72)*    (0.182,0.618)*  
+2                (-0.065,0.145) (-0.266,0.026)  
+3                               (-0.293,-0.027)*
+
+----------------------------------------------------------------------
+     1      2      3      4 Totals      n 
+  0.72   0.05   0.06   0.17   1.00  65.00 
+
+Chisq test for uniformity: chisq =   , df = 3 , p-value =  
+95% CIs for diffs in propns within the ethnicity = Maori distribution 
+(rowname-colname) 
+  2              3              4             
+1 (0.494,0.859)* (0.469,0.854)* (0.303,0.804)*
+2                (-0.123,0.092) (-0.27,0.023) 
+3                               (-0.261,0.046)
+
+----------------------------------------------------------------------
+     1      2      3      4 Totals      n 
+  0.65   0.00   0.10   0.26   1.00  31.00 
+
+Chisq test for uniformity: chisq =   , df = 3 , p-value =  
+95% CIs for diffs in propns within the ethnicity = Pacific distribution 
+(rowname-colname) 
+  2              3              4               
+1 (0.418,0.872)* (0.234,0.863)* (-0.024,0.798)  
+2                (-0.237,0.043) (-0.465,-0.051)*
+3                               (-0.433,0.11)   
+
+----------------------------------------------------------------------
+> 
+> 
+> ##from matrix of counts
+> z <- matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
+> rowdistr(z)
+Row Proportions
+     1    2    3    4 Totals   n
+1 0.06 0.72 0.17 0.05      1  65
+2 0.10 0.65 0.26 0.00      1  31
+3 0.04 0.80 0.14 0.02      1  50
+4 0.06 0.62 0.22 0.10      1 100
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("rowdistr", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("skewness")
+> ### * skewness
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: skewness
+> ### Title: Skewness Statistic
+> ### Aliases: skewness
+> ### Keywords: univar
+> 
+> ### ** Examples
+> 
+> ##Merger data:
+> data(mergers.df)
+> skewness(mergers.df$mergerdays)
+[1] 1.67523
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("skewness", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("stripqq")
+> ### * stripqq
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: stripqq
+> ### Title: Strip charts and normal quantile-quantile plots
+> ### Aliases: stripqq stripqq.formula
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> ## Zoo data
+> data(zoo.df)
+> stripqq(attendance~day.type, data = zoo.df)
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("stripqq", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("summary1way")
+> ### * summary1way
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: summary1way
+> ### Title: One-way Analysis of Variance Summary
+> ### Aliases: summary1way
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> attitudes <- c(5.2,5.2,6.1,6,5.75,5.6,6.25,6.8,6.87,7.1,
++                6.3,6.35,5.5,5.75,4.6,5.36,5.85,5.9)
+> l <- rep(c("Gp1","Gp2","Gp3"),rep(6,3))
+> l <- factor(l)
+> f <-lm(attitudes ~ l)
+> result <- summary1way(f)
+ANOVA Table:
+                Df  Sum Squares  Mean Square  F-statistic  p-value   
+Between Groups  2   4.42714      2.21357      13.00317     0.00053   
+Within Groups   15  2.5535       0.17023                             
+Total           17  6.98064                                          
+
+Numeric Summary:
+          Sample size     Mean  Median  Std Dev  Midspread
+All Data           18  5.91556   5.875  0.64080     0.7625
+Gp1                 6  5.64167   5.675  0.38525     0.6375
+Gp2                 6  6.61167   6.575  0.35695     0.5400
+Gp3                 6  5.49333   5.625  0.48463     0.4300
+
+Table of Effects: (GrandMean and deviations from GM)
+ typ.val      Gp1      Gp2      Gp3 
+ 5.91556 -0.27389  0.69611 -0.42222 
+> result
+$Df
+[1]  2 15 17
+
+$`Sum of Sq`
+[1] 4.42714 2.55350 6.98064
+
+$`Mean Sq`
+[1] 2.21357 0.17023
+
+$`F value`
+[1] 13.00317
+
+$`Pr(F)`
+[1] 0.0005300326
+
+$`Main Effect`
+[1] 5.915556
+
+$`Group Effects`
+       Gp1        Gp2        Gp3 
+-0.2738889  0.6961111 -0.4222222 
+
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("summary1way", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("summary2way")
+> ### * summary2way
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: summary2way
+> ### Title: Two-way Analysis of Variance Summary
+> ### Aliases: summary2way
+> ### Keywords: models
+> 
+> ### ** Examples
+> 
+> ##Arousal data:
+> data(arousal.df)
+> fit<-lm(arousal~gender+picture+gender*picture,data=arousal.df)
+> summary2way(fit)
+ANOVA Table:
+               Df  Sum Squares  Mean Square  F-statistic  p-value   
+gender         1   172.01756    172.01756    188.68993    0         
+picture        3   197.60319    65.86773     72.25179     0         
+gender:picture 3   5731.29969   1910.43323   2095.59716   0         
+Residuals      152 138.5695     0.91164                             
+Total          159 6239.48994                                       
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("summary2way", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("summaryStats")
+> ### * summaryStats
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: summaryStats
+> ### Title: Summary Statistics
+> ### Aliases: summaryStats summaryStats.default summaryStats.formula
+> ###   summaryStats.matrix
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## STATS20x data:
+> data(course.df)
+> 
+> ## Single variable summary
+> with(course.df, summaryStats(Exam))
+Minimum value:           11 
+Maximum value:           93 
+Mean value:              52.88 
+Median:                  51.5 
+Upper quartile:          68.5 
+Lower quartile:          40 
+Variance:                348.87 
+Standard deviation:      18.68 
+Midspread (IQR):         28.5 
+Skewness:                0.16 
+Number of data values:   146 
+> 
+> ## Using a formula
+> summaryStats(Exam~Stage1, course.df)
+  Sample Size     Mean Median  Std Dev Midspread
+A          49 68.75510     72 15.47381     20.00
+B          46 51.52174     52 14.75238     19.75
+C          51 38.84314     41 11.67625     16.50
+> 
+> ## Using a matrix
+> X = cbind(rnorm(50), rnorm(50))
+> summaryStats(X)
+  Sample Size      Mean    Median   Std Dev Midspread
+1          50 0.1004483 0.1291042 0.8313939  1.100049
+2          50 0.1173265 0.1137973 0.9688279  1.178648
+> 
+> ## Saving and extracting the information
+> sumStats = summaryStats(Exam~Degree, course.df)
+      Sample Size     Mean Median  Std Dev Midspread
+BA             17 52.41176   60.0 24.57402     43.00
+BCom           49 58.81633   60.0 16.23868     24.00
+BSc            64 45.82812   42.5 15.80090     17.25
+Other          16 63.37500   66.0 19.76824     35.75
+> sumStats
+      min max     mean      var       sd  n   iqr     skewness    lq median uq
+BA     20  89 52.41176 603.8824 24.57402 17 43.00 -0.002099851 27.00   60.0 70
+BCom   11  91 58.81633 263.6947 16.23868 49 24.00 -0.586416225 48.00   60.0 72
+BSc    18  93 45.82812 249.6684 15.80090 64 17.25  0.883319414 35.75   42.5 53
+Other  35  87 63.37500 390.7833 19.76824 16 35.75 -0.148843664 46.25   66.0 82
+> 
+> ## Just the BAs
+> sumStats["BA", ]
+   min max     mean      var       sd  n iqr     skewness lq median uq
+BA  20  89 52.41176 603.8824 24.57402 17  43 -0.002099851 27     60 70
+> 
+> ## Just the means
+> sumStats$mean
+[1] 52.41176 58.81633 45.82812 63.37500
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("summaryStats", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> cleanEx()
+> nameEx("trendscatter")
+> ### * trendscatter
+> 
+> flush(stderr()); flush(stdout())
+> 
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: trendscatter
+> ### Title: Trend and scatter plot
+> ### Aliases: trendscatter trendscatter.default trendscatter.formula
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> # A simple polynomial
+> x<-rnorm(100)
+> e<-rnorm(100)
+> y<-2+3*x-2*x^2+4*x^3+e
+> trendscatter(y~x)
+> 
+> # An exponential growth curve
+> e<-rnorm(100,0,0.1)
+> y<-exp(5+3*x+e)
+> trendscatter(log(y)~x)
+> 
+> # Peruvian Indians data
+> data(peru.df)
+> trendscatter(BP~weight, data=peru.df)
+> 
+> # Note: this usage is deprecated
+> with(peru.df,trendscatter(weight,BP))
+> 
+> 
+> 
+> base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+> base::cat("trendscatter", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.633 0.058 0.741 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

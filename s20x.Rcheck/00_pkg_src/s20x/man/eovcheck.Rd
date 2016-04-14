@@ -1,0 +1,77 @@
+\name{eovcheck}
+\alias{eovcheck}
+\alias{eovcheck.formula}
+\alias{eovcheck.lm}
+\title{Testing for equality of variance plot}
+\usage{
+eovcheck(object, \dots)
+\method{eovcheck}{formula} (object, data = NULL, xlab = NULL, col = NULL
+                            ,smoother = FALSE, twosd = FALSE, levene = FALSE, \dots)
+\method{eovcheck}{lm} (object, smoother = FALSE, twosd = FALSE, levene = FALSE, \dots)
+}
+\arguments{
+  \item{object}{A linear model formula. Alternatively, a fitted
+    lm object from a linear model.}
+
+  \item{data}{A data frame in which to evaluate the formula.}
+  \item{xlab}{a title for the x axis: see \code{\link{title}}.}
+  \item{col}{a color for the lowess smoother line.}
+  \item{smoother}{if TRUE then a smoothed lowess line will be added to
+    the plot}
+  \item{twosd}{if TRUE then horizontal dotted lines will be drawn at +/-2sd}
+  \item{levene}{if TRUE then the P-value from Levene's test for equality of variance is displayed}
+  \item{\dots}{Optional arguments}
+}
+\description{
+  Plots the residuals versus the fitted (or predicted) values from a
+  linear model. A horizontal line is drawn at y = 0,
+  reflecting the fact that we expect the residuals to have a mean of
+  zero. An optional lowess line is drawn if smoother is set to
+  TRUE. This can be useful in determining whether a trend still exists
+  in the residuals. An optional pair of lines is drawn at +/- 2 times
+  the standard deviation of the residuals - which is estimated from the
+  Residual Mean Sqare (Within group mean square = WGMS). This can be
+  useful in highlighting potential outliers. If the model
+  has one or two factors and no continous variables, i.e. if it is a
+  oneway or twoway ANOVA model, and \code{levene = TRUE} then the P-value from Levene's test for
+  equality variance is displayed in the top left hand corner,as long as
+  the number of observations per group exceeds two.
+}
+\seealso{"levene.test"}
+
+\examples{
+# one way ANOVA - oysters
+data(oysters.df)
+oyster.fit = lm(Oysters~Site, data = oysters.df)
+eovcheck(oyster.fit)
+
+# Same model as the previous example, but using eovcheck.formula
+data(oysters.df)
+eovcheck(Oysters~Site, data = oysters.df)
+
+
+# A two-way model without interaction
+data(soyabean.df)
+soya.fit<-lm(yield~planttime+cultivar, data = soyabean.df)
+eovcheck(soya.fit)
+
+# A two-way model with interaction
+data(arousal.df)
+arousal.fit<-lm(arousal~gender*picture, data = arousal.df)
+eovcheck(arousal.fit)
+
+# A regression model
+data(peru.df)
+peru.fit<-lm(BP~height+weight+age+years, data = peru.df)
+eovcheck(peru.fit)
+
+
+# A time series model
+data(airpass.df)
+t<-1:144
+month<-factor(rep(1:12,12))
+airpass.df<-data.frame(passengers = airpass.df$passengers, t = t, month = month)
+airpass.fit<-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passengers)[-144], data  = airpass.df)
+eovcheck(airpass.fit)
+}
+\keyword{hplot}
