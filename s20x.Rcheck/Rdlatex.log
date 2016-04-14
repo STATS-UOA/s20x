@@ -76,7 +76,7 @@ Overfull \vbox (7.71587pt too high) has occurred while \output is active
 [2] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.30003pt too wide) in alignment at lines 184--184
+Overfull \hbox (3.30003pt too wide) in alignment at lines 183--183
  [] [] [] [] 
 [3] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [4]
@@ -89,7 +89,7 @@ Overfull \vbox (1.84074pt too high) has occurred while \output is active
 [6] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [7]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.78941pt too wide) in alignment at lines 422--422
+Overfull \hbox (3.78941pt too wide) in alignment at lines 421--421
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [8]
@@ -100,7 +100,7 @@ Overfull \hbox (3.78941pt too wide) in alignment at lines 422--422
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 Underfull \vbox (badness 10000) has occurred while \output is active [11]
 [12]
-Overfull \hbox (24.18091pt too wide) in paragraph at lines 715--715
+Overfull \hbox (24.18091pt too wide) in paragraph at lines 714--714
  []\T1/zi4/m/n/9 airpass.fit<-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passen
 gers)[-144], data  = airpass.df)[] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [13]
@@ -127,7 +127,7 @@ Overfull \vbox (18.52072pt too high) has occurred while \output is active
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [22]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [23] [24]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (214.62741pt too wide) in alignment at lines 1444--1444
+Overfull \hbox (214.62741pt too wide) in alignment at lines 1443--1443
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [25]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
@@ -150,16 +150,16 @@ Overfull \vbox (18.54558pt too high) has occurred while \output is active
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [37]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [38]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (92.68912pt too wide) in alignment at lines 2212--2212
+Overfull \hbox (92.68912pt too wide) in alignment at lines 2211--2211
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 Overfull \vbox (3.21599pt too high) has occurred while \output is active
 [39] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (103.49928pt too wide) in alignment at lines 2257--2257
+Overfull \hbox (103.49928pt too wide) in alignment at lines 2256--2256
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [40]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (149.3102pt too wide) in alignment at lines 2353--2353
+Overfull \hbox (149.3102pt too wide) in alignment at lines 2352--2352
  [] [] [] [] 
 No file Rd2.ind.
 [41] (./Rd2.aux)
@@ -184,7 +184,7 @@ exlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/
 -dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/font
 s/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/ur
 w/times/utmri8a.pfb>
-Output written on Rd2.pdf (41 pages, 153945 bytes).
+Output written on Rd2.pdf (41 pages, 153803 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2015] (kpathsea + Thai support).
 Scanning input file Rd2.idx....done (142 entries accepted, 0 rejected).
@@ -267,7 +267,7 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [4]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.30003pt too wide) in alignment at lines 184--184
+Overfull \hbox (3.30003pt too wide) in alignment at lines 183--183
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [5]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
@@ -278,7 +278,7 @@ Overfull \hbox (3.30003pt too wide) in alignment at lines 184--184
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [8]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.78941pt too wide) in alignment at lines 422--422
+Overfull \hbox (3.78941pt too wide) in alignment at lines 421--421
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [9]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
@@ -288,7 +288,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active [10]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [12]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [13]
-Overfull \hbox (24.18091pt too wide) in paragraph at lines 715--715
+Overfull \hbox (24.18091pt too wide) in paragraph at lines 714--714
  []\T1/zi4/m/n/9 airpass.fit<-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passen
 gers)[-144], data  = airpass.df)[] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [14]
@@ -312,7 +312,7 @@ gers)[-144], data  = airpass.df)[]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [25]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [26] [27]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (214.62741pt too wide) in alignment at lines 1444--1444
+Overfull \hbox (214.62741pt too wide) in alignment at lines 1443--1443
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [28]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
@@ -334,16 +334,16 @@ Overfull \hbox (214.62741pt too wide) in alignment at lines 1444--1444
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [40]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [41]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (92.68912pt too wide) in alignment at lines 2212--2212
+Overfull \hbox (92.68912pt too wide) in alignment at lines 2211--2211
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 Overfull \vbox (3.21599pt too high) has occurred while \output is active
 [42] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (103.49928pt too wide) in alignment at lines 2257--2257
+Overfull \hbox (103.49928pt too wide) in alignment at lines 2256--2256
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [43]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (149.3102pt too wide) in alignment at lines 2353--2353
+Overfull \hbox (149.3102pt too wide) in alignment at lines 2352--2352
  [] [] [] [] 
 (./Rd2.ind [44] [45]
 
@@ -376,7 +376,7 @@ xlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts
 /type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb>
-Output written on Rd2.pdf (46 pages, 176854 bytes).
+Output written on Rd2.pdf (46 pages, 176859 bytes).
 Transcript written on Rd2.log.
 This is makeindex, version 2.15 [TeX Live 2015] (kpathsea + Thai support).
 Scanning input file Rd2.idx....done (142 entries accepted, 0 rejected).
@@ -459,7 +459,7 @@ Writing index file Rd2.idx
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [4]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.30003pt too wide) in alignment at lines 184--184
+Overfull \hbox (3.30003pt too wide) in alignment at lines 183--183
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [5]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
@@ -470,7 +470,7 @@ Overfull \hbox (3.30003pt too wide) in alignment at lines 184--184
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [8]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (3.78941pt too wide) in alignment at lines 422--422
+Overfull \hbox (3.78941pt too wide) in alignment at lines 421--421
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [9]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
@@ -480,7 +480,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active [10]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [12]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [13]
-Overfull \hbox (24.18091pt too wide) in paragraph at lines 715--715
+Overfull \hbox (24.18091pt too wide) in paragraph at lines 714--714
  []\T1/zi4/m/n/9 airpass.fit<-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passen
 gers)[-144], data  = airpass.df)[] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [14]
@@ -504,7 +504,7 @@ gers)[-144], data  = airpass.df)[]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [25]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [26] [27]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (214.62741pt too wide) in alignment at lines 1444--1444
+Overfull \hbox (214.62741pt too wide) in alignment at lines 1443--1443
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [28]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
@@ -526,16 +526,16 @@ Overfull \hbox (214.62741pt too wide) in alignment at lines 1444--1444
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [40]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [41]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (92.68912pt too wide) in alignment at lines 2212--2212
+Overfull \hbox (92.68912pt too wide) in alignment at lines 2211--2211
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
 Overfull \vbox (3.21599pt too high) has occurred while \output is active
 [42] (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (103.49928pt too wide) in alignment at lines 2257--2257
+Overfull \hbox (103.49928pt too wide) in alignment at lines 2256--2256
  [] [] [] [] 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def) [43]
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def)
-Overfull \hbox (149.3102pt too wide) in alignment at lines 2353--2353
+Overfull \hbox (149.3102pt too wide) in alignment at lines 2352--2352
  [] [] [] [] 
 (./Rd2.ind [44] [45]
 
@@ -563,8 +563,8 @@ xlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts
 /type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb>
-Output written on Rd2.pdf (46 pages, 177649 bytes).
+Output written on Rd2.pdf (46 pages, 177583 bytes).
 Transcript written on Rd2.log.
 Saving output to 's20x-manual.pdf' ...
 Done
-You may want to clean up by 'rm -rf /var/folders/75/55c2dhsj30jb5w5nl_1_ny0h0000gp/T//RtmpQyrTHN/Rd2pdf53024ac1bfb0'
+You may want to clean up by 'rm -rf /var/folders/75/55c2dhsj30jb5w5nl_1_ny0h0000gp/T//RtmpDeiMJE/Rd2pdf5892210c0c43'

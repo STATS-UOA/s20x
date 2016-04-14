@@ -17,9 +17,7 @@
 * checking installed package size ... OK
 * checking package directory ... OK
 * checking DESCRIPTION meta-information ... OK
-* checking top-level files ... NOTE
-Non-standard file/directory found at top level:
-  ‘s20x.Rproj’
+* checking top-level files ... OK
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
@@ -50,4 +48,4 @@ Non-standard file/directory found at top level:
 * checking examples ... OK
 * checking PDF version of manual ... OK
 * DONE
-Status: 1 NOTE
+Status: OK
