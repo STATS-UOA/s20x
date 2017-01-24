@@ -1,5 +1,5 @@
 
-R version 3.2.4 (2016-03-10) -- "Very Secure Dishes"
+R version 3.3.2 (2016-10-31) -- "Sincere Pumpkin Patch"
 Copyright (C) 2016 The R Foundation for Statistical Computing
 Platform: x86_64-apple-darwin13.4.0 (64-bit)
 
@@ -429,8 +429,8 @@ Chi-square test for hypothesized probabilities
 > 
 > getVersion()
 Package: s20x
-Version: 3.1-17
-Date: 2016-04-14
+Version: 3.1-18
+Date: 2016-11-16
 Title: Functions for University of Auckland Course STATS 201/208 Data
         Analysis
 Author: Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike
@@ -442,8 +442,8 @@ Description: A set of functions used in teaching STATS 201/208 Data
         undergraduate population who are mostly not statistics majors.
 License: GPL-2 | file LICENSE
 NeedsCompilation: no
-Packaged: 2016-04-14 07:57:48 UTC; jcur002
-Built: R 3.2.4; ; 2016-04-14 07:57:50 UTC; unix
+Packaged: 2016-11-16 13:24:16 UTC; jcur002
+Built: R 3.3.2; ; 2016-11-16 13:24:50 UTC; unix
 
 -- File: /Users/jcur002/Dropbox/Code/git/s20x/s20x.Rcheck/s20x/Meta/package.rds 
 > 
@@ -1100,7 +1100,7 @@ BA  20  89 52.41176 603.8824 24.57402 17  43 -0.002099851 27     60 70
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.692 0.065 0.832 0 0 
+Time elapsed:  0.572 0.059 0.722 0 0 
 > grDevices::dev.off()
 null device 
           1 
