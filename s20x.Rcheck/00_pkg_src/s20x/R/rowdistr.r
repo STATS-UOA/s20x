@@ -35,7 +35,9 @@ prepCrosstabList = function(crosstablist){
   return(crosstablist)
 }
 
-drawPlot = function(crosstablist, comp = "basic", conf.level = 0.95){
+drawPlot = function(crosstablist, comp = c("basic", "within", "between"), conf.level = 0.95){
+  
+  comp = match.arg(comp)
   
   ad  =  0.5
   rowcol  =  1
@@ -115,7 +117,8 @@ drawPlot = function(crosstablist, comp = "basic", conf.level = 0.95){
   
 }
 
-printOutput = function(crosstablist, comp = "basic", conf.level = 0.95){
+printOutput = function(crosstablist, comp = c("basic", "within", "between"), conf.level = 0.95){
+  comp = match.arg(comp)
   
   cat("Row Proportions\n")
 
@@ -206,10 +209,12 @@ printOutput = function(crosstablist, comp = "basic", conf.level = 0.95){
 }
 
 
-rowdistr = function (crosstablist, comp = "basic", conf.level = 0.95,
+rowdistr = function (crosstablist, comp = c("basic", "within", "between"), conf.level = 0.95,
                     plot = TRUE, suppressText = FALSE){
 
       
+  comp = match.arg(comp)
+  
     if (!is.matrix(crosstablist) && (class(crosstablist) != "ct.20x"))
         stop("check form of crosstablist: input list must be output from crosstabs or a list of similar form")
     

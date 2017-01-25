@@ -1,4 +1,7 @@
-summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print.out = TRUE, ...){
+summary2way = function (fit, page = c("table", "means", "effects", "interaction", "nointeraction"), digit = 5, conf.level = 0.95, print.out = TRUE, ...){
+  
+    page = match.arg(page)
+  
     if(!inherits(fit, "lm")){ 
         stop("Input is not an \"lm\" object")
     }
@@ -28,6 +31,12 @@ summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print
         }
       
         inter = TRUE
+    }
+    
+    ## Another test to make sure all variables are factors because 
+    ## it seems that some models can slip through test above
+    if(any(!sapply(fit$model[,-1], is.factor))){
+      stop("All explanatory variables should be factors!")
     }
     
     y = fit$model[, 1]
@@ -165,8 +174,7 @@ summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print
     }
     cellmns = cbind(cellmns, apply(effmat, 1, mean))
     cellmns = rbind(cellmns, c(apply(effmat, 2, mean), mmean))
-    dimnames(cellmns) = list(c(rep(" ", length(levels(f1)) + 
-        1)), c(rep(" ", length(levels(f2)) + 1)))
+    dimnames(cellmns) = list(c(rep(" ", length(levels(f1)) + 1)), c(rep(" ", length(levels(f2)) + 1)))
     matr = rbind(rep("", ncol(effmat)))
     matr[1, as.integer((length(levels(f2)) + 1)/2)] = as.character(attributes(fit$terms)$variables[[4]])
     matr = c("", "", matr, "")
@@ -177,16 +185,12 @@ summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print
     R = c("", "", levels(f2), as.character(attributes(fit$terms)$variables[[3]]))
     M1 = cbind(matc, C, format(round(cellmns, digit), digit = 5))
     M2 = rbind(matr, R, M1)
-    roweff = apply(effmat, 1, mean) - mean(apply(effmat, 1, 
-        mean))
-    coleff = apply(effmat, 2, mean) - mean(apply(effmat, 2, 
-        mean))
-    interact = (effmat - outer(apply(effmat, 1, mean), rep(1, 
-        n2)) - outer(rep(1, n1), apply(effmat, 2, mean))) + mean(effmat)
+    roweff = apply(effmat, 1, mean) - mean(apply(effmat, 1, mean))
+    coleff = apply(effmat, 2, mean) - mean(apply(effmat, 2, mean))
+    interact = (effmat - outer(apply(effmat, 1, mean), rep(1, n2)) - outer(rep(1, n1), apply(effmat, 2, mean))) + mean(effmat)
     effmat1 = cbind(interact, roweff)
     effmat2 = rbind(effmat1, c(coleff, mmean))
-    dimnames(effmat2) = list(c(rep(" ", length(levels(f1)) + 
-        1)), c(rep(" ", length(levels(f2)) + 1)))
+    dimnames(effmat2) = list(c(rep(" ", length(levels(f1)) + 1)), c(rep(" ", length(levels(f2)) + 1)))
     matr = rbind(rep("", ncol(effmat)))
     matr[1, as.integer((length(levels(f2)) + 1)/2)] = as.character(attributes(fit$terms)$variables[[4]])
     matr = c("", "", matr, "")
@@ -201,50 +205,46 @@ summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print
     M4 = rbind(matr, R, M3)
     f1.name = row.names(alist)[1]
     f2.name = row.names(alist)[2]
+    
+    comparisons = NULL
+    
     if(page == "table"){
         cat("ANOVA Table:\n")
         print(a.table, quote = FALSE)
-    }
-    if(page == "means"){
+    }else if(page == "means"){
         cat("\n\nCell-means Matrix:\n")
         print(M2, quote = FALSE)
         cat("\nNumeric Summary:\n")
         print(numeric.summary, quote = FALSE)
-    }
-    if(page == "effects"){
+    }else if(page == "effects"){
         cat("\n\nTable of Effects:\n")
         print(M4, quote = FALSE)
-    }
-    if(page == "interaction"){
-        cat(paste("\n\nComparisons within ", f1.name, ":\n\n", 
-            sep = ""))
+    }else if(page == "interaction"){
+        cat(paste("\n\nComparisons within ", f1.name, ":\n\n", sep = ""))
         contrast.matrix1 = names = NULL
         offset = 1
         for (levs in 1:nlevf1){
-            temp = matrix(0, nrow = (nlevf2 * (nlevf2 - 1)/2), 
-                ncol = nlevf1 * nlevf2)
+            temp = matrix(0, nrow = (nlevf2 * (nlevf2 - 1)/2), ncol = nlevf1 * nlevf2)
             row = 1
             for (i in offset:(levs * nlevf2 - 1)){
                 for (j in (i + 1):(levs * nlevf2)){
                   temp[row, i] = 1
                   temp[row, j] = -1
-                  names = c(names, paste(levels(f1f2)[i], " - ", 
-                    levels(f1f2)[j]))
+                  names = c(names, paste(levels(f1f2)[i], " - ", levels(f1f2)[j]))
                   row = row + 1
                 }
             }
-            contrast.matrix1 = as.matrix(rbind(contrast.matrix1, 
-                temp))
+            contrast.matrix1 = as.matrix(rbind(contrast.matrix1, temp))
             offset = offset + nlevf2
         }
         row.names(contrast.matrix1) = names
         fit.1way = lm(y ~ f1f2)
         L = (nlevf1 * nlevf2/2) * (1 + nlevf1)
-        contrasts1 = estimateContrasts(as.matrix(contrast.matrix1), 
-            fit.1way, alpha=1-conf.level,row = TRUE, L)
+        contrasts1 = estimateContrasts(as.matrix(contrast.matrix1), fit.1way, alpha = 1 - conf.level, row = TRUE, L)
         print(contrasts1, quote = FALSE)
-        cat(paste("\n\nComparisons between ", f1.name, ":\n\n", 
-            sep = ""))
+        comparisons$within = contrasts1
+        
+        cat(paste("\n\nComparisons between ", f1.name, ":\n\n", sep = ""))
         contrast.matrix2 = names = NULL
         temp = matrix(0, nrow = nlevf2, ncol = nlevf1 * nlevf2)
         nrows = nlevf1 * (nlevf1 - 1)/2
@@ -253,43 +253,39 @@ summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print
                 for (row in 1:nlevf2){
                   temp[row, i + row - 1] = 1
                   temp[row, j + row - 1] = -1
-                  names = c(names, paste(levels(f1f2)[i + row - 
-                    1], " - ", levels(f1f2)[j + row - 1]))
+                  names = c(names, paste(levels(f1f2)[i + row - 1], " - ", levels(f1f2)[j + row - 1]))
                 }
-                contrast.matrix2 = as.matrix(rbind(contrast.matrix2, 
-                  temp))
-                temp = matrix(0, nrow = nlevf2, ncol = nlevf1 * 
-                  nlevf2)
+                contrast.matrix2 = as.matrix(rbind(contrast.matrix2, temp))
+                temp = matrix(0, nrow = nlevf2, ncol = nlevf1 * nlevf2)
             }
         }
         row.names(contrast.matrix2) = names
-        contrasts2 = estimateContrasts(as.matrix(contrast.matrix2), 
-            fit.1way, alpha=1-conf.level,row = TRUE,L)
+        contrasts2 = estimateContrasts(as.matrix(contrast.matrix2), fit.1way, alpha = 1 - conf.level, row = TRUE, L)
         print(contrasts2, quote = FALSE)
-    }
-    dc[if(page == "nointeraction"){
+        comparisons$between = contrasts2
+        
+    }else if(page == "nointeraction"){
         cat(paste("\n\n", f1.name, " comparisons:\n\n", sep = ""))
-        contrast.matrix1 = matrix(0, nrow = nlevf1 * (nlevf1 - 
-            1)/2, ncol = nlevf1)
+        contrast.matrix1 = matrix(0, nrow = nlevf1 * (nlevf1 - 1)/2, ncol = nlevf1)
         row = 1
         names = NULL
         for (i in 1:(nlevf1 - 1)){
             for (j in (i + 1):nlevf1){
                 contrast.matrix1[row, i] = 1
                 contrast.matrix1[row, j] = -1
-                names = c(names, paste(levels(f1)[i], " - ", 
-                  levels(f1)[j]))
+                names = c(names, paste(levels(f1)[i], " - ",  levels(f1)[j]))
                 row = row + 1
             }
         }
+        
         row.names(contrast.matrix1) = names
         contrast.matrix1 = as.matrix(contrast.matrix1)
-        contrasts1 = estimateContrasts(contrast.matrix1, fit, alpha=1-conf.level,
-            row = TRUE)
+        contrasts1 = estimateContrasts(contrast.matrix1, fit, alpha = 1-conf.level,  row = TRUE)
         print(contrasts1, quote = FALSE)
+        eval(parse(text = paste0("comparisons$", f1.name, "= contrasts1")))
+        
         cat(paste("\n\n", f2.name, " comparisons:\n\n", sep = ""))
-        contrast.matrix2 = matrix(0, nrow = nlevf2 * (nlevf2 - 
-            1)/2, ncol = nlevf2)
+        contrast.matrix2 = matrix(0, nrow = nlevf2 * (nlevf2 - 1)/2, ncol = nlevf2)
         row = 1
         names = NULL
         for (i in 1:(nlevf2 - 1)){
@@ -304,11 +300,11 @@ summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print
 
         row.names(contrast.matrix2) = names
         contrast.matrix2 = as.matrix(contrast.matrix2)
-        contrasts2 = estimateContrasts(contrast.matrix2, fit, alpha=1-conf.level,
-            row = FALSE)
+        contrasts2 = estimateContrasts(contrast.matrix2, fit, alpha=1-conf.level, row = FALSE)
          
      
         print(contrasts2, quote = FALSE)
+        eval(parse(text = paste0("comparisons$", f2.name, "= contrasts2")))
     }
     
     if(!inter){ 
@@ -317,8 +313,8 @@ summary2way = function (fit, page = "table", digit = 5, conf.level = 0.95, print
     
     invisible(list(Df = a.df, "Sum of Sq" = a.ss, "Mean Sq" = a.ms, 
         "F value" = alist$"F value"[1:m], "Pr(F)" = alist$"Pr(>F)"[1:m], 
-        "Main Effects" = mmean, "Row Effects" = roweff, "Col Effects" = coleff, 
-        Interaction = interact))
+        "Grand Mean" = mmean, "Row Effects" = roweff, "Col Effects" = coleff, 
+        "Interaction Effects" = interact, Comparisons = comparisons))
 
 }
 

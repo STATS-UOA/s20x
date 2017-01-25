@@ -1,6 +1,6 @@
 Package: s20x
-Version: 3.1-18
-Date: 2016-11-16
+Version: 3.1-19
+Date: 2017-01-25
 Title: Functions for University of Auckland Course STATS 201/208 Data
         Analysis
 Author: Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike Forster, Brendan McArdle, Chris Wild
@@ -8,4 +8,4 @@ Maintainer: James Curran <j.curran@auckland.ac.nz>
 Description: A set of functions used in teaching STATS 201/208 Data Analysis at the University of Auckland. The functions are designed to make parts of R more accessible to a large undergraduate population who are mostly not statistics majors.
 License: GPL-2 | file LICENSE
 NeedsCompilation: no
-Packaged: 2016-11-16 13:24:16 UTC; jcur002
+Packaged: 2017-01-24 23:49:53 UTC; jcur002

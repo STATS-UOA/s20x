@@ -641,8 +641,8 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ##Arousal data:
 data(arousal.df)
-fit<-lm(arousal~gender+picture+gender*picture,data=arousal.df)
-summary2way(fit)
+arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
+summary2way(arousal.fit)
 
 
 

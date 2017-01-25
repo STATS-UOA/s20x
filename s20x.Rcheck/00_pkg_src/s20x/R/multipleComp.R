@@ -1,6 +1,4 @@
-multipleComp<-
-function (fit, conf.level = 0.95) 
-{
+multipleComp = function (fit, conf.level = 0.95){
     if (nrow(anova(fit)) != 2) 
         stop("This is not a 1-way ANOVA fit")
     y <- fit$model[, 1]
@@ -24,6 +22,5 @@ function (fit, conf.level = 0.95)
     row.names(contrast.matrix) <- names
     contrast.matrix <- as.matrix(contrast.matrix)
     estimateContrasts(contrast.matrix, fit, row = TRUE, alpha=1-conf.level)[,1:4]
-
 }
 

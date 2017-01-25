@@ -4,7 +4,7 @@
 * using session charset: UTF-8
 * using option ‘--as-cran’
 * checking for file ‘s20x/DESCRIPTION’ ... OK
-* this is package ‘s20x’ version ‘3.1-18’
+* this is package ‘s20x’ version ‘3.1-19’
 * checking CRAN incoming feasibility ... Note_to_CRAN_maintainers
 Maintainer: ‘James Curran <j.curran@auckland.ac.nz>’
 * checking package namespace information ... OK
