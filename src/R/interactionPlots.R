@@ -6,7 +6,6 @@
 #' for each combination of factors.
 #' 
 #' 
-#' @aliases interactionPlots interactionPlots.default interactionPlots.formula
 #' @param y either a formula of the form: y~fac1+fac2 where y is the response
 #' and fac1 and fac2 are the two explanatory variables used as factors, or a
 #' single response vector
@@ -58,6 +57,7 @@ interactionPlots <- function(y, ...) {
     UseMethod("interactionPlots")
 }
 
+#' @export
 interactionPlots.default <- function(y, fac1 = NULL, fac2 = NULL, xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1, jitter = 0.02, conf.level = 0.95, interval.type = "tukey", pooled = TRUE, 
     tick.length = 0.1, interval.distance = 0.2, col.width = 2/3, xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...) {
     if (is.null(fac1) || is.null(fac2)) {
@@ -160,7 +160,7 @@ interactionPlots.default <- function(y, fac1 = NULL, fac2 = NULL, xlab = NULL, x
     }
 }
 
-
+#' @export
 interactionPlots.formula <- function(y, data = NULL, xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1, jitter = 0.02, conf.level = 0.95, interval.type = "tukey", pooled = TRUE, tick.length = 0.1, 
     interval.distance = 0.2, col.width = 2/3, xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...) {
     

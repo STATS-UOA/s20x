@@ -10,7 +10,8 @@ Description: A set of functions used in teaching STATS 201/208 Data Analysis at
     the University of Auckland. The functions are designed to make parts of R more
     accessible to a large undergraduate population who are mostly not statistics
     majors.
+Imports: stats, graphics
 License: GPL-2 | file LICENSE
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2017-01-27 01:19:25 UTC; jcur002
+Packaged: 2017-01-27 02:26:33 UTC; jcur002

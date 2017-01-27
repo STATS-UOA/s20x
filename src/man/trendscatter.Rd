@@ -2,8 +2,6 @@
 % Please edit documentation in R/trendscatter.R
 \name{trendscatter}
 \alias{trendscatter}
-\alias{trendscatter.default}
-\alias{trendscatter.formula}
 \title{Trend and scatter plot}
 \usage{
 trendscatter(x, ...)

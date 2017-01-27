@@ -6,9 +6,6 @@
 #' are interpreted as group labels and the summary statistics are displayed for
 #' each group separately.
 #' 
-#' 
-#' @aliases summaryStats summaryStats.default summaryStats.formula
-#' summaryStats.matrix
 #' @param x either a single vector of values, or a formula of the form
 #' data~group, or a matrix.
 #' @param data an optional data frame containing the variables in the model.
@@ -64,6 +61,7 @@ summaryStats = function(x, ...) {
     UseMethod("summaryStats")
 }
 
+#' @export
 summaryStats.default = function(x, group = rep("Data", length(x)), data.order = TRUE, digits = 2, ...) {
     if (!is.factor(group)) {
         group = factor(group, levels = if (data.order) {
@@ -117,6 +115,7 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
     invisible(stats)
 }
 
+#' @export
 summaryStats.formula = function(x, data = NULL, data.order = TRUE, digits = 2, ...) {
     if (missing(x) || (length(x) != 3)) {
         stop("missing or incorrect formula")
@@ -131,6 +130,7 @@ summaryStats.formula = function(x, data = NULL, data.order = TRUE, digits = 2, .
     summaryStats(vars[[1]], vars[[2]], data.order = data.order, digits = digits, ...)
 }
 
+#' @export
 summaryStats.matrix = function(x, data.order = TRUE, digits = 2, ...) {
     nrows = nrow(x)
     ncols = ncol(x)

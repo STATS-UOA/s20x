@@ -2,9 +2,6 @@
 % Please edit documentation in R/summaryStats.R
 \name{summaryStats}
 \alias{summaryStats}
-\alias{summaryStats.default}
-\alias{summaryStats.formula}
-\alias{summaryStats.matrix}
 \title{Summary Statistics}
 \usage{
 summaryStats(x, ...)

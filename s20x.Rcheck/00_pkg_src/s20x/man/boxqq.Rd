@@ -2,7 +2,6 @@
 % Please edit documentation in R/boxqq.r
 \name{boxqq}
 \alias{boxqq}
-\alias{boxqq.formula}
 \title{Box plots and normal quantile-quantile plots}
 \usage{
 boxqq(formula, ...)
@@ -21,14 +20,14 @@ the levels of the factor `g'. `NA's are allowed in the data.}
 Returns the plot.
 }
 \description{
-Draws boxplots and normal quantile quantile plots of x for each value of the
+Draws boxplots and normal quantile-quantile plots of x for each value of the
 grouping variable g
 }
 \examples{
 
 ## Zoo data
 data(zoo.df)
-boxqq(attendance~day.type, data = zoo.df)
+boxqq(attendance ~ day.type, data = zoo.df)
 
 }
 \keyword{hplot}

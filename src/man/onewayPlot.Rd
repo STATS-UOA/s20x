@@ -2,9 +2,6 @@
 % Please edit documentation in R/onewayPlot.R
 \name{onewayPlot}
 \alias{onewayPlot}
-\alias{onewayPlot.default}
-\alias{onewayPlot.formula}
-\alias{onewayPlot.lm}
 \alias{twosampPlot}
 \title{One-way Analysis of Variance Plot}
 \usage{

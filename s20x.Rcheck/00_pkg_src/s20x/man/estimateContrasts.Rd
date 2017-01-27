@@ -14,9 +14,9 @@ estimateContrasts(contrast.matrix, fit, row = TRUE, alpha = 0.05,
 the matrix contain the contrast coefficients for that particular contrast,
 and a column for level of the factor.}
 
-\item{fit}{output from the command 'lm()'.}
+\item{fit}{output from the \code{lm} function.}
 
-\item{row}{if T, and the ANOVA is two-way, then contrasts in the row effects
+\item{row}{if \code{TRUE}, and the ANOVA is two-way, then contrasts in the row effects
 are printed, otherwise contrasts in the column effects are printed. Ignored
 if the ANOVA is one-way.}
 
@@ -39,15 +39,15 @@ one or two-way ANOVA.
 
 ## computer data:
 data(computer.df)
-computer.df <- within(computer.df, {selfassess <- factor(selfassess)})
-computer.fit <- lm(score ~ selfassess, data = computer.df)
-contrast.matrix <- matrix(c(-1/2,-1/2,1),byrow=TRUE,nrow=1,ncol=3)
+computer.df = within(computer.df, {selfassess = factor(selfassess)})
+computer.fit = lm(score ~ selfassess, data = computer.df)
+contrast.matrix = matrix(c(-1/2,-1/2,1),byrow=TRUE,nrow=1,ncol=3)
 contrast.matrix
 estimateContrasts(contrast.matrix,computer.fit)
 
 }
 \seealso{
-\code{'summary1way', 'summary2way', 'multipleComp'}
+\code{\link{summary1way}}, \code{\link{summary2way}}, \code{\link{multipleComp}}
 }
 \keyword{models}
 

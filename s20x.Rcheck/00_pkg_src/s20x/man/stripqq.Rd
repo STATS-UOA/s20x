@@ -2,7 +2,6 @@
 % Please edit documentation in R/stripqq.r
 \name{stripqq}
 \alias{stripqq}
-\alias{stripqq.formula}
 \title{Strip charts and normal quantile-quantile plots}
 \usage{
 stripqq(formula, ...)
@@ -12,7 +11,7 @@ stripqq(formula, ...)
 indicating the observations in the vector `x' are to be grouped according to
 the levels of the factor `g'. `NA's are allowed in the data.}
 
-\item{...}{Optional arguments that are passed to the plotting function.}
+\item{...}{Optional arguments that are passed to the \code{stripchart} function.}
 
 \item{data}{An optional data frame in which to evaluate the formula}
 }

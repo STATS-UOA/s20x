@@ -1,10 +1,9 @@
 #' Box plots and normal quantile-quantile plots
 #' 
-#' Draws boxplots and normal quantile quantile plots of x for each value of the
+#' Draws boxplots and normal quantile-quantile plots of x for each value of the
 #' grouping variable g
 #' 
 #' 
-#' @aliases boxqq boxqq.formula
 #' @param formula A symbolic specification of the form `x ~ g' can be given,
 #' indicating the observations in the vector `x' are to be grouped according to
 #' the levels of the factor `g'. `NA's are allowed in the data.
@@ -17,15 +16,15 @@
 #' 
 #' ## Zoo data
 #' data(zoo.df)
-#' boxqq(attendance~day.type, data = zoo.df)
+#' boxqq(attendance ~ day.type, data = zoo.df)
 #' 
 #' @export boxqq
 boxqq = function(formula, ...) {
     UseMethod("boxqq")
 }
 
-boxqq.formula = function(formula, data = NULL, ...) { ### Box plots and Normal Quantile Quantile plots
-
+#' @export
+boxqq.formula = function(formula, data = NULL, ...) { 
     oldPar = par()
     
     if (missing(formula) || (length(formula) != 3)) 

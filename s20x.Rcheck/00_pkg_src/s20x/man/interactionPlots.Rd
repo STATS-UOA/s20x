@@ -2,8 +2,6 @@
 % Please edit documentation in R/interactionPlots.R
 \name{interactionPlots}
 \alias{interactionPlots}
-\alias{interactionPlots.default}
-\alias{interactionPlots.formula}
 \title{Interactions Plot for Two-way Analysis of Variance}
 \usage{
 interactionPlots(y, ...)

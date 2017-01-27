@@ -2,8 +2,6 @@
 % Please edit documentation in R/normcheck.R
 \name{normcheck}
 \alias{normcheck}
-\alias{normcheck.default}
-\alias{normcheck.lm}
 \title{Testing for normality plot}
 \usage{
 normcheck(x, ...)

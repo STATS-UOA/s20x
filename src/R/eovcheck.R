@@ -68,6 +68,7 @@ eovcheck = function(object, ...) {
     UseMethod("eovcheck")
 }
 
+#' @export
 eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
     if (missing(object) || (class(object) != "formula")) 
         stop("missing or incorrect formula formula")
@@ -199,6 +200,7 @@ eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smooth
     on.exit(par(opar))
 }
 
+#' @export
 eovcheck.lm = function(object, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
     if (missing(object) || (class(object) != "lm")) 
         stop("missing or incorrect lm object")

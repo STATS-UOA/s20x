@@ -5,7 +5,6 @@
 #' about this trend are also plotted.
 #' 
 #' 
-#' @aliases trendscatter trendscatter.default trendscatter.formula
 #' @param x the coordinates of the points in the scatter plot. Alternatively, a
 #' function.
 #' @param y the y coordinates of the points in the plot, ignored if 'x' is a
@@ -46,6 +45,7 @@ trendscatter = function(x, ...) {
     UseMethod("trendscatter")
 }
 
+#' @export
 trendscatter.default = function(x, y = NULL, f = 0.5, xlab = NULL, ylab = NULL, main = NULL, ...) {
     if (is.null(xlab)) 
         xlab = deparse(substitute(x))
@@ -86,6 +86,7 @@ trendscatter.default = function(x, y = NULL, f = 0.5, xlab = NULL, ylab = NULL, 
     lines(scatter$x, lowlim, lty = 2, col = col2, lwd = lwd)
 }
 
+#' @export
 trendscatter.formula = function(x, f = 0.5, data = NULL, xlab = NULL, ylab = NULL, main = NULL, ...) {
     if (missing(x) || (length(x) != 3)) 
         stop("missing or incorrect formula")
