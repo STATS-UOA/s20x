@@ -1,7 +1,8 @@
 airpass.df	airpass.df
 apples.df	apples.df
 arousal.df	arousal.df
-autocor.plot	autocor.plot
+autocor.plot	autocorPlot
+autocorPlot	autocorPlot
 beer.df	beer.df
 body.df	body.df
 books.df	books.df
@@ -17,13 +18,9 @@ cooks20x	cooks20x
 course.df	course.df
 course2way.df	course2way.df
 crossFactors	crossFactors
-crossFactors.default	crossFactors
-crossFactors.formula	crossFactors
 crosstabs	crosstabs
 diamonds.df	diamonds.df
 eovcheck	eovcheck
-eovcheck.formula	eovcheck
-eovcheck.lm	eovcheck
 estimateContrasts	estimateContrasts
 estimateContrasts1	estimateContrasts
 estimateContrasts2	estimateContrasts

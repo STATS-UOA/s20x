@@ -17,28 +17,30 @@ library('s20x')
 
 base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 cleanEx()
-nameEx("autocor.plot")
-### * autocor.plot
+nameEx("autocorPlot")
+### * autocorPlot
 
 flush(stderr()); flush(stdout())
 
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-### Name: autocor.plot
+### Name: autocorPlot
 ### Title: Autocorrelation Plot
-### Aliases: autocor.plot
+### Aliases: autocor.plot autocorPlot
 ### Keywords: hplot
 
 ### ** Examples
 
+
 data(airpass.df)
-time<-1:144
-airpass.fit<-lm(passengers~time, data = airpass.df)
-autocor.plot(airpass.fit)
+time = 1:144
+airpass.fit = lm(passengers ~ time, data = airpass.df)
+autocorPlot(airpass.fit)
+
 
 
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
-base::cat("autocor.plot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+base::cat("autocorPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
 nameEx("boxqq")
 ### * boxqq
@@ -53,9 +55,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ## Zoo data
 data(zoo.df)
 boxqq(attendance~day.type, data = zoo.df)
+
 
 
 
@@ -75,10 +79,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ##Peruvian Indians data
 data(peru.df)
 fit<-lm(BP ~ age + years + weight + height, data = peru.df)
 ciReg(fit)
+
 
 
 
@@ -98,10 +104,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 # Peruvian Indians data
 data(peru.df)
-fit1<-lm(BP~age+years+I(years^2)+weight+height, data = peru.df)
-cooks20x(fit1)
+peru.fit = lm(BP ~ age + years + I(years^2) + weight + height, data = peru.df)
+cooks20x(peru.fit)
+
 
 
 
@@ -116,20 +124,22 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: crossFactors
 ### Title: Crossed Factors
-### Aliases: crossFactors crossFactors.default crossFactors.formula
+### Aliases: crossFactors
 ### Keywords: models
 
 ### ** Examples
 
+
 ## arousal data:
 data(arousal.df)
-gender.picture<-factor(crossFactors(arousal.df$gender,arousal.df$picture))
+gender.picture = crossFactors(arousal.df$gender, arousal.df$picture)
 gender.picture
 
 ## arousal data:
 data(arousal.df)
-gender.picture<-factor(crossFactors(~gender*picture, data = arousal.df))
+gender.picture = crossFactors(~ gender * picture, data = arousal.df)
 gender.picture
+
 
 
 
@@ -150,9 +160,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ##body image data:
 data(body.df)
 crosstabs(~ ethnicity + married, body.df)
+
 
 
 
@@ -167,44 +179,46 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: eovcheck
 ### Title: Testing for equality of variance plot
-### Aliases: eovcheck eovcheck.formula eovcheck.lm
+### Aliases: eovcheck
 ### Keywords: hplot
 
 ### ** Examples
 
+
 # one way ANOVA - oysters
 data(oysters.df)
-oyster.fit = lm(Oysters~Site, data = oysters.df)
+oyster.fit = lm(Oysters ~ Site, data = oysters.df)
 eovcheck(oyster.fit)
 
 # Same model as the previous example, but using eovcheck.formula
 data(oysters.df)
-eovcheck(Oysters~Site, data = oysters.df)
+eovcheck(Oysters ~ Site, data = oysters.df)
 
 
 # A two-way model without interaction
 data(soyabean.df)
-soya.fit<-lm(yield~planttime+cultivar, data = soyabean.df)
+soya.fit=lm(yield ~ planttime + cultivar, data = soyabean.df)
 eovcheck(soya.fit)
 
 # A two-way model with interaction
 data(arousal.df)
-arousal.fit<-lm(arousal~gender*picture, data = arousal.df)
+arousal.fit=lm(arousal~gender*picture, data = arousal.df)
 eovcheck(arousal.fit)
 
 # A regression model
 data(peru.df)
-peru.fit<-lm(BP~height+weight+age+years, data = peru.df)
+peru.fit = lm(BP ~ height + weight + age + years, data = peru.df)
 eovcheck(peru.fit)
 
 
 # A time series model
 data(airpass.df)
-t<-1:144
-month<-factor(rep(1:12,12))
-airpass.df<-data.frame(passengers = airpass.df$passengers, t = t, month = month)
-airpass.fit<-lm(log(passengers)[-1]~t[-1]+month[-1]+log(passengers)[-144], data  = airpass.df)
+t = 1:144
+month = factor(rep(1:12, 12))
+airpass.df = data.frame(passengers = airpass.df$passengers, t = t, month = month)
+airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1] + log(passengers)[-144], data  = airpass.df)
 eovcheck(airpass.fit)
+
 
 
 
@@ -224,6 +238,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ## computer data:
 data(computer.df)
 computer.df <- within(computer.df, {selfassess <- factor(selfassess)})
@@ -231,6 +246,7 @@ computer.fit <- lm(score ~ selfassess, data = computer.df)
 contrast.matrix <- matrix(c(-1/2,-1/2,1),byrow=TRUE,nrow=1,ncol=3)
 contrast.matrix
 estimateContrasts(contrast.matrix,computer.fit)
+
 
 
 
@@ -250,11 +266,13 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ##Body image data:
 data(body.df)
 eth.table <- with(body.df, table(ethnicity))
 freq1way(eth.table)
 freq1way(eth.table,hypothprob=c(0.2,0.4,0.3,0.1))
+
 
 
 
@@ -274,7 +292,9 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 getVersion()
+
 
 
 
@@ -295,12 +315,14 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 data(mtcars)
 interactionPlots(wt~vs+gear, mtcars)
 
 ## note this usage is deprecated
 data(mtcars)
 with(mtcars, interactionPlots(wt,vs,gear))
+
 
 
 
@@ -320,10 +342,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 data(course.df)
 layout20x(1,2)
 stripchart(course.df$Exam)
 boxplot(course.df$Exam)
+
 
 
 
@@ -343,9 +367,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ##
 data(computer.df)
 levene.test(score ~ factor(selfassess), computer.df)
+
 
 
 
@@ -365,10 +391,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ## computer data
 data(computer.df)
 fit <- lm(score ~ factor(selfassess), data = computer.df)
 multipleComp(fit)
+
 
 
 
@@ -387,6 +415,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Keywords: hplot
 
 ### ** Examples
+
 
 # An exponential growth curve
 e<-rnorm(100,0,0.1)
@@ -408,6 +437,7 @@ normcheck(lm(BP~weight, data=peru.df))
 
 
 
+
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("normcheck", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
@@ -419,13 +449,14 @@ flush(stderr()); flush(stdout())
 base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 ### Name: onewayPlot
 ### Title: One-way Analysis of Variance Plot
-### Aliases: twosampPlot onewayPlot onewayPlot.default onewayPlot.formula
-###   onewayPlot.lm
+### Aliases: onewayPlot onewayPlot.default onewayPlot.formula onewayPlot.lm
+###   twosampPlot
 ### Keywords: hplot
 
 ### ** Examples
 
-##see example in "summary1way"
+
+##see example in 'summary1way'
 
 ##computer data:
 data(computer.df)
@@ -447,6 +478,7 @@ onewayPlot(oyster.fit)
 
 
 
+
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("onewayPlot", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 cleanEx()
@@ -463,9 +495,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ##peruvian indians
 data(peru.df)
 pairs20x(peru.df)
+
 
 
 
@@ -485,6 +519,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 # Zoo data
 data(zoo.df)
 zoo.df = within(zoo.df, {day.type = factor(day.type)})
@@ -499,6 +534,7 @@ data(peru.df)
 peru.fit = lm(BP ~ age + years + I(years^2) + weight + height, data = peru.df)
 pred.peru = data.frame(age = 21, years = 2, `I(years^2)` = 2, weight = 71, height = 1629)
 predict20x(peru.fit, pred.peru)
+
 
 
 
@@ -518,10 +554,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 # Peruvian Indians data
 data(peru.df)
 fit<-lm(BP~age+years+weight+height, data = peru.df)
 residPlot(fit)
+
 
 
 
@@ -541,16 +579,18 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 data(body.df)
 z <- crosstabs(~ ethnicity + married, data = body.df)
 rowdistr(z)
-rowdistr(z, comp="between")
-rowdistr(z, comp="within")
+rowdistr(z, comp='between')
+rowdistr(z, comp='within')
 
 
 ##from matrix of counts
 z <- matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
 rowdistr(z)
+
 
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
@@ -569,9 +609,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ##Merger data:
 data(mergers.df)
 skewness(mergers.df$mergerdays)
+
 
 
 
@@ -591,9 +633,11 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ## Zoo data
 data(zoo.df)
 stripqq(attendance~day.type, data = zoo.df)
+
 
 
 
@@ -613,13 +657,15 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 attitudes <- c(5.2,5.2,6.1,6,5.75,5.6,6.25,6.8,6.87,7.1,
                6.3,6.35,5.5,5.75,4.6,5.36,5.85,5.9)
-l <- rep(c("Gp1","Gp2","Gp3"),rep(6,3))
+l <- rep(c('Gp1','Gp2','Gp3'),rep(6,3))
 l <- factor(l)
 f <-lm(attitudes ~ l)
 result <- summary1way(f)
 result
+
 
 
 
@@ -639,10 +685,12 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ##Arousal data:
 data(arousal.df)
 arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
 summary2way(arousal.fit)
+
 
 
 
@@ -663,6 +711,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 ## STATS20x data:
 data(course.df)
 
@@ -681,10 +730,11 @@ sumStats = summaryStats(Exam~Degree, course.df)
 sumStats
 
 ## Just the BAs
-sumStats["BA", ]
+sumStats['BA', ]
 
 ## Just the means
 sumStats$mean
+
 
 
 
@@ -704,6 +754,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
+
 # A simple polynomial
 x<-rnorm(100)
 e<-rnorm(100)
@@ -721,6 +772,7 @@ trendscatter(BP~weight, data=peru.df)
 
 # Note: this usage is deprecated
 with(peru.df,trendscatter(weight,BP))
+
 
 
 

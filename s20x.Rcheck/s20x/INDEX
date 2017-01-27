@@ -1,7 +1,7 @@
 airpass.df              International Airline Passengers
 apples.df               Apples Data
 arousal.df              Changes in Pupil Size with Emotional Arousal
-autocor.plot            Autocorrelation Plot
+autocorPlot             Autocorrelation Plot
 beer.df                 US Beer Production
 body.df                 Body Image and Ethnicity
 books.df                Books Data

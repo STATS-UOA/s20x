@@ -1,4 +1,24 @@
-multipleComp = function (fit, conf.level = 0.95){
+#' Multiple Comparisons
+#' 
+#' Calculates and prints the estimate, multiple 95\% confidence intervals;
+#' unadjusted, Tukey and Bonferroni p-values for all possible differences in
+#' means in a one-way ANOVA.
+#' 
+#' 
+#' @param fit output from the command 'lm()'.
+#' @param conf.level confidence level for the confidence interval, expressed as
+#' a percentage.
+#' @return Returns a list of estimates, confidence intervals and p-values.
+#' @keywords htest
+#' @examples
+#' 
+#' ## computer data
+#' data(computer.df)
+#' fit <- lm(score ~ factor(selfassess), data = computer.df)
+#' multipleComp(fit)
+#' 
+#' @export multipleComp
+multipleComp = function(fit, conf.level = 0.95) {
     if (nrow(anova(fit)) != 2) 
         stop("This is not a 1-way ANOVA fit")
     y <- fit$model[, 1]
@@ -21,6 +41,6 @@ multipleComp = function (fit, conf.level = 0.95){
     }
     row.names(contrast.matrix) <- names
     contrast.matrix <- as.matrix(contrast.matrix)
-    estimateContrasts(contrast.matrix, fit, row = TRUE, alpha=1-conf.level)[,1:4]
+    estimateContrasts(contrast.matrix, fit, row = TRUE, alpha = 1 - conf.level)[, 1:4]
 }
 
