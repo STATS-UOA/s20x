@@ -5,9 +5,8 @@
 #' about this trend are also plotted.
 #' 
 #' 
-#' @param x the coordinates of the points in the scatter plot. Alternatively, a
-#' function.
-#' @param y the y coordinates of the points in the plot, ignored if 'x' is a
+#' @param x the coordinates of the points in the scatter plot. Alternatively, a formula.
+#' @param y the y coordinates of the points in the plot, ignored if \code{x} is a
 #' function.
 #' @param f the smoother span. This gives the proportion of points in the plot
 #' which influence the smooth at each value. Larger values give more
@@ -18,24 +17,24 @@
 #' @param main a title for the plot: see \code{\link{title}}.
 #' @param \dots Optional arguments
 #' @return Returns the plot.
-#' @seealso 'residPlot'
+#' @seealso \code{\link{residPlot}}
 #' @keywords hplot
 #' @examples
 #' 
 #' # A simple polynomial
-#' x<-rnorm(100)
-#' e<-rnorm(100)
-#' y<-2+3*x-2*x^2+4*x^3+e
-#' trendscatter(y~x)
+#' x = rnorm(100)
+#' e = rnorm(100)
+#' y = 2 + 3 * x - 2 * x^2 + 4 * x^3 + e
+#' trendscatter(y ~ x)
 #' 
 #' # An exponential growth curve
-#' e<-rnorm(100,0,0.1)
-#' y<-exp(5+3*x+e)
-#' trendscatter(log(y)~x)
+#' e = rnorm(100, 0, 0.1)
+#' y = exp(5 + 3 * x + e)
+#' trendscatter(log(y) ~ x)
 #' 
 #' # Peruvian Indians data
 #' data(peru.df)
-#' trendscatter(BP~weight, data=peru.df)
+#' trendscatter(BP ~ weight, data = peru.df)
 #' 
 #' # Note: this usage is deprecated
 #' with(peru.df,trendscatter(weight,BP))
@@ -46,6 +45,7 @@ trendscatter = function(x, ...) {
 }
 
 #' @export
+#' @describeIn trendscatter Trend and scatter plot
 trendscatter.default = function(x, y = NULL, f = 0.5, xlab = NULL, ylab = NULL, main = NULL, ...) {
     if (is.null(xlab)) 
         xlab = deparse(substitute(x))
@@ -87,6 +87,7 @@ trendscatter.default = function(x, y = NULL, f = 0.5, xlab = NULL, ylab = NULL, 
 }
 
 #' @export
+#' @describeIn trendscatter Trend and scatter plot
 trendscatter.formula = function(x, f = 0.5, data = NULL, xlab = NULL, ylab = NULL, main = NULL, ...) {
     if (missing(x) || (length(x) != 3)) 
         stop("missing or incorrect formula")

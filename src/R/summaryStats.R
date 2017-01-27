@@ -10,8 +10,8 @@
 #' data~group, or a matrix.
 #' @param data an optional data frame containing the variables in the model.
 #' @param group a vector of group labels.
-#' @param data.order if T, the group order is the order which the groups are
-#' first encountered in the vector 'group'. If F, the order is alphabetical.
+#' @param data.order if \code{TRUE}, the group order is the order which the groups are
+#' first encountered in the vector 'group'. If \code{FALSE}, the order is alphabetical.
 #' @param digits the number of decimal places to display.
 #' @param \dots Optional arguments.
 #' @return If \code{x} is a single variable, i.e. there are no groups, then a
@@ -40,14 +40,14 @@
 #' with(course.df, summaryStats(Exam))
 #' 
 #' ## Using a formula
-#' summaryStats(Exam~Stage1, course.df)
+#' summaryStats(Exam ~ Stage1, course.df)
 #' 
 #' ## Using a matrix
 #' X = cbind(rnorm(50), rnorm(50))
 #' summaryStats(X)
 #' 
 #' ## Saving and extracting the information
-#' sumStats = summaryStats(Exam~Degree, course.df)
+#' sumStats = summaryStats(Exam ~ Degree, course.df)
 #' sumStats
 #' 
 #' ## Just the BAs
@@ -116,6 +116,7 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
 }
 
 #' @export
+#' @describeIn summaryStats Summary Statistics
 summaryStats.formula = function(x, data = NULL, data.order = TRUE, digits = 2, ...) {
     if (missing(x) || (length(x) != 3)) {
         stop("missing or incorrect formula")
@@ -131,6 +132,7 @@ summaryStats.formula = function(x, data = NULL, data.order = TRUE, digits = 2, .
 }
 
 #' @export
+#' @describeIn summaryStats Summary Statistics
 summaryStats.matrix = function(x, data.order = TRUE, digits = 2, ...) {
     nrows = nrow(x)
     ncols = ncol(x)

@@ -22,14 +22,14 @@
 #' @examples
 #' 
 #' # An exponential growth curve
-#' e<-rnorm(100,0,0.1)
-#' x<-rnorm(100)
-#' y<-exp(5+3*x+e)
-#' fit<-lm(y~x)
+#' e=rnorm(100,0,0.1)
+#' x=rnorm(100)
+#' y=exp(5+3*x+e)
+#' fit=lm(y~x)
 #' normcheck(fit)
 #' 
 #' # An exponential growth curve with the correct transformation
-#' fit<-lm(log(y)~x)
+#' fit=lm(log(y)~x)
 #' normcheck(fit)
 #' 
 #' # Same example as above except we use normcheck.default

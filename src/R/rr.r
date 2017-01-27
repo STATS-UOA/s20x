@@ -5,7 +5,7 @@
 #' 
 #' @keywords models
 #' @export rr
-rr <- function() {
+rr = function() {
     # Shortcut to read in data
     read.table(file.choose(), header = TRUE)
 }
