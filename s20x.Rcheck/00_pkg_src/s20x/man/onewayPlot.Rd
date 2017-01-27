@@ -2,15 +2,29 @@
 % Please edit documentation in R/onewayPlot.R
 \name{onewayPlot}
 \alias{onewayPlot}
+\alias{onewayPlot.default}
+\alias{onewayPlot.formula}
+\alias{onewayPlot.lm}
 \alias{twosampPlot}
 \title{One-way Analysis of Variance Plot}
 \usage{
 onewayPlot(x, ...)
+
+\method{onewayPlot}{default}(x, f, conf.level = 0.95,
+  interval.type = "tukey", pooled = TRUE, strip = TRUE, vert = TRUE,
+  verbose = FALSE, ylabel = deparse(terms(formula)[[2]]),
+  flabel = deparse(terms(formula)[[3]]), ...)
+
+\method{onewayPlot}{formula}(formula, data = parent.frame(),
+  conf.level = 0.95, interval.type = "tukey", pooled = TRUE,
+  strip = TRUE, vert = TRUE, verbose = FALSE,
+  ylabel = deparse(terms(formula)[[2]]),
+  flabel = deparse(terms(formula)[[3]]), ...)
+
+\method{onewayPlot}{lm}(x, ..., ylabel = nms[1], flabel = nms[2])
 }
 \arguments{
 \item{x}{a vector of responses, a formula object or an lm object}
-
-\item{formula}{a symbolic description of the model to be fit.}
 
 \item{f}{if x is a vector of responses then f contains the group labels for
 each observation in x. That is, the ith value in f says which group the ith
@@ -35,14 +49,24 @@ can only be displayed vertically).}
 
 \item{flabel}{can be used to replace variable name of f by another string.}
 
+\item{formula}{a symbolic description of the model to be fit.}
+
 \item{data}{an optional data frame in which to evaluate the formula.}
 
 \item{\dots}{optional arguments.}
 }
 \description{
 Displays stripplot/boxplot of the reponse variable with intervals by factor
-levels. It is used as part of a one-way anova analysis.
+levels. It is used as part of a one-way ANOVA analysis.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: One-way Analysis of Variance Plot
+
+\item \code{formula}: One-way Analysis of Variance Plot
+
+\item \code{lm}: One-way Analysis of Variance Plot
+}}
 \examples{
 
 ##see example in 'summary1way'
@@ -67,7 +91,7 @@ onewayPlot(oyster.fit)
 
 }
 \seealso{
-'summary1way', 'welch.test'.
+\code{\link{summary1way}}, \code{\link{welch.test}}.
 }
 \keyword{hplot}
 

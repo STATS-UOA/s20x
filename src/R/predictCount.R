@@ -7,16 +7,16 @@
 #' types (e.g. numeric or factor) as those used in fitting the model.
 #' 
 #' 
-#' @param object a glm object, i.e. the output from 'glm()'.
+#' @param object a \code{glm} object, i.e. the output from \code{\link{glm}}.
 #' @param newdata prediction data frame.
 #' @param cilevel confidence level of the interval.
 #' @param digit decimal numbers after the point.
-#' @param print.out if TRUE, print out the prediction matrix.
-#' @param \dots optional arguments that are passed to the generic 'predict'.
+#' @param print.out if \code{TRUE}, print out the prediction matrix.
+#' @param \dots optional arguments that are passed to the generic \code{predict}.
 #' @return A data frame with three columns: \describe{ \item{Predicted}{the
 #' predicted count.} \item{Conf.lower}{the lower bound of the predicted count.}
 #' \item{Conf.upper}{the upper bound of the predicted count.} }
-#' @seealso 'predict', 'predict.glm', 'as.data.frame'.
+#' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{as.data.frame}}.
 #' @keywords htest
 #' @export predictCount
 predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...) {

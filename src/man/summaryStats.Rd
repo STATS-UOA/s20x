@@ -2,11 +2,15 @@
 % Please edit documentation in R/summaryStats.R
 \name{summaryStats}
 \alias{summaryStats}
+\alias{summaryStats.default}
 \alias{summaryStats.formula}
 \alias{summaryStats.matrix}
 \title{Summary Statistics}
 \usage{
 summaryStats(x, ...)
+
+\method{summaryStats}{default}(x, group = rep("Data", length(x)),
+  data.order = TRUE, digits = 2, ...)
 
 \method{summaryStats}{formula}(x, data = NULL, data.order = TRUE,
   digits = 2, ...)
@@ -17,14 +21,14 @@ summaryStats(x, ...)
 \item{x}{either a single vector of values, or a formula of the form
 data~group, or a matrix.}
 
-\item{data}{an optional data frame containing the variables in the model.}
+\item{group}{a vector of group labels.}
 
 \item{data.order}{if \code{TRUE}, the group order is the order which the groups are
 first encountered in the vector 'group'. If \code{FALSE}, the order is alphabetical.}
 
 \item{digits}{the number of decimal places to display.}
 
-\item{group}{a vector of group labels.}
+\item{data}{an optional data frame containing the variables in the model.}
 
 \item{\dots}{Optional arguments.}
 }
@@ -55,6 +59,8 @@ each group separately.
 }
 \section{Methods (by class)}{
 \itemize{
+\item \code{default}: Summary Statistics
+
 \item \code{formula}: Summary Statistics
 
 \item \code{matrix}: Summary Statistics

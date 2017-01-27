@@ -7,12 +7,12 @@
 #' between the residuals and the fitted values is also computed.
 #' 
 #' 
-#' @param lmfit an lm object, i.e. the output from 'lm()'.
+#' @param lmfit an \code{lm} object, i.e. the output from \code{lm}.
 #' @param f the smoother span. This gives the proportion of points in the plot
 #' which influence the smooth at each value. Larger values give more
 #' smoothness.
 #' @return Returns the plot.
-#' @seealso 'trendscatter'
+#' @seealso \code{\link{trendscatter}}
 #' @keywords hplot
 #' @examples
 #' 

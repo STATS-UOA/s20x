@@ -15,5 +15,5 @@
 #' skewness(mergers.df$mergerdays)
 #' 
 #' @export skewness
-skewness <- function(x) mean((x - mean(x))^3)/sd(x)^3
+skewness = function(x) mean((x - mean(x))^3)/sd(x)^3
 

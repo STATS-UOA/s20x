@@ -1,7 +1,7 @@
 #' One-way Analysis of Variance Plot
 #' 
 #' Displays stripplot/boxplot of the reponse variable with intervals by factor
-#' levels. It is used as part of a one-way anova analysis.
+#' levels. It is used as part of a one-way ANOVA analysis.
 #' 
 #' @param formula a symbolic description of the model to be fit.
 #' @param x a vector of responses, a formula object or an lm object
@@ -21,7 +21,7 @@
 #' @param flabel can be used to replace variable name of f by another string.
 #' @param data an optional data frame in which to evaluate the formula.
 #' @param \dots optional arguments.
-#' @seealso 'summary1way', 'welch.test'.
+#' @seealso \code{\link{summary1way}}, \code{\link{welch.test}}.
 #' @keywords hplot
 #' @examples
 #' 
@@ -53,6 +53,7 @@ onewayPlot = twosampPlot = function(x, ...) {
 }
 
 #' @export
+#' @describeIn onewayPlot One-way Analysis of Variance Plot
 onewayPlot.default = function(x, f, conf.level = 0.95, interval.type = "tukey", pooled = TRUE, strip = TRUE, vert = TRUE, verbose = FALSE, 
                               ylabel = deparse(terms(formula)[[2]]), flabel = deparse(terms(formula)[[3]]), ...) {
     
@@ -137,6 +138,7 @@ onewayPlot.default = function(x, f, conf.level = 0.95, interval.type = "tukey", 
 }
 
 #' @export
+#' @describeIn onewayPlot One-way Analysis of Variance Plot
 onewayPlot.formula = function(formula, data = parent.frame(), conf.level = 0.95, interval.type = "tukey", pooled = TRUE, strip = TRUE, vert = TRUE, verbose = FALSE, ylabel = deparse(terms(formula)[[2]]), flabel = deparse(terms(formula)[[3]]), 
     ...) {
     
@@ -243,6 +245,7 @@ onewayPlot.formula = function(formula, data = parent.frame(), conf.level = 0.95,
 }
 
 #' @export
+#' @describeIn onewayPlot One-way Analysis of Variance Plot
 onewayPlot.lm = function(x, ..., ylabel = nms[1], flabel = nms[2]) {
     ## Thanks to Ross Ihaka for sorting this out
     data = x$model

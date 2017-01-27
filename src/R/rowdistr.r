@@ -203,11 +203,11 @@ printOutput = function(crosstablist, comp = c("basic", "within", "between"), con
 #' 2-way table of counts (without marginal totals).
 #' @param comp three options: 'basic' (default), 'within', and 'between'.
 #' @param conf.level confidence level of the intervals.
-#' @param plot if FALSE then the row distribution plots are not displayed
-#' @param suppressText if TRUE then text results are not displayed
+#' @param plot if \code{FALSE} then the row distribution plots are not displayed
+#' @param suppressText if \code{TRUE} then text results are not displayed
 #' @return A matrix of row proportions, i.e cell counts divided by row
 #' marginals.
-#' @seealso 'crosstabs'
+#' @seealso \code{\link{crosstabs}}
 #' @keywords htest
 #' @examples
 #' 

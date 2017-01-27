@@ -24,7 +24,7 @@ means in a one-way ANOVA.
 
 ## computer data
 data(computer.df)
-fit <- lm(score ~ factor(selfassess), data = computer.df)
+fit = lm(score ~ factor(selfassess), data = computer.df)
 multipleComp(fit)
 
 }

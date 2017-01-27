@@ -7,7 +7,7 @@
 residPlot(lmfit, f = 0.5)
 }
 \arguments{
-\item{lmfit}{an lm object, i.e. the output from 'lm()'.}
+\item{lmfit}{an \code{lm} object, i.e. the output from \code{lm}.}
 
 \item{f}{the smoother span. This gives the proportion of points in the plot
 which influence the smooth at each value. Larger values give more
@@ -27,12 +27,12 @@ between the residuals and the fitted values is also computed.
 
 # Peruvian Indians data
 data(peru.df)
-fit<-lm(BP~age+years+weight+height, data = peru.df)
+fit=lm(BP~age+years+weight+height, data = peru.df)
 residPlot(fit)
 
 }
 \seealso{
-'trendscatter'
+\code{\link{trendscatter}}
 }
 \keyword{hplot}
 

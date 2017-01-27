@@ -2,9 +2,24 @@
 % Please edit documentation in R/interactionPlots.R
 \name{interactionPlots}
 \alias{interactionPlots}
+\alias{interactionPlots.default}
+\alias{interactionPlots.formula}
 \title{Interactions Plot for Two-way Analysis of Variance}
 \usage{
 interactionPlots(y, ...)
+
+\method{interactionPlots}{default}(y, fac1 = NULL, fac2 = NULL,
+  xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE,
+  exlim = 0.1, jitter = 0.02, conf.level = 0.95,
+  interval.type = c("tukey", "hsd", "lsd", "ci"), pooled = TRUE,
+  tick.length = 0.1, interval.distance = 0.2, col.width = 2/3,
+  xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...)
+
+\method{interactionPlots}{formula}(y, data = NULL, xlab = NULL,
+  xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1,
+  jitter = 0.02, conf.level = 0.95, interval.type = c("tukey", "hsd",
+  "lsd", "ci"), pooled = TRUE, tick.length = 0.1, interval.distance = 0.2,
+  col.width = 2/3, xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...)
 }
 \arguments{
 \item{y}{either a formula of the form: y~fac1+fac2 where y is the response
@@ -16,8 +31,6 @@ which correspond to the y value}
 
 \item{fac2}{if 'y' is a vector, then fac1 contains the levels of factor 2
 which correspond to the y value}
-
-\item{data}{an optional data frame containing the variables in the model.}
 
 \item{xlab}{an optional label for the x-axis. If not specified the name of
 fac1 will be used.}
@@ -57,7 +70,9 @@ between the centres of two columns.}
 \item{xlab.distance}{distance of x-axis labels from bottom of plot, as a
 fraction of the overall height of the plot.}
 
-\item{xlen, ylen}{xxx}
+\item{xlen, ylen}{character interspacing factor for horizontal (x) and vertical (y) spacing of the legend.}
+
+\item{data}{an optional data frame containing the variables in the model.}
 
 \item{\dots}{optional arguments.}
 }
@@ -67,18 +82,24 @@ shows the mean differences between levels of the first factor for each level
 of the second factor. Note that there should be more than one observation
 for each combination of factors.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: Interactions Plot for Two-way Analysis of Variance
+
+\item \code{formula}: Interactions Plot for Two-way Analysis of Variance
+}}
 \examples{
 
 data(mtcars)
-interactionPlots(wt~vs+gear, mtcars)
+interactionPlots(wt ~ vs + gear, mtcars)
 
 ## note this usage is deprecated
 data(mtcars)
-with(mtcars, interactionPlots(wt,vs,gear))
+with(mtcars, interactionPlots(wt, vs, gear))
 
 }
 \seealso{
-'summary2way'.
+\code{\link{summary2way}}.
 }
 \keyword{hplot}
 

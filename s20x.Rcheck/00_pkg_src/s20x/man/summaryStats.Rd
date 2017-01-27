@@ -2,22 +2,33 @@
 % Please edit documentation in R/summaryStats.R
 \name{summaryStats}
 \alias{summaryStats}
+\alias{summaryStats.default}
+\alias{summaryStats.formula}
+\alias{summaryStats.matrix}
 \title{Summary Statistics}
 \usage{
 summaryStats(x, ...)
+
+\method{summaryStats}{default}(x, group = rep("Data", length(x)),
+  data.order = TRUE, digits = 2, ...)
+
+\method{summaryStats}{formula}(x, data = NULL, data.order = TRUE,
+  digits = 2, ...)
+
+\method{summaryStats}{matrix}(x, data.order = TRUE, digits = 2, ...)
 }
 \arguments{
 \item{x}{either a single vector of values, or a formula of the form
 data~group, or a matrix.}
 
-\item{data}{an optional data frame containing the variables in the model.}
-
 \item{group}{a vector of group labels.}
 
-\item{data.order}{if T, the group order is the order which the groups are
-first encountered in the vector 'group'. If F, the order is alphabetical.}
+\item{data.order}{if \code{TRUE}, the group order is the order which the groups are
+first encountered in the vector 'group'. If \code{FALSE}, the order is alphabetical.}
 
 \item{digits}{the number of decimal places to display.}
+
+\item{data}{an optional data frame containing the variables in the model.}
 
 \item{\dots}{Optional arguments.}
 }
@@ -46,6 +57,14 @@ data in \code{x}. If \code{group} is present, the elements of \code{group}
 are interpreted as group labels and the summary statistics are displayed for
 each group separately.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: Summary Statistics
+
+\item \code{formula}: Summary Statistics
+
+\item \code{matrix}: Summary Statistics
+}}
 \examples{
 
 ## STATS20x data:
@@ -55,14 +74,14 @@ data(course.df)
 with(course.df, summaryStats(Exam))
 
 ## Using a formula
-summaryStats(Exam~Stage1, course.df)
+summaryStats(Exam ~ Stage1, course.df)
 
 ## Using a matrix
 X = cbind(rnorm(50), rnorm(50))
 summaryStats(X)
 
 ## Saving and extracting the information
-sumStats = summaryStats(Exam~Degree, course.df)
+sumStats = summaryStats(Exam ~ Degree, course.df)
 sumStats
 
 ## Just the BAs

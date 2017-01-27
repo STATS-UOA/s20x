@@ -15,9 +15,9 @@ rowdistr(crosstablist, comp = c("basic", "within", "between"),
 
 \item{conf.level}{confidence level of the intervals.}
 
-\item{plot}{if FALSE then the row distribution plots are not displayed}
+\item{plot}{if \code{FALSE} then the row distribution plots are not displayed}
 
-\item{suppressText}{if TRUE then text results are not displayed}
+\item{suppressText}{if \code{TRUE} then text results are not displayed}
 }
 \value{
 A matrix of row proportions, i.e cell counts divided by row
@@ -50,18 +50,18 @@ can be displayed in the document.
 \examples{
 
 data(body.df)
-z <- crosstabs(~ ethnicity + married, data = body.df)
+z = crosstabs(~ ethnicity + married, data = body.df)
 rowdistr(z)
 rowdistr(z, comp='between')
 rowdistr(z, comp='within')
 
 
 ##from matrix of counts
-z <- matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
+z = matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
 rowdistr(z)
 }
 \seealso{
-'crosstabs'
+\code{\link{crosstabs}}
 }
 \keyword{htest}
 

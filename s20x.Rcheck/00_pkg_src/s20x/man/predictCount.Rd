@@ -8,7 +8,7 @@ predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
   ...)
 }
 \arguments{
-\item{object}{a glm object, i.e. the output from 'glm()'.}
+\item{object}{a \code{glm} object, i.e. the output from \code{\link{glm}}.}
 
 \item{newdata}{prediction data frame.}
 
@@ -16,9 +16,9 @@ predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
 
 \item{digit}{decimal numbers after the point.}
 
-\item{print.out}{if TRUE, print out the prediction matrix.}
+\item{print.out}{if \code{TRUE}, print out the prediction matrix.}
 
-\item{\dots}{optional arguments that are passed to the generic 'predict'.}
+\item{\dots}{optional arguments that are passed to the generic \code{predict}.}
 }
 \value{
 A data frame with three columns: \describe{ \item{Predicted}{the
@@ -34,7 +34,7 @@ Note: The data frame, newdata, must have the same column order and data
 types (e.g. numeric or factor) as those used in fitting the model.
 }
 \seealso{
-'predict', 'predict.glm', 'as.data.frame'.
+\code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{as.data.frame}}.
 }
 \keyword{htest}
 

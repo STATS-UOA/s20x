@@ -8,7 +8,7 @@ predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
   ...)
 }
 \arguments{
-\item{object}{an lm object, i.e. the output from 'lm()'.}
+\item{object}{an \code{lm} object, i.e. the output from \code{lm}.}
 
 \item{newdata}{prediction data frame.}
 
@@ -35,6 +35,9 @@ gives you more output. (Error messages are not reliable when used in Splus.)
 Note: The data frame, newdata, must have the same column order and data
 types (e.g. numeric or factor) as those used in fitting the model.
 }
+\note{
+this function is deprecated as it is never used in class any more. We prefer the standard \code{\link{predict}} method.
+}
 \examples{
 
 # Zoo data
@@ -54,7 +57,7 @@ predict20x(peru.fit, pred.peru)
 
 }
 \seealso{
-'predict', 'predict.lm', 'as.data.frame'.
+\code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
 }
 \keyword{htest}
 

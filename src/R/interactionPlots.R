@@ -39,18 +39,18 @@
 #' between the centres of two columns.
 #' @param xlab.distance distance of x-axis labels from bottom of plot, as a
 #' fraction of the overall height of the plot.
-#' @param xlen,ylen xxx
+#' @param xlen,ylen character interspacing factor for horizontal (x) and vertical (y) spacing of the legend.
 #' @param \dots optional arguments.
-#' @seealso 'summary2way'.
+#' @seealso \code{\link{summary2way}}.
 #' @keywords hplot
 #' @examples
 #' 
 #' data(mtcars)
-#' interactionPlots(wt~vs+gear, mtcars)
+#' interactionPlots(wt ~ vs + gear, mtcars)
 #' 
 #' ## note this usage is deprecated
 #' data(mtcars)
-#' with(mtcars, interactionPlots(wt,vs,gear))
+#' with(mtcars, interactionPlots(wt, vs, gear))
 #' 
 #' @export interactionPlots
 interactionPlots = function(y, ...) {
@@ -58,7 +58,9 @@ interactionPlots = function(y, ...) {
 }
 
 #' @export
-interactionPlots.default = function(y, fac1 = NULL, fac2 = NULL, xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1, jitter = 0.02, conf.level = 0.95, interval.type = "tukey", pooled = TRUE, 
+#' @describeIn interactionPlots Interactions Plot for Two-way Analysis of Variance
+interactionPlots.default = function(y, fac1 = NULL, fac2 = NULL, xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1, jitter = 0.02, conf.level = 0.95, 
+                                    interval.type = c("tukey", "hsd", "lsd", "ci"), pooled = TRUE, 
     tick.length = 0.1, interval.distance = 0.2, col.width = 2/3, xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...) {
     if (is.null(fac1) || is.null(fac2)) {
         stop("You must specify two factors")
@@ -72,6 +74,7 @@ interactionPlots.default = function(y, fac1 = NULL, fac2 = NULL, xlab = NULL, xl
             xlab2 = deparse(substitute(fac2))
         
         arrowhead.length = 0.5 * tick.length
+        interval.type = match.arg(interval.type)
         index = switch(interval.type, tukey = 1, hsd = 2, lsd = 3, ci = 4, 0)
         
         if (!index) 
@@ -161,8 +164,10 @@ interactionPlots.default = function(y, fac1 = NULL, fac2 = NULL, xlab = NULL, xl
 }
 
 #' @export
-interactionPlots.formula = function(y, data = NULL, xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1, jitter = 0.02, conf.level = 0.95, interval.type = "tukey", pooled = TRUE, tick.length = 0.1, 
-    interval.distance = 0.2, col.width = 2/3, xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...) {
+#' @describeIn interactionPlots Interactions Plot for Two-way Analysis of Variance
+interactionPlots.formula = function(y, data = NULL, xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1, jitter = 0.02, conf.level = 0.95, 
+                                    interval.type = c("tukey", "hsd", "lsd", "ci"), pooled = TRUE, tick.length = 0.1, interval.distance = 0.2, 
+                                    col.width = 2/3, xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...) {
     
     ## This makes the naive assumption that the formula is correct.
     if (is.null(data)) 

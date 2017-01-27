@@ -11,6 +11,6 @@
 #' getVersion()
 #' 
 #' @export getVersion
-getVersion <- function() {
+getVersion = function() {
     return(packageDescription("s20x"))
 }

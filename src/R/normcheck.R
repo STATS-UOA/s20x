@@ -9,27 +9,26 @@
 #' fitted and superimposed over the histogram.
 #' 
 #' 
-#' @param x the residuals from fitting a linear model.  Alternatively, a fitted
-#' lm object.
+#' @param x the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.
 #' @param xlab a title for the x axis: see \code{\link{title}}.
 #' @param main a title for the x axis: see \code{\link{title}}.
 #' @param col a color for the bars of the histogram.
 #' @param shapiro.wilk if \code{TRUE}, then in the top left hand corner of the
 #' Q-Q plot, the P-value from the Shapiro-Wilk test for normality is displayed.
 #' @param \dots Optional arguments
-#' @seealso 'shapiro.test'
+#' @seealso \code{\link{shapiro.test}}.
 #' @keywords hplot
 #' @examples
 #' 
 #' # An exponential growth curve
-#' e=rnorm(100,0,0.1)
-#' x=rnorm(100)
-#' y=exp(5+3*x+e)
-#' fit=lm(y~x)
+#' e = rnorm(100, 0, 0.1)
+#' x = rnorm(100)
+#' y = exp(5 + 3 * x + e)
+#' fit = lm(y ~ x)
 #' normcheck(fit)
 #' 
 #' # An exponential growth curve with the correct transformation
-#' fit=lm(log(y)~x)
+#' fit = lm(log(y) ~ x)
 #' normcheck(fit)
 #' 
 #' # Same example as above except we use normcheck.default
@@ -37,7 +36,7 @@
 #' 
 #' # Peruvian Indians data
 #' data(peru.df)
-#' normcheck(lm(BP~weight, data=peru.df))
+#' normcheck(lm(BP ~ weight, data = peru.df))
 #' 
 #' @export normcheck
 normcheck = function(x, ...) {
@@ -45,6 +44,7 @@ normcheck = function(x, ...) {
 }
 
 #' @export
+#' @describeIn normcheck Testing for normality plot
 normcheck.default = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wilk = FALSE, ...) {
     
     if (is.null(xlab)) 
@@ -93,6 +93,7 @@ normcheck.default = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wi
 }
 
 #' @export
+#' @describeIn normcheck Testing for normality plot
 normcheck.lm = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wilk = FALSE, ...) {
     if (missing(x) || (class(x) != "lm")) 
         stop("missing or incorrect lm object")

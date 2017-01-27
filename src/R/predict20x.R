@@ -7,7 +7,7 @@
 #' types (e.g. numeric or factor) as those used in fitting the model.
 #' 
 #' 
-#' @param object an lm object, i.e. the output from 'lm()'.
+#' @param object an \code{lm} object, i.e. the output from \code{lm}.
 #' @param newdata prediction data frame.
 #' @param cilevel confidence level of the interval.
 #' @param digit decimal numbers after the point.
@@ -18,7 +18,7 @@
 #' \item{se.fit}{standard error of predictions.} \item{residual.scale}{residual
 #' standard deviations.} \item{df}{degrees of freedom for residual.}
 #' \item{cilevel}{confidence level of the interval.}
-#' @seealso 'predict', 'predict.lm', 'as.data.frame'.
+#' @seealso \code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
 #' @keywords htest
 #' @examples
 #' 
@@ -38,6 +38,7 @@
 #' predict20x(peru.fit, pred.peru)
 #' 
 #' @export predict20x
+#' @note this function is deprecated as it is never used in class any more. We prefer the standard \code{\link{predict}} method.
 predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...) {
     ## prediction which allows for factors and a data frame with data entered in the same order as the data frame that was used in fitting the above model (note: the variable names do not need to be specified)
     

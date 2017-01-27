@@ -2,13 +2,20 @@
 % Please edit documentation in R/normcheck.R
 \name{normcheck}
 \alias{normcheck}
+\alias{normcheck.default}
+\alias{normcheck.lm}
 \title{Testing for normality plot}
 \usage{
 normcheck(x, ...)
+
+\method{normcheck}{default}(x, xlab = NULL, main = xlab, col = NULL,
+  shapiro.wilk = FALSE, ...)
+
+\method{normcheck}{lm}(x, xlab = NULL, main = xlab, col = NULL,
+  shapiro.wilk = FALSE, ...)
 }
 \arguments{
-\item{x}{the residuals from fitting a linear model.  Alternatively, a fitted
-lm object.}
+\item{x}{the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.}
 
 \item{xlab}{a title for the x axis: see \code{\link{title}}.}
 
@@ -30,17 +37,23 @@ plot, the P-value from the Shapiro-Wilk test for normality is given.
 Secondly, it draws a histogram of the residuals. A normal distribution is
 fitted and superimposed over the histogram.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: Testing for normality plot
+
+\item \code{lm}: Testing for normality plot
+}}
 \examples{
 
 # An exponential growth curve
-e<-rnorm(100,0,0.1)
-x<-rnorm(100)
-y<-exp(5+3*x+e)
-fit<-lm(y~x)
+e = rnorm(100, 0, 0.1)
+x = rnorm(100)
+y = exp(5 + 3 * x + e)
+fit = lm(y ~ x)
 normcheck(fit)
 
 # An exponential growth curve with the correct transformation
-fit<-lm(log(y)~x)
+fit = lm(log(y) ~ x)
 normcheck(fit)
 
 # Same example as above except we use normcheck.default
@@ -48,11 +61,11 @@ normcheck(residuals(fit))
 
 # Peruvian Indians data
 data(peru.df)
-normcheck(lm(BP~weight, data=peru.df))
+normcheck(lm(BP ~ weight, data = peru.df))
 
 }
 \seealso{
-'shapiro.test'
+\code{\link{shapiro.test}}.
 }
 \keyword{hplot}
 

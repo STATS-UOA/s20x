@@ -3,18 +3,18 @@
 #' Calculates and prints the confidence intervals for the fitted model.
 #' 
 #' 
-#' @param fit an lm object, i.e. the output from 'lm()'.
+#' @param fit an object of class{lm}, i.e. the output from \code{\link{lm}}.
 #' @param conf.level confidence level of the intervals.
-#' @param print.out if TRUE, print out the output on the screen.
+#' @param print.out if \code{TRUE}, print out the output on the screen.
 #' @return The function returns a two-column matrix containing the upper and
 #' lower endpoints of the intervals.
-#' @seealso 'lm', 'summary', 'anova'.
+#' @seealso \code{\link{lm}}, \code{\link{summary}}, \code{\link{anova}}.
 #' @keywords htest
 #' @examples
 #' 
 #' ##Peruvian Indians data
 #' data(peru.df)
-#' fit<-lm(BP ~ age + years + weight + height, data = peru.df)
+#' fit=lm(BP ~ age + years + weight + height, data = peru.df)
 #' ciReg(fit)
 #' 
 #' @export ciReg

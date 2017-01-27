@@ -46,7 +46,7 @@ corresponding hypothesized probabilities. )
 
 ##Body image data:
 data(body.df)
-eth.table <- with(body.df, table(ethnicity))
+eth.table = with(body.df, table(ethnicity))
 freq1way(eth.table)
 freq1way(eth.table,hypothprob=c(0.2,0.4,0.3,0.1))
 

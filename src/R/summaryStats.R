@@ -62,6 +62,7 @@ summaryStats = function(x, ...) {
 }
 
 #' @export
+#' @describeIn summaryStats Summary Statistics
 summaryStats.default = function(x, group = rep("Data", length(x)), data.order = TRUE, digits = 2, ...) {
     if (!is.factor(group)) {
         group = factor(group, levels = if (data.order) {

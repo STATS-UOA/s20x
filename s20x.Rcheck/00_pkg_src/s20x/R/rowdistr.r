@@ -203,23 +203,23 @@ printOutput = function(crosstablist, comp = c("basic", "within", "between"), con
 #' 2-way table of counts (without marginal totals).
 #' @param comp three options: 'basic' (default), 'within', and 'between'.
 #' @param conf.level confidence level of the intervals.
-#' @param plot if FALSE then the row distribution plots are not displayed
-#' @param suppressText if TRUE then text results are not displayed
+#' @param plot if \code{FALSE} then the row distribution plots are not displayed
+#' @param suppressText if \code{TRUE} then text results are not displayed
 #' @return A matrix of row proportions, i.e cell counts divided by row
 #' marginals.
-#' @seealso 'crosstabs'
+#' @seealso \code{\link{crosstabs}}
 #' @keywords htest
 #' @examples
 #' 
 #' data(body.df)
-#' z <- crosstabs(~ ethnicity + married, data = body.df)
+#' z = crosstabs(~ ethnicity + married, data = body.df)
 #' rowdistr(z)
 #' rowdistr(z, comp='between')
 #' rowdistr(z, comp='within')
 #' 
 #' 
 #' ##from matrix of counts
-#' z <- matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
+#' z = matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
 #' rowdistr(z)
 #' @export rowdistr
 rowdistr = function(crosstablist, comp = c("basic", "within", "between"), conf.level = 0.95, plot = TRUE, suppressText = FALSE) {
