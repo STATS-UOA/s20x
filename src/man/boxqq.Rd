@@ -2,9 +2,12 @@
 % Please edit documentation in R/boxqq.r
 \name{boxqq}
 \alias{boxqq}
+\alias{boxqq.formula}
 \title{Box plots and normal quantile-quantile plots}
 \usage{
 boxqq(formula, ...)
+
+\method{boxqq}{formula}(formula, data = NULL, ...)
 }
 \arguments{
 \item{formula}{A symbolic specification of the form `x ~ g' can be given,
@@ -23,6 +26,10 @@ Returns the plot.
 Draws boxplots and normal quantile-quantile plots of x for each value of the
 grouping variable g
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{formula}: Box plots and normal quantile-quantile plots
+}}
 \examples{
 
 ## Zoo data

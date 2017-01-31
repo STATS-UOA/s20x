@@ -2,9 +2,12 @@
 % Please edit documentation in R/stripqq.r
 \name{stripqq}
 \alias{stripqq}
+\alias{stripqq.formula}
 \title{Strip charts and normal quantile-quantile plots}
 \usage{
 stripqq(formula, ...)
+
+\method{stripqq}{formula}(formula, data = NULL, ...)
 }
 \arguments{
 \item{formula}{A symbolic specification of the form `x ~ g' can be given,
@@ -22,6 +25,10 @@ Returns the plot.
 Draws strip charts and normal quantile quantile plots of x for each value of
 the grouping variable g
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{formula}: Strip charts and normal quantile-quantile plots
+}}
 \examples{
 
 ## Zoo data

@@ -32,6 +32,7 @@ crossFactors = function(x, fac2 = NULL, ...) {
     UseMethod("crossFactors")
 }
 
+#' @describeIn crossFactors Crossed Factors
 #' @export
 crossFactors.default = function(x, fac2 = NULL, ...) {
     fac1 = x
@@ -40,6 +41,7 @@ crossFactors.default = function(x, fac2 = NULL, ...) {
     return(fac1.fac2)
 }
 
+#' @describeIn crossFactors Crossed Factors
 #' @export
 crossFactors.formula = function(formula, fac2 = NULL, data = NULL, ...) {
     if (missing(formula) || length(formula) != 2) {

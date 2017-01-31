@@ -22,6 +22,7 @@ stripqq = function(formula, ...) {
     UseMethod("stripqq")
 }
 
+#' @describeIn stripqq Strip charts and normal quantile-quantile plots
 #' @export
 stripqq.formula = function(formula, data = NULL, ...) {
     ## Strip Charts and Normal Quantile Quantile plots

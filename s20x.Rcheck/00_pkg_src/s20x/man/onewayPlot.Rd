@@ -91,7 +91,7 @@ onewayPlot(oyster.fit)
 
 }
 \seealso{
-\code{\link{summary1way}}, \code{\link{welch.test}}.
+\code{\link{summary1way}}, \code{\link{t.test}}.
 }
 \keyword{hplot}
 

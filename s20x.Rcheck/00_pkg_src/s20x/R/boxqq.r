@@ -23,6 +23,7 @@ boxqq = function(formula, ...) {
     UseMethod("boxqq")
 }
 
+#' @describeIn boxqq Box plots and normal quantile-quantile plots
 #' @export
 boxqq.formula = function(formula, data = NULL, ...) { 
     oldPar = par()

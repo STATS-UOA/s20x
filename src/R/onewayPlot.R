@@ -21,7 +21,7 @@
 #' @param flabel can be used to replace variable name of f by another string.
 #' @param data an optional data frame in which to evaluate the formula.
 #' @param \dots optional arguments.
-#' @seealso \code{\link{summary1way}}, \code{\link{welch.test}}.
+#' @seealso \code{\link{summary1way}}, \code{\link{t.test}}.
 #' @keywords hplot
 #' @examples
 #' 

@@ -2,9 +2,17 @@
 % Please edit documentation in R/eovcheck.R
 \name{eovcheck}
 \alias{eovcheck}
+\alias{eovcheck.formula}
+\alias{eovcheck.lm}
 \title{Testing for equality of variance plot}
 \usage{
 eovcheck(object, ...)
+
+\method{eovcheck}{formula}(object, data = NULL, xlab = NULL, col = NULL,
+  smoother = FALSE, twosd = FALSE, levene = FALSE, ...)
+
+\method{eovcheck}{lm}(object, smoother = FALSE, twosd = FALSE,
+  levene = FALSE, ...)
 }
 \arguments{
 \item{object}{A linear model formula. Alternatively, a fitted lm object from
@@ -40,6 +48,12 @@ model, and \code{levene = TRUE} then the P-value from Levene's test for
 equality variance is displayed in the top left hand corner,as long as the
 number of observations per group exceeds two.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{formula}: Testing for equality of variance plot
+
+\item \code{lm}: Testing for equality of variance plot
+}}
 \examples{
 
 # one way ANOVA - oysters
@@ -59,7 +73,7 @@ eovcheck(soya.fit)
 
 # A two-way model with interaction
 data(arousal.df)
-arousal.fit=lm(arousal~gender*picture, data = arousal.df)
+arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
 eovcheck(arousal.fit)
 
 # A regression model
@@ -73,7 +87,8 @@ data(airpass.df)
 t = 1:144
 month = factor(rep(1:12, 12))
 airpass.df = data.frame(passengers = airpass.df$passengers, t = t, month = month)
-airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1] + log(passengers)[-144], data  = airpass.df)
+airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1] 
+                 + log(passengers)[-144], data  = airpass.df)
 eovcheck(airpass.fit)
 
 }

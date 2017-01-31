@@ -2,16 +2,22 @@
 % Please edit documentation in R/crossFactors.R
 \name{crossFactors}
 \alias{crossFactors}
+\alias{crossFactors.default}
+\alias{crossFactors.formula}
 \title{Crossed Factors}
 \usage{
 crossFactors(x, fac2 = NULL, ...)
+
+\method{crossFactors}{default}(x, fac2 = NULL, ...)
+
+\method{crossFactors}{formula}(formula, fac2 = NULL, data = NULL, ...)
 }
 \arguments{
-\item{x}{the name of the first factor or a formula in the form ~fac1*fac2}
+\item{x}{the name of the first factor or a formula in the form \code{~ fac1 * fac2}}
 
-\item{fac2}{the name of the second factor - optional if x is a formula.}
+\item{fac2}{the name of the second factor - ignored if \code{x} is a formula.}
 
-\item{formula}{a formula in the form ~fac1*fac2}
+\item{formula}{a formula in the form \code{~ fac1 * fac2}}
 
 \item{data}{an optional data frame in which to evaluate the formula}
 
@@ -25,6 +31,12 @@ interaction of the given factors.
 Computes a factor that has a level for each combination of the factors
 'fac1' and 'fac2'.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: Crossed Factors
+
+\item \code{formula}: Crossed Factors
+}}
 \note{
 This function actually returns a \code{factor} now instead of a character string, so coercion into a \code{factor} is no longer necessary.
 }

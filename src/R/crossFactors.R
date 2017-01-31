@@ -4,9 +4,9 @@
 #' 'fac1' and 'fac2'.
 #' 
 #' 
-#' @param x the name of the first factor or a formula in the form ~fac1*fac2
-#' @param fac2 the name of the second factor - optional if x is a formula.
-#' @param formula a formula in the form ~fac1*fac2
+#' @param x the name of the first factor or a formula in the form \code{~ fac1 * fac2}
+#' @param fac2 the name of the second factor - ignored if \code{x} is a formula.
+#' @param formula a formula in the form \code{~ fac1 * fac2}
 #' @param data an optional data frame in which to evaluate the formula
 #' @param \dots Optional arguments
 #' @return Returns a vector containing the factor which represents the
@@ -32,6 +32,7 @@ crossFactors = function(x, fac2 = NULL, ...) {
     UseMethod("crossFactors")
 }
 
+#' @describeIn crossFactors Crossed Factors
 #' @export
 crossFactors.default = function(x, fac2 = NULL, ...) {
     fac1 = x
@@ -40,6 +41,7 @@ crossFactors.default = function(x, fac2 = NULL, ...) {
     return(fac1.fac2)
 }
 
+#' @describeIn crossFactors Crossed Factors
 #' @export
 crossFactors.formula = function(formula, fac2 = NULL, data = NULL, ...) {
     if (missing(formula) || length(formula) != 2) {

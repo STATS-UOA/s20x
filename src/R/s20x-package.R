@@ -4,5 +4,9 @@
 #' @docType package
 #' @name s0x
 #' 
+#' @import stats
+#' @import graphics 
+#' @importFrom utils packageDescription
+#' @importFrom utils read.table
 #' @author Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike Forster, Brendan McArdle, Chris Wild
 NULL

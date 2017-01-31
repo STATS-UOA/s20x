@@ -46,7 +46,7 @@
 #' 
 #' # A two-way model with interaction
 #' data(arousal.df)
-#' arousal.fit=lm(arousal~gender*picture, data = arousal.df)
+#' arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
 #' eovcheck(arousal.fit)
 #' 
 #' # A regression model
@@ -60,7 +60,8 @@
 #' t = 1:144
 #' month = factor(rep(1:12, 12))
 #' airpass.df = data.frame(passengers = airpass.df$passengers, t = t, month = month)
-#' airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1] + log(passengers)[-144], data  = airpass.df)
+#' airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1] 
+#'                  + log(passengers)[-144], data  = airpass.df)
 #' eovcheck(airpass.fit)
 #' 
 #' @export eovcheck
@@ -68,6 +69,7 @@ eovcheck = function(object, ...) {
     UseMethod("eovcheck")
 }
 
+#' @describeIn eovcheck Testing for equality of variance plot
 #' @export
 eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
     if (missing(object) || (class(object) != "formula")) 
@@ -200,6 +202,7 @@ eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smooth
     on.exit(par(opar))
 }
 
+#' @describeIn eovcheck Testing for equality of variance plot
 #' @export
 eovcheck.lm = function(object, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
     if (missing(object) || (class(object) != "lm")) 

@@ -12,5 +12,5 @@
 #' 
 #' @export getVersion
 getVersion = function() {
-    return(packageDescription("s20x"))
+    return(utils::packageDescription("s20x"))
 }
