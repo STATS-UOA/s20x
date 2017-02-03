@@ -4,14 +4,15 @@
 #' grouping variable g
 #' 
 #' 
-#' @param formula A symbolic specification of the form `x ~ g' can be given,
-#' indicating the observations in the vector `x' are to be grouped according to
-#' the levels of the factor `g'. `NA's are allowed in the data.
+#' @param formula A symbolic specification of the form \code{x ~ g} can be given,
+#' indicating the observations in the vector \code{x} are to be grouped according to
+#' the levels of the factor \code{g}. \code{NA}'s are allowed in the data.
 #' @param data An optional data frame in which to evaluate the formula.
 #' @param ... Arguments to be passed to methods, such as graphical parameters
 #' (see \code{\link{par}}).
 #' @return Returns the plot.
 #' @keywords hplot
+#' @note This function is deprecated and will be removed in later versions of the package.
 #' @examples
 #' 
 #' ## Zoo data

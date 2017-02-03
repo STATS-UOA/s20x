@@ -11,6 +11,7 @@
 #' @param ... Optional arguments that are passed to the \code{stripchart} function.
 #' @return Returns the plot.
 #' @keywords hplot
+#' @note This function is deprecated and will be removed in later versions of the pacakge.
 #' @examples
 #' 
 #' ## Zoo data

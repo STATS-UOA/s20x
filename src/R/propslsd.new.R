@@ -3,15 +3,14 @@
 #' This function is called by rowdistr.
 #' 
 #' 
-#' @param crosstablist A list produced by 'crosstabs' or a matrix containing a
+#' @param crosstablist A list produced by \code{\link{crosstabs}} or a matrix containing a
 #' 2-way table of counts (without marginal totals).
 #' @param conf.level Confidence level of the intervals.
 #' @param arrowlength Length of the arrows.
-#' @param \dots Additional arguments (ignored).
-#' @seealso \code{'crosstabs', 'rowdistr'}
+#' @seealso \code{\link{crosstabs}}, \code{\link{rowdistr}}
 #' @keywords htest
-#' @export propslsd.new
-propslsd.new = function(crosstablist, conf.level = 0.95, arrowlength = 0.1, ...) {
+#' @note This function is no longer exported as it should never be called by the user.
+propslsd.new = function(crosstablist, conf.level = 0.95, arrowlength = 0.1) {
     x = crosstablist$Totals[1:nrow(crosstablist$whole.props), 1:ncol(crosstablist$whole.props)]
     nrows = nrow(x)
     ncols = ncol(x)
