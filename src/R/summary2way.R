@@ -91,8 +91,13 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     }else if(page == "effects"){
       cat("Table of effects:\n")
       print(results$effects$tables)
-    }else{ #if(page == "nointeraction" | page == "interaction")
-      print(results$comparisons)
+    }else if(page == "nointeraction"){
+      factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
+      print(results$comparisons[factorLabels])
+    }else{# page == "interaction")
+      interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
+      
+      print(results$comparisons[interactionLabel])
     }
     
     invisible(list(Df = results$table$Df, 
