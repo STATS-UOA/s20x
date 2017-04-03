@@ -93,11 +93,16 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       print(results$effects$tables)
     }else if(page == "nointeraction"){
       factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
-      print(results$comparisons[factorLabels])
+      out = results$comparisons[factorLabels]
+      mostattributes(out) = attributes(results$comparisons)
+      names(out) = factorLabels
+      print(out)
     }else{# page == "interaction")
       interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
-      
-      print(results$comparisons[interactionLabel])
+      out = results$comparisons[interactionLabel]
+      mostattributes(out) = attributes(results$comparisons)
+      names(out) = interactionLabel
+      print(out)
     }
     
     invisible(list(Df = results$table$Df, 
