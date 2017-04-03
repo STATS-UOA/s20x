@@ -15,4 +15,3 @@ toothpaste and one of households who do not. For each household the age is
 recorded of the person responsible for purchasing the toothpaste.
 }
 \keyword{datasets}
-

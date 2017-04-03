@@ -16,4 +16,3 @@ Data from an experiment to examine the effects of different planting times
 on the yield of soya beans, given four different cultivars.
 }
 \keyword{datasets}
-

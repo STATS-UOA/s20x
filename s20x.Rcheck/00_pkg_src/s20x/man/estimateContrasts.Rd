@@ -2,8 +2,6 @@
 % Please edit documentation in R/estimateContrasts.R
 \name{estimateContrasts}
 \alias{estimateContrasts}
-\alias{estimateContrasts1}
-\alias{estimateContrasts2}
 \title{Contrast Estimates}
 \usage{
 estimateContrasts(contrast.matrix, fit, row = TRUE, alpha = 0.05,
@@ -35,19 +33,20 @@ unadjusted p-value, the Tukey and Bonferroni p-values.
 Calculates and prints Tukey multiple confidence intervals for contrasts in
 one or two-way ANOVA.
 }
+\note{
+: This function is no longer exported as it should never be called by the user. It will ultimately be removed.
+}
 \examples{
 
 ## computer data:
 data(computer.df)
 computer.df = within(computer.df, {selfassess = factor(selfassess)})
 computer.fit = lm(score ~ selfassess, data = computer.df)
-contrast.matrix = matrix(c(-1/2,-1/2,1),byrow=TRUE,nrow=1,ncol=3)
+contrast.matrix = matrix(c(-1/2, -1/2, 1), byrow = TRUE, nrow = 1, ncol = 3)
 contrast.matrix
-estimateContrasts(contrast.matrix,computer.fit)
-
+s20x:::estimateContrasts(contrast.matrix,computer.fit)
 }
 \seealso{
 \code{\link{summary1way}}, \code{\link{summary2way}}, \code{\link{multipleComp}}
 }
 \keyword{models}
-

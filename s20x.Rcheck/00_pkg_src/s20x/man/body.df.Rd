@@ -16,4 +16,3 @@ Data collected to examine how women from various ethnic groups rate their
 body image. All subjects were slightly underweight for their body size.
 }
 \keyword{datasets}
-

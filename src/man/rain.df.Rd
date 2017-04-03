@@ -16,4 +16,3 @@ Data from an experiment to see if seeding clouds with Silver Nitrate effects
 the amount of rainfall.
 }
 \keyword{datasets}
-

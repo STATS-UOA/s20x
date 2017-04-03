@@ -16,4 +16,3 @@ used 20 males and 20 females. Images included a nude man, nude woman,
 infant, and a landscape.
 }
 \keyword{datasets}
-

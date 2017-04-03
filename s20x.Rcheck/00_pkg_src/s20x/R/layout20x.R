@@ -9,6 +9,7 @@
 #' @param numCols number of columns in plot array
 #' @return Function returns no value
 #' @keywords device
+#' @note This function is deprecated. It will be removed in future versions of the package.
 #' @examples
 #' 
 #' data(course.df)
@@ -18,6 +19,6 @@
 #' 
 #' @export layout20x
 layout20x = function(numRows = 1, numCols = 1) {
-    par(mfrow = c(numRows, numCols))
+  par(mfrow = c(numRows, numCols))
 }
 

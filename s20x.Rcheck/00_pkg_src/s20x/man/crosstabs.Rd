@@ -24,6 +24,9 @@ cell counts and the marginal totals.}
 Produces a 2-way table of counts and the corresponding chi-square test of
 independence or homogeneity.
 }
+\note{
+This function is deprecated and will be removed in future versions of the package.
+}
 \examples{
 
 ##body image data:
@@ -32,4 +35,3 @@ crosstabs(~ ethnicity + married, body.df)
 
 }
 \keyword{htest}
-

@@ -4,13 +4,13 @@
 #' the grouping variable g
 #' 
 #' 
-#' @param formula A symbolic specification of the form `x ~ g' can be given,
+#' @param formula A symbolic specification of the form \code{x ~ g} can be given,
 #' indicating the observations in the vector `x' are to be grouped according to
-#' the levels of the factor `g'. `NA's are allowed in the data.
+#' the levels of the factor `g'. \code{NA}s are allowed in the data.
 #' @param data An optional data frame in which to evaluate the formula
-#' @param ... Optional arguments that are passed to the \code{stripchart} function.
-#' @return Returns the plot.
+#' @param \ldots Optional arguments that are passed to the \code{stripchart} function.
 #' @keywords hplot
+#' @note This function is deprecated and will be removed in later versions of the pacakge.
 #' @examples
 #' 
 #' ## Zoo data

@@ -15,4 +15,3 @@ has 19 managers complete the questionnaire as well as rate their own
 technical expertise.
 }
 \keyword{datasets}
-

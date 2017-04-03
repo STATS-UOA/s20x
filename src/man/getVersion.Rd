@@ -17,4 +17,3 @@ getVersion()
 
 }
 \keyword{debugging}
-

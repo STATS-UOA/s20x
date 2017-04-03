@@ -10,4 +10,3 @@ Number of international airline passengers (in thousands) recorded monthly
 from January 1949 to December 1960.
 }
 \keyword{datasets}
-

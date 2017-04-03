@@ -14,4 +14,3 @@ area. For each school the decile rating of the school is recorded along with
 the percentage of eligible students who gain a B Bursary or better.
 }
 \keyword{datasets}
-

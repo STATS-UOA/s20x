@@ -38,4 +38,3 @@ levene.test(score ~ factor(selfassess), computer.df)
 \code{\link{crossFactors}}, \code{\link{anova}}.
 }
 \keyword{htest}
-

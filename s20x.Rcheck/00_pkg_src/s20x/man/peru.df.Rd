@@ -16,4 +16,3 @@ have since migrated to lower altitudes. The sample was collected to assess
 the long term effects of altitude on blood pressure.
 }
 \keyword{datasets}
-

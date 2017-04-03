@@ -19,4 +19,3 @@ selected at random, and then sentences within each page were selected at
 random. These data were collected by James Curran.
 }
 \keyword{datasets}
-

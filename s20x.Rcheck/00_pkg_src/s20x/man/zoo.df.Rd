@@ -20,4 +20,3 @@ interest to assess whether an advertising campaign was effective in
 increasing attendance.
 }
 \keyword{datasets}
-

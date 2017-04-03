@@ -18,6 +18,8 @@ eovcheck(object, ...)
 \item{object}{A linear model formula. Alternatively, a fitted lm object from
 a linear model.}
 
+\item{\dots}{Optional arguments}
+
 \item{data}{A data frame in which to evaluate the formula.}
 
 \item{xlab}{a title for the x axis: see \code{\link{title}}.}
@@ -31,8 +33,6 @@ plot}
 
 \item{levene}{if \code{TRUE} then the P-value from Levene's test for equality of
 variance is displayed}
-
-\item{\dots}{Optional arguments}
 }
 \description{
 Plots the residuals versus the fitted (or predicted) values from a linear
@@ -54,6 +54,7 @@ number of observations per group exceeds two.
 
 \item \code{lm}: Testing for equality of variance plot
 }}
+
 \examples{
 
 # one way ANOVA - oysters
@@ -96,4 +97,3 @@ eovcheck(airpass.fit)
 \code{\link{levene.test}}
 }
 \keyword{hplot}
-

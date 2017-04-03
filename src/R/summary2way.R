@@ -15,6 +15,10 @@
 #' @param digit the number of decimal places in the display.
 #' @param conf.level confidence level of the intervals.
 #' @param print.out if TRUE, print out the output on the screen.
+#' @param new if \code{TRUE} then this will run the new version of \code{summary2way} which should be more
+#' robust than the old version. It does not work in the same way however. In particular, when \code{page = 'means'} 
+#' it does not return summary statistics for each grouping of the data (pooled/by row factor/by column factor/by interaction factor).
+#' Instead it simply returns the means for each grouping.
 #' @param \dots other arguments like inttype, pooled etc.
 #' @return A list with the following components: \item{Df}{degrees of freedom
 #' for regression, residual and total.} \item{Sum of Sq}{sum squares for
@@ -25,17 +29,9 @@
 #' factor.} \item{Col Effects}{The main effects for the second (column)
 #' factor.} \item{Interaction Effects}{The interaction effects if an
 #' interaction model has been fitted, otherwise \code{NULL}.}
-#' \item{Comparisons}{This item will be \code{NULL} for any choice of
-#' \code{page} other than \code{'interaction'} or \code{'nointeraction'}. If an
-#' interaction model has been fitted, and \code{page = 'interaction'} then this
-#' will be a list with two components named \code{within} and \code{between}.
-#' If an additive model has been fitted, and \code{page = 'nointeraction'} then
-#' this will be a list with two components with the same names as the first
-#' (row) factor and the second (column) factor. Each component is a matrix with
-#' four columns: the estimate, the Tukey HSD lower and upper bounds on the
-#' estimate and the P-value for the hypothesis test that the difference in the
-#' means is 0.}
-#' @seealso \code{'summary1way'}
+#' \item{results}{If \code{new = TRUE}, then this is a list with five components: \code{table} - the ANOVA table, \code{means} the table of means from \code{model.tables}, 
+#' \code{effects} - the table of effects from \code{model.tables}, and \code{comparisons} - the differences in the means with standard errors, confidence bounds, and P-values from \code{TukeyHSD}}.
+#' @seealso \code{\link{summary1way}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}
 #' @keywords models
 #' @examples
 #' 
@@ -74,6 +70,45 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     }else{
       FALSE
     }
+    
+    results = list(table = anova(fit.aov),
+                   means = model.tables(fit.aov, "means"),
+                   effects = model.tables(fit.aov, "effects"),
+                   comparisons = TukeyHSD(fit.aov, conf.level = conf.level))
+    
+    ## setup the ANOVA table so that it mimics the output from summary2way
+    ## It isn't worth replicating the precision (digits) behaviour
+    ## because this be done other ways
+    attr(results$table, "heading") = "ANOVA Table:"
+    names(results$table) = c("Df", "Sum Squares", "Mean Square", "F-statistic", "p-value")
+    
+    
+    if(page == "table"){
+      print(results$table) ## note this doesn't print the totals - do we care?
+    }else if(page == "means"){
+      cat("Table of means:\n")
+      print(results$means$tables)
+    }else if(page == "effects"){
+      cat("Table of effects:\n")
+      print(results$effects$tables)
+    }else{ #if(page == "nointeraction" | page == "interaction")
+      print(results$comparisons)
+    }
+    
+    invisible(list(Df = results$table$Df, 
+                   `Sum of Sq` = results$table$`Sum Squares`, 
+                   `Mean Sq` = results$table$`Mean Square`,
+                   `F value` = results$table$`F-statistic`, 
+                   `Pr(F)` = results$table$`p-value`, 
+                   `Grand Mean` = results$means$tables[[1]], 
+                   `Row Effects` = results$effects$tables[[1]], 
+                   `Col Effects` = results$effects$tables[[2]], 
+                   `Interaction Effects` = if(inter){
+                     results$effects$tables[[3]]
+                   }else{
+                     NULL
+                   },
+                   results = results))
     
   }else{
     alist = anova(fit)

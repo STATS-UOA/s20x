@@ -23,8 +23,7 @@
 #' residPlot(fit)
 #' 
 #' @export residPlot
-residPlot = function(lmfit, f = 0.5) ## Fitted Values versus Residuals plot
-{
+residPlot = function(lmfit, f = 0.5){
     yhat = fitted(lmfit)
     res = resid(lmfit)
     y = yhat + res

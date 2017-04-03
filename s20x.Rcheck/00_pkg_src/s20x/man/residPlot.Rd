@@ -23,6 +23,9 @@ as well as one standard deviation error bounds for the scatter about this
 trend, are added to this scatter plot. A test for a quadratic relationship
 between the residuals and the fitted values is also computed.
 }
+\note{
+This function is deprecated. It will be removed in future versions of the package.
+}
 \examples{
 
 # Peruvian Indians data
@@ -35,4 +38,3 @@ residPlot(fit)
 \code{\link{trendscatter}}
 }
 \keyword{hplot}
-

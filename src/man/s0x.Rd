@@ -11,4 +11,3 @@ A set of functions used in teaching STATS 201/208 Data Analysis at the Universit
 \author{
 Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike Forster, Brendan McArdle, Chris Wild
 }
-

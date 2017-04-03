@@ -11,4 +11,3 @@ levels (No, Yes) \cr [,3] \tab Cobalt \tab factor \tab levels (No, Yes) }}
 Sheep Data
 }
 \keyword{datasets}
-

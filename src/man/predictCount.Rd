@@ -37,4 +37,3 @@ types (e.g. numeric or factor) as those used in fitting the model.
 \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{as.data.frame}}.
 }
 \keyword{htest}
-

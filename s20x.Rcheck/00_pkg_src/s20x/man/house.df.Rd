@@ -12,4 +12,3 @@ A random sample of 100 houses recently sold in Mt Eden, Auckland. For each
 house we have the advertised price and the actual sale price.
 }
 \keyword{datasets}
-

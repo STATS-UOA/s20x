@@ -24,4 +24,3 @@ cooks20x(peru.fit)
 
 }
 \keyword{hplot}
-

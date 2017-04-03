@@ -17,11 +17,11 @@ crossFactors(x, fac2 = NULL, ...)
 
 \item{fac2}{the name of the second factor - ignored if \code{x} is a formula.}
 
+\item{\dots}{Optional arguments}
+
 \item{formula}{a formula in the form \code{~ fac1 * fac2}}
 
 \item{data}{an optional data frame in which to evaluate the formula}
-
-\item{\dots}{Optional arguments}
 }
 \value{
 Returns a vector containing the factor which represents the
@@ -37,6 +37,7 @@ Computes a factor that has a level for each combination of the factors
 
 \item \code{formula}: Crossed Factors
 }}
+
 \note{
 This function actually returns a \code{factor} now instead of a character string, so coercion into a \code{factor} is no longer necessary.
 }
@@ -58,4 +59,3 @@ gender.picture
 \code{\link{factor}}.
 }
 \keyword{models}
-

@@ -26,6 +26,8 @@ interactionPlots(y, ...)
 and fac1 and fac2 are the two explanatory variables used as factors, or a
 single response vector}
 
+\item{\dots}{optional arguments.}
+
 \item{fac1}{if 'y' is a vector, then fac1 contains the levels of factor 1
 which correspond to the y value}
 
@@ -73,8 +75,6 @@ fraction of the overall height of the plot.}
 \item{xlen, ylen}{character interspacing factor for horizontal (x) and vertical (y) spacing of the legend.}
 
 \item{data}{an optional data frame containing the variables in the model.}
-
-\item{\dots}{optional arguments.}
 }
 \description{
 Displays data with intervals for each combination of the two factors and
@@ -88,6 +88,7 @@ for each combination of factors.
 
 \item \code{formula}: Interactions Plot for Two-way Analysis of Variance
 }}
+
 \examples{
 
 data(mtcars)
@@ -102,4 +103,3 @@ with(mtcars, interactionPlots(wt, vs, gear))
 \code{\link{summary2way}}.
 }
 \keyword{hplot}
-

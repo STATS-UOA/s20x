@@ -21,6 +21,8 @@ summaryStats(x, ...)
 \item{x}{either a single vector of values, or a formula of the form
 data~group, or a matrix.}
 
+\item{\dots}{Optional arguments.}
+
 \item{group}{a vector of group labels.}
 
 \item{data.order}{if \code{TRUE}, the group order is the order which the groups are
@@ -29,8 +31,6 @@ first encountered in the vector 'group'. If \code{FALSE}, the order is alphabeti
 \item{digits}{the number of decimal places to display.}
 
 \item{data}{an optional data frame containing the variables in the model.}
-
-\item{\dots}{Optional arguments.}
 }
 \value{
 If \code{x} is a single variable, i.e. there are no groups, then a
@@ -65,6 +65,7 @@ each group separately.
 
 \item \code{matrix}: Summary Statistics
 }}
+
 \examples{
 
 ## STATS20x data:
@@ -92,4 +93,3 @@ sumStats$mean
 
 }
 \keyword{multivariate}
-

@@ -19,6 +19,9 @@ Allows an \code{numRows} by \code{numCols} matrix of plots to be displayed
 in a single plot. If the function is called with no arguments, then the
 plotting device layout will be reset to a single plot.
 }
+\note{
+This function is deprecated. It will be removed in future versions of the package.
+}
 \examples{
 
 data(course.df)
@@ -28,4 +31,3 @@ boxplot(course.df$Exam)
 
 }
 \keyword{device}
-

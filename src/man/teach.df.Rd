@@ -15,4 +15,3 @@ groups, one for each method. The students' IQ before instruction and a
 language test score after instruction were recorded.
 }
 \keyword{datasets}
-

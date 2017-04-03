@@ -11,7 +11,7 @@
 #' @param newdata prediction data frame.
 #' @param cilevel confidence level of the interval.
 #' @param digit decimal numbers after the point.
-#' @param print.out if T, print out the prediction matrix.
+#' @param print.out if \code{TRUE}, print out the prediction matrix.
 #' @param \dots optional arguments that are passed to the generic 'predict'
 #' @return \item{frame}{vector or matrix including predicted values, confidence
 #' intervals and predicted intervals.} \item{fit}{prediction values.}
@@ -19,6 +19,7 @@
 #' standard deviations.} \item{df}{degrees of freedom for residual.}
 #' \item{cilevel}{confidence level of the interval.}
 #' @seealso \code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
+#' @note This function is deprecated. It will be removed in future versions of the package.
 #' @keywords htest
 #' @examples
 #' 

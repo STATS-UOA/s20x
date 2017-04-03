@@ -16,4 +16,3 @@ kept in the dark. Four identical boxes were used for each combination of
 water and light
 }
 \keyword{datasets}
-

@@ -9,4 +9,3 @@
 Annual rainfall (in inches) for Los Angeles from 1908 to 1973.
 }
 \keyword{datasets}
-

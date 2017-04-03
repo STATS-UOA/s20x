@@ -9,4 +9,3 @@ Random sample of 152 families giving their mean income (\$000s). The sample
 was taken by an advertising agency over their area of operations.
 }
 \keyword{datasets}
-

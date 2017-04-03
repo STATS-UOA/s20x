@@ -10,4 +10,3 @@ number of days between the date the merger was announced and the date the
 merger became effective.
 }
 \keyword{datasets}
-

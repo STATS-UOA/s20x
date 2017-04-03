@@ -14,4 +14,3 @@ tested the density of the chalk. The main interest was whether the different
 laboratories yielded the same density for the two different types of chalk.
 }
 \keyword{datasets}
-

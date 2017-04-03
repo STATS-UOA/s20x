@@ -10,16 +10,13 @@ stripqq(formula, ...)
 \method{stripqq}{formula}(formula, data = NULL, ...)
 }
 \arguments{
-\item{formula}{A symbolic specification of the form `x ~ g' can be given,
+\item{formula}{A symbolic specification of the form \code{x ~ g} can be given,
 indicating the observations in the vector `x' are to be grouped according to
-the levels of the factor `g'. `NA's are allowed in the data.}
-
-\item{...}{Optional arguments that are passed to the \code{stripchart} function.}
+the levels of the factor `g'. \code{NA}s are allowed in the data.}
 
 \item{data}{An optional data frame in which to evaluate the formula}
-}
-\value{
-Returns the plot.
+
+\item{\ldots}{Optional arguments that are passed to the \code{stripchart} function.}
 }
 \description{
 Draws strip charts and normal quantile quantile plots of x for each value of
@@ -29,6 +26,10 @@ the grouping variable g
 \itemize{
 \item \code{formula}: Strip charts and normal quantile-quantile plots
 }}
+
+\note{
+This function is deprecated and will be removed in later versions of the pacakge.
+}
 \examples{
 
 ## Zoo data
@@ -37,4 +38,3 @@ stripqq(attendance~day.type, data = zoo.df)
 
 }
 \keyword{hplot}
-

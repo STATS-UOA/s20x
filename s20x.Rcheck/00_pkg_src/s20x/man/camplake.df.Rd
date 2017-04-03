@@ -13,4 +13,3 @@ Scale.Radius \tab numeric \tab Age of fish (radius of the key scale (mm/100)
 have the length of the fish, its age in years and its age in scale radius.
 }
 \keyword{datasets}
-

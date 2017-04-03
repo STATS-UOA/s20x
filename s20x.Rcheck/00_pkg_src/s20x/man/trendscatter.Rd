@@ -17,6 +17,8 @@ trendscatter(x, ...)
 \arguments{
 \item{x}{the coordinates of the points in the scatter plot. Alternatively, a formula.}
 
+\item{\dots}{Optional arguments}
+
 \item{y}{the y coordinates of the points in the plot, ignored if \code{x} is a
 function.}
 
@@ -31,8 +33,6 @@ smoothness.}
 \item{main}{a title for the plot: see \code{\link{title}}.}
 
 \item{data}{an optional data frame containing the variables in the model.}
-
-\item{\dots}{Optional arguments}
 }
 \value{
 Returns the plot.
@@ -48,6 +48,7 @@ about this trend are also plotted.
 
 \item \code{formula}: Trend and scatter plot
 }}
+
 \examples{
 
 # A simple polynomial
@@ -73,4 +74,3 @@ with(peru.df,trendscatter(weight,BP))
 \code{\link{residPlot}}
 }
 \keyword{hplot}
-

@@ -64,4 +64,3 @@ rowdistr(z)
 \code{\link{crosstabs}}
 }
 \keyword{htest}
-

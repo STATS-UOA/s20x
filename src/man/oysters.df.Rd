@@ -16,4 +16,3 @@ Georges River and two in Port Stephens. The number of oysters were recorded
 for 10 cm by 10 cm panels over a two year period.
 }
 \keyword{datasets}
-

@@ -2,10 +2,10 @@
 % Please edit documentation in R/onewayPlot.R
 \name{onewayPlot}
 \alias{onewayPlot}
+\alias{twosampPlot}
 \alias{onewayPlot.default}
 \alias{onewayPlot.formula}
 \alias{onewayPlot.lm}
-\alias{twosampPlot}
 \title{One-way Analysis of Variance Plot}
 \usage{
 onewayPlot(x, ...)
@@ -25,6 +25,8 @@ onewayPlot(x, ...)
 }
 \arguments{
 \item{x}{a vector of responses, a formula object or an lm object}
+
+\item{\dots}{optional arguments.}
 
 \item{f}{if x is a vector of responses then f contains the group labels for
 each observation in x. That is, the ith value in f says which group the ith
@@ -52,8 +54,6 @@ can only be displayed vertically).}
 \item{formula}{a symbolic description of the model to be fit.}
 
 \item{data}{an optional data frame in which to evaluate the formula.}
-
-\item{\dots}{optional arguments.}
 }
 \description{
 Displays stripplot/boxplot of the reponse variable with intervals by factor
@@ -67,6 +67,7 @@ levels. It is used as part of a one-way ANOVA analysis.
 
 \item \code{lm}: One-way Analysis of Variance Plot
 }}
+
 \examples{
 
 ##see example in 'summary1way'
@@ -94,4 +95,3 @@ onewayPlot(oyster.fit)
 \code{\link{summary1way}}, \code{\link{t.test}}.
 }
 \keyword{hplot}
-

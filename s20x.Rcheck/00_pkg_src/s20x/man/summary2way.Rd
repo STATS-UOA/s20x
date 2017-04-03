@@ -5,7 +5,8 @@
 \title{Two-way Analysis of Variance Summary}
 \usage{
 summary2way(fit, page = c("table", "means", "effects", "interaction",
-  "nointeraction"), digit = 5, conf.level = 0.95, print.out = TRUE, ...)
+  "nointeraction"), digit = 5, conf.level = 0.95, print.out = TRUE,
+  new = TRUE, ...)
 }
 \arguments{
 \item{fit}{an lm object, i.e. the output from 'lm()'.}
@@ -19,6 +20,11 @@ summary2way(fit, page = c("table", "means", "effects", "interaction",
 
 \item{print.out}{if TRUE, print out the output on the screen.}
 
+\item{new}{if \code{TRUE} then this will run the new version of \code{summary2way} which should be more
+robust than the old version. It does not work in the same way however. In particular, when \code{page = 'means'} 
+it does not return summary statistics for each grouping of the data (pooled/by row factor/by column factor/by interaction factor).
+Instead it simply returns the means for each grouping.}
+
 \item{\dots}{other arguments like inttype, pooled etc.}
 }
 \value{
@@ -31,16 +37,8 @@ response variable.} \item{Row Effects}{The main effects for the first (row)
 factor.} \item{Col Effects}{The main effects for the second (column)
 factor.} \item{Interaction Effects}{The interaction effects if an
 interaction model has been fitted, otherwise \code{NULL}.}
-\item{Comparisons}{This item will be \code{NULL} for any choice of
-\code{page} other than \code{'interaction'} or \code{'nointeraction'}. If an
-interaction model has been fitted, and \code{page = 'interaction'} then this
-will be a list with two components named \code{within} and \code{between}.
-If an additive model has been fitted, and \code{page = 'nointeraction'} then
-this will be a list with two components with the same names as the first
-(row) factor and the second (column) factor. Each component is a matrix with
-four columns: the estimate, the Tukey HSD lower and upper bounds on the
-estimate and the P-value for the hypothesis test that the difference in the
-means is 0.}
+\item{results}{If \code{new = TRUE}, then this is a list with five components: \code{table} - the ANOVA table, \code{means} the table of means from \code{model.tables}, 
+\code{effects} - the table of effects from \code{model.tables}, and \code{comparisons} - the differences in the means with standard errors, confidence bounds, and P-values from \code{TukeyHSD}}.
 }
 \description{
 Displays summary information for a two-way anova analysis. The lm object
@@ -61,7 +59,6 @@ summary2way(arousal.fit)
 
 }
 \seealso{
-\code{'summary1way'}
+\code{\link{summary1way}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}
 }
 \keyword{models}
-

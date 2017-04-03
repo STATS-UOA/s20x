@@ -6,21 +6,21 @@
 #' (iv) plot of data with intervals.
 #' 
 #' 
-#' @param fit an lm object, i.e. the output from 'lm()'.
+#' @param fit an lm object, i.e. the output from \code{\link{lm}}.
 #' @param digit decimal numbers after the point.
 #' @param conf.level confidence level of the intervals.
 #' @param inttype three options for intervals appeared on plot: 'hsd','lsd' or
 #' 'ci'.
 #' @param pooled two options: pooled or unpooled standard deviation used for
 #' plotted intervals.
-#' @param print.out if T, print out the output on the screen.
-#' @param draw.plot if T, plot data with intervals.
+#' @param print.out if \code{TRUE}, print out the output on the screen.
+#' @param draw.plot if \code{TRUE}, plot data with intervals.
 #' @param \dots more options.
 #' @return \item{Df}{degrees of freedom for regression, residual and total.}
 #' \item{Sum of Sq}{sum squares for regression, residual and total.} \item{Mean
 #' Sq}{mean squares for regression and residual.} \item{F value}{F-statistic
 #' value.} \item{Pr(F)}{} \item{Main Effect}{} \item{Group Effects}{}
-#' @seealso \code{'summary2way', 'anova', 'aov', 'dummy.coef', 'plot.oneway'}
+#' @seealso \code{\link{summary2way}}, \code{\link{anova}}, \code{\link{aov}}, \code{\link{dummy.coef}}, \code{\link{onewayPlot}}
 #' @keywords models
 #' @examples
 #' 
@@ -33,7 +33,10 @@
 #' result
 #' 
 #' @export
-summary1way = function(fit, digit = 5, conf.level = 0.95, inttype = "tukey", pooled = TRUE, print.out = TRUE, draw.plot = TRUE, ...) {
+summary1way = function(fit, digit = 5, conf.level = 0.95, 
+                       inttype = "tukey", 
+                       pooled = TRUE, 
+                       print.out = TRUE, draw.plot = TRUE, ...) {
     if (!inherits(fit, "lm")) 
         stop("Input is not an \"lm\" object")
     alist = anova(fit)
@@ -83,9 +86,10 @@ summary1way = function(fit, digit = 5, conf.level = 0.95, inttype = "tukey", poo
         cat("\nTable of Effects: (GrandMean and deviations from GM)\n")
         print(round(effmat, digit))
     }
-    if (draw.plot) {
+    if(draw.plot) {
         onewayPlot(fit, conf.level = conf.level, interval.type = inttype)
     }
+    
     invisible(list(Df = a.df, `Sum of Sq` = a.ss, `Mean Sq` = a.ms, `F value` = alist$"F value"[1], `Pr(F)` = alist$"Pr(>F)"[1], `Main Effect` = grandmn, `Group Effects` = grpeffs))
 }
 

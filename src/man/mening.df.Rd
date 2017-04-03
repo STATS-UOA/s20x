@@ -11,4 +11,3 @@ This data shows the monthly number of notifications meningococcal disease in
 New Zealand from January 1990 to December 2001.
 }
 \keyword{datasets}
-

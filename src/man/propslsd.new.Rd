@@ -4,23 +4,23 @@
 \alias{propslsd.new}
 \title{LSD-Display Intervals}
 \usage{
-propslsd.new(crosstablist, conf.level = 0.95, arrowlength = 0.1, ...)
+propslsd.new(crosstablist, conf.level = 0.95, arrowlength = 0.1)
 }
 \arguments{
-\item{crosstablist}{A list produced by 'crosstabs' or a matrix containing a
+\item{crosstablist}{A list produced by \code{\link{crosstabs}} or a matrix containing a
 2-way table of counts (without marginal totals).}
 
 \item{conf.level}{Confidence level of the intervals.}
 
 \item{arrowlength}{Length of the arrows.}
-
-\item{\dots}{Additional arguments (ignored).}
 }
 \description{
-This function is called by rowdistr.
+This function is called by \code{\link{rowdistr}}.
+}
+\note{
+This function is no longer exported as it should never be called by the user. It is also deprecated and will be removed from future versions of the package.
 }
 \seealso{
-\code{'crosstabs', 'rowdistr'}
+\code{\link{crosstabs}}, \code{\link{rowdistr}}
 }
 \keyword{htest}
-

@@ -30,4 +30,3 @@ pairs20x(peru.df)
 \code{'pairs', 'panel.smooth', 'panel.cor', 'panel.hist'}
 }
 \keyword{hplot}
-

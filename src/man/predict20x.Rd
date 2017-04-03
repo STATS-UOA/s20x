@@ -16,7 +16,7 @@ predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
 
 \item{digit}{decimal numbers after the point.}
 
-\item{print.out}{if T, print out the prediction matrix.}
+\item{print.out}{if \code{TRUE}, print out the prediction matrix.}
 
 \item{\dots}{optional arguments that are passed to the generic 'predict'}
 }
@@ -36,6 +36,8 @@ Note: The data frame, newdata, must have the same column order and data
 types (e.g. numeric or factor) as those used in fitting the model.
 }
 \note{
+This function is deprecated. It will be removed in future versions of the package.
+
 this function is deprecated as it is never used in class any more. We prefer the standard \code{\link{predict}} method.
 }
 \examples{
@@ -60,4 +62,3 @@ predict20x(peru.fit, pred.peru)
 \code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
 }
 \keyword{htest}
-

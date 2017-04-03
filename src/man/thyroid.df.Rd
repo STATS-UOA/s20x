@@ -17,4 +17,3 @@ had its bodyweight recorded at the beginning of the experiment and its
 thyroid weight measured at the end of the experiment.
 }
 \keyword{datasets}
-

@@ -13,4 +13,3 @@ regular nail polish dried faster. The time for each type of nail polish to
 dry was recorded.
 }
 \keyword{datasets}
-

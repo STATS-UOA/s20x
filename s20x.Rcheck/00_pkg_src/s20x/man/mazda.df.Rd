@@ -12,4 +12,3 @@ Prices and ages of 124 Mazda cars collected from the Melbourne Age newspaper
 in 1991.
 }
 \keyword{datasets}
-

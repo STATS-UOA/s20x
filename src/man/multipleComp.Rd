@@ -29,4 +29,3 @@ multipleComp(fit)
 
 }
 \keyword{htest}
-

@@ -29,4 +29,3 @@ University of Auckland 1994}). The data are from Andrews and Herzberg
 (1985).
 }
 \keyword{datasets}
-

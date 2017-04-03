@@ -8,7 +8,7 @@ summary1way(fit, digit = 5, conf.level = 0.95, inttype = "tukey",
   pooled = TRUE, print.out = TRUE, draw.plot = TRUE, ...)
 }
 \arguments{
-\item{fit}{an lm object, i.e. the output from 'lm()'.}
+\item{fit}{an lm object, i.e. the output from \code{\link{lm}}.}
 
 \item{digit}{decimal numbers after the point.}
 
@@ -20,9 +20,9 @@ summary1way(fit, digit = 5, conf.level = 0.95, inttype = "tukey",
 \item{pooled}{two options: pooled or unpooled standard deviation used for
 plotted intervals.}
 
-\item{print.out}{if T, print out the output on the screen.}
+\item{print.out}{if \code{TRUE}, print out the output on the screen.}
 
-\item{draw.plot}{if T, plot data with intervals.}
+\item{draw.plot}{if \code{TRUE}, plot data with intervals.}
 
 \item{\dots}{more options.}
 }
@@ -50,7 +50,6 @@ result
 
 }
 \seealso{
-\code{'summary2way', 'anova', 'aov', 'dummy.coef', 'plot.oneway'}
+\code{\link{summary2way}}, \code{\link{anova}}, \code{\link{aov}}, \code{\link{dummy.coef}}, \code{\link{onewayPlot}}
 }
 \keyword{models}
-

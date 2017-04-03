@@ -32,4 +32,3 @@ ciReg(fit)
 \code{\link{lm}}, \code{\link{summary}}, \code{\link{anova}}.
 }
 \keyword{htest}
-

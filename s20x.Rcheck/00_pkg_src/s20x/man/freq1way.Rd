@@ -8,21 +8,21 @@ freq1way(counts, hypothprob, conf.level = 0.95, addCIs = TRUE, digits = 4,
   arrowwid = 0.1, estimated = 0)
 }
 \arguments{
-\item{counts}{A 1-way frequency table as produced by table()}
+\item{counts}{A 1-way frequency table as produced by \code{table}.}
 
 \item{hypothprob}{If present, a set of probabilities to test the cell counts
-against}
+against.}
 
 \item{conf.level}{confidence level for the confidence interval, expressed as
 a decimal.}
 
-\item{addCIs}{If true, adds confidence limits to plot of sample proportions}
+\item{addCIs}{If true, adds confidence limits to plot of sample proportions.}
 
-\item{digits}{used to control rounding of printout}
+\item{digits}{used to control rounding of printout.}
 
-\item{arrowwid}{controls width of arrowheads}
+\item{arrowwid}{controls width of arrowheads.}
 
-\item{estimated}{default is 0. Subtracted from the df for the Chi-square
+\item{estimated}{default is \code{0}. Subtracted from the df for the Chi-square
 test.}
 }
 \value{
@@ -42,6 +42,9 @@ proportions, a Chi-square test for the hypothesized probabilities, and plots
 the sample proportions (with atached confidence limits) alongside the
 corresponding hypothesized probabilities. )
 }
+\note{
+These confidence intervals have been Bonferroni adjusted for multiple comparisons. This function has been deprecated and will be removed from future versions of the package
+}
 \examples{
 
 ##Body image data:
@@ -52,4 +55,3 @@ freq1way(eth.table,hypothprob=c(0.2,0.4,0.3,0.1))
 
 }
 \keyword{htest}
-

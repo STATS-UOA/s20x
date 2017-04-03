@@ -12,4 +12,3 @@ House damage and distance from the fire station, of 15 house fires. Data
 collected by an insurance company for homes in a particular area.
 }
 \keyword{datasets}
-

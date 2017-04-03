@@ -25,4 +25,3 @@ skewness(mergers.df$mergerdays)
 
 }
 \keyword{univar}
-

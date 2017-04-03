@@ -12,4 +12,3 @@ Prices of ladies' diamond rings from a Singaporean retailer and the weight
 of their diamond stones.
 }
 \keyword{datasets}
-

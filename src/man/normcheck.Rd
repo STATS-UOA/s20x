@@ -17,6 +17,8 @@ normcheck(x, ...)
 \arguments{
 \item{x}{the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.}
 
+\item{\dots}{Optional arguments}
+
 \item{xlab}{a title for the x axis: see \code{\link{title}}.}
 
 \item{main}{a title for the x axis: see \code{\link{title}}.}
@@ -25,8 +27,6 @@ normcheck(x, ...)
 
 \item{shapiro.wilk}{if \code{TRUE}, then in the top left hand corner of the
 Q-Q plot, the P-value from the Shapiro-Wilk test for normality is displayed.}
-
-\item{\dots}{Optional arguments}
 }
 \description{
 Plots two plots side by side. Firstly it draws a Normal QQ-plot of the
@@ -43,6 +43,7 @@ fitted and superimposed over the histogram.
 
 \item \code{lm}: Testing for normality plot
 }}
+
 \examples{
 
 # An exponential growth curve
@@ -68,4 +69,3 @@ normcheck(lm(BP ~ weight, data = peru.df))
 \code{\link{shapiro.test}}.
 }
 \keyword{hplot}
-

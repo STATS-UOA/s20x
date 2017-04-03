@@ -15,4 +15,3 @@ a student's final examination mark and both their gender and whether they
 regularly attend lectures.
 }
 \keyword{datasets}
-

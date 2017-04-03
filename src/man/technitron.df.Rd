@@ -18,4 +18,3 @@ of employees supervised }}
 Salary information for all salaried employees of the Technitron Company.
 }
 \keyword{datasets}
-

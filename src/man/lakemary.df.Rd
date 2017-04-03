@@ -11,4 +11,3 @@
 The ages and lengths of 78 bluegills captured from Lake Mary, Minnesota.
 }
 \keyword{datasets}
-
