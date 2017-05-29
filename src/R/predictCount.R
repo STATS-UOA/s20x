@@ -42,16 +42,16 @@ predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = 
     percent = 1 - (1 - cilevel)/2
     Conf.lower = pred$fit - qnorm(percent) * pred$se.fit
     Conf.upper = pred$fit + qnorm(percent) * pred$se.fit
-    mat = cbind(Predicted, Conf.lower, Conf.upper)
+    mat = exp(cbind(Predicted, Conf.lower, Conf.upper))
     mat = round(mat, digit)
     mat.df = as.data.frame(mat)
     dimnames(mat.df)[[1]] = dimnames(newdata)[[1]]
     dimnames(mat.df)[[2]] = c("Predicted", " Conf.lower", "Conf.upper")
     
-    if (print.out) 
+    if (print.out){
         print(mat.df)
-    
-    mat.df
+    }
+    invisible(mat.df)
     # invisible(list(frame = mat.df, fit = pred$fit, se.fit = pred$se.fit, df = pred$df, cilevel = cilevel))
 }
 
