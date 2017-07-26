@@ -14,11 +14,15 @@
 #' cooks20x(peru.fit)
 #' 
 #' @export cooks20x
-cooks20x = function(lmfit) {
+cooks20x = function(lmfit, main = "Cook's Distance plot", xlab = "observation number", ylab = "Cook's distance", 
+                    ...) {
   
     y = cooks.distance(lmfit)
     show.r = order(-y)[1:3]
-    plot(1:length(y), y, type = "h", main = "Cook's Distance plot", xlab = "observation number", ylab = "Cook's distance")
+    plot(1:length(y), y, type = "h")
+    title(main = main)
+    title(xlab = xlab)
+    title(ylab = ylab)
     text(show.r, y[show.r] + 0.4 * 0.75 * strheight(" "), show.r)
 }
 
