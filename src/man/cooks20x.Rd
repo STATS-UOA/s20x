@@ -4,10 +4,24 @@
 \alias{cooks20x}
 \title{Cook's distance plot}
 \usage{
-cooks20x(lmfit)
+cooks20x(lmfit, main = "Cook's Distance plot", xlab = "observation number",
+  ylab = "Cook's distance", line = c(0.5, 2, 2), cex.labels = 1, ...)
 }
 \arguments{
 \item{lmfit}{output from the function 'lm()'.}
+
+\item{main}{the plot title}
+
+\item{xlab}{the x-axis title.}
+
+\item{ylab}{the y-axis title.}
+
+\item{line}{a vector of length 3 controlling the distances of the plot title, the x-axis title and the y-axis title 
+from the axis in line units.}
+
+\item{cex.labels}{a factor controlling the font size of the labels on suspected high influence points.}
+
+\item{\dots}{additional arguments are passed to \code{plot} and may provide some extra flexibility.}
 }
 \value{
 Returns the plot and identifies the three highest Cook's values

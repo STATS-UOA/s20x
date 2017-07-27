@@ -8,20 +8,24 @@
 \usage{
 normcheck(x, ...)
 
-\method{normcheck}{default}(x, xlab = NULL, main = xlab, col = NULL,
+\method{normcheck}{default}(x, xlab = c("Theoretical Quantiles", ""),
+  ylab = c("Sample Quantiles", ""), main = c("", ""), col = "light blue",
   shapiro.wilk = FALSE, ...)
 
-\method{normcheck}{lm}(x, xlab = NULL, main = xlab, col = NULL,
+\method{normcheck}{lm}(x, xlab = c("Theoretical Quantiles", ""),
+  ylab = c("Sample Quantiles", ""), main = c("", ""), col = "light blue",
   shapiro.wilk = FALSE, ...)
 }
 \arguments{
 \item{x}{the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.}
 
-\item{\dots}{Optional arguments}
+\item{\dots}{additional arguments which are passed to both \code{qqnorm} and \code{hist}}
 
-\item{xlab}{a title for the x axis: see \code{\link{title}}.}
+\item{xlab}{a title for the x-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.}
 
-\item{main}{a title for the x axis: see \code{\link{title}}.}
+\item{ylab}{a title for the y-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.}
+
+\item{main}{a title for both the Q-Q plot and the histogram: see \code{\link{title}}.}
 
 \item{col}{a color for the bars of the histogram.}
 
@@ -35,7 +39,10 @@ residuals and a slope equal to the standard deviation of the residuals. If
 \code{shapiro.wilk = TRUE} then, in the top left hand corner of the Q-Q
 plot, the P-value from the Shapiro-Wilk test for normality is given.
 Secondly, it draws a histogram of the residuals. A normal distribution is
-fitted and superimposed over the histogram.
+fitted and superimposed over the histogram. NOTE: if you want to leave the 
+x-axis blank in the histogram then, use \code{xlab = c("Theoretical Quantiles", " ")}
+, i.e. leave a space between the quotes. If you don't leave a space, then information 
+will be extracted from \code{x}.
 }
 \section{Methods (by class)}{
 \itemize{

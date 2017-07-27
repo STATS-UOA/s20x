@@ -6,16 +6,20 @@
 #' \code{shapiro.wilk = TRUE} then, in the top left hand corner of the Q-Q
 #' plot, the P-value from the Shapiro-Wilk test for normality is given.
 #' Secondly, it draws a histogram of the residuals. A normal distribution is
-#' fitted and superimposed over the histogram.
+#' fitted and superimposed over the histogram. NOTE: if you want to leave the 
+#' x-axis blank in the histogram then, use \code{xlab = c("Theoretical Quantiles", " ")}
+#' , i.e. leave a space between the quotes. If you don't leave a space, then information 
+#' will be extracted from \code{x}. 
 #' 
 #' 
 #' @param x the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.
-#' @param xlab a title for the x axis: see \code{\link{title}}.
-#' @param main a title for the x axis: see \code{\link{title}}.
+#' @param xlab a title for the x-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.
+#' @param ylab a title for the y-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.
+#' @param main a title for both the Q-Q plot and the histogram: see \code{\link{title}}.
 #' @param col a color for the bars of the histogram.
 #' @param shapiro.wilk if \code{TRUE}, then in the top left hand corner of the
 #' Q-Q plot, the P-value from the Shapiro-Wilk test for normality is displayed.
-#' @param \dots Optional arguments
+#' @param \dots additional arguments which are passed to both \code{qqnorm} and \code{hist}
 #' @seealso \code{\link{shapiro.test}}.
 #' @keywords hplot
 #' @examples
@@ -53,7 +57,7 @@ normcheck.default = function(x, xlab = c("Theoretical Quantiles", ""),
     if (xlab[2] == "") 
         xlab[2] = deparse(substitute(x))
     
-    col = match.arg(col, c("light blue", colors()))
+    col = match.arg(col, c("light blue", grDevices::colors()))
     
     ## only grab the parameters that are going to be set
     oldPar = par(c("mfrow", "xaxs", "yaxs", "pty", "mai"))
