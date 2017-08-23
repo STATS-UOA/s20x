@@ -8,8 +8,9 @@
 \usage{
 eovcheck(object, ...)
 
-\method{eovcheck}{formula}(object, data = NULL, xlab = NULL, col = NULL,
-  smoother = FALSE, twosd = FALSE, levene = FALSE, ...)
+\method{eovcheck}{formula}(object, data = NULL, xlab = "Fitted values",
+  ylab = "Residuals", col = NULL, smoother = FALSE, twosd = FALSE,
+  levene = FALSE, ...)
 
 \method{eovcheck}{lm}(object, smoother = FALSE, twosd = FALSE,
   levene = FALSE, ...)
@@ -23,6 +24,8 @@ a linear model.}
 \item{data}{A data frame in which to evaluate the formula.}
 
 \item{xlab}{a title for the x axis: see \code{\link{title}}.}
+
+\item{ylab}{a title for the y axis: see \code{\link{title}}.}
 
 \item{col}{a color for the lowess smoother line.}
 

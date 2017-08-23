@@ -23,14 +23,25 @@
 #' 
 #' @export cooks20x
 cooks20x = function(lmfit, main = "Cook's Distance plot", xlab = "observation number", ylab = "Cook's distance", 
-                    line = c(0.5, 2, 2), cex.labels = 1, ...) {
+                    line = c(0.5, 0.1, 2), cex.labels = 1, axisOpts = c(xAxis = TRUE), ...) {
   
     y = cooks.distance(lmfit)
     show.r = order(-y)[1:3]
-    plot(1:length(y), y, type = "h", xlab = "", ylab = "", main = "", ...)
+    plot(1:length(y), y, type = "h", xlab = "", ylab = "", main = "", ylim = c(0, max(y) * 1.1), axes = FALSE, ...)
+    
+    dots = list(...)
+    
+    if(axisOpts$xAxis){
+      title(xlab = xlab, line = line[2])
+      axis(1)
+    }
+    
+    axis(2)
+    box()
+    
     title(main = main, line = line[1])
-    title(xlab = xlab, line = line[2])
     title(ylab = ylab, line = line[3])
+    
     text(show.r, y[show.r] + 0.4 * 0.75 * strheight(" "), show.r, cex = cex.labels)
 }
 

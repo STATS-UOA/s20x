@@ -18,6 +18,7 @@
 #' a linear model.
 #' @param data A data frame in which to evaluate the formula.
 #' @param xlab a title for the x axis: see \code{\link{title}}.
+#' @param ylab a title for the y axis: see \code{\link{title}}.
 #' @param col a color for the lowess smoother line.
 #' @param smoother if TRUE then a smoothed lowess line will be added to the
 #' plot
@@ -71,7 +72,7 @@ eovcheck = function(object, ...) {
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
+eovcheck.formula = function(object, data = NULL, xlab = "Fitted values", ylab = "Residuals", col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
     if (missing(object) || (class(object) != "formula")) 
         stop("missing or incorrect formula formula")
     
@@ -177,7 +178,8 @@ eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smooth
     
     opar = par(mfrow = c(1, 1), xaxs = "r", yaxs = "r")
     
-    plot(fit, sub = "", which = 1, add.smooth = FALSE)
+    plot(residuals(fit) ~ fitted(fit), xlab = "Fitted values", ylab = "Residuals", main = "", ...)
+    abline(h = 0, lty = 3, col = "lightgrey")
     resids = residuals(fit)
     yhat = fitted(fit)
     

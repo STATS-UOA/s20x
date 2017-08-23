@@ -60,7 +60,10 @@ trendscatter.default = function(x, y = NULL, f = 0.5, xlab = NULL, ylab = NULL, 
     scatter = lowess(x, e2, f)
     uplim = trend$y + sqrt(abs(scatter$y))
     lowlim = trend$y - sqrt(abs(scatter$y))
-    plot(x, y, pch = 1, xlab = xlab, ylab = ylab, main = ifelse(is.null(main), paste("Plot of", ylab, "vs.", xlab, "  (lowess+/-sd)"), main))
+    plot(x, y, pch = 1, xlab = xlab, 
+                        ylab = ylab, 
+                        main = ifelse(is.null(main), paste("Plot of", ylab, "vs.", xlab, "  (lowess+/-sd)"), main),
+                        ...)
     dots = list(...)
     
     lwd = 1
@@ -101,6 +104,6 @@ trendscatter.formula = function(x, f = 0.5, data = NULL, xlab = NULL, ylab = NUL
     if (is.null(ylab)) 
         ylab = nms[1]
     
-    trendscatter(vars[[2]], vars[[1]], f = f, xlab = xlab, ylab = ylab, main = main, ... = ...)
+    trendscatter(vars[[2]], vars[[1]], f = f, xlab = xlab, ylab = ylab, main = main, ...)
 }
 

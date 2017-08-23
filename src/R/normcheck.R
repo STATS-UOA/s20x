@@ -71,7 +71,7 @@ normcheck.default = function(x, xlab = c("Theoretical Quantiles", ""),
         on.exit(par(mfrow = oldPar))
     }
     
-    qqp = qqnorm(x, axes = FALSE, xlab = "", ylab = "", main = "")
+    qqp = qqnorm(x, axes = FALSE, xlab = "", ylab = "", main = "", ...)
     qqline(x, col = "black")
     box()
     title(xlab = xlab[1], line = 0.05)
@@ -98,7 +98,7 @@ normcheck.default = function(x, xlab = c("Theoretical Quantiles", ""),
     ymax = max(h$density, dnorm(mx, mx, sx)) * 1.05
     
     hist(x, prob = TRUE, ylim = c(0, ymax), xlim = c(xmin, xmax), col = col,
-         xlab = "", ylab = "", main = "", axes = FALSE)
+         xlab = "", ylab = "", main = "", axes = FALSE, ...)
     w = strwidth(xlab[2], units = "figure")
     
     if(w < 0.95){
