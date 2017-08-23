@@ -71,7 +71,7 @@ eovcheck = function(object, ...) {
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
+eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, axes = TRUE, ...) {
     if (missing(object) || (class(object) != "formula")) 
         stop("missing or incorrect formula formula")
     
@@ -176,8 +176,19 @@ eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smooth
     }
     
     opar = par(mfrow = c(1, 1), xaxs = "r", yaxs = "r")
-    
-    plot(fit, sub = "", which = 1, add.smooth = FALSE)
+    ## The plot.lm() function does not accept the 'axes'
+    ## argument. This is a bit of a hack to remove axis tickmarks and
+    ## labels.
+    if (axes){
+        xaxt = "s"
+        yaxt = "s"
+        cex.lab = 1
+    } else {
+        xaxt = "n"
+        yaxt = "n"
+        cex.lab = 1e-10
+    }
+    plot(fit, sub = "", which = 1, add.smooth = FALSE, xaxt = xaxt, yaxt = yaxt, cex.lab = cex.lab)
     resids = residuals(fit)
     yhat = fitted(fit)
     
@@ -204,13 +215,13 @@ eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smooth
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.lm = function(object, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
+eovcheck.lm = function(object, smoother = FALSE, twosd = FALSE, levene = FALSE, axes = TRUE, ...) {
     if (missing(object) || (class(object) != "lm")) 
         stop("missing or incorrect lm object")
     
     form = formula(object$call$formula)
     data.f = data.frame(eval(object$call$data, parent.frame()))
     
-    eovcheck.formula(object = form, data = data.f, smoother = smoother, twosd = twosd, levene = levene, ...)
+    eovcheck.formula(object = form, data = data.f, smoother = smoother, twosd = twosd, levene = levene, axes = axes, ...)
 }
 
