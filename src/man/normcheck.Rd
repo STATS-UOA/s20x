@@ -10,10 +10,12 @@ normcheck(x, ...)
 
 \method{normcheck}{default}(x, xlab = c("Theoretical Quantiles", ""),
   ylab = c("Sample Quantiles", ""), main = c("", ""), col = "light blue",
+  bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
   shapiro.wilk = FALSE, ...)
 
 \method{normcheck}{lm}(x, xlab = c("Theoretical Quantiles", ""),
   ylab = c("Sample Quantiles", ""), main = c("", ""), col = "light blue",
+  bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
   shapiro.wilk = FALSE, ...)
 }
 \arguments{
@@ -28,6 +30,13 @@ normcheck(x, ...)
 \item{main}{a title for both the Q-Q plot and the histogram: see \code{\link{title}}.}
 
 \item{col}{a color for the bars of the histogram.}
+
+\item{bootstrap}{if \code{TRUE} then \code{B} samples will be taken from a Normal distribution 
+with the same mean and standard deviation as \code{x}. These will be plotted in a lighter colour behind the
+empirical quantiles so that we can see how much variation we would expect in the Q-Q plot for a
+sample of the same size from a truly normal distribution.}
+
+\item{B}{the number of bootstrap samples to take. Five should be sufficient, but hey maybe you want more?}
 
 \item{shapiro.wilk}{if \code{TRUE}, then in the top left hand corner of the
 Q-Q plot, the P-value from the Shapiro-Wilk test for normality is displayed.}

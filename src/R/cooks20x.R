@@ -23,7 +23,7 @@
 #' 
 #' @export cooks20x
 cooks20x = function(lmfit, main = "Cook's Distance plot", xlab = "observation number", ylab = "Cook's distance", 
-                    line = c(0.5, 0.1, 2), cex.labels = 1, axisOpts = c(xAxis = TRUE), ...) {
+                    line = c(0.5, 0.1, 2), cex.labels = 1, axisOpts = list(xAxis = TRUE), ...) {
   
     y = cooks.distance(lmfit)
     show.r = order(-y)[1:3]
