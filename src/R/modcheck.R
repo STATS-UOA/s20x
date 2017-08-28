@@ -38,6 +38,9 @@ modcheck = function(x, ...) {
 #' @describeIn modcheck Model checking plots
 modcheck.lm = function(x, plotOrder = 1:4, 
                        args = list(predResArgs, normcheckArgs, cooksArgs),
+                       parVals = list(mfrow = c(2, 2),
+                                      xaxs = "r", yaxs = "r", pty = "s",
+                                      mai = c(0.2, 0.2, 0, 0.05)),
                        ...){
   if (missing(x) || (class(x) != "lm")) 
     stop("missing or incorrect lm object")
@@ -46,15 +49,16 @@ modcheck.lm = function(x, plotOrder = 1:4,
     stop("plotOrder must be in 1:4")
   }
   
-  oldPar = par(mfrow = c(2, 2))
+  oldPar = par(parVals)
   
   Plots = c(eovcheck, normcheck, normcheck, cooks20x)[plotOrder]
   
   for(p in plotOrder){
     if(p == 1){
-      eovcheck(x)
+      eovcheck(x, axes = FALSE)
+      box()
     }else if(p == 2){
-      normcheck(x, whichPlot = 1, usePar = FALSE)
+      normcheck(x, whichPlot = 1, usePar = FALSE, bootstrap = TRUE)
     }else if(p == 3){
       normcheck(x, whichPlot = 2, usePar = FALSE)
     }else{

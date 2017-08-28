@@ -8,7 +8,8 @@
 modcheck(x, ...)
 
 \method{modcheck}{lm}(x, plotOrder = 1:4, args = list(predResArgs,
-  normcheckArgs, cooksArgs), ...)
+  normcheckArgs, cooksArgs), parVals = list(mfrow = c(2, 2), xaxs = "r", yaxs
+  = "r", pty = "s", mai = c(0.2, 0.2, 0, 0.05)), ...)
 }
 \arguments{
 \item{x}{a vector of observations, or the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.

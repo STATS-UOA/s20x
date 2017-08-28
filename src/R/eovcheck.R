@@ -180,7 +180,7 @@ eovcheck.formula = function(object, data = NULL,
     
     opar = par(xaxs = "r", yaxs = "r")
     
-    plot(residuals(fit) ~ fitted(fit), xlab = "Fitted values", ylab = "Residuals", main = "", ...)
+    plot(residuals(fit) ~ fitted(fit), xlab = xlab, ylab = ylab, main = "", ...)
     abline(h = 0, lty = 3, col = "lightgrey")
     resids = residuals(fit)
     yhat = fitted(fit)

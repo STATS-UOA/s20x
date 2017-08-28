@@ -105,8 +105,8 @@ normcheck.default = function(x,
   nx = length(x)
   
   qqPlot = function(i){
-    qqp = qqnorm(x, axes = FALSE, xlab = "", ylab = "", main = "", ...)
-    qqline(x, col = "black")
+    qqp = qqnorm(x, axes = FALSE, xlab = "", ylab = "", main = "", 
+                 xaxs = "r", yaxs = "r", ...)
     box()
     title(xlab = xlab[i], line = 0.05)
     title(ylab = ylab[i], line = 0.05)
@@ -123,8 +123,12 @@ normcheck.default = function(x,
         points(qz, sort(z), pch = bpch, col = bcol)
       }
       points(qqp$x, qqp$y)
-      legend("topleft", pch = c(1, 3), col = c("black", bcol), legend = c("Data", "Bootstrap samples"), bty = "n")
+      legend("topleft", pch = c(1, 3), col = c("black", bcol), 
+             legend = c("Data", "Bootstrap samples"), 
+             cex = 0.7, bty = "n")
     }
+    
+    qqline(x, col = "black")
     
     if (shapiro.wilk) {
       stest = shapiro.test(x)
@@ -145,7 +149,7 @@ normcheck.default = function(x,
     ymax = max(h$density, dnorm(mx, mx, sx)) * 1.05
     
     hist(x, prob = TRUE, ylim = c(0, ymax), xlim = c(xmin, xmax), col = col,
-         xlab = "", ylab = "", main = "", axes = FALSE, ...)
+         xlab = "", ylab = "", main = "", axes = FALSE, yaxs = "i", ...)
     w = strwidth(xlab[i], units = "figure")
     
     if(w < 0.95){
@@ -158,7 +162,8 @@ normcheck.default = function(x,
     title(main = main[i], line = 0.05)
     box()
     
-    x1 = seq(xmin, xmax, length = 100)
+    usr = par("usr")
+    x1 = seq(usr[1], usr[2], length = 100)
     y1 = dnorm(x1, mx, sx)
     lines(x1, y1, lwd = 1.5, lty = 3)
   }
@@ -172,7 +177,7 @@ normcheck.default = function(x,
     if(length(mfrow) > 1){
       par(mfrow = mfrow)
     }
-    par(xaxs = "i", yaxs = "i", pty = "s",
+    par(xaxs = "r", yaxs = "r", pty = "s",
         mai = c(0.1, 0.2, 0, 0.05))
     on.exit(par(par = oldPar))
   }
