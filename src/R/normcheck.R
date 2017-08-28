@@ -49,46 +49,71 @@
 #' 
 #' @export normcheck
 normcheck = function(x, ...) {
-    UseMethod("normcheck")
+  UseMethod("normcheck")
 }
 
 #' @export
 #' @describeIn normcheck Testing for normality plot
-normcheck.default = function(x, xlab = c("Theoretical Quantiles", ""), 
-                                ylab = c("Sample Quantiles", ""),
-                                main = c("", ""), col = "light blue",
-                                bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
-                                shapiro.wilk = FALSE, ...) {
-    
-    if (xlab[2] == "") 
-        xlab[2] = deparse(substitute(x))
-    
-    col = match.arg(col, c("light blue", grDevices::colors()))
-    
-    ## only grab the parameters that are going to be set
-    oldPar = par(c("mfrow", "xaxs", "yaxs", "pty", "mai"))
-
-    
-    ## change the layout of the plotting window only if it has not already been set
-    if (all(oldPar$mfrow == c(1, 1))) {
-        par(mfrow = c(1, 2), xaxs = "i", yaxs = "i", pty = "s",
-            mai = c(0.1, 0.2, 0, 0.05))
-        on.exit(par(mfrow = oldPar))
+normcheck.default = function(x,
+                             xlab = c("Theoretical Quantiles", ""), 
+                             ylab = c("Sample Quantiles", ""),
+                             main = c("", ""), col = "light blue",
+                             bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
+                             shapiro.wilk = FALSE, 
+                             whichPlot = 1:2,
+                             usePar = TRUE, ...) {
+  
+  if(!all(whichPlot %in% 1:2)){
+    stop("whichPlot must be in 1:2")
+  }
+  
+  if(length(xlab) == length(whichPlot)){
+    ## if the length of the labels matches the number of plots
+    ## then assume the user wants them ordered in the order given
+    ## by whichPlot. This might be stupid, but I can't see this being
+    ## done very often
+    if(length(whichPlot) == 2){
+      xlab = xlab[whichPlot]
+      ylab = ylab[whichPlot]
+      main = main[whichPlot]
     }
-    
+  }else{
+    if(length(xlab) == 2 & length(whichPlot) == 1){
+      xlab = xlab[whichPlot]
+      ylab = ylab[whichPlot]
+      main = main[whichPlot] 
+    }
+  }
+  
+  ## Make sure if we're drawing the histogram
+  ## That the default label is not left blank
+  if(2 %in% whichPlot){
+    idx = which(whichPlot == 2)
+    if (!is.na(xlab[idx]) && xlab[idx] == "") {
+      xlab[idx] = deparse(substitute(x))
+    }
+  }
+  
+  col = match.arg(col, c("light blue", grDevices::colors()))
+  bcol = match.arg(bcol, grDevices::colors())
+  
+  ## only grab the parameters that are going to be set
+  oldPar = par(c("mfrow", "xaxs", "yaxs", "pty", "mai"))
+  
+  mx = mean(x)
+  sx = sd(x)
+  nx = length(x)
+  
+  qqPlot = function(i){
     qqp = qqnorm(x, axes = FALSE, xlab = "", ylab = "", main = "", ...)
     qqline(x, col = "black")
     box()
-    title(xlab = xlab[1], line = 0.05)
-    title(ylab = ylab[1], line = 0.05)
+    title(xlab = xlab[i], line = 0.05)
+    title(ylab = ylab[i], line = 0.05)
     if(main[1] != ""){
-      title(main = main[1])
+      title(main = main[i])
     }
     
-    mx = mean(x)
-    sx = sd(x)
-    nx = length(x)
-     
     if(bootstrap){
       p = ppoints(nx)
       qz = qnorm(p)
@@ -102,10 +127,14 @@ normcheck.default = function(x, xlab = c("Theoretical Quantiles", ""),
     }
     
     if (shapiro.wilk) {
-        stest = shapiro.test(x)
-        txt = paste("Shapiro-Wilk normality test", "\n", "W = ", round(stest$statistic, 4), "\n", "P-value = ", round(stest$p.value, 3), sep = "")
-        text(sort(qqp$x)[2], 0.99 * sort(qqp$y)[length(qqp$y)], txt, adj = c(0, 1))
+      stest = shapiro.test(x)
+      txt = paste("Shapiro-Wilk normality test", "\n", "W = ", round(stest$statistic, 4), "\n", "P-value = ", round(stest$p.value, 3), sep = "")
+      text(sort(qqp$x)[2], 0.99 * sort(qqp$y)[length(qqp$y)], txt, adj = c(0, 1))
     }
+  }
+  
+  
+  histPlot = function(i){
     
     h = hist(x, plot = FALSE)
     rx = range(x)
@@ -117,38 +146,75 @@ normcheck.default = function(x, xlab = c("Theoretical Quantiles", ""),
     
     hist(x, prob = TRUE, ylim = c(0, ymax), xlim = c(xmin, xmax), col = col,
          xlab = "", ylab = "", main = "", axes = FALSE, ...)
-    w = strwidth(xlab[2], units = "figure")
+    w = strwidth(xlab[i], units = "figure")
     
     if(w < 0.95){
-      title(xlab = xlab[2], line = 0.05)
+      title(xlab = xlab[i], line = 0.05)
     }else{
       m = 1 / (w * 1.1)
-      title(xlab = xlab[2], line = 0.05, cex.lab = m)
+      title(xlab = xlab[i], line = 0.05, cex.lab = m)
     }
-    title(ylab = ylab[2], line = 0.05)
-    title(main = main[2], line = 0.05)
+    title(ylab = ylab[i], line = 0.05)
+    title(main = main[i], line = 0.05)
     box()
     
     x1 = seq(xmin, xmax, length = 100)
     y1 = dnorm(x1, mx, sx)
     lines(x1, y1, lwd = 1.5, lty = 3)
+  }
+  
+  mfrow = c(1, 2)[1:length(whichPlot)]
+  
+  ## Change the layout of the plotting window only if it has not already been set
+  ## This has changed to allow for a single plot to be drawn
+  
+  if(usePar) {
+    if(length(mfrow) > 1){
+      par(mfrow = mfrow)
+    }
+    par(xaxs = "i", yaxs = "i", pty = "s",
+        mai = c(0.1, 0.2, 0, 0.05))
+    on.exit(par(par = oldPar))
+  }
+  
+  Plots = c(qqPlot, histPlot)[whichPlot]
+  i = 1
+  for(p in Plots){
+    p(i)
+    i = i + 1
+  }
 }
 
 #' @export
 #' @describeIn normcheck Testing for normality plot
 normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""), 
-                           ylab = c("Sample Quantiles", ""),
-                           main = c("", ""), col = "light blue",
-                           bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
-                           shapiro.wilk = FALSE, ...){
-    if (missing(x) || (class(x) != "lm")) 
-        stop("missing or incorrect lm object")
-    
-    
-    if (xlab[2] == "") 
+                        ylab = c("Sample Quantiles", ""),
+                        main = c("", ""), col = "light blue",
+                        bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
+                        shapiro.wilk = FALSE, 
+                        whichPlot = 1:2, 
+                        usePar = TRUE, ...){
+  if (missing(x) || (class(x) != "lm")) 
+    stop("missing or incorrect lm object")
+  
+  if(!all(whichPlot %in% 1:2)){
+    stop("whichPlot must be in 1:2")
+  }
+  
+  if(2 %in% whichPlot){
+    if(length(xlab) == 2){
+      if(!is.na(xlab[2]) && xlab[2] == "") {
         xlab[2] = paste("Residuals from lm(", as.character(x$call[2]), ")", sep = "")
-    
-    x = residuals(x)
-    normcheck(x, xlab = xlab, main = main, col = col, bootstrap = bootstrap, bpch = bpch, bcol = bcol, shapiro.wilk = shapiro.wilk, ...)
+      }
+    }else{
+      if(!is.na(xlab) && xlab == "") {
+        xlab = paste("Residuals from lm(", as.character(x$call[2]), ")", sep = "")
+      }
+    }
+  }
+
+  x = residuals(x)
+  normcheck(x, xlab = xlab, main = main, col = col, bootstrap = bootstrap, bpch = bpch, bcol = bcol, shapiro.wilk = shapiro.wilk, 
+            whichPlot = whichPlot, usePar = usePar, ...)
 }
 

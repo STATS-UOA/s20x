@@ -72,7 +72,9 @@ eovcheck = function(object, ...) {
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.formula = function(object, data = NULL, xlab = "Fitted values", ylab = "Residuals", col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
+eovcheck.formula = function(object, data = NULL, 
+                            xlab = "Fitted values", ylab = "Residuals", 
+                            col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
     if (missing(object) || (class(object) != "formula")) 
         stop("missing or incorrect formula formula")
     
