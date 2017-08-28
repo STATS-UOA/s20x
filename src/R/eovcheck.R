@@ -178,7 +178,7 @@ eovcheck.formula = function(object, data = NULL,
         fit = lm(form, data = data.f)
     }
     
-    opar = par(mfrow = c(1, 1), xaxs = "r", yaxs = "r")
+    opar = par(xaxs = "r", yaxs = "r")
     
     plot(residuals(fit) ~ fitted(fit), xlab = "Fitted values", ylab = "Residuals", main = "", ...)
     abline(h = 0, lty = 3, col = "lightgrey")
