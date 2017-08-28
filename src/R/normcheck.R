@@ -120,7 +120,7 @@ normcheck.default = function(x,
       
       for(b in 1:B){
         z = rnorm(nx, mx, sx)
-        points(qz, sort(z), pch = bpch, col = bcol)
+        points(qz, quantile(z, probs = p), pch = bpch, col = bcol)
       }
       points(qqp$x, qqp$y)
       legend("topleft", pch = c(1, 3), col = c("black", bcol), 
@@ -178,7 +178,7 @@ normcheck.default = function(x,
       par(mfrow = mfrow)
     }
     par(xaxs = "r", yaxs = "r", pty = "s",
-        mai = c(0.1, 0.2, 0, 0.05))
+        mai = c(0.2, 0.2, 0.05, 0.05))
     on.exit(par(par = oldPar))
   }
   

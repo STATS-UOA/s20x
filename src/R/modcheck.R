@@ -40,7 +40,7 @@ modcheck.lm = function(x, plotOrder = 1:4,
                        args = list(predResArgs, normcheckArgs, cooksArgs),
                        parVals = list(mfrow = c(2, 2),
                                       xaxs = "r", yaxs = "r", pty = "s",
-                                      mai = c(0.2, 0.2, 0, 0.05)),
+                                      mai = c(0.2, 0.2, 0.05, 0.05)),
                        ...){
   if (missing(x) || (class(x) != "lm")) 
     stop("missing or incorrect lm object")
@@ -56,6 +56,7 @@ modcheck.lm = function(x, plotOrder = 1:4,
   for(p in plotOrder){
     if(p == 1){
       eovcheck(x, axes = FALSE)
+      title(xlab = "Fitted values", line = 1)
       box()
     }else if(p == 2){
       normcheck(x, whichPlot = 1, usePar = FALSE, bootstrap = TRUE)
