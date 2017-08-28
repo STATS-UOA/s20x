@@ -117,10 +117,10 @@ normcheck.default = function(x,
     if(bootstrap){
       p = ppoints(nx)
       qz = qnorm(p)
-      
+
       for(b in 1:B){
         z = rnorm(nx, mx, sx)
-        points(qz, quantile(z, probs = p), pch = bpch, col = bcol)
+        points(qz[order(order(z))], z, pch = bpch, col = bcol)
       }
       points(qqp$x, qqp$y)
       legend("topleft", pch = c(1, 3), col = c("black", bcol), 
