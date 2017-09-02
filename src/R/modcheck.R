@@ -47,17 +47,17 @@ modcheck = function(x, ...) {
 #' @export
 #' @describeIn modcheck Model checking plots
 modcheck.lm = function(x, plotOrder = 1:4, 
-                       args = list(predResArgs = list(smoother = FALSE, 
+                       args = list(eovcheck = list(smoother = FALSE, 
                                                       twosd = FALSE, 
                                                       levene = FALSE, ...), 
-                                   normcheckArgs = list(xlab = c("Theoretical Quantiles", ""), 
+                                   normcheck = list(xlab = c("Theoretical Quantiles", ""), 
                                                         ylab = c("Sample Quantiles", ""),
                                                         main = c("", ""), col = "light blue",
                                                         bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
                                                         shapiro.wilk = FALSE, 
                                                         whichPlot = 1:2,
                                                         usePar = TRUE, ...), 
-                                   cooksArgs = list(main = "Cook's Distance plot",
+                                   cooks20x = list(main = "Cook's Distance plot",
                                                     xlab = "observation number", 
                                                     ylab = "Cook's distance", 
                                                     line = c(0.5, 0.1, 2), 
@@ -80,15 +80,27 @@ modcheck.lm = function(x, plotOrder = 1:4,
   
   for(p in plotOrder){
     if(p == 1){
-      eovcheck(x, axes = FALSE)
-      title(xlab = "Fitted values", line = 1)
+      args$eovcheck$axes = FALSE
+      args$eovcheck$x = formula(x$call$formula)
+      args$eovcheck$data = x$model
+      do.call(what = eovcheck, args = args$eovcheck)
+      title(xlab = "Fitted values", line = 0)
+      title(ylab = "Residuals", line = 0)
       box()
     }else if(p == 2){
-      normcheck(x, whichPlot = 1, usePar = FALSE, bootstrap = TRUE)
+      args$normcheck$x = x
+      args$normcheck$whichPlot = 1
+      args$normcheck$usePar = FALSE
+      do.call(what = normcheck, args = args$normcheck)
     }else if(p == 3){
-      normcheck(x, whichPlot = 2, usePar = FALSE)
+      args$normcheck$x = x
+      args$normcheck$whichPlot = 2
+      args$normcheck$usePar = FALSE
+      do.call(what = normcheck, args = args$normcheck)
     }else{
-      cooks20x(x)
+      args$cooks20x$x = x
+      args$cooks20x$axisOpts$xAxis = FALSE
+      do.call(what = cooks20x, args = args$cooks20x)
     }
   }
   

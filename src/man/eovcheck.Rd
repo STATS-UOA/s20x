@@ -6,17 +6,17 @@
 \alias{eovcheck.lm}
 \title{Testing for equality of variance plot}
 \usage{
-eovcheck(object, ...)
+eovcheck(x, ...)
 
-\method{eovcheck}{formula}(object, data = NULL, xlab = "Fitted values",
+\method{eovcheck}{formula}(x, data = NULL, xlab = "Fitted values",
   ylab = "Residuals", col = NULL, smoother = FALSE, twosd = FALSE,
   levene = FALSE, ...)
 
-\method{eovcheck}{lm}(object, smoother = FALSE, twosd = FALSE,
-  levene = FALSE, ...)
+\method{eovcheck}{lm}(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
+  ...)
 }
 \arguments{
-\item{object}{A linear model formula. Alternatively, a fitted lm object from
+\item{x}{A linear model formula. Alternatively, a fitted lm object from
 a linear model.}
 
 \item{\dots}{Optional arguments}

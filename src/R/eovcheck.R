@@ -14,7 +14,7 @@
 #' number of observations per group exceeds two.
 #' 
 #' 
-#' @param object A linear model formula. Alternatively, a fitted lm object from
+#' @param x A linear model formula. Alternatively, a fitted lm object from
 #' a linear model.
 #' @param data A data frame in which to evaluate the formula.
 #' @param xlab a title for the x axis: see \code{\link{title}}.
@@ -66,21 +66,21 @@
 #' eovcheck(airpass.fit)
 #' 
 #' @export eovcheck
-eovcheck = function(object, ...) {
+eovcheck = function(x, ...) {
     UseMethod("eovcheck")
 }
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.formula = function(object, data = NULL, 
+eovcheck.formula = function(x, data = NULL, 
                             xlab = "Fitted values", ylab = "Residuals", 
                             col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
-    if (missing(object) || (class(object) != "formula")) 
+    if (missing(x) || (class(x) != "formula")) 
         stop("missing or incorrect formula formula")
     
     call = match.call()
     m = match.call()
-    mn = match(c("object", "data"), names(m), 0)
+    mn = match(c("x", "data"), names(m), 0)
     m = m[c(1, mn)]
     m$drop.unused.levels = TRUE
     
@@ -208,13 +208,13 @@ eovcheck.formula = function(object, data = NULL,
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.lm = function(object, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
-    if (missing(object) || (class(object) != "lm")) 
+eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
+    if (missing(x) || (class(x) != "lm")) 
         stop("missing or incorrect lm object")
     
-    form = formula(object$call$formula)
-    data.f = data.frame(eval(object$call$data, parent.frame()))
+    form = formula(x$call$formula)
+    data.f = data.frame(eval(x$call$data, parent.frame()))
     
-    eovcheck.formula(object = form, data = data.f, smoother = smoother, twosd = twosd, levene = levene, ...)
+    eovcheck.formula(x = form, data = data.f, smoother = smoother, twosd = twosd, levene = levene, ...)
 }
 

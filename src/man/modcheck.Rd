@@ -7,12 +7,12 @@
 \usage{
 modcheck(x, ...)
 
-\method{modcheck}{lm}(x, plotOrder = 1:4, args = list(predResArgs =
-  list(smoother = FALSE, twosd = FALSE, levene = FALSE, ...), normcheckArgs =
+\method{modcheck}{lm}(x, plotOrder = 1:4, args = list(eovcheck =
+  list(smoother = FALSE, twosd = FALSE, levene = FALSE, ...), normcheck =
   list(xlab = c("Theoretical Quantiles", ""), ylab = c("Sample Quantiles", ""),
   main = c("", ""), col = "light blue", bootstrap = FALSE, B = 5, bpch = 3, bcol
   = "lightgrey", shapiro.wilk = FALSE, whichPlot = 1:2, usePar = TRUE, ...),
-  cooksArgs = list(main = "Cook's Distance plot", xlab = "observation number",
+  cooks20x = list(main = "Cook's Distance plot", xlab = "observation number",
   ylab = "Cook's distance", line = c(0.5, 0.1, 2), cex.labels = 1, axisOpts =
   list(xAxis = TRUE), ...)), parVals = list(mfrow = c(2, 2), xaxs = "r", yaxs
   = "r", pty = "s", mai = c(0.2, 0.2, 0.05, 0.05)), ...)

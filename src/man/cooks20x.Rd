@@ -4,12 +4,12 @@
 \alias{cooks20x}
 \title{Cook's distance plot}
 \usage{
-cooks20x(lmfit, main = "Cook's Distance plot", xlab = "observation number",
+cooks20x(x, main = "Cook's Distance plot", xlab = "observation number",
   ylab = "Cook's distance", line = c(0.5, 0.1, 2), cex.labels = 1,
   axisOpts = list(xAxis = TRUE), ...)
 }
 \arguments{
-\item{lmfit}{output from the function 'lm()'.}
+\item{x}{an object of class \code{lm}, usually obtained by using the \code{\link{lm}} function.}
 
 \item{main}{the plot title}
 
@@ -21,6 +21,10 @@ cooks20x(lmfit, main = "Cook's Distance plot", xlab = "observation number",
 from the axis in line units.}
 
 \item{cex.labels}{a factor controlling the font size of the labels on suspected high influence points.}
+
+\item{axisOpts}{a list of additional arguments that can be used to control the axes. At this point
+this list only contains one element \code{xAxis} which is logical. If \code{xAxis == TRUE} then the 
+x-axis will be displayed, and clearly, if it is \code{FALSE}, then it will not.}
 
 \item{\dots}{additional arguments are passed to \code{plot} and may provide some extra flexibility.}
 }
