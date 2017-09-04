@@ -220,7 +220,7 @@ eovcheck.lm = function(object, smoother = FALSE, twosd = FALSE, levene = FALSE, 
         stop("missing or incorrect lm object")
     
     form = formula(object$call$formula)
-    data.f = data.frame(eval(object$call$data, parent.frame()))
+    data.f = object$model
     
     eovcheck.formula(object = form, data = data.f, smoother = smoother, twosd = twosd, levene = levene, axes = axes, ...)
 }
