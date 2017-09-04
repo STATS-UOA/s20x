@@ -6,16 +6,37 @@
 #' \code{shapiro.wilk = TRUE} then, in the top left hand corner of the Q-Q
 #' plot, the P-value from the Shapiro-Wilk test for normality is given.
 #' Secondly, it draws a histogram of the residuals. A normal distribution is
-#' fitted and superimposed over the histogram.
+#' fitted and superimposed over the histogram. NOTE: if you want to leave the 
+#' x-axis blank in the histogram then, use \code{xlab = c("Theoretical Quantiles", " ")}
+#' , i.e. leave a space between the quotes. If you don't leave a space, then information 
+#' will be extracted from \code{x}. 
 #' 
 #' 
 #' @param x the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.
-#' @param xlab a title for the x axis: see \code{\link{title}}.
-#' @param main a title for the x axis: see \code{\link{title}}.
+#' @param xlab a title for the x-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.
+#' @param ylab a title for the y-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.
+#' @param main a title for both the Q-Q plot and the histogram: see \code{\link{title}}.
 #' @param col a color for the bars of the histogram.
+#' @param bootstrap if \code{TRUE} then \code{B} samples will be taken from a Normal distribution 
+#' with the same mean and standard deviation as \code{x}. These will be plotted in a lighter colour behind the
+#' empirical quantiles so that we can see how much variation we would expect in the Q-Q plot for a
+#' sample of the same size from a truly normal distribution.
+#' @param B the number of bootstrap samples to take. Five should be sufficient, but hey maybe you want more?
+#' @param bpch the plotting symbol used for the bootstrap samples. Legal values are the same as any legal
+#' value for \code{pch} as defined in \code{\link{par}}.
+#' @param bcol the plotting colour used for the bootstrap samples. Legal values are the same as any legal
+#' value for \code{col} as defined in \code{\link{par}}.
 #' @param shapiro.wilk if \code{TRUE}, then in the top left hand corner of the
 #' Q-Q plot, the P-value from the Shapiro-Wilk test for normality is displayed.
-#' @param \dots Optional arguments
+#' @param whichPlot legal values are  \code{1}, \code{2}, and any pair of the two, i.e. \code{1:2}, \code{2:1},
+#' \code{c(1,2)}, \code{c(2,1)}, or even variants of \code{c(1,1)} (although I do not know why you would)
+#' want to do this. \code{1:2} is used by default and returns a normal Q-Q plot and a historgram of the residuals
+#' in that order. The order of the labels in \code{xlab} and \code{ylab} assume this order, and will be 
+#' reordered automatically if the order is anything other than \code{1:2}.
+#' @param usePar if \code{TRUE}, then this function will set \code{\link{par}} for the user. If \code{FALSE},
+#' then this function assumes \code{\link{par}} has been set by the user and therefore should not be
+#' be over-ridden.
+#' @param \dots additional arguments which are passed to both \code{qqnorm} and \code{hist}
 #' @seealso \code{\link{shapiro.test}}.
 #' @keywords hplot
 #' @examples
@@ -40,41 +61,96 @@
 #' 
 #' @export normcheck
 normcheck = function(x, ...) {
-    UseMethod("normcheck")
+  UseMethod("normcheck")
 }
 
 #' @export
 #' @describeIn normcheck Testing for normality plot
-normcheck.default = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wilk = FALSE, ...) {
-    
-    if (is.null(xlab)) 
-        xlab = deparse(substitute(x))
-    
-    if (is.null(col)) 
-        col = "light blue"
-    
-    ## only grab the parameters that are going to be set
-    oldPar = par(c("mfrow", "xaxs", "yaxs", "pty"))
-    
-    
-    
-    ## change the layout of the plotting window only if it has not already been set
-    if (all(oldPar$mfrow == c(1, 1))) {
-        par(mfrow = c(1, 2), xaxs = "i", yaxs = "i", pty = "s")
-        on.exit(par(mfrow = oldPar))
+normcheck.default = function(x,
+                             xlab = c("Theoretical Quantiles", ""), 
+                             ylab = c("Sample Quantiles", ""),
+                             main = c("", ""), col = "light blue",
+                             bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
+                             shapiro.wilk = FALSE, 
+                             whichPlot = 1:2,
+                             usePar = TRUE, ...) {
+  
+  if(!all(whichPlot %in% 1:2)){
+    stop("whichPlot must be in 1:2")
+  }
+  
+  if(length(xlab) == length(whichPlot)){
+    ## if the length of the labels matches the number of plots
+    ## then assume the user wants them ordered in the order given
+    ## by whichPlot. This might be stupid, but I can't see this being
+    ## done very often
+    if(length(whichPlot) == 2){
+      xlab = xlab[whichPlot]
+      ylab = ylab[whichPlot]
+      main = main[whichPlot]
+    }
+  }else{
+    if(length(xlab) == 2 & length(whichPlot) == 1){
+      xlab = xlab[whichPlot]
+      ylab = ylab[whichPlot]
+      main = main[whichPlot] 
+    }
+  }
+  
+  ## Make sure if we're drawing the histogram
+  ## That the default label is not left blank
+  if(2 %in% whichPlot){
+    idx = which(whichPlot == 2)
+    if (!is.na(xlab[idx]) && xlab[idx] == "") {
+      xlab[idx] = deparse(substitute(x))
+    }
+  }
+  
+  col = match.arg(col, c("light blue", grDevices::colors()))
+  bcol = match.arg(bcol, grDevices::colors())
+  
+  ## only grab the parameters that are going to be set
+  oldPar = par(c("mfrow", "xaxs", "yaxs", "pty", "mai"))
+  
+  mx = mean(x)
+  sx = sd(x)
+  nx = length(x)
+  
+  qqPlot = function(i){
+    qqp = qqnorm(x, axes = FALSE, xlab = "", ylab = "", main = "", 
+                 xaxs = "r", yaxs = "r", ...)
+    box()
+    title(xlab = xlab[i], line = 0.05)
+    title(ylab = ylab[i], line = 0.05)
+    if(main[1] != ""){
+      title(main = main[i])
     }
     
-    mx = mean(x)
-    sx = sd(x)
-    qqp = qqnorm(x)
-    abline(c(mx, sx))
+    if(bootstrap){
+      p = ppoints(nx)
+      qz = qnorm(p)
+
+      for(b in 1:B){
+        z = rnorm(nx, mx, sx)
+        points(qz[order(order(z))], z, pch = bpch, col = bcol)
+      }
+      points(qqp$x, qqp$y)
+      legend("topleft", pch = c(1, 3), col = c("black", bcol), 
+             legend = c("Data", "Bootstrap samples"), 
+             cex = 0.7, bty = "n")
+    }
     
+    qqline(x, col = "black")
     
     if (shapiro.wilk) {
-        stest = shapiro.test(x)
-        txt = paste("Shapiro-Wilk normality test", "\n", "W = ", round(stest$statistic, 4), "\n", "P-value = ", round(stest$p.value, 3), sep = "")
-        text(sort(qqp$x)[2], 0.99 * sort(qqp$y)[length(qqp$y)], txt, adj = c(0, 1))
+      stest = shapiro.test(x)
+      txt = paste("Shapiro-Wilk normality test", "\n", "W = ", round(stest$statistic, 4), "\n", "P-value = ", round(stest$p.value, 3), sep = "")
+      text(sort(qqp$x)[2], 0.99 * sort(qqp$y)[length(qqp$y)], txt, adj = c(0, 1))
     }
+  }
+  
+  
+  histPlot = function(i){
     
     h = hist(x, plot = FALSE)
     rx = range(x)
@@ -84,25 +160,78 @@ normcheck.default = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wi
     
     ymax = max(h$density, dnorm(mx, mx, sx)) * 1.05
     
-    hist(x, prob = TRUE, ylim = c(0, ymax), xlim = c(xmin, xmax), xlab = xlab, col = col, main = main)
+    hist(x, prob = TRUE, ylim = c(0, ymax), xlim = c(xmin, xmax), col = col,
+         xlab = "", ylab = "", main = "", axes = FALSE, yaxs = "i", ...)
+    w = strwidth(xlab[i], units = "figure")
+    
+    if(w < 0.95){
+      title(xlab = xlab[i], line = 0.05)
+    }else{
+      m = 1 / (w * 1.1)
+      title(xlab = xlab[i], line = 0.05, cex.lab = m)
+    }
+    title(ylab = ylab[i], line = 0.05)
+    title(main = main[i], line = 0.05)
     box()
     
-    x1 = seq(xmin, xmax, length = 100)
+    usr = par("usr")
+    x1 = seq(usr[1], usr[2], length = 100)
     y1 = dnorm(x1, mx, sx)
     lines(x1, y1, lwd = 1.5, lty = 3)
+  }
+  
+  mfrow = c(1, 2)[1:length(whichPlot)]
+  
+  ## Change the layout of the plotting window only if it has not already been set
+  ## This has changed to allow for a single plot to be drawn
+  
+  if(usePar) {
+    if(length(mfrow) > 1){
+      par(mfrow = mfrow)
+    }
+    par(xaxs = "r", yaxs = "r", pty = "s",
+        mai = c(0.2, 0.2, 0.05, 0.05))
+    on.exit(par(par = oldPar))
+  }
+  
+  Plots = c(qqPlot, histPlot)[whichPlot]
+  i = 1
+  for(p in Plots){
+    p(i)
+    i = i + 1
+  }
 }
 
 #' @export
 #' @describeIn normcheck Testing for normality plot
-normcheck.lm = function(x, xlab = NULL, main = xlab, col = NULL, shapiro.wilk = FALSE, ...) {
-    if (missing(x) || (class(x) != "lm")) 
-        stop("missing or incorrect lm object")
-    
-    
-    if (is.null(xlab)) 
+normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""), 
+                        ylab = c("Sample Quantiles", ""),
+                        main = c("", ""), col = "light blue",
+                        bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
+                        shapiro.wilk = FALSE, 
+                        whichPlot = 1:2, 
+                        usePar = TRUE, ...){
+  if (missing(x) || (class(x) != "lm")) 
+    stop("missing or incorrect lm object")
+  
+  if(!all(whichPlot %in% 1:2)){
+    stop("whichPlot must be in 1:2")
+  }
+  
+  if(2 %in% whichPlot){
+    if(length(xlab) == 2){
+      if(!is.na(xlab[2]) && xlab[2] == "") {
+        xlab[2] = paste("Residuals from lm(", as.character(x$call[2]), ")", sep = "")
+      }
+    }else{
+      if(!is.na(xlab) && xlab == "") {
         xlab = paste("Residuals from lm(", as.character(x$call[2]), ")", sep = "")
-    
-    x = residuals(x)
-    normcheck(x, xlab = xlab, main = main, col = col, shapiro.wilk = shapiro.wilk, ...)
+      }
+    }
+  }
+
+  x = residuals(x)
+  normcheck(x, xlab = xlab, main = main, col = col, bootstrap = bootstrap, bpch = bpch, bcol = bcol, shapiro.wilk = shapiro.wilk, 
+            whichPlot = whichPlot, usePar = usePar, ...)
 }
 

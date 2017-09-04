@@ -29,3 +29,6 @@ instead of this
 $`store:crust`
 ```
 
+## 3.1-24
+
+A new function called `modcheck` has been added. This allows the plotting of all four standard 20x model checking plots: a pred-res or equality of variance plot, a normal Q-Q plot, a histogram of the residuals, and a Cook's distance plot, to be drawn on the same plot at once. This function needed a much more flexible version of `normcheck`, and needed modifications to `eovcheck` and `cooks20x`. I have not put it on CRAN yet because of the chance that it will fail for our current students. We *really* need some unit testing in this package so that this process can be sped up.

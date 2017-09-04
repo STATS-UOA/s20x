@@ -14,10 +14,11 @@
 #' number of observations per group exceeds two.
 #' 
 #' 
-#' @param object A linear model formula. Alternatively, a fitted lm object from
+#' @param x A linear model formula. Alternatively, a fitted lm object from
 #' a linear model.
 #' @param data A data frame in which to evaluate the formula.
 #' @param xlab a title for the x axis: see \code{\link{title}}.
+#' @param ylab a title for the y axis: see \code{\link{title}}.
 #' @param col a color for the lowess smoother line.
 #' @param smoother if TRUE then a smoothed lowess line will be added to the
 #' plot
@@ -65,19 +66,21 @@
 #' eovcheck(airpass.fit)
 #' 
 #' @export eovcheck
-eovcheck = function(object, ...) {
+eovcheck = function(x, ...) {
     UseMethod("eovcheck")
 }
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, axes = TRUE, ...) {
-    if (missing(object) || (class(object) != "formula")) 
+eovcheck.formula = function(x, data = NULL, 
+                            xlab = "Fitted values", ylab = "Residuals", 
+                            col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
+    if (missing(x) || (class(x) != "formula")) 
         stop("missing or incorrect formula formula")
     
     call = match.call()
     m = match.call()
-    mn = match(c("object", "data"), names(m), 0)
+    mn = match(c("x", "data"), names(m), 0)
     m = m[c(1, mn)]
     m$drop.unused.levels = TRUE
     
@@ -174,21 +177,10 @@ eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smooth
     } else {
         fit = lm(form, data = data.f)
     }
+    opar = par(xaxs = "r", yaxs = "r")
     
-    opar = par(mfrow = c(1, 1), xaxs = "r", yaxs = "r")
-    ## The plot.lm() function does not accept the 'axes'
-    ## argument. This is a bit of a hack to remove axis tickmarks and
-    ## labels.
-    if (axes){
-        xaxt = "s"
-        yaxt = "s"
-        cex.lab = 1
-    } else {
-        xaxt = "n"
-        yaxt = "n"
-        cex.lab = 1e-10
-    }
-    plot(fit, sub = "", which = 1, add.smooth = FALSE, xaxt = xaxt, yaxt = yaxt, cex.lab = cex.lab)
+    plot(residuals(fit) ~ fitted(fit), xlab = xlab, ylab = ylab, main = "", ...)
+    abline(h = 0, lty = 3, col = "lightgrey")
     resids = residuals(fit)
     yhat = fitted(fit)
     
@@ -215,13 +207,13 @@ eovcheck.formula = function(object, data = NULL, xlab = NULL, col = NULL, smooth
 
 #' @describeIn eovcheck Testing for equality of variance plot
 #' @export
-eovcheck.lm = function(object, smoother = FALSE, twosd = FALSE, levene = FALSE, axes = TRUE, ...) {
-    if (missing(object) || (class(object) != "lm")) 
+eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
+    if (missing(x) || (class(x) != "lm")) 
         stop("missing or incorrect lm object")
     
-    form = formula(object$call$formula)
-    data.f = object$model
+    form = formula(x$call$formula)
+    data.f = data.frame(eval(x$call$data, parent.frame()))
     
-    eovcheck.formula(object = form, data = data.f, smoother = smoother, twosd = twosd, levene = levene, axes = axes, ...)
+    eovcheck.formula(x = form, data = data.f, smoother = smoother, twosd = twosd, levene = levene, ...)
 }
 
