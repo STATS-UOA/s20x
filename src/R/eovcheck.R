@@ -177,6 +177,7 @@ eovcheck.formula = function(x, data = NULL,
     } else {
         fit = lm(form, data = data.f)
     }
+    
     opar = par(xaxs = "r", yaxs = "r")
     
     plot(residuals(fit) ~ fitted(fit), xlab = xlab, ylab = ylab, main = "", ...)
