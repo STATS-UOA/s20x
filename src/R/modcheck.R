@@ -82,7 +82,7 @@ modcheck.lm = function(x, plotOrder = 1:4,
     if(p == 1){
       args$eovcheck$axes = FALSE
       args$eovcheck$x = formula(x$call$formula)
-      args$eovcheck$data = x$model
+      args$eovcheck$data = data.frame(eval(x$call$data, parent.frame())) #x$model
       do.call(what = eovcheck, args = args$eovcheck)
       title(xlab = "Fitted values", line = 0)
       title(ylab = "Residuals", line = 0)
