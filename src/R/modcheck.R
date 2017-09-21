@@ -100,6 +100,7 @@ modcheck.lm = function(x, plotOrder = 1:4,
     }else{
       args$cooks20x$x = x
       args$cooks20x$axisOpts$xAxis = FALSE
+      args$cooks20x$axisOpts$yAxisTight = TRUE
       do.call(what = cooks20x, args = args$cooks20x)
     }
   }
