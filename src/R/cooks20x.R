@@ -26,20 +26,25 @@
 #' 
 #' @export cooks20x
 cooks20x = function(x, main = "Cook's Distance plot", xlab = "observation number", ylab = "Cook's distance", 
-                    line = c(0.5, 0.1, 2), cex.labels = 1, axisOpts = list(xAxis = TRUE), ...) {
+                    line = c(0.5, 0.1, 2), cex.labels = 1, axisOpts = list(xAxis = TRUE, yAxisTight = FALSE), ...) {
   
     y = cooks.distance(x)
     show.r = order(-y)[1:3]
-    plot(1:length(y), y, type = "h", xlab = "", ylab = "", main = "", ylim = c(0, max(y) * 1.1), axes = FALSE, ...)
+    plot(1:length(y), y, type = "h", xlab = "", ylab = "", main = "", ylim = c(0, max(y) * 1.1), axes = FALSE, yaxs = "i", ...)
     
     dots = list(...)
     
     if(axisOpts$xAxis){
       title(xlab = xlab, line = line[2])
-      axis(1, mgp = c(3, .3, 0))
+      axis(1, mgp = c(0.3, 0.3, 0))
     }
     
-    axis(2)
+    if(axisOpts$yAxisTight){
+      axis(2, mgp = c(0.3, 0.5, 0))
+    }else{
+      axis(2)
+    }
+    
     box()
     
     title(main = main, line = line[1])

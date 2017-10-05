@@ -4,10 +4,12 @@
 \alias{pairs20x}
 \title{Pairwise Scatter Plots with Histograms and Correlations}
 \usage{
-pairs20x(x, ...)
+pairs20x(x, na.rm = TRUE, ...)
 }
 \arguments{
 \item{x}{a data frame.}
+
+\item{na.rm}{if TRUE then only complete cases will be displayed}
 
 \item{\dots}{optional argumments which are passed to the generic pairs
 function.}

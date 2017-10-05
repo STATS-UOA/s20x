@@ -5,6 +5,7 @@
 #' 
 #' 
 #' @param x a data frame.
+#' @param na.rm if TRUE then only complete cases will be displayed
 #' @param \dots optional argumments which are passed to the generic pairs
 #' function.
 #' @return Returns the plots.
@@ -17,7 +18,7 @@
 #' pairs20x(peru.df)
 #' 
 #' @export pairs20x
-pairs20x = function(x, ...) {
+pairs20x = function(x, na.rm = TRUE, ...) {
     panel.hist = function(x, ...) {
         usr = par("usr")
         on.exit(par(usr))
@@ -40,6 +41,10 @@ pairs20x = function(x, ...) {
         if (missing(cex.cor)) 
             cex = 0.8/strwidth(txt)
         text(0.5, 0.5, txt, cex = cex * r)
+    }
+    
+    if(na.rm){
+      x = x[complete.cases(x), ]
     }
     
     pairs(x, upper.panel = panel.smooth, lower.panel = panel.cor, diag.panel = panel.hist, ...)
