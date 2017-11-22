@@ -54,11 +54,11 @@ and a Cook's Distance plot.
 e = rnorm(100, 0, 0.1)
 x = rnorm(100)
 y = exp(5 + 3 * x + e)
-fit = lm(y ~ x)
+fit = lm(y ~ x, data = data.frame(x, y))
 modcheck(fit)
 
 # An exponential growth curve with the correct transformation
-fit = lm(log(y) ~ x)
+fit = lm(log(y) ~ x, data = data.frame(x, y))
 modcheck(fit)
 
 # Peruvian Indians data

@@ -6,13 +6,13 @@
 \usage{
 summary2way(fit, page = c("table", "means", "effects", "interaction",
   "nointeraction"), digit = 5, conf.level = 0.95, print.out = TRUE,
-  new = TRUE, ...)
+  new = TRUE, all = FALSE, ...)
 }
 \arguments{
 \item{fit}{an lm object, i.e. the output from 'lm()'.}
 
-\item{page}{options for output: 'table', 'means', 'effects', 'interaction',
-'nointeraction'}
+\item{page}{options for output: 'table', 'means', 'effects',
+'interaction', 'nointeraction'}
 
 \item{digit}{the number of decimal places in the display.}
 
@@ -20,25 +20,40 @@ summary2way(fit, page = c("table", "means", "effects", "interaction",
 
 \item{print.out}{if TRUE, print out the output on the screen.}
 
-\item{new}{if \code{TRUE} then this will run the new version of \code{summary2way} which should be more
-robust than the old version. It does not work in the same way however. In particular, when \code{page = 'means'} 
-it does not return summary statistics for each grouping of the data (pooled/by row factor/by column factor/by interaction factor).
-Instead it simply returns the means for each grouping.}
+\item{new}{if \code{TRUE} then this will run the new version of
+\code{summary2way} which should be more robust than the old
+version. It does not work in the same way however. In
+particular, when \code{page = 'means'} it does not return
+summary statistics for each grouping of the data (pooled/by row
+factor/by column factor/by interaction factor).  Instead it
+simply returns the means for each grouping.}
+
+\item{all}{Only applicable to \code{page = "interaction"}. If
+\code{TRUE}, pairwise comparisons for all combinations of
+factor levels are shown. Otherwise, comparisons are only shown
+between combinations that have the same level for one of the
+factors.}
 
 \item{\dots}{other arguments like inttype, pooled etc.}
 }
 \value{
-A list with the following components: \item{Df}{degrees of freedom
-for regression, residual and total.} \item{Sum of Sq}{sum squares for
-regression, residual and total.} \item{Mean Sq}{mean squares for regression
-and residual.} \item{F value}{F-statistic value.} \item{Pr(F)}{The P-value
-assoicated with each F-test.} \item{Grand Mean}{The overall mean of the
-response variable.} \item{Row Effects}{The main effects for the first (row)
-factor.} \item{Col Effects}{The main effects for the second (column)
-factor.} \item{Interaction Effects}{The interaction effects if an
-interaction model has been fitted, otherwise \code{NULL}.}
-\item{results}{If \code{new = TRUE}, then this is a list with five components: \code{table} - the ANOVA table, \code{means} the table of means from \code{model.tables}, 
-\code{effects} - the table of effects from \code{model.tables}, and \code{comparisons} - the differences in the means with standard errors, confidence bounds, and P-values from \code{TukeyHSD}}.
+A list with the following components: \item{Df}{degrees of
+    freedom for regression, residual and total.} \item{Sum of
+    Sq}{sum squares for regression, residual and total.} \item{Mean
+    Sq}{mean squares for regression and residual.} \item{F
+    value}{F-statistic value.} \item{Pr(F)}{The P-value assoicated
+    with each F-test.} \item{Grand Mean}{The overall mean of the
+    response variable.} \item{Row Effects}{The main effects for the
+    first (row) factor.} \item{Col Effects}{The main effects for
+    the second (column) factor.} \item{Interaction Effects}{The
+    interaction effects if an interaction model has been fitted,
+    otherwise \code{NULL}.}  \item{results}{If \code{new = TRUE},
+    then this is a list with five components: \code{table} - the
+    ANOVA table, \code{means} the table of means from
+    \code{model.tables}, \code{effects} - the table of effects from
+    \code{model.tables}, and \code{comparisons} - the differences
+    in the means with standard errors, confidence bounds, and
+    P-values from \code{TukeyHSD}}.
 }
 \description{
 Displays summary information for a two-way anova analysis. The lm object
@@ -59,6 +74,7 @@ summary2way(arousal.fit)
 
 }
 \seealso{
-\code{\link{summary1way}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}
+\code{\link{summary1way}}, \code{\link{model.tables}},
+    \code{\link{TukeyHSD}}
 }
 \keyword{models}
