@@ -10,28 +10,43 @@
 #' 
 #' 
 #' @param fit an lm object, i.e. the output from 'lm()'.
-#' @param page options for output: 'table', 'means', 'effects', 'interaction',
-#' 'nointeraction'
+#' @param page options for output: 'table', 'means', 'effects',
+#'     'interaction', 'nointeraction'
 #' @param digit the number of decimal places in the display.
 #' @param conf.level confidence level of the intervals.
 #' @param print.out if TRUE, print out the output on the screen.
-#' @param new if \code{TRUE} then this will run the new version of \code{summary2way} which should be more
-#' robust than the old version. It does not work in the same way however. In particular, when \code{page = 'means'} 
-#' it does not return summary statistics for each grouping of the data (pooled/by row factor/by column factor/by interaction factor).
-#' Instead it simply returns the means for each grouping.
+#' @param new if \code{TRUE} then this will run the new version of
+#'     \code{summary2way} which should be more robust than the old
+#'     version. It does not work in the same way however. In
+#'     particular, when \code{page = 'means'} it does not return
+#'     summary statistics for each grouping of the data (pooled/by row
+#'     factor/by column factor/by interaction factor).  Instead it
+#'     simply returns the means for each grouping.
+#' @param all Only applicable to \code{page = "interaction"}. If
+#'     \code{TRUE}, pairwise comparisons for all combinations of
+#'     factor levels are shown. Otherwise, comparisons are only shown
+#'     between combinations that have the same level for one of the
+#'     factors.
 #' @param \dots other arguments like inttype, pooled etc.
-#' @return A list with the following components: \item{Df}{degrees of freedom
-#' for regression, residual and total.} \item{Sum of Sq}{sum squares for
-#' regression, residual and total.} \item{Mean Sq}{mean squares for regression
-#' and residual.} \item{F value}{F-statistic value.} \item{Pr(F)}{The P-value
-#' assoicated with each F-test.} \item{Grand Mean}{The overall mean of the
-#' response variable.} \item{Row Effects}{The main effects for the first (row)
-#' factor.} \item{Col Effects}{The main effects for the second (column)
-#' factor.} \item{Interaction Effects}{The interaction effects if an
-#' interaction model has been fitted, otherwise \code{NULL}.}
-#' \item{results}{If \code{new = TRUE}, then this is a list with five components: \code{table} - the ANOVA table, \code{means} the table of means from \code{model.tables}, 
-#' \code{effects} - the table of effects from \code{model.tables}, and \code{comparisons} - the differences in the means with standard errors, confidence bounds, and P-values from \code{TukeyHSD}}.
-#' @seealso \code{\link{summary1way}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}
+#' @return A list with the following components: \item{Df}{degrees of
+#'     freedom for regression, residual and total.} \item{Sum of
+#'     Sq}{sum squares for regression, residual and total.} \item{Mean
+#'     Sq}{mean squares for regression and residual.} \item{F
+#'     value}{F-statistic value.} \item{Pr(F)}{The P-value assoicated
+#'     with each F-test.} \item{Grand Mean}{The overall mean of the
+#'     response variable.} \item{Row Effects}{The main effects for the
+#'     first (row) factor.} \item{Col Effects}{The main effects for
+#'     the second (column) factor.} \item{Interaction Effects}{The
+#'     interaction effects if an interaction model has been fitted,
+#'     otherwise \code{NULL}.}  \item{results}{If \code{new = TRUE},
+#'     then this is a list with five components: \code{table} - the
+#'     ANOVA table, \code{means} the table of means from
+#'     \code{model.tables}, \code{effects} - the table of effects from
+#'     \code{model.tables}, and \code{comparisons} - the differences
+#'     in the means with standard errors, confidence bounds, and
+#'     P-values from \code{TukeyHSD}}.
+#' @seealso \code{\link{summary1way}}, \code{\link{model.tables}},
+#'     \code{\link{TukeyHSD}}
 #' @keywords models
 #' @examples
 #' 
@@ -43,7 +58,7 @@
 #' @export summary2way
 summary2way = function(fit, page = c("table", "means", "effects", "interaction", "nointeraction"), 
                        digit = 5, conf.level = 0.95, print.out = TRUE, 
-                       new = TRUE, ...) {
+                       new = TRUE, all = FALSE, ...) {
   
   page = match.arg(page)
   
@@ -100,9 +115,33 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     }else{# page == "interaction")
       interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
       out = results$comparisons[interactionLabel]
-      mostattributes(out) = attributes(results$comparisons)
-      names(out) = interactionLabel
-      print(out)
+      if (all){
+          mostattributes(out) = attributes(results$comparisons)
+          names(out) = interactionLabel
+          print(out)
+      } else {
+          ## Extracting levels from each group being compared.
+          group.names = matrix(c(strsplit(rownames(out[[1]]), "-", fixed = TRUE),
+                                 recursive = TRUE), ncol = 2, byrow = TRUE)
+          ## Getting level of first variable in the first group.
+          group1.var1 <- sapply(strsplit(group.names[, 1], ":"), function(x) x[1])
+          ## Getting level of first variable in the second group.
+          group2.var1 <- sapply(strsplit(group.names[, 2], ":"), function(x) x[1])
+          ## Getting level of second variable in the first group.
+          group1.var2 <- sapply(strsplit(group.names[, 1], ":"), function(x) x[2])
+          ## Getting level of second variable in the second group.
+          group2.var2 <- sapply(strsplit(group.names[, 2], ":"), function(x) x[2])
+          ## Matrix of 'within' comparisons.
+          out.within = out[[1]][group1.var1 == group2.var1, ]
+          ## Matrix of 'between' comparisons.
+          out.between = out[[1]][group1.var2 == group2.var2, ]
+          out <- list(out.within, out.between)
+          mostattributes(out) = attributes(results$comparisons)
+          factor1 = strsplit(interactionLabel, ":")[[1]][1]
+          names(out) = c(paste("Comparisons within", factor1),
+                         paste("Comparisons between", factor1))
+          print(out)
+      }
     }
     
     invisible(list(Df = results$table$Df, 
@@ -384,6 +423,6 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     
     invisible(list(Df = a.df, `Sum of Sq` = a.ss, `Mean Sq` = a.ms, `F value` = alist$"F value"[1:m], `Pr(F)` = alist$"Pr(>F)"[1:m], `Grand Mean` = mmean, `Row Effects` = roweff, `Col Effects` = coleff, `Interaction Effects` = interact, 
                    Comparisons = comparisons))
-  } 
+  }
 }
 
