@@ -81,6 +81,7 @@ modcheck.lm = function(x, plotOrder = 1:4,
   for(p in plotOrder){
     if(p == 1){
       args$eovcheck$axes = FALSE
+      args$eovcheck$ylab = ""
       args$eovcheck$x = formula(x$call$formula)
       args$eovcheck$data = data.frame(eval(x$call$data, parent.frame())) #x$model
       do.call(what = eovcheck, args = args$eovcheck)
