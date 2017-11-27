@@ -26,7 +26,7 @@
 #' 
 #' @export cooks20x
 cooks20x = function(x, main = "Cook's Distance plot", xlab = "observation number", ylab = "Cook's distance", 
-                    line = c(0.5, 0.1, 2), cex.labels = 1, axisOpts = list(xAxis = TRUE, yAxisTight = FALSE), ...) {
+                    line = c(0.5, 1.2, 2), cex.labels = 1, axisOpts = list(xAxis = TRUE, yAxisTight = FALSE), ...) {
   
     y = cooks.distance(x)
     show.r = order(-y)[1:3]
