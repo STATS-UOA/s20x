@@ -39,8 +39,8 @@ pairs20x = function(x, na.rm = TRUE, ...) {
         txt = format(c(r, 0.123456789), digits = digits)[1]
         txt = paste(prefix, txt, sep = "")
         if (missing(cex.cor)) 
-            cex = 0.8/strwidth(txt)
-        text(0.5, 0.5, txt, cex = cex * r)
+            cex.cor = 0.8/strwidth(txt)
+        text(0.5, 0.5, txt, cex = cex.cor * r)
     }
     
     if(na.rm){
