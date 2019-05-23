@@ -9,6 +9,6 @@ Description: A set of functions used in teaching STATS 201/208 Data Analysis at
     the University of Auckland. The functions are designed to make parts of R more
     accessible to a large undergraduate population who are mostly not statistics
     majors.
-Imports: stats, graphics
+Imports: stats, graphics, methods
 License: GPL-2 | file LICENSE
 RoxygenNote: 6.1.1

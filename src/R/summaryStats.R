@@ -13,17 +13,25 @@
 #' @param data.order if \code{TRUE}, the group order is the order which the groups are
 #' first encountered in the vector 'group'. If \code{FALSE}, the order is alphabetical.
 #' @param digits the number of decimal places to display.
-#' @param \dots Optional arguments.
+#' @param \dots Optional arguments which are passed to the summary statistic functions. 
+#' For example \code{na.rm = TRUE} will help if there are missing values in the 
+#' (response) variable.
 #' @return If \code{x} is a single variable, i.e. there are no groups, then a
 #' single list is invisibly returned with the following named items:
-#' \item{min}{Minimum value.} \item{max}{Maximum value.} \item{mean}{Mean
-#' value.} \item{var}{Variance -- the average of the squares of the deviations
-#' of the data values from the sample mean.} \item{sd}{Standard deviation --
-#' the square root of the variance.} \item{n}{Number of data values -- size of
-#' the data set.} \item{iqr}{Midspread (IQR) -- the range spanned by central
-#' half of data; the interquartile range.} \item{skewness}{Skewness statistic
-#' -- indicates how skewed the data set is. Positive values indicate right-skew
-#' data. Negative values indicate left-skew data.} \item{lq}{Lower quartile}
+#' \item{min}{Minimum value.} 
+#' \item{max}{Maximum value.} 
+#' \item{mean}{Mean value.}
+#' \item{var}{Variance -- the average of the squares of the deviations
+#' of the data values from the sample mean.} 
+#' \item{sd}{Standard deviation -- the square root of the variance.} 
+#' \item{n}{Number of data values -- size of the data set.}
+#' \item{nMissing}{If there are missing values, and \code{na.rm} has been set to \code{TRUE}
+#' then this item will contain the number of missing values.}
+#' \item{iqr}{Midspread (IQR) -- the range spanned by central half of data; the 
+#' interquartile range.} 
+#' \item{skewness}{Skewness statistic -- indicates how skewed the data set is. 
+#' Positive values indicate right-skew data. Negative values indicate left-skew data.} 
+#' \item{lq}{Lower quartile}
 #' \item{median}{Median -- the middle value when the batch is ordered.}
 #' \item{uq}{Upper quartile} If grouping is provided, either by using the
 #' \code{group} argument, or providing a factor in a formula, or by passing a
@@ -55,6 +63,8 @@
 #' 
 #' ## Just the means
 #' sumStats$mean
+#' 
+#' @importFrom methods hasArg
 #' 
 #' @export summaryStats
 summaryStats = function(x, ...) {
@@ -89,7 +99,7 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
                     median = quantiles[2], 
                     uq = quantiles[3])
         
-        if(hasArg(na.rm)){
+        if(hasArg("na.rm")){
             args = list(...)
             if(args$na.rm == TRUE){
                 results["nMissing"] = sum(is.na(x))
@@ -124,7 +134,7 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
         
     } else {
         temp.df = data.frame(x = x, group = group)
-        na.action = if(hasArg(na.action)){
+        na.action = if(hasArg("na.action")){
             args = list(...)
             args$na.action
         }else{
