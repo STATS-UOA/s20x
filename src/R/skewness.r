@@ -6,6 +6,8 @@
 #' 
 #' 
 #' @param x vector containing the data.
+#' @param \dots any other variables to be passed to \code{mean} and \code{sd}, e.g. 
+#' \code{na.rm = TRUE}.
 #' @return Returns the value of the skewness.
 #' @keywords univar
 #' @examples
@@ -15,5 +17,9 @@
 #' skewness(mergers.df$mergerdays)
 #' 
 #' @export skewness
-skewness = function(x) mean((x - mean(x))^3)/sd(x)^3
+skewness = function(x, ...){
+  mx = mean(x, ...)
+  sx = sd(x, ...)
+  mean((x - mx)^3, ...)/sx^3
+} 
 

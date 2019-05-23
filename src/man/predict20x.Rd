@@ -4,8 +4,8 @@
 \alias{predict20x}
 \title{Model Predictions for a Linear Model}
 \usage{
-predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
-  ...)
+predict20x(object, newdata, cilevel = 0.95, digit = 3,
+  print.out = TRUE, ...)
 }
 \arguments{
 \item{object}{an \code{lm} object, i.e. the output from \code{lm}.}

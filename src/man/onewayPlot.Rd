@@ -11,8 +11,9 @@
 onewayPlot(x, ...)
 
 \method{onewayPlot}{default}(x, f, conf.level = 0.95,
-  interval.type = "tukey", pooled = TRUE, strip = TRUE, vert = TRUE,
-  verbose = FALSE, ylabel = deparse(terms(formula)[[2]]),
+  interval.type = "tukey", pooled = TRUE, strip = TRUE,
+  vert = TRUE, verbose = FALSE,
+  ylabel = deparse(terms(formula)[[2]]),
   flabel = deparse(terms(formula)[[3]]), ...)
 
 \method{onewayPlot}{formula}(formula, data = parent.frame(),

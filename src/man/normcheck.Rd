@@ -9,14 +9,16 @@
 normcheck(x, ...)
 
 \method{normcheck}{default}(x, xlab = c("Theoretical Quantiles", ""),
-  ylab = c("Sample Quantiles", ""), main = c("", ""), col = "light blue",
-  bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
-  shapiro.wilk = FALSE, whichPlot = 1:2, usePar = TRUE, ...)
+  ylab = c("Sample Quantiles", ""), main = c("", ""),
+  col = "light blue", bootstrap = FALSE, B = 5, bpch = 3,
+  bcol = "lightgrey", shapiro.wilk = FALSE, whichPlot = 1:2,
+  usePar = TRUE, ...)
 
 \method{normcheck}{lm}(x, xlab = c("Theoretical Quantiles", ""),
-  ylab = c("Sample Quantiles", ""), main = c("", ""), col = "light blue",
-  bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
-  shapiro.wilk = FALSE, whichPlot = 1:2, usePar = TRUE, ...)
+  ylab = c("Sample Quantiles", ""), main = c("", ""),
+  col = "light blue", bootstrap = FALSE, B = 5, bpch = 3,
+  bcol = "lightgrey", shapiro.wilk = FALSE, whichPlot = 1:2,
+  usePar = TRUE, ...)
 }
 \arguments{
 \item{x}{the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.}

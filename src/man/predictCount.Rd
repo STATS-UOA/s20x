@@ -4,8 +4,8 @@
 \alias{predictCount}
 \title{Predicted Counts for a Generalized Linear Model}
 \usage{
-predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE,
-  ...)
+predictCount(object, newdata, cilevel = 0.95, digit = 3,
+  print.out = TRUE, ...)
 }
 \arguments{
 \item{object}{a \code{glm} object, i.e. the output from \code{\link{glm}}.}
