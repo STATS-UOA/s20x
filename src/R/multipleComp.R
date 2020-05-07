@@ -8,6 +8,8 @@
 #' @param fit output from the command 'lm()'.
 #' @param conf.level confidence level for the confidence interval, expressed as
 #' a percentage.
+#' @param FUN optional function to be applied to estimates and confidence intervals.
+#' Typically for backtransformation operations.
 #' @return Returns a list of estimates, confidence intervals and p-values.
 #' @keywords htest
 #' @examples
@@ -17,8 +19,15 @@
 #' fit = lm(score ~ factor(selfassess), data = computer.df)
 #' multipleComp(fit)
 #' 
+#' ## butterfat data
+#' data("butterfat.df")
+#' fit <- lm(log(Butterfat) ~ Breed, data=butterfat.df)
+#' multipleComp(fit, FUN=exp)
+#'
 #' @export multipleComp
-multipleComp = function(fit, conf.level = 0.95) {
+multipleComp = function(fit, conf.level = 0.95, FUN = identity) {
+    FUN <- match.fun(FUN)
+
     if (nrow(anova(fit)) != 2) 
         stop("This is not a 1-way ANOVA fit")
     y = fit$model[, 1]
@@ -41,6 +50,6 @@ multipleComp = function(fit, conf.level = 0.95) {
     }
     row.names(contrast.matrix) = names
     contrast.matrix = as.matrix(contrast.matrix)
-    estimateContrasts(contrast.matrix, fit, row = TRUE, alpha = 1 - conf.level)[, 1:4]
+    estimateContrasts(contrast.matrix, fit, row = TRUE, alpha = 1 - conf.level, FUN = FUN)[, 1:4]
 }
 

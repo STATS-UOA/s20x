@@ -14,6 +14,8 @@
 #' @param alpha the nominal error rate for the multiple confidence intervals.
 #' @param L number of contrasts. If NULL, L will be set to the number of rows
 #' in the contrast matrix, otherwise L will be as specified.
+#' @param FUN optional function to be applied to estimates and confidence intervals.
+#' Typically for backtransformation operations.
 #' @return Returns a matrix whose rows correspond to the different contrasts
 #' being estimated and whose columns correspond to the point estimate of the
 #' contrast, the Tukey lower and upper limits of the confidence interval, the
@@ -30,15 +32,17 @@
 #' contrast.matrix = matrix(c(-1/2, -1/2, 1), byrow = TRUE, nrow = 1, ncol = 3)
 #' contrast.matrix
 #' s20x:::estimateContrasts(contrast.matrix,computer.fit)
-estimateContrasts = function(contrast.matrix, fit, row = TRUE, alpha = 0.05, L = NULL) {
+estimateContrasts = function(contrast.matrix, fit, row = TRUE, alpha = 0.05, L = NULL, FUN = identity) {
+    FUN <- match.fun(FUN)
+
     if (!inherits(fit, "lm")) {
         stop("Second input is not an \"lm\" object")
     }
     
     if (length(dimnames(fit$model)[[2]]) == 2) {
-        estimateContrasts1(contrast.matrix, fit, alpha = alpha, L)
+        estimateContrasts1(contrast.matrix, fit, alpha = alpha, L, FUN = FUN)
     } else {
-        estimateContrasts2(contrast.matrix, fit, alpha = alpha, row, L)
+        estimateContrasts2(contrast.matrix, fit, alpha = alpha, row, L, FUN = FUN)
     }
 }
 

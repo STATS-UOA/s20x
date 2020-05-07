@@ -27,6 +27,8 @@
 #'     factor levels are shown. Otherwise, comparisons are only shown
 #'     between combinations that have the same level for one of the
 #'     factors.
+#' @param FUN optional function to be applied to estimates and confidence intervals.
+#'     Typically for backtransformation operations.
 #' @param \dots other arguments like inttype, pooled etc.
 #' @return A list with the following components: \item{Df}{degrees of
 #'     freedom for regression, residual and total.} \item{Sum of
@@ -55,12 +57,18 @@
 #' arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
 #' summary2way(arousal.fit)
 #' 
+#' ## Butterfat data:
+#' data("butterfat.df")
+#' fit <- lm(log(Butterfat)~Breed+Age, data=butterfat.df)
+#' summary2way(fit, page="nointeraction", FUN = exp)
+#'
 #' @export summary2way
 summary2way = function(fit, page = c("table", "means", "effects", "interaction", "nointeraction"), 
                        digit = 5, conf.level = 0.95, print.out = TRUE, 
-                       new = TRUE, all = FALSE, ...) {
+                       new = TRUE, all = FALSE, FUN = identity,  ...) {
   
   page = match.arg(page)
+  FUN <- match.fun(FUN)
   
   if (!inherits(fit, "lm")) {
     stop("Input is not an \"lm\" object")
@@ -108,7 +116,8 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       print(results$effects$tables)
     }else if(page == "nointeraction"){
       factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
-      out = results$comparisons[factorLabels]
+      out <- lapply(results$comparisons[factorLabels],
+                    function(x) cbind(FUN(x[,1:3,drop=FALSE]),x[,4,drop=FALSE]))
       mostattributes(out) = attributes(results$comparisons)
       names(out) = factorLabels
       print(out)
@@ -116,12 +125,14 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
       out = results$comparisons[interactionLabel]
       if (all){
+          out <- lapply(out, function(x) cbind(FUN(x[,1:3,drop=FALSE]),x[,4,drop=FALSE]))
           mostattributes(out) = attributes(results$comparisons)
           names(out) = interactionLabel
           print(out)
       } else {
+          out <- out[[1]]
           ## Extracting levels from each group being compared.
-          group.names = matrix(c(strsplit(rownames(out[[1]]), "-", fixed = TRUE),
+          group.names = matrix(c(strsplit(rownames(out), "-", fixed = TRUE),
                                  recursive = TRUE), ncol = 2, byrow = TRUE)
           ## Getting level of first variable in the first group.
           group1.var1 <- sapply(strsplit(group.names[, 1], ":"), function(x) x[1])
@@ -132,12 +143,13 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
           ## Getting level of second variable in the second group.
           group2.var2 <- sapply(strsplit(group.names[, 2], ":"), function(x) x[2])
           ## Matrix of 'within' comparisons.
-          out.within = out[[1]][group1.var1 == group2.var1, ]
+          out.within = out[group1.var1 == group2.var1, ]
           ## Matrix of 'between' comparisons.
-          out.between = out[[1]][group1.var2 == group2.var2, ]
-          out <- list(out.within, out.between)
+          out.between = out[group1.var2 == group2.var2, ]
+          out <- lapply(list(out.within, out.between),
+                        function(x) cbind(FUN(x[,1:3,drop=FALSE]),x[,4,drop=FALSE]))
           mostattributes(out) = attributes(results$comparisons)
-          factor1 = strsplit(interactionLabel, ":")[[1]][1]
+          factor1 = strsplit(interactionLabel, ":")[1]
           names(out) = c(paste("Comparisons within", factor1),
                          paste("Comparisons between", factor1))
           print(out)
@@ -351,7 +363,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       row.names(contrast.matrix1) = names
       fit.1way = lm(y ~ f1f2)
       L = (nlevf1 * nlevf2/2) * (1 + nlevf1)
-      contrasts1 = estimateContrasts(as.matrix(contrast.matrix1), fit.1way, alpha = 1 - conf.level, row = TRUE, L)
+      contrasts1 = estimateContrasts(as.matrix(contrast.matrix1), fit.1way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
       print(contrasts1, quote = FALSE)
       comparisons$within = contrasts1
       
@@ -371,7 +383,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
         }
       }
       row.names(contrast.matrix2) = names
-      contrasts2 = estimateContrasts(as.matrix(contrast.matrix2), fit.1way, alpha = 1 - conf.level, row = TRUE, L)
+      contrasts2 = estimateContrasts(as.matrix(contrast.matrix2), fit.1way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
       print(contrasts2, quote = FALSE)
       comparisons$between = contrasts2
       
@@ -391,7 +403,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       
       row.names(contrast.matrix1) = names
       contrast.matrix1 = as.matrix(contrast.matrix1)
-      contrasts1 = estimateContrasts(contrast.matrix1, fit, alpha = 1 - conf.level, row = TRUE)
+      contrasts1 = estimateContrasts(contrast.matrix1, fit, alpha = 1 - conf.level, row = TRUE, FUN = FUN)
       print(contrasts1, quote = FALSE)
       eval(parse(text = paste0("comparisons$", f1.name, "= contrasts1")))
       
@@ -410,7 +422,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       
       row.names(contrast.matrix2) = names
       contrast.matrix2 = as.matrix(contrast.matrix2)
-      contrasts2 = estimateContrasts(contrast.matrix2, fit, alpha = 1 - conf.level, row = FALSE)
+      contrasts2 = estimateContrasts(contrast.matrix2, fit, alpha = 1 - conf.level, row = FALSE, FUN = FUN)
       
       
       print(contrasts2, quote = FALSE)
