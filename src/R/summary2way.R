@@ -65,8 +65,12 @@
 #' @export summary2way
 summary2way = function(fit, page = c("table", "means", "effects", "interaction", "nointeraction"), 
                        digit = 5, conf.level = 0.95, print.out = TRUE, 
-                       new = TRUE, all = FALSE, FUN = identity,  ...) {
-  
+                       new = TRUE, all = FALSE, FUN = "identity",  ...) {
+  backtransform = if(is.character(FUN) && FUN == "identity") {
+    FALSE
+  } else {
+    TRUE
+  }
   page = match.arg(page)
   FUN <- match.fun(FUN)
   
@@ -94,16 +98,27 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       FALSE
     }
     
-    results = list(table = anova(fit.aov),
-                   means = model.tables(fit.aov, "means"),
-                   effects = model.tables(fit.aov, "effects"),
-                   comparisons = TukeyHSD(fit.aov, conf.level = conf.level))
+    results.identity = list(table = anova(fit.aov),
+                            means = model.tables(fit.aov, "means"),
+                            effects = model.tables(fit.aov, "effects"),
+                            comparisons = TukeyHSD(fit.aov, conf.level = conf.level))
     
     ## setup the ANOVA table so that it mimics the output from summary2way
     ## It isn't worth replicating the precision (digits) behaviour
     ## because this be done other ways
-    attr(results$table, "heading") = "ANOVA Table:"
-    names(results$table) = c("Df", "Sum Squares", "Mean Square", "F-statistic", "p-value")
+    attr(results.identity$table, "heading") = "ANOVA Table:"
+    names(results.identity$table) = c("Df", "Sum Squares", "Mean Square", "F-statistic", "p-value")
+
+    ## If FUN = identity, these will come out the same...
+    results = results.identity
+    if (backtransform) {
+      results$means$tables = lapply(results.identity$means$tables, FUN)
+      results$effects$tables = lapply(results.identity$effects$tables, FUN)
+      results$comparisons = lapply(results.identity$comparisons,
+                                   function(x) {
+                                     cbind(FUN(x[,-4, drop=FALSE]), x[,4, drop=FALSE])
+                                   })
+    }
     
     
     if(page == "table"){
@@ -125,7 +140,6 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
       out = results$comparisons[interactionLabel]
       if (all){
-          out <- lapply(out, function(x) cbind(FUN(x[,1:3,drop=FALSE]),x[,4,drop=FALSE]))
           mostattributes(out) = attributes(results$comparisons)
           names(out) = interactionLabel
           print(out)
@@ -146,8 +160,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
           out.within = out[group1.var1 == group2.var1, ]
           ## Matrix of 'between' comparisons.
           out.between = out[group1.var2 == group2.var2, ]
-          out <- lapply(list(out.within, out.between),
-                        function(x) cbind(FUN(x[,1:3,drop=FALSE]),x[,4,drop=FALSE]))
+          out <- list(out.within, out.between)
           mostattributes(out) = attributes(results$comparisons)
           factor1 = strsplit(interactionLabel, ":")[1]
           names(out) = c(paste("Comparisons within", factor1),
@@ -169,7 +182,8 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
                    }else{
                      NULL
                    },
-                   results = results))
+                   results = results,
+                   results.identity = results.identity))
     
   }else{
     alist = anova(fit)
