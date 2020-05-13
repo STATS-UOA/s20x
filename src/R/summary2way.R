@@ -137,6 +137,9 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       names(out) = factorLabels
       print(out)
     }else{# page == "interaction")
+      if (!inter) {
+        stop("No interaction term in model")
+      }
       interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
       out = results$comparisons[interactionLabel]
       if (all){
