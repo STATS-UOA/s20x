@@ -1,4 +1,4 @@
-estimateContrasts2 = function(contrast.matrix, fit, alpha = 0.05, row = TRUE, L) {
+estimateContrasts2 = function(contrast.matrix, fit, alpha = 0.05, row = TRUE, L, FUN) {
     if (!inherits(fit, "lm")) 
         stop("Second input is not an \"lm\" object")
     if (length(dimnames(fit$model)[[2]]) != 3) 
@@ -37,7 +37,7 @@ estimateContrasts2 = function(contrast.matrix, fit, alpha = 0.05, row = TRUE, L)
     tukey.p = 1 - round((ptukey(abs(tstat) * sqrt(2), ncol(contrast.matrix), fit$df)), 4)
     bonf.p = pmin(round(L * 2 * (1 - pt(abs(tstat), fit$df)), 4), 1)
     # drop unadjusted probs 2005 outmat = cbind(contrasts, tl, tu, tukey.p, unadj.p)
-    outmat = cbind(contrasts, tl, tu, tukey.p)
+    outmat = cbind(FUN(cbind(contrasts, tl, tu)), tukey.p)
     contrast.names = if (is.null(dimnames(contrast.matrix))) 
         paste("C", 1:length(contrasts), sep = "") else dimnames(contrast.matrix)[[1]]
     # drop unadjusted probs 2005 dimnames(outmat) = list(contrast.names,c('Estimate','Tukey.L','Tukey.U','Tukey.p','Unadj.p'))
