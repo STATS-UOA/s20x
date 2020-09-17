@@ -1,13 +1,27 @@
-#predictGLM replaces predictCount (only applicable to Poisson models)
-#predictGLM handles both Poisson and binomial models.
+#' Predictions for Generalized Linear Models
+#' 
+#' An alternative to \code{\link{predictCount}} to handle Binomial as well as
+#' Poisson models
+#' 
+#' Note: The data frame, newdata, must have the same column order and data
+#' types (e.g. numeric or factor) as those used in fitting the model.
+#' 
+#' 
+#' @param object a \code{glm} object, i.e. the output from \code{\link{glm}}.
+#' @param newdata prediction data frame.
+#' @param cilevel confidence level of the interval.
+#' @param type \code{"link"} (default) or \code{"response"} for CI on linear predictor or response scale.
+#' @param quasit if \code{TRUE}, t multiplier for CI rather than normal multiplier in the case of a quasi model.
+#' @param \dots optional arguments that are passed to the generic \code{predict}.
+#' @return A data frame with three columns: \describe{ \item{Predicted}{the
+#' predicted count.} \item{Conf.lower}{the lower bound of the predicted count.}
+#' \item{Conf.upper}{the upper bound of the predicted count.} }
+#' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{as.data.frame}}.
+#' @keywords htest
+#' @export predictGLM
 
-#Optional arguments
-#type = "link" or "response" for CI on linear predictor or response scale.
-#quasit = Logical. Whether to use t multiplier for CI rather than normal multiplier in the case of a quasi model.
-
-predictGLM=function (object, newdata, type="link",
-                     cilevel = 0.95, quasit=FALSE,...) 
-{
+predictGLM =function(object, newdata, type="link",
+                     cilevel = 0.95, quasit=FALSE,...) {
   if (!inherits(object, "glm")) 
     stop("First input is not a \"glm\" object")
   if (!is.data.frame(newdata)) 
