@@ -1,0 +1,9 @@
+*.txt   text
+*.Rmd   text
+*.md    text
+*.r	text
+*.R     text
+*.Rd	text
+*.yaml	text
+*.yml   text
+*.Rproj text
