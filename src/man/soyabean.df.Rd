@@ -4,10 +4,12 @@
 \name{soyabean.df}
 \alias{soyabean.df}
 \title{Soya Bean Yields}
-\format{A data frame with 32 observations on 3 variables. \tabular{rlll}{
+\format{
+A data frame with 32 observations on 3 variables. \tabular{rlll}{
 [,1] \tab yield \tab numeric \tab Yield of each plant \cr [,2] \tab cultivar
 \tab factor \tab Cultivar used (cult1, cult2, cult3, cult4)\cr [,3] \tab
-planttime \tab factor \tab Month of planting (Novemb, Decemb) }}
+planttime \tab factor \tab Month of planting (Novemb, Decemb) }
+}
 \source{
 Littler, R. University of Waikato
 }

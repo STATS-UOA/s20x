@@ -4,9 +4,11 @@
 \name{house.df}
 \alias{house.df}
 \title{Sale and Advertised Prices of Houses}
-\format{A data frame with 100 observations on 2 variables. \tabular{rlll}{
+\format{
+A data frame with 100 observations on 2 variables. \tabular{rlll}{
 [,1] \tab advertised.price \tab numeric \tab Advertised price (\$)\cr [,2]
-\tab sell.price \tab numeric \tab Final sale price (\$) }}
+\tab sell.price \tab numeric \tab Final sale price (\$) }
+}
 \description{
 A random sample of 100 houses recently sold in Mt Eden, Auckland. For each
 house we have the advertised price and the actual sale price.

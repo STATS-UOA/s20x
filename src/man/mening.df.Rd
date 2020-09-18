@@ -4,8 +4,10 @@
 \name{mening.df}
 \alias{mening.df}
 \title{Monthly Notifications of Meningococcal Disease}
-\format{A data frame with 144 observations on 3 variables: Month, Year and
-mening.}
+\format{
+A data frame with 144 observations on 3 variables: Month, Year and
+mening.
+}
 \description{
 This data shows the monthly number of notifications meningococcal disease in
 New Zealand from January 1990 to December 2001.

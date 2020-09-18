@@ -4,8 +4,16 @@
 \alias{summary1way}
 \title{One-way Analysis of Variance Summary}
 \usage{
-summary1way(fit, digit = 5, conf.level = 0.95, inttype = "tukey",
-  pooled = TRUE, print.out = TRUE, draw.plot = TRUE, ...)
+summary1way(
+  fit,
+  digit = 5,
+  conf.level = 0.95,
+  inttype = "tukey",
+  pooled = TRUE,
+  print.out = TRUE,
+  draw.plot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{fit}{an lm object, i.e. the output from \code{\link{lm}}.}

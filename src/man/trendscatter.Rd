@@ -8,11 +8,17 @@
 \usage{
 trendscatter(x, ...)
 
-\method{trendscatter}{default}(x, y = NULL, f = 0.5, xlab = NULL,
-  ylab = NULL, main = NULL, ...)
+\method{trendscatter}{default}(x, y = NULL, f = 0.5, xlab = NULL, ylab = NULL, main = NULL, ...)
 
-\method{trendscatter}{formula}(x, f = 0.5, data = NULL, xlab = NULL,
-  ylab = NULL, main = NULL, ...)
+\method{trendscatter}{formula}(
+  x,
+  f = 0.5,
+  data = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  main = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{the coordinates of the points in the scatter plot. Alternatively, a formula.}

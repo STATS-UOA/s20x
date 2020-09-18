@@ -8,12 +8,19 @@
 \usage{
 eovcheck(x, ...)
 
-\method{eovcheck}{formula}(x, data = NULL, xlab = "Fitted values",
-  ylab = "Residuals", col = NULL, smoother = FALSE, twosd = FALSE,
-  levene = FALSE, ...)
+\method{eovcheck}{formula}(
+  x,
+  data = NULL,
+  xlab = "Fitted values",
+  ylab = "Residuals",
+  col = NULL,
+  smoother = FALSE,
+  twosd = FALSE,
+  levene = FALSE,
+  ...
+)
 
-\method{eovcheck}{lm}(x, smoother = FALSE, twosd = FALSE,
-  levene = FALSE, ...)
+\method{eovcheck}{lm}(x, smoother = FALSE, twosd = FALSE, levene = FALSE, ...)
 }
 \arguments{
 \item{x}{A linear model formula. Alternatively, a fitted lm object from

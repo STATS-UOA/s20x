@@ -4,9 +4,17 @@
 \alias{summary2way}
 \title{Two-way Analysis of Variance Summary}
 \usage{
-summary2way(fit, page = c("table", "means", "effects", "interaction",
-  "nointeraction"), digit = 5, conf.level = 0.95, print.out = TRUE,
-  new = TRUE, all = FALSE, ...)
+summary2way(
+  fit,
+  page = c("table", "means", "effects", "interaction", "nointeraction"),
+  digit = 5,
+  conf.level = 0.95,
+  print.out = TRUE,
+  new = TRUE,
+  all = FALSE,
+  FUN = "identity",
+  ...
+)
 }
 \arguments{
 \item{fit}{an lm object, i.e. the output from 'lm()'.}
@@ -33,6 +41,9 @@ simply returns the means for each grouping.}
 factor levels are shown. Otherwise, comparisons are only shown
 between combinations that have the same level for one of the
 factors.}
+
+\item{FUN}{optional function to be applied to estimates and confidence intervals.
+Typically for backtransformation operations.}
 
 \item{\dots}{other arguments like inttype, pooled etc.}
 }
@@ -71,6 +82,11 @@ page = 'nointeraction' tables of contrasts
 data(arousal.df)
 arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
 summary2way(arousal.fit)
+
+## Butterfat data:
+data("butterfat.df")
+fit <- lm(log(Butterfat)~Breed+Age, data=butterfat.df)
+summary2way(fit, page="nointeraction", FUN = exp)
 
 }
 \seealso{

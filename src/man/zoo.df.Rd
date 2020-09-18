@@ -4,7 +4,8 @@
 \name{zoo.df}
 \alias{zoo.df}
 \title{Zoo Attendance during an Advertising Campaign}
-\format{A data frame with 440 observations on 6 variables. \tabular{rlll}{
+\format{
+A data frame with 440 observations on 6 variables. \tabular{rlll}{
 [,1] \tab attendance \tab numeric \tab Number of visitors \cr [,2] \tab time
 \tab numeric \tab Time in days since the start of the study \cr [,3] \tab
 sun.yesterday \tab numeric \tab Hours of sunshine the previous day \cr [,4]
@@ -12,7 +13,8 @@ sun.yesterday \tab numeric \tab Hours of sunshine the previous day \cr [,4]
 previous week (\$000 per day)\cr [,5] \tab nice.day \tab factor \tab
 Assessment based on number of hours of sunshine (0 = No, 1 = Yes)\cr [,6]
 \tab day.type \tab factor \tab Type of day (1 = ordinary weekday, 2 =
-weekend day, 3 = school holiday weekday, 4 = public holday) }}
+weekend day, 3 = school holiday weekday, 4 = public holday) }
+}
 \description{
 Data for 455 days of attendance records for Auckland Zoo, from January 1,
 1993. Note that only 440 values are given due to missing values. It was of

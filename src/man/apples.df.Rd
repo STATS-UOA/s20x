@@ -4,11 +4,13 @@
 \name{apples.df}
 \alias{apples.df}
 \title{Apples Data}
-\format{The data consist of a data frame with 104 observations on 3
+\format{
+The data consist of a data frame with 104 observations on 3
 variables. \tabular{rlll}{ [,1] \tab Rootstock \tab factor \tab levels (I,
 II, III, IV, IX, V, VI, VII, X, XII, XIII, XV, XVI) \cr [,2] \tab Weight
 \tab integer \tab . \cr [,3] \tab Propagated \tab factor \tab levels
-(cutting, seed) }}
+(cutting, seed) }
+}
 \description{
 These data come from a classic long-term experiment conducted at the East
 Malling Research Station, Kent, which is the centre four research into apple

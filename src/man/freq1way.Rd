@@ -4,8 +4,15 @@
 \alias{freq1way}
 \title{Analysis of 1-dimensional frequency tables}
 \usage{
-freq1way(counts, hypothprob, conf.level = 0.95, addCIs = TRUE,
-  digits = 4, arrowwid = 0.1, estimated = 0)
+freq1way(
+  counts,
+  hypothprob,
+  conf.level = 0.95,
+  addCIs = TRUE,
+  digits = 4,
+  arrowwid = 0.1,
+  estimated = 0
+)
 }
 \arguments{
 \item{counts}{A 1-way frequency table as produced by \code{table}.}

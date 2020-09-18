@@ -4,9 +4,16 @@
 \alias{cooks20x}
 \title{Cook's distance plot}
 \usage{
-cooks20x(x, main = "Cook's Distance plot", xlab = "observation number",
-  ylab = "Cook's distance", line = c(0.5, 1.2, 2), cex.labels = 1,
-  axisOpts = list(xAxis = TRUE, yAxisTight = FALSE), ...)
+cooks20x(
+  x,
+  main = "Cook's Distance plot",
+  xlab = "observation number",
+  ylab = "Cook's distance",
+  line = c(0.5, 1.2, 2),
+  cex.labels = 1,
+  axisOpts = list(xAxis = TRUE, yAxisTight = FALSE),
+  ...
+)
 }
 \arguments{
 \item{x}{an object of class \code{lm}, usually obtained by using the \code{\link{lm}} function.}

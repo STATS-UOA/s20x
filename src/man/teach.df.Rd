@@ -4,10 +4,12 @@
 \name{teach.df}
 \alias{teach.df}
 \title{Comparison of Three Teaching Methods}
-\format{A data frame with 30 observations on 3 variables. \tabular{rlll}{
+\format{
+A data frame with 30 observations on 3 variables. \tabular{rlll}{
 [,1] \tab lang \tab numeric \tab Language test score after instruction \cr
 [,2] \tab IQ \tab numeric \tab Student's IQ \cr [,3] \tab method \tab factor
-\tab Teaching method (1, 2, 3) }}
+\tab Teaching method (1, 2, 3) }
+}
 \description{
 Data from an experiment to assess the impact of three different teaching
 methods on language ability. 30 students were randomly allocated into three

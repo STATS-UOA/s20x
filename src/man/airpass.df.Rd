@@ -4,7 +4,9 @@
 \name{airpass.df}
 \alias{airpass.df}
 \title{International Airline Passengers}
-\format{A time series with 144 observations.}
+\format{
+A time series with 144 observations.
+}
 \description{
 Number of international airline passengers (in thousands) recorded monthly
 from January 1949 to December 1960.

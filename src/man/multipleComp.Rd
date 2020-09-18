@@ -4,13 +4,16 @@
 \alias{multipleComp}
 \title{Multiple Comparisons}
 \usage{
-multipleComp(fit, conf.level = 0.95)
+multipleComp(fit, conf.level = 0.95, FUN = identity)
 }
 \arguments{
 \item{fit}{output from the command 'lm()'.}
 
 \item{conf.level}{confidence level for the confidence interval, expressed as
 a percentage.}
+
+\item{FUN}{optional function to be applied to estimates and confidence intervals.
+Typically for backtransformation operations.}
 }
 \value{
 Returns a list of estimates, confidence intervals and p-values.
@@ -26,6 +29,11 @@ means in a one-way ANOVA.
 data(computer.df)
 fit = lm(score ~ factor(selfassess), data = computer.df)
 multipleComp(fit)
+
+## butterfat data
+data("butterfat.df")
+fit <- lm(log(Butterfat) ~ Breed, data=butterfat.df)
+multipleComp(fit, FUN=exp)
 
 }
 \keyword{htest}

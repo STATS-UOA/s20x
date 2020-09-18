@@ -4,8 +4,14 @@
 \alias{estimateContrasts}
 \title{Contrast Estimates}
 \usage{
-estimateContrasts(contrast.matrix, fit, row = TRUE, alpha = 0.05,
-  L = NULL)
+estimateContrasts(
+  contrast.matrix,
+  fit,
+  row = TRUE,
+  alpha = 0.05,
+  L = NULL,
+  FUN = identity
+)
 }
 \arguments{
 \item{contrast.matrix}{a matrix of contrast coefficients. Separate rows of
@@ -22,6 +28,9 @@ if the ANOVA is one-way.}
 
 \item{L}{number of contrasts. If NULL, L will be set to the number of rows
 in the contrast matrix, otherwise L will be as specified.}
+
+\item{FUN}{optional function to be applied to estimates and confidence intervals.
+Typically for backtransformation operations.}
 }
 \value{
 Returns a matrix whose rows correspond to the different contrasts

@@ -4,13 +4,15 @@
 \name{body.df}
 \alias{body.df}
 \title{Body Image and Ethnicity}
-\format{A data frame with 246 observations on 8 variables. \tabular{rlll}{
+\format{
+A data frame with 246 observations on 8 variables. \tabular{rlll}{
 [,1] \tab ethnicity \tab factor \tab Subject's ethnicity (Asian, Europn,
 Maori, Pacific) \cr [,2] \tab married \tab . \tab . \cr [,3] \tab bodyim
 \tab factor \tab Subject's rating of themself (slight.uw, right, slight.ow,
 mod.ow, very.ow)\cr [,4] \tab sm.ever \tab . \tab . \cr [,5] \tab weight
 \tab . \tab . \cr [,6] \tab height \tab . \tab . \cr [,7] \tab age \tab .
-\tab . \cr [,8] \tab stressgp \tab . \tab . }}
+\tab . \cr [,8] \tab stressgp \tab . \tab . }
+}
 \description{
 Data collected to examine how women from various ethnic groups rate their
 body image. All subjects were slightly underweight for their body size.

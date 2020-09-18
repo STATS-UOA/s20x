@@ -9,11 +9,15 @@
 \usage{
 summaryStats(x, ...)
 
-\method{summaryStats}{default}(x, group = rep("Data", length(x)),
-  data.order = TRUE, digits = 2, ...)
+\method{summaryStats}{default}(
+  x,
+  group = rep("Data", length(x)),
+  data.order = TRUE,
+  digits = 2,
+  ...
+)
 
-\method{summaryStats}{formula}(x, data = NULL, data.order = TRUE,
-  digits = 2, ...)
+\method{summaryStats}{formula}(x, data = NULL, data.order = TRUE, digits = 2, ...)
 
 \method{summaryStats}{matrix}(x, data.order = TRUE, digits = 2, ...)
 }

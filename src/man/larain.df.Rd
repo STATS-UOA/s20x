@@ -4,7 +4,9 @@
 \name{larain.df}
 \alias{larain.df}
 \title{Los Angeles Rainfall}
-\format{A time series with 66 observations.}
+\format{
+A time series with 66 observations.
+}
 \description{
 Annual rainfall (in inches) for Los Angeles from 1908 to 1973.
 }

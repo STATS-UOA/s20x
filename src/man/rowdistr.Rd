@@ -4,8 +4,13 @@
 \alias{rowdistr}
 \title{Row distributions from a cross-tabulation of two variables}
 \usage{
-rowdistr(crosstablist, comp = c("basic", "within", "between"),
-  conf.level = 0.95, plot = TRUE, suppressText = FALSE)
+rowdistr(
+  crosstablist,
+  comp = c("basic", "within", "between"),
+  conf.level = 0.95,
+  plot = TRUE,
+  suppressText = FALSE
+)
 }
 \arguments{
 \item{crosstablist}{a list produced by 'crosstabs' or a matrix containing a

@@ -8,19 +8,48 @@
 \usage{
 interactionPlots(y, ...)
 
-\method{interactionPlots}{default}(y, fac1 = NULL, fac2 = NULL,
-  xlab = NULL, xlab2 = NULL, ylab = NULL, data.order = TRUE,
-  exlim = 0.1, jitter = 0.02, conf.level = 0.95,
-  interval.type = c("tukey", "hsd", "lsd", "ci"), pooled = TRUE,
-  tick.length = 0.1, interval.distance = 0.2, col.width = 2/3,
-  xlab.distance = 0.1, xlen = 1.5, ylen = 1, ...)
+\method{interactionPlots}{default}(
+  y,
+  fac1 = NULL,
+  fac2 = NULL,
+  xlab = NULL,
+  xlab2 = NULL,
+  ylab = NULL,
+  data.order = TRUE,
+  exlim = 0.1,
+  jitter = 0.02,
+  conf.level = 0.95,
+  interval.type = c("tukey", "hsd", "lsd", "ci"),
+  pooled = TRUE,
+  tick.length = 0.1,
+  interval.distance = 0.2,
+  col.width = 2/3,
+  xlab.distance = 0.1,
+  xlen = 1.5,
+  ylen = 1,
+  ...
+)
 
-\method{interactionPlots}{formula}(y, data = NULL, xlab = NULL,
-  xlab2 = NULL, ylab = NULL, data.order = TRUE, exlim = 0.1,
-  jitter = 0.02, conf.level = 0.95, interval.type = c("tukey", "hsd",
-  "lsd", "ci"), pooled = TRUE, tick.length = 0.1,
-  interval.distance = 0.2, col.width = 2/3, xlab.distance = 0.1,
-  xlen = 1.5, ylen = 1, ...)
+\method{interactionPlots}{formula}(
+  y,
+  data = NULL,
+  xlab = NULL,
+  xlab2 = NULL,
+  ylab = NULL,
+  data.order = TRUE,
+  exlim = 0.1,
+  jitter = 0.02,
+  conf.level = 0.95,
+  interval.type = c("tukey", "hsd", "lsd", "ci"),
+  pooled = TRUE,
+  tick.length = 0.1,
+  interval.distance = 0.2,
+  col.width = 2/3,
+  xlab.distance = 0.1,
+  xlen = 1.5,
+  ylen = 1,
+  ...
+)
 }
 \arguments{
 \item{y}{either a formula of the form: y~fac1+fac2 where y is the response

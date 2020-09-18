@@ -4,10 +4,12 @@
 \name{computer.df}
 \alias{computer.df}
 \title{Computer Questionnaire}
-\format{A data frame with 19 observations on 2 variables. \tabular{rlll}{
+\format{
+A data frame with 19 observations on 2 variables. \tabular{rlll}{
 [,1] \tab score \tab numeric \tab Questionnaire score \cr [,2] \tab
 selfassess \tab ordered factor \tab Self-assessed level of expertise (1 =
-low, 2 = medium, 3 = high) }}
+low, 2 = medium, 3 = high) }
+}
 \description{
 Data from a test to see if a questionnaire was properly designed. The
 questionnaire measures managers' technical knowledge of computers. The test

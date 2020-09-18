@@ -4,11 +4,13 @@
 \name{butterfat.df}
 \alias{butterfat.df}
 \title{Butterfat Data}
-\format{A data frame with 100 observations on 3 variables. \tabular{rlll}{
+\format{
+A data frame with 100 observations on 3 variables. \tabular{rlll}{
 [,1] \tab Butterfat \tab numeric \tab Mean percentage of butterfat per cow
 \cr [,2] \tab Breed \tab factor \tab Breed (ayrshire, canadian, guernesy,
 holst.fres, jersey) \cr [,3] \tab Age \tab factor \tab Age group (2yo,
-mature) }}
+mature) }
+}
 \source{
 A Handbook of Small Data Sets
 }

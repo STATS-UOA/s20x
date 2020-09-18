@@ -4,7 +4,8 @@
 \name{course.df}
 \alias{course.df}
 \title{Stats 20x Summer School Data}
-\format{A data frame with 146 observations on 15 variables. \tabular{rlll}{
+\format{
+A data frame with 146 observations on 15 variables. \tabular{rlll}{
 [,1] \tab Grade \tab factor \tab Final grade for the course (A, B, C, D)\cr
 [,2] \tab Pass \tab factor \tab Passed the course (No, Yes)\cr [,3] \tab
 Exam \tab numeric \tab Mark in the final exam \cr [,4] \tab Degree \tab
@@ -19,7 +20,8 @@ exam \cr [,12] \tab Colour \tab factor \tab Colour of the exam booklet
 (Blue, Green, Pink, Yellow)\cr [,13] \tab Stage1 \tab factor \tab Stage one
 grade (A, B, C)\cr [,14] \tab Years.Since \tab numeric \tab Number of years
 since doing Stage 1 \cr [,15] \tab Repeat \tab factor \tab Repeating the
-paper (No, Yes) }}
+paper (No, Yes) }
+}
 \description{
 Data from a summer school Stats 20x course. Each observation represents a
 single student.

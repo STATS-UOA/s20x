@@ -4,9 +4,11 @@
 \name{mazda.df}
 \alias{mazda.df}
 \title{Year and Price of Mazda Cars}
-\format{A data frame with 124 observations on 2 variables. \tabular{rlll}{
+\format{
+A data frame with 124 observations on 2 variables. \tabular{rlll}{
 [,1] \tab price \tab numeric \tab Price (Australian dollars)\cr [,2] \tab
-year \tab numeric \tab Year of manufacture }}
+year \tab numeric \tab Year of manufacture }
+}
 \description{
 Prices and ages of 124 Mazda cars collected from the Melbourne Age newspaper
 in 1991.

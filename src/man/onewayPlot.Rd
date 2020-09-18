@@ -10,17 +10,33 @@
 \usage{
 onewayPlot(x, ...)
 
-\method{onewayPlot}{default}(x, f, conf.level = 0.95,
-  interval.type = "tukey", pooled = TRUE, strip = TRUE,
-  vert = TRUE, verbose = FALSE,
+\method{onewayPlot}{default}(
+  x,
+  f,
+  conf.level = 0.95,
+  interval.type = "tukey",
+  pooled = TRUE,
+  strip = TRUE,
+  vert = TRUE,
+  verbose = FALSE,
   ylabel = deparse(terms(formula)[[2]]),
-  flabel = deparse(terms(formula)[[3]]), ...)
+  flabel = deparse(terms(formula)[[3]]),
+  ...
+)
 
-\method{onewayPlot}{formula}(formula, data = parent.frame(),
-  conf.level = 0.95, interval.type = "tukey", pooled = TRUE,
-  strip = TRUE, vert = TRUE, verbose = FALSE,
+\method{onewayPlot}{formula}(
+  formula,
+  data = parent.frame(),
+  conf.level = 0.95,
+  interval.type = "tukey",
+  pooled = TRUE,
+  strip = TRUE,
+  vert = TRUE,
+  verbose = FALSE,
   ylabel = deparse(terms(formula)[[2]]),
-  flabel = deparse(terms(formula)[[3]]), ...)
+  flabel = deparse(terms(formula)[[3]]),
+  ...
+)
 
 \method{onewayPlot}{lm}(x, ..., ylabel = nms[1], flabel = nms[2])
 }
