@@ -1,11 +1,17 @@
 estimateContrasts1 = function(contrast.matrix, fit, alpha = 0.05, L, FUN) {
-    if (!inherits(fit, "lm")) 
+    if (!inherits(fit, "lm")){ 
         stop("Second input is not an \"lm\" object")
-    if (length(dimnames(fit$model)[[2]]) != 2) 
-        stop("Require only one factor in \"lm\" model!") else if (!is.factor(fit$model[[2]])) 
+    }
+    
+    if (length(dimnames(fit$model)[[2]]) != 2){ 
+        stop("Require only one factor in \"lm\" model!")
+    }else if (!is.factor(fit$model[[2]])){ 
         stop("Explanatory variable in \"lm\" should be a factor!")
+    }
+    
     if (alpha < 0 || alpha > 1) 
         alpha = 0.05
+    
     k = fit$rank
     contrast.matrix = if (!is.matrix(contrast.matrix)) 
         matrix(contrast.matrix, ncol = length(contrast.matrix)) else contrast.matrix
