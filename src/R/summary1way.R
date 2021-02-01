@@ -72,12 +72,17 @@ summary1way = function(fit, digit = 5, conf.level = 0.95,
     }
     numeric.summary = cbind(size, mea, med, std, mid)
     dimnames(numeric.summary) = list(c("All Data", names(split(y, f1))), c(" Sample size", "    Mean", " Median", " Std Dev", " Midspread"))
+    
     # calculate the effects
-    dc = dummy.coef(fit)
     grandmn = mean(y)
-    grpeffs = dc[[1]] + dc[[2]] - mean(y)  #internal-constraint independent calc
+    # Small 'hack' for R 4.0+ as we may not have factors and dummy.coef
+    # doesn't handle this.
+    grpeffcol = data.frame(names(group))
+    colnames(grpeffcol) <- colnames(fit$model)[2]
+    grpeffs = predict(fit, newdata = grpeffcol) - grandmn
     effmat = c(grandmn, grpeffs)
     names(effmat) = c("typ.val", names(split(y, f1)))
+    
     if (print.out) {
         cat("ANOVA Table:\n")
         print(a.table, quote = FALSE)

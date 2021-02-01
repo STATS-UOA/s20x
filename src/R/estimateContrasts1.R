@@ -5,7 +5,7 @@ estimateContrasts1 = function(contrast.matrix, fit, alpha = 0.05, L, FUN) {
     
     if (length(dimnames(fit$model)[[2]]) != 2){ 
         stop("Require only one factor in \"lm\" model!")
-    }else if (!is.factor(fit$model[[2]])){ 
+    }else if (!is.factor(fit$model[[2]]) && !is.character(fit$model[[2]])){ 
         stop("Explanatory variable in \"lm\" should be a factor!")
     }
     
