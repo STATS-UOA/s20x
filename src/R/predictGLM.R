@@ -38,15 +38,20 @@ predictGLM = function(object,
   name.row = paste("pred", 1:nrow(newdata), sep = ".")
   name.row = 1:nrow(newdata)
   
-  x = attr(object$terms, "term.labels")
-  y = unlist(strsplit(x, "factor\\("))
-  z = unlist(strsplit(y, "\\)"))
-  name.col = z
+  if (!inherits(object, "glm"))
+    stop("First input is not a \"glm\" object")
   
-  if (ncol(newdata) != length(name.col))
-    stop("Incorrect input of the new data!")
+  if (!is.data.frame(newdata))
+    stop("Argument \"newdata\" is not a data frame!")
   
-  dimnames(newdata) = list(name.row, name.col)
+  if (family(object)$link != "log" & family(object)$link != "logit")
+    stop("Must be a poisson or binomial model")
+  
+  tt <- terms(object)
+  Terms <- delete.response(tt)
+  if (!all(match(attr(Terms, "term.labels")[attr(Terms, "order") == 1],
+                 colnames(newdata), nomatch = FALSE)))
+    stop("newdata must be provided for all first-order terms")
   
   pred = predict.glm(object, newdata, se.fit = TRUE, ...)
   
@@ -59,22 +64,20 @@ predictGLM = function(object,
   
   Conf.lower = pred$fit - CIquantile * pred$se.fit
   Conf.upper = pred$fit + CIquantile * pred$se.fit
-  predictions = cbind(Expected, Conf.lower, Conf.upper)
+  predictions = cbind(fit = Expected, lwr = Conf.lower, upr = Conf.upper)
   
   if (type == "response")
     predictions = family(object)$linkinv(predictions)
   
-  predictions.df = as.data.frame(predictions)
-  dimnames(predictions.df)[[1]] = dimnames(newdata)[[1]]
-  dimnames(predictions.df)[[2]] = c("Estimated", "Conf.lower", "Conf.upper")
+  rownames <- seq_len(nrow(predictions))
   
   type = if(type == "response"){
-            "response"}
-         else{
-             "link"
-         }
+    "response"}
+  else{
+    "link"
+  }
   
-  cat("***Estimates and CIs are on the", type, "scale***\n")
+  message("***Estimates and CIs are on the ", type, " scale***")
   
-  return(predictions.df)
+  predictions
 }
