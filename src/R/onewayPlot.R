@@ -69,8 +69,8 @@ onewayPlot.default = function(x, f, conf.level = 0.95, interval.type = "tukey", 
     
     name = c("TUKEY intervals", "HSD intervals", "LSD intervals", "Confidence intervals")[index]
     mylevels = split(y, f)
-    nfactor = as.numeric(f)
-    xmax = max(nfactor)
+    nfactor = unique(f)
+    xmax = length(nfactor)
     if (length(mylevels) < 2) 
         stop("must have at least 2 levels")
     
