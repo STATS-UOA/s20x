@@ -24,9 +24,9 @@ the grouping variable g
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: Strip charts and normal quantile-quantile plots
-}}
+\item \code{stripqq(formula)}: Strip charts and normal quantile-quantile plots
 
+}}
 \note{
 This function is deprecated and will be removed in later versions of the pacakge.
 }

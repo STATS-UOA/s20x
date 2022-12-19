@@ -6,7 +6,7 @@
 \title{Fire Damage and Distance from the Fire Station}
 \format{
 A data frame with 15 observations on 2 variables. \tabular{rlll}{
-[,1] \tab damage \tab numeric \tab Damage (\$000s)\cr [,2] \tab distance
+[,1] \tab damage \tab numeric \tab Damage (1000s of dollars)\cr [,2] \tab distance
 \tab numeric \tab Distance from the fire station (miles) }
 }
 \description{

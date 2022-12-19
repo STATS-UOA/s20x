@@ -33,11 +33,11 @@ Computes a factor that has a level for each combination of the factors
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Crossed Factors
+\item \code{crossFactors(default)}: Crossed Factors
 
-\item \code{formula}: Crossed Factors
+\item \code{crossFactors(formula)}: Crossed Factors
+
 }}
-
 \note{
 This function actually returns a \code{factor} now instead of a character string, so coercion into a \code{factor} is no longer necessary.
 }

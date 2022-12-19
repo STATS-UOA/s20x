@@ -10,7 +10,7 @@ A data frame with 440 observations on 6 variables. \tabular{rlll}{
 \tab numeric \tab Time in days since the start of the study \cr [,3] \tab
 sun.yesterday \tab numeric \tab Hours of sunshine the previous day \cr [,4]
 \tab tv.adds \tab numeric \tab Average spending on TV advertising in the
-previous week (\$000 per day)\cr [,5] \tab nice.day \tab factor \tab
+previous week (1000s of dollars per day)\cr [,5] \tab nice.day \tab factor \tab
 Assessment based on number of hours of sunshine (0 = No, 1 = Yes)\cr [,6]
 \tab day.type \tab factor \tab Type of day (1 = ordinary weekday, 2 =
 weekend day, 3 = school holiday weekday, 4 = public holday) }

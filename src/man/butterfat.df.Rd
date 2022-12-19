@@ -21,11 +21,11 @@ groups, two years old and greater than five years old. For each combination
 of breed and age, there are measurements for 10 cows.
 }
 \references{
-Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. \& Ostrowski,
+Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
 Chapman and Hall/CRC.
 
-Sokal, R.R. \& Rohlf, F.J. (1981). \emph{Biometry}, 2nd edition. San
+Sokal, R.R. and Rohlf, F.J. (1981). \emph{Biometry}, 2nd edition. San
 Francisco: W.H. Freeman, 368.
 }
 \keyword{datasets}

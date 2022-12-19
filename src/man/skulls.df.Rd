@@ -21,11 +21,11 @@ of the populations. This data only includes the maximum breadth
 measurements.
 }
 \references{
-Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. \& Ostrowski,
+Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
 Chapman and Hall/CRC.
 
-Thomson, A. \& Randall-Maciver, R. (1905). \emph{Ancient Races of the
+Thomson, A. and Randall-Maciver, R. (1905). \emph{Ancient Races of the
 Thebaid}. Oxford: Oxford University Press.
 }
 \keyword{datasets}

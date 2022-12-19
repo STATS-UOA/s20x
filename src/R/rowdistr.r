@@ -221,14 +221,16 @@ printOutput = function(crosstablist, comp = c("basic", "within", "between"), con
 #' ##from matrix of counts
 #' z = matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
 #' rowdistr(z)
+#' @importFrom methods is
 #' @export rowdistr
 rowdistr = function(crosstablist, comp = c("basic", "within", "between"), conf.level = 0.95, plot = TRUE, suppressText = FALSE) {
     
     
     comp = match.arg(comp)
     
-    if (!is.matrix(crosstablist) && (class(crosstablist) != "ct.20x")) 
+    if (!is.matrix(crosstablist) && !methods::is(crosstablist, "ct.20x")){ 
         stop("check form of crosstablist: input list must be output from crosstabs or a list of similar form")
+    }
     
     if (is.matrix(crosstablist) & !is.list(crosstablist)) {
         crosstablist = prepCrosstabList(crosstablist)

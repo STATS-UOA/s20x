@@ -60,11 +60,11 @@ number of observations per group exceeds two.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: Testing for equality of variance plot
+\item \code{eovcheck(formula)}: Testing for equality of variance plot
 
-\item \code{lm}: Testing for equality of variance plot
+\item \code{eovcheck(lm)}: Testing for equality of variance plot
+
 }}
-
 \examples{
 
 # one way ANOVA - oysters

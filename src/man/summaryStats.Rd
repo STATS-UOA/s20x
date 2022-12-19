@@ -71,13 +71,13 @@ each group separately.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Summary Statistics
+\item \code{summaryStats(default)}: Summary Statistics
 
-\item \code{formula}: Summary Statistics
+\item \code{summaryStats(formula)}: Summary Statistics
 
-\item \code{matrix}: Summary Statistics
+\item \code{summaryStats(matrix)}: Summary Statistics
+
 }}
-
 \examples{
 
 ## STATS20x data:

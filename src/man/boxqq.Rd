@@ -28,9 +28,9 @@ grouping variable g
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: Box plots and normal quantile-quantile plots
-}}
+\item \code{boxqq(formula)}: Box plots and normal quantile-quantile plots
 
+}}
 \note{
 This function is deprecated and will be removed in later versions of the package.
 }

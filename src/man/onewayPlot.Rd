@@ -78,13 +78,13 @@ levels. It is used as part of a one-way ANOVA analysis.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: One-way Analysis of Variance Plot
+\item \code{onewayPlot(default)}: One-way Analysis of Variance Plot
 
-\item \code{formula}: One-way Analysis of Variance Plot
+\item \code{onewayPlot(formula)}: One-way Analysis of Variance Plot
 
-\item \code{lm}: One-way Analysis of Variance Plot
+\item \code{onewayPlot(lm)}: One-way Analysis of Variance Plot
+
 }}
-
 \examples{
 
 ##see example in 'summary1way'

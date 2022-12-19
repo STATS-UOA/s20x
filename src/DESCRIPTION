@@ -1,16 +1,47 @@
 Package: s20x
-Version: 3.1-30
-Date: 2021-01-06
+Version: 3.1-32
+Date: 2022-12-19
 Title: Functions for University of Auckland Course STATS 201/208 Data Analysis
-Author: Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike Forster,
-    Brendan McArdle, Ben Stevenson, Chris Wild
-Maintainer: James Curran <j.curran@auckland.ac.nz>
+Authors@R: c(person(given = "Brant",
+                    family = "Deppa",
+                    role = "aut",
+                    comment = "Wrote the original R scripts this package is derived from"),
+            person(given = "James",
+                    family = "Curran",
+                    role = c("aut", "cre"),
+                    email = "j.curran@auckland.ac.nz",
+                    comment = "Wrote the original R package. Current maintainer."),
+            person(given = "Russell",
+                    family = "Millar",
+                    email = "r.millar@auckland.ac.nz",
+                    role = "ctb"),
+            person(given = "Ben",
+                    family = "Stevenson",
+                    email = "ben.stevenson@auckland.ac.nz",
+                    role = "ctb"),
+            person(given = "Andrew",
+                    family = "Balemi",
+                    email = "a.balemi@auckland.ac.nz",
+                    role = "ctb"),
+            person(given = "Chris",
+                    family = "Wild",
+                    email = "c.wild@auckland.ac.nz",
+                    role = "ctb"),
+            person(given = "Sophie",
+                    family = "Jones",
+                    role = "ctb"),
+            person(given = "Dineika",
+                    family = "Chandra",
+                    role = "ctr"),
+            person(given = "Brendan",
+                    family = "McArdle",
+                    role = "ctr"))
 Description: A set of functions used in teaching STATS 201/208 Data Analysis at
     the University of Auckland. The functions are designed to make parts of R more
     accessible to a large undergraduate population who are mostly not statistics
     majors.
-Depends: R (>= 3.5.0)
+Depends: R (>= 4.0.0)
 Encoding: UTF-8
 Imports: stats, graphics, methods
 License: GPL-2 | file LICENSE
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3

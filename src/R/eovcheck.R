@@ -65,18 +65,21 @@
 #'                  + log(passengers)[-144], data  = airpass.df)
 #' eovcheck(airpass.fit)
 #' 
+#' @importFrom methods is
 #' @export eovcheck
 eovcheck = function(x, ...) {
     UseMethod("eovcheck")
 }
 
 #' @describeIn eovcheck Testing for equality of variance plot
+#' @importFrom methods is
 #' @export
 eovcheck.formula = function(x, data = NULL, 
                             xlab = "Fitted values", ylab = "Residuals", 
                             col = NULL, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
-    if (missing(x) || (class(x) != "formula")) 
+    if (missing(x) || !is(x, "formula")){ 
         stop("missing or incorrect formula formula")
+    }
     
     call = match.call()
     m = match.call()
@@ -207,10 +210,12 @@ eovcheck.formula = function(x, data = NULL,
 }
 
 #' @describeIn eovcheck Testing for equality of variance plot
+#' @importFrom methods is
 #' @export
 eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
-    if (missing(x) || (class(x) != "lm")) 
+    if (missing(x) || !methods::is(x, "lm")){ 
         stop("missing or incorrect lm object")
+    }
     
     form = formula(x$call$formula)
     data.f = data.frame(eval(x$call$data, parent.frame()))

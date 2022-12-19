@@ -114,11 +114,11 @@ for each combination of factors.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Interactions Plot for Two-way Analysis of Variance
+\item \code{interactionPlots(default)}: Interactions Plot for Two-way Analysis of Variance
 
-\item \code{formula}: Interactions Plot for Two-way Analysis of Variance
+\item \code{interactionPlots(formula)}: Interactions Plot for Two-way Analysis of Variance
+
 }}
-
 \examples{
 
 data(mtcars)

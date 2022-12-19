@@ -5,7 +5,7 @@
 \alias{incomes.df}
 \title{Mean Family Incomes}
 \description{
-Random sample of 152 families giving their mean income (\$000s). The sample
+Random sample of 152 families giving their mean income (1000s of dollars). The sample
 was taken by an advertising agency over their area of operations.
 }
 \keyword{datasets}

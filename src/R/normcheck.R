@@ -202,8 +202,8 @@ normcheck.default = function(x,
   }
 }
 
-#' @export
 #' @describeIn normcheck Testing for normality plot
+#' @export
 normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""), 
                         ylab = c("Sample Quantiles", ""),
                         main = c("", ""), col = "light blue",
@@ -211,8 +211,9 @@ normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""),
                         shapiro.wilk = FALSE, 
                         whichPlot = 1:2, 
                         usePar = TRUE, ...){
-  if (missing(x) || (class(x) != "lm")) 
+  if (missing(x) || !methods::is(x, "lm")){ 
     stop("missing or incorrect lm object")
+  }
   
   if(!all(whichPlot %in% 1:2)){
     stop("whichPlot must be in 1:2")

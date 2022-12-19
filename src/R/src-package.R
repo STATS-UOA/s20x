@@ -169,11 +169,11 @@ NULL
 #' \cr [,2] \tab Breed \tab factor \tab Breed (ayrshire, canadian, guernesy,
 #' holst.fres, jersey) \cr [,3] \tab Age \tab factor \tab Age group (2yo,
 #' mature) }
-#' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. \& Ostrowski,
+#' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
 #' Chapman and Hall/CRC.
 #' 
-#' Sokal, R.R. \& Rohlf, F.J. (1981). \emph{Biometry}, 2nd edition. San
+#' Sokal, R.R. and Rohlf, F.J. (1981). \emph{Biometry}, 2nd edition. San
 #' Francisco: W.H. Freeman, 368.
 #' @source A Handbook of Small Data Sets
 #' @keywords datasets
@@ -322,7 +322,7 @@ NULL
 #' @name fire.df
 #' @docType data
 #' @format A data frame with 15 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab damage \tab numeric \tab Damage (\$000s)\cr [,2] \tab distance
+#' [,1] \tab damage \tab numeric \tab Damage (1000s of dollars)\cr [,2] \tab distance
 #' \tab numeric \tab Distance from the fire station (miles) }
 #' @keywords datasets
 NULL
@@ -347,11 +347,11 @@ NULL
 #' [,1] \tab fecundity \tab numeric \tab Number of eggs laid, per day, per
 #' fruitfly \cr [,2] \tab strain \tab factor \tab Strain of fruitfly (NS, RS,
 #' SS) }
-#' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. \& Ostrowski,
+#' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
 #' Chapman and Hall/CRC.
 #' 
-#' Sokal, R.R. \& Rohlf, F.J. (1981). \emph{Biometry}, 2nd edition. San
+#' Sokal, R.R. and Rohlf, F.J. (1981). \emph{Biometry}, 2nd edition. San
 #' Francisco: W.H. Freeman, 239.
 #' @source A Handbook of Small Data Sets
 #' @keywords datasets
@@ -370,8 +370,8 @@ NULL
 #' @name house.df
 #' @docType data
 #' @format A data frame with 100 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab advertised.price \tab numeric \tab Advertised price (\$)\cr [,2]
-#' \tab sell.price \tab numeric \tab Final sale price (\$) }
+#' [,1] \tab advertised.price \tab numeric \tab Advertised price (dollars)\cr [,2]
+#' \tab sell.price \tab numeric \tab Final sale price (dollars) }
 #' @keywords datasets
 NULL
 
@@ -381,7 +381,7 @@ NULL
 
 #' Mean Family Incomes
 #' 
-#' Random sample of 152 families giving their mean income (\$000s). The sample
+#' Random sample of 152 families giving their mean income (1000s of dollars). The sample
 #' was taken by an advertising agency over their area of operations.
 #' 
 #' 
@@ -633,11 +633,11 @@ NULL
 #' @format A data frame with 150 observations on 2 variables. \tabular{rlll}{
 #' [,1] \tab measurement \tab integer \tab \cr [,2] \tab year \tab integer \tab
 #' }
-#' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. \& Ostrowski,
+#' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
 #' Chapman and Hall/CRC.
 #' 
-#' Thomson, A. \& Randall-Maciver, R. (1905). \emph{Ancient Races of the
+#' Thomson, A. and Randall-Maciver, R. (1905). \emph{Ancient Races of the
 #' Thebaid}. Oxford: Oxford University Press.
 #' @source A Handbook of Small Data Sets
 #' @keywords datasets
@@ -718,7 +718,7 @@ NULL
 #' @name technitron.df
 #' @docType data
 #' @format A data frame with 46 observations on 8 variables. \tabular{rlll}{
-#' [,1] \tab salary \tab numeric \tab Annual Salary (\$)\cr [,2] \tab yrs.empl
+#' [,1] \tab salary \tab numeric \tab Annual Salary (dollars)\cr [,2] \tab yrs.empl
 #' \tab numeric \tab Number of years employed at Technitron \cr [,3] \tab
 #' prior.yrs \tab numeric \tab Number of years prior experience \cr [,4] \tab
 #' edu \tab numeric \tab Years of education after high school \cr [,5] \tab id
@@ -793,7 +793,7 @@ NULL
 #' \tab numeric \tab Time in days since the start of the study \cr [,3] \tab
 #' sun.yesterday \tab numeric \tab Hours of sunshine the previous day \cr [,4]
 #' \tab tv.adds \tab numeric \tab Average spending on TV advertising in the
-#' previous week (\$000 per day)\cr [,5] \tab nice.day \tab factor \tab
+#' previous week (1000s of dollars per day)\cr [,5] \tab nice.day \tab factor \tab
 #' Assessment based on number of hours of sunshine (0 = No, 1 = Yes)\cr [,6]
 #' \tab day.type \tab factor \tab Type of day (1 = ordinary weekday, 2 =
 #' weekend day, 3 = school holiday weekday, 4 = public holday) }

@@ -8,5 +8,6 @@
 #' @import graphics 
 #' @importFrom utils packageDescription
 #' @importFrom utils read.table
+#' @importFrom methods is
 #' @author Andrew Balemi, Dineika Chandra, James Curran, Brant Deppa, Mike Forster, Brendan McArdle, Chris Wild
 NULL

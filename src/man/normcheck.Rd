@@ -93,11 +93,11 @@ will be extracted from \code{x}.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Testing for normality plot
+\item \code{normcheck(default)}: Testing for normality plot
 
-\item \code{lm}: Testing for normality plot
+\item \code{normcheck(lm)}: Testing for normality plot
+
 }}
-
 \examples{
 
 # An exponential growth curve

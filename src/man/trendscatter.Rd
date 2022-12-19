@@ -50,11 +50,11 @@ about this trend are also plotted.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Trend and scatter plot
+\item \code{trendscatter(default)}: Trend and scatter plot
 
-\item \code{formula}: Trend and scatter plot
+\item \code{trendscatter(formula)}: Trend and scatter plot
+
 }}
-
 \examples{
 
 # A simple polynomial
