@@ -10,10 +10,6 @@
 #' @keywords datasets
 NULL
 
-
-
-
-
 #' Apples Data
 #' 
 #' These data come from a classic long-term experiment conducted at the East
@@ -45,10 +41,6 @@ NULL
 #' @keywords datasets
 NULL
 
-
-
-
-
 #' Changes in Pupil Size with Emotional Arousal
 #' 
 #' Data from an experiment to measure the effect of different images on
@@ -66,7 +58,6 @@ NULL
 #' nude female, nude male) }
 #' @keywords datasets
 NULL
-
 
 
 
@@ -104,7 +95,6 @@ NULL
 #' \tab . \cr [,8] \tab stressgp \tab . \tab . }
 #' @keywords datasets
 NULL
-
 
 
 

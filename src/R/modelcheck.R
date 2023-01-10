@@ -56,7 +56,8 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
   
   M = createLayoutMatrix()
   layout(M)
-  oldPar = par(mar = mar, mgp = c(2, 1, 0))
+  oldPar = par("mar","mgp")
+  par(mar = mar, mgp = c(2, 1, 0))
   
   if (1 %in% which){
     plot(x, which = 1, ...)
@@ -64,7 +65,7 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
   
   if (2 %in% which){
     plot(x, which = 2, ...)
-    hist(resid(x), main = "Histogram of residuals")
+    hist(resid(x), xlab="Residuals",main = "Histogram of residuals")
   }
   
   if(3 %in% which){
@@ -72,4 +73,5 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
   }
   
   par(oldPar)
+  layout(1)
 }
