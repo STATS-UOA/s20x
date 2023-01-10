@@ -11,9 +11,9 @@ displayPairs(allpairs, levels1, levels2, brief = TRUE)
 
 \item{levels1}{a character string specifying which within-level comparisons from \code{factor1} are wanted, and in which order.}
 
-\item{levels2}{a character string specifying which within-level comparisons are wanted, and in which order.}
+\item{levels2}{a character string specifying which within-level comparisons from \code{factor2} are wanted, and in which order.}
 
-\item{brief}{either \code{TRUE} or \code{FALSE}. If \code{TRUE} then the information displayed will be more succint.}
+\item{brief}{either \code{TRUE} or \code{FALSE}. If \code{TRUE} then the information displayed will be more succinct.}
 }
 \description{
 Displays within-level pairwise comparisons from a two-way ANOVA with

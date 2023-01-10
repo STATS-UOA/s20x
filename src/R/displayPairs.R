@@ -9,8 +9,8 @@
 #'
 #' @param allpairs pairwise output from a command like \code{pairs}. See details for a longer explanation.
 #' @param levels1 a character string specifying which within-level comparisons from \code{factor1} are wanted, and in which order.
-#' @param levels2 a character string specifying which within-level comparisons are wanted, and in which order.
-#' @param brief either \code{TRUE} or \code{FALSE}. If \code{TRUE} then the information displayed will be more succint.
+#' @param levels2 a character string specifying which within-level comparisons from \code{factor2} are wanted, and in which order.
+#' @param brief either \code{TRUE} or \code{FALSE}. If \code{TRUE} then the information displayed will be more succinct.
 #'
 #' @details \code{allpairs} is a pairwise output from a command like
 #'   \code{pairs(emmeans(fit, ~factor1 * factor2))}. If \code{allpairs} is not
