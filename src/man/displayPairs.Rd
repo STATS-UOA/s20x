@@ -24,7 +24,7 @@ just to organise the output from \code{emmeans} into a more convenient
 format.
 }
 \details{
-\code{alppairs} is a pairwise output from a command like
+\code{allpairs} is a pairwise output from a command like
   \code{pairs(emmeans(fit, ~factor1 * factor2))}. If \code{allpairs} is not
   already a \code{data.frame} it will be converted to a \code{data.frame}
   within this function.  It must contain a column called \code{contrast} with

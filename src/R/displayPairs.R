@@ -12,7 +12,7 @@
 #' @param levels2 a character string specifying which within-level comparisons are wanted, and in which order.
 #' @param brief either \code{TRUE} or \code{FALSE}. If \code{TRUE} then the information displayed will be more succint.
 #'
-#' @details \code{alppairs} is a pairwise output from a command like
+#' @details \code{allpairs} is a pairwise output from a command like
 #'   \code{pairs(emmeans(fit, ~factor1 * factor2))}. If \code{allpairs} is not
 #'   already a \code{data.frame} it will be converted to a \code{data.frame}
 #'   within this function.  It must contain a column called \code{contrast} with
