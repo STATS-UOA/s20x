@@ -1,45 +1,21 @@
 Package: s20x
-Version: 3.1-34
-Date: 2022-12-23
+Version: 3.1-35
+Date: 2023-02-21
 Title: Functions for University of Auckland Course STATS 201/208 Data Analysis
-Authors@R: c(person(given = "Brant",
-                    family = "Deppa",
-                    role = "aut",
-                    comment = "Wrote the original R scripts this package is derived from"),
-            person(given = "James",
-                    family = "Curran",
-                    role = c("aut", "cre"),
-                    email = "j.curran@auckland.ac.nz",
-                    comment = "Wrote the original R package. Current maintainer."),
-            person(given = "Rachel",
-                    family = "Fewster",
-                    email = "r.fewster@auckland.ac.nz",
-                    role = "ctb"),
-            person(given = "Russell",
-                    family = "Millar",
-                    email = "r.millar@auckland.ac.nz",
-                    role = "ctb"),
-            person(given = "Ben",
-                    family = "Stevenson",
-                    email = "ben.stevenson@auckland.ac.nz",
-                    role = "ctb"),
-            person(given = "Andrew",
-                    family = "Balemi",
-                    email = "a.balemi@auckland.ac.nz",
-                    role = "ctb"),
-            person(given = "Chris",
-                    family = "Wild",
-                    email = "c.wild@auckland.ac.nz",
-                    role = "ctb"),
-            person(given = "Sophie",
-                    family = "Jones",
-                    role = "ctb"),
-            person(given = "Dineika",
-                    family = "Chandra",
-                    role = "ctr"),
-            person(given = "Brendan",
-                    family = "McArdle",
-                    role = "ctr"))
+Authors@R: c(
+    person("Brant", "Deppa", role = "aut",
+           comment = "Wrote the original R scripts this package is derived from"),
+    person("James", "Curran", , "j.curran@auckland.ac.nz", role = c("aut", "cre"),
+           comment = "Wrote the original R package. Current maintainer."),
+    person("Rachel", "Fewster", , "r.fewster@auckland.ac.nz", role = "ctb"),
+    person("Russell", "Millar", , "r.millar@auckland.ac.nz", role = "ctb"),
+    person("Ben", "Stevenson", , "ben.stevenson@auckland.ac.nz", role = "ctb"),
+    person("Andrew", "Balemi", , "a.balemi@auckland.ac.nz", role = "ctb"),
+    person("Chris", "Wild", , "c.wild@auckland.ac.nz", role = "ctb"),
+    person("Sophie", "Jones", role = "ctb"),
+    person("Dineika", "Chandra", role = "ctr"),
+    person("Brendan", "McArdle", role = "ctr")
+  )
 Description: A set of functions used in teaching STATS 201/208 Data Analysis at
     the University of Auckland. The functions are designed to make parts of R more
     accessible to a large undergraduate population who are mostly not statistics

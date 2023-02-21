@@ -4,16 +4,23 @@
 \alias{displayPairs}
 \title{Display within-level pairwise comparisons for saturated two-way ANOVA model.}
 \usage{
-displayPairs(allpairs, levels1, levels2, brief = TRUE)
+displayPairs(allpairs, levels1, levels2, brief = TRUE, asDF = FALSE)
 }
 \arguments{
-\item{allpairs}{pairwise output from a command like \code{pairs}. See details for a longer explanation.}
+\item{allpairs}{pairwise output from a command like \code{pairs}. See details
+for a longer explanation.}
 
-\item{levels1}{a character string specifying which within-level comparisons from \code{factor1} are wanted, and in which order.}
+\item{levels1}{a character string specifying which within-level comparisons
+from \code{factor1} are wanted, and in which order.}
 
-\item{levels2}{a character string specifying which within-level comparisons from \code{factor2} are wanted, and in which order.}
+\item{levels2}{a character string specifying which within-level comparisons
+from \code{factor2} are wanted, and in which order.}
 
-\item{brief}{either \code{TRUE} or \code{FALSE}. If \code{TRUE} then the information displayed will be more succinct.}
+\item{brief}{either \code{TRUE} or \code{FALSE}. If \code{TRUE} then the
+information displayed will be more succinct.}
+
+\item{asDF}{either \code{TRUE} or \code{FALSE} specifying whether to return
+a \code{data.frame} of results or just to display the output.}
 }
 \description{
 Displays within-level pairwise comparisons from a two-way ANOVA with
@@ -34,26 +41,30 @@ format.
   specified in \code{emmeans}, so if using \code{emmeans(fit, ~factor1 *
   factor2)} then \code{levels1} must belong to \code{factor1} and
   \code{levels2} must belong to \code{factor2}. All this function does is to
-  pick out the rows of \code{allpairs} with the requested contrasts, so if there are
-  no contrasts of the requested format (e.g. because \code{levels1} and \code{levels2} have
-  been switched) it will output a blank list. If \code{brief = TRUE}, columns 
-  labelled \code{df}, \code{SE}, and \code{t.ratio} will be removed for a more succinct display.
+  pick out the rows of \code{allpairs} with the requested contrasts, so if
+  there are no contrasts of the requested format (e.g. because \code{levels1}
+  and \code{levels2} have been switched) it will output a blank list. If
+  \code{brief = TRUE}, columns labelled \code{df}, \code{SE}, and
+  \code{t.ratio} or \code{z.ratio} will be removed for a more succinct
+  display. If \code{asDF = TRUE}, the output is returned as a data-frame
+  suitable for further manipulation, whereas if \code{asDF = FALSE} it is
+  returned as a list for display only.
 }
 \examples{
 ## Fit a two-way ANOVA to the arousal data in arousal.df.
-## The factors are gender (female, male) and picture shown to 
+## The factors are gender (female, male) and picture shown to
 ## subject (infant, landscape, nude.f, nude.m):
 data(arousal.df)
-arousal.fit = lm(arousal ~ gender *  picture, data = arousal.df) 
+arousal.fit = lm(arousal ~ gender *  picture, data = arousal.df)
 
-## Create a data-frame with all pairwise comparisons using \code{emmeans}: 
+## Create a data-frame with all pairwise comparisons using \code{emmeans}:
 require(emmeans)
-arousal.allpairs = pairs(emmeans(arousal.fit,  ~gender *  picture), infer = TRUE) 
+arousal.allpairs = pairs(emmeans(arousal.fit,  ~gender *  picture), infer = TRUE)
 
-## Display only the within-level comparisons: 
-displayPairs(arousal.allpairs, levels1 = c('female', 'male'), 
+## Display only the within-level comparisons:
+displayPairs(arousal.allpairs, levels1 = c('female', 'male'),
                                levels2 = c('infant', 'landscape', 'nude.f', 'nude.m'))
-                               
+
 }
 \author{
 Rachel Fewster
