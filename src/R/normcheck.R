@@ -110,8 +110,7 @@ normcheck.default = function(x,
   bcol = match.arg(bcol, grDevices::colors())
   
   ## only grab the parameters that are going to be set
-  oldPar = par(c("mfrow", "xaxs", "yaxs", "pty", "mai"))
-  on.exit(par(par = oldPar))
+  oldPar = par(no.readonly = TRUE)
   
   mx = mean(x)
   sx = sd(x)
@@ -192,6 +191,7 @@ normcheck.default = function(x,
     }
     par(xaxs = "r", yaxs = "r", pty = "s",
         mai = c(0.2, 0.2, 0.05, 0.05))
+    on.exit(par(oldPar))
   }
   
   Plots = c(qqPlot, histPlot)[whichPlot]
