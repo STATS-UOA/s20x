@@ -111,6 +111,7 @@ normcheck.default = function(x,
   
   ## only grab the parameters that are going to be set
   oldPar = par(c("mfrow", "xaxs", "yaxs", "pty", "mai"))
+  on.exit(par(par = oldPar))
   
   mx = mean(x)
   sx = sd(x)
@@ -191,7 +192,6 @@ normcheck.default = function(x,
     }
     par(xaxs = "r", yaxs = "r", pty = "s",
         mai = c(0.2, 0.2, 0.05, 0.05))
-    on.exit(par(par = oldPar))
   }
   
   Plots = c(qqPlot, histPlot)[whichPlot]

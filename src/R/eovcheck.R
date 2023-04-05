@@ -182,6 +182,8 @@ eovcheck.formula = function(x, data = NULL,
     }
     
     opar = par(xaxs = "r", yaxs = "r")
+    on.exit(par(opar))
+    
     
     plot(residuals(fit) ~ fitted(fit), xlab = xlab, ylab = ylab, main = "", ...)
     abline(h = 0, lty = 3, col = "lightgrey")
@@ -205,8 +207,6 @@ eovcheck.formula = function(x, data = NULL,
         xpos = xlims[1] + diff(xlims) * 0.02
         text(xpos, ypos, paste("Levene Test P-value: ", round(p.value, 4)), adj = c(0))
     }
-    
-    on.exit(par(opar))
 }
 
 #' @describeIn eovcheck Testing for equality of variance plot

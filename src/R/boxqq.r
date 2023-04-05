@@ -29,6 +29,7 @@ boxqq = function(formula, ...) {
 boxqq.formula = function(formula, data = NULL, ...) { 
 
   oldPar = par(no.readonly = TRUE)
+  on.exit(par(oldPar, no.readonly = TRUE))
   
   if (missing(formula) || (length(formula) != 3)) 
     stop("'formula' missing or incorrect")
@@ -74,6 +75,5 @@ boxqq.formula = function(formula, data = NULL, ...) {
     abline(mean(data[data[, 2] == names[j], 1]), sd(data[data[, 2] == names[j], 1]), col = j)
   }
   
-  par(oldPar, no.readonly = TRUE)
 }
 

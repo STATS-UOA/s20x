@@ -26,6 +26,8 @@ propslsd.new = function(crosstablist, conf.level = 0.95, arrowlength = 0.1) {
   xmax = (1 + plus.min) * ncols * nrows - plus.min
   xmin = 1 - 2 * plus.min
   op = par(mar = c(5.1, 4.1, 4.1, 3.1))
+  on.exit(par(op))
+  
   plot(c(xmin, xmax), c(0, 1.1 * maxy.plot), type = "n", bty = "n", axes = FALSE, xlab = "", ylab = "Proportion", main = "LSD-display intervals", cex.lab = 1)
   axis(2, las = 2)
   axis(4, las = 2)

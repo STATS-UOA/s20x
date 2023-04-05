@@ -22,6 +22,7 @@ pairs20x = function(x, na.rm = TRUE, ...) {
     panel.hist = function(x, ...) {
         usr = par("usr")
         on.exit(par(usr = usr))
+        
         par(usr = c(usr[1:2], 0, 1.5))
         h = hist(x, plot = FALSE)
         breaks = h$breaks

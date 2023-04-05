@@ -38,6 +38,8 @@ stripqq.formula = function(formula, data = NULL, ...) {
     data = mf
     
     oldPar = par(mfrow = c(1, 2), mar = c(5.1, 4.1, 4.1, 0))
+    on.exit(par(oldPar))
+    
     stripchart(formula, data = data, xlab = names(data)[2], ylab = names(data)[1], main = paste(names(data)[1], "vs.", names(data)[2]), cex = 0.75, method = "stack", vert = TRUE, pch = 1, ...)
     names = unique(data[, 2])
     nv = length(names)
@@ -71,7 +73,5 @@ stripqq.formula = function(formula, data = NULL, ...) {
         points(sort(goo$x), sort(goo$y), pch = j, col = j, type = "b")
         abline(mean(data[data[, 2] == names[j], 1]), sd(data[data[, 2] == names[j], 1]), col = j)
     }
-    
-    par(oldPar)
 }
 

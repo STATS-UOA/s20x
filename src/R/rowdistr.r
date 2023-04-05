@@ -39,11 +39,14 @@ drawPlot = function(crosstablist, comp = c("basic", "within", "between"), conf.l
     n = nrow(propmat)
     opar = NULL
     
-    if (comp == "basic" | comp == "within") 
+    if (comp == "basic" | comp == "within"){ 
         opar = par(mfrow = c(n, 1), mar = c(1.5, 1.5, 1.5, 1.5), oma = c(3, 3, 4, 3))
+    }
     
-    if (comp == "between") 
+    if (comp == "between"){ 
         opar = par(mfrow = c(1, 1))
+        on.exit(par(opar))
+    }
     
     chiuse = chiadd = NULL
     pvaluse = pvaladd = NULL
@@ -90,7 +93,7 @@ drawPlot = function(crosstablist, comp = c("basic", "within", "between"), conf.l
     if (comp == "between") 
         propslsd.new(crosstablist, conf.level = 1 - (1 - conf.level)/choose(n, 2))
     
-    par(opar)
+   
     
 }
 
