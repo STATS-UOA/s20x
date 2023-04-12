@@ -26,3 +26,5 @@ Encoding: UTF-8
 Imports: stats, graphics, methods
 License: GPL-2 | file LICENSE
 RoxygenNote: 7.2.3
+URL: https://github.com/STATS-UOA/s20x
+BugReports: https://github.com/STATS-UOA/s20x/issues
