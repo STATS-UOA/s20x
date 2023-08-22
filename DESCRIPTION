@@ -1,6 +1,6 @@
 Package: s20x
-Version: 3.1-39
-Date: 2023-04-13
+Version: 3.1-40
+Date: 2023-08-21
 Title: Functions for University of Auckland Course STATS 201/208 Data Analysis
 Authors@R: c(
     person("Brant", "Deppa", role = "aut",
