@@ -1,0 +1,98 @@
+---
+title: "Case Study 6.4: Clouding seeding"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS6_4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+```
+
+# Problem
+The data in this question come from an experiment to see whether cloud-seeding works. Cloud-seeding is the process of firing silver nitrate (AgNO$_3$) into the clouds. Water coalesces around the silver nitrate particles, hopefully getting large enough to precipitate (rain). The measurements in this study are in acre-feet. One acre-foot is the amount of water it takes to fill one acre uniformly to the depth of one foot. One acre-foot is about 1.2 million litres of water (1233481.85532 litres to be exact). This data set is included in the `s20x` library.
+
+The variables of interest are:
+
+* `rain`: total rainfall.
+* `seed`: is a factor with two levels, `seeded` and `unseeded`.
+
+## Question of Interest
+We wish to see whether cloud seeding produces more rain. Also, what is the typical rainfall from seeded and unseeded clouds?
+
+## Read in and Inspect the Data
+```{r, out.width = "65%", fig.align = 'center'}
+data(rain.df)
+boxplot(rain ~ seed, data = rain.df, horizontal = TRUE)
+```
+
+Looks like our old right-skewed friend again. Maybe, just maybe, a log-transformation would work. Let's try it.
+
+```{r, out.width = "65%", fig.align = 'center'}
+boxplot(log(rain) ~ seed, data = rain.df, horizontal = TRUE)
+```
+
+Yup. Looks much better, and we have preliminary evidence that the seeding seems to work. Should we be worried about equality of variance? 
+
+```{r}
+summaryStats(log(rain) ~ seed, data = rain.df)
+```
+
+No. On the log-scale, the standard deviations are nearly identical, and the midspreads are well below a factor of two different. Let's go ahead and fit the model.
+
+## Model Building and Check Assumptions
+```{r, out.width = "70%", fig.align = 'center'}
+rain.fit  = lm(log(rain) ~ seed, data = rain.df)
+plot(rain.fit, which = 1)
+normcheck(rain.fit)
+cooks20x(rain.fit)
+summary(rain.fit)
+# Let's refit the model so that `unseeded` is the base level.
+rain.df$seed = relevel(rain.df$seed, ref = "unseeded")
+rain.fit.2 = lm(log(rain) ~ seed, data = rain.df)
+summary(rain.fit.2)
+exp(confint(rain.fit.2))
+100 * (exp(confint(rain.fit.2)) - 1)
+```
+
+## Confidence Interval Output
+```{r}
+pred.df = data.frame(seed = c("unseeded", "seeded"))
+exp(predict(rain.fit.2, pred.df, interval = "confidence"))
+```
+
+```{r, echo=FALSE}
+conf1=as.data.frame(exp(predict(rain.fit.2, pred.df, interval = "confidence")))
+resultStr1 = paste0(sprintf("%.1f", conf1$lwr), " to ", sprintf("%.1f", conf1$upr))
+
+
+conf2 = as.data.frame(100 * (exp(confint(rain.fit.2)) - 1))
+
+resultStr2 = sprintf("%s%% to %s%%",
+                    format(round(conf2$`2.5 %`,0), big.mark = ",", trim = TRUE),
+                    format(round(conf2$`97.5 %`,-1), big.mark = ",", trim = TRUE)
+                    )
+```
+
+# Methods and Assumption Checks
+The boxplots of `log(rain)` showed that the groups were comparable. So, we fitted a linear model to explain `log(rain)` with the explanatory factor `seed`.
+
+All model assumptions were satisified.
+
+Our final model is $$log(Rain_i) = \beta_0 + \beta_1 \times Seed.Seeded_i + \epsilon_i,$$
+where $\epsilon_i \sim iid ~ N(0,\sigma^2)$. Here $Seed.Seeded_i=1$ if the observation was done in a seeded environment, otherwise it is zero.
+
+Our model describes 13% of the variability in the logged measurements of total rainfall.
+
+# Executive Summary
+We wish to see whether cloud seeding produces more rain.
+
+There is strong evidence cloud-seeding works (_P-value_ < 0.01).
+
+We estimate that the median rain from the seeded clouds is about `r resultStr2[2]` higher than that from unseeded clouds.
+
+The unseeded clouds produce median rainfall of `r resultStr1[1]` acre-feet, whereas for the seeded clouds it is `r resultStr1[2]` acre-feet of rain.

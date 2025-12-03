@@ -1,0 +1,155 @@
+---
+title: 'Additional Time Series Case Study D: Milk Production Data'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS17_4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+The data in this question refers to the average monthly production of milk in New Zealand (in 1000s of tonnes) from January 2012 until March 2016. 
+(Data courtesy of the Dairy Company Association of New Zealand.)
+
+
+It is of particular interest to describe the overall trend in production,
+and, in particular, how it changes from month to month. Dairy farmers typically do not milk their herds in the late autumn and earlier winter months with the the traditional `flush' of production occuring in the spring months.
+
+
+The variables are:
+
+
+
+| Variable | Description |
+|---------|-------------|
+| `year` | the year of production |
+| `month` | month of the year |
+| `production` | in 1000s of tonnes |
+
+
+```{r, echo=FALSE,warning=FALSE}
+data("MilkProd.df")
+```
+
+
+```{r,fig.height=5,echo=-1}
+par(mar=c(4,4,2,0))
+MilkProd.ts=ts(MilkProd.df$production,frequency=12,start=c(2012,1))
+plot(MilkProd.ts,main="Milk productions in 1000s tonnes")
+abline(v=c(2012:2015),lty=2)
+```
+
+```{r,fig.height=6,echo=-1}
+par(mar=c(4,4,2,0))
+MilkProd.stl=stl(MilkProd.ts,s.window="periodic")
+plot(MilkProd.stl)
+abline(v=c(2012:2015),lty=2)
+```
+
+
+```{r,fig.height=5}
+head(MilkProd.stl$time.series,13)
+```
+
+
+```{r,fig.height=5}
+MilkProd.hw=HoltWinters(MilkProd.ts)
+preds.hw=predict(MilkProd.hw,n.ahead=5,prediction.interval = TRUE)
+preds.hw
+```
+
+
+```{r,fig.height=5}
+plot(MilkProd.hw,preds.hw,lty.predicted=2, lty.interval=4,lwd=2)
+```
+
+
+```{r,fig.height=4}
+MilkProd.df=within(MilkProd.df, 
+                   {time=1:nrow(MilkProd.df);month.fac=factor(month)})
+```
+
+
+```{r,fig.height=4}
+MilkProd.lm=lm(production~time+month.fac, data=MilkProd.df)
+acf(resid(MilkProd.lm))
+```
+
+```{r,fig.height=4}
+# start from observation 2
+MilkProd2.df=MilkProd.df[-1,]
+# put the past month as an explanatory variable
+MilkProd2.df=within(MilkProd2.df,{past.prod=MilkProd.df$production[-51]})
+MilkProd.lm2=lm(production~time+past.prod+month.fac, data=MilkProd2.df)
+```
+
+
+
+```{r,fig.height=4,echo=-1}
+par(mar=c(4,4,2,0))
+plot(residuals(MilkProd.lm2),type="l")
+normcheck(MilkProd.lm2, main="",xlab="Residuals")
+```
+
+
+```{r,fig.height=4}
+summary(MilkProd.lm2)
+```
+
+
+
+
+### Question 
+Comment on the STL decomposition plot, paying particular attention to the comparison with the milk production trends stated in the introduction to the data.
+
+
+### Solution 
+The original data has clear seasonality with, perhaps, a slight increase over time. The seasonal component explains most of these data.The seasonal component shows high milk production in August - November and lowest in April - July so this is consistent with low production in late autumn/early winter and high production in spring.
+
+There may have been a very slight drop in production in 2013 (drought?) with an increase to regular levels afterwards but this effect is very slight. There remainder (residuals) seem to indicate a high degree of auto correlation (clustering of positive and negative residuals). 
+ 
+
+
+### Question
+Using the Holt-Winters model, provide a 95\% prediction interval for the
+average milk production for the month of April in 2016.
+
+
+### Solution
+The Holt-Winters model predicts that, with 95\% confidence, the average milk production for the month of April, 2016 would be about 1244 thousand tonnes and could be between 1058 to 1431 thousand tonnes.  
+
+
+### Question
+Which of the four components of times series; trend, cycle, seasonality and
+error, contributes most to describing what you observe for these data?  
+
+### Solution
+These data appear to be mostly explained by seasonal (monthly) effect reflecting the very seasonal nature of dairy production with high spending production and slight (or no) production in winter. Any trend effect seems very slight.  
+
+Note: Looking at the stl plot, the range of the seasonal variation is from -1500 to 1000, so 2500. The range of the trend is just 1650 to 1750, so only 100 - half of that of the remainders which estimate errors. There is too little data to see any sign of a cycle. Seasonality dominates this data.
+
+
+
+ 
+### Question
+In most time series analysis we commonly encounter a lack of independence
+between consecutive residuals (i.e. auto-correlation).
+
+
+- What would an auto-correlation of zero indicate?
+- What would an auto-correlation of one indicate?
+- What is the estimate of the auto-correlation for these data?
+- Is there any evidence that the auto-correlation is different from the value zero? 
+
+
+
+### Solution
+An auto-correlation of zero would indicate errors are independent each other over time  - the near past has no bearing on the future errors. I.e the usual independence assumption for the linear model.
+
+ An auto-correlation of one would indicate total dependence over time  - i.e. there is no error  (except for the first observation). Every observation depends on the previous observation.
+
+ The estimate of the autocorrelation is 0.6908 (from `MilkProd.lm2` output) or about 0.7 from ACF plot.
+
+ The autocorrelation is highly significant (from `MilkProd.lm2` the P-value = 9.769e-06) or P-value $<$ .05 from ACF plot as the first lagged correlation above 5\% threshold line.
+
+

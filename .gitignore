@@ -3,3 +3,6 @@
 .RData
 s20x.Rcheck
 s20x.Rcheck/*
+inst/doc
+/doc/
+/Meta/

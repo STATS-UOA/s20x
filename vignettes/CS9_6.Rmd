@@ -1,0 +1,149 @@
+---
+title: "STATS 201/8 Extra Case Study - Parallel Lines Model"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS9_6}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.height=3)
+```
+
+```{r setup, echo=FALSE, warning=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile
+library(s20x)
+```
+
+# Question 1
+
+Researchers were interested in trying to find factors linked to cholesterol level in people. They were studying a genotype at a marker that was believed to be associated with cholesterol level. Data was collected on the genotype for a random sample of people recruited from the Dallas region. Their cholesterol level, age and their genotype at the marker (identified from a blood sample) were recorded. It was known that cholesterol levels generally increased with age. What was of interest was:
+
+* Did any age effect differ between the genotypes? If so, how? 
+*	If not, were there differences in average cholesterol levels between the different genotypes? If so, quantify this. Also quantify any age effect.
+
+The resulting data is in the file *Dallas.csv*, which contains the variables:
+
+Variable    | Description
+------------|--------------------------------------------------------
+cholesterol | The cholesterol level (mg/dL) of the study subject.
+age         | The age (years) of the study subject. 
+genotype    | The genotype at the marker (classed as either aa or Aa).
+
+Note: a third genotype was identified, but in very small numbers. For the purposes of this question, the data was simplified to two levels of genotype.
+
+**Instructions:**
+
+*	Comment on plot of the data.
+* Fit an appropriate model to the data. Check the model assumptions.
+* Write appropriate Methods and Assumption Checks.
+* Plot the data with your appropriate model superimposed over it.
+* Write an appropriate *Executive Summary*. Ensure that you have answered all the questions of interest.
+
+
+## Question of interest/goal of the study
+
+We are interested in how the age and genotype at a locus are related to the cholesterol level and we are also interested in whether the effects of age are the same at different genotype.  
+
+
+## inspect the data:
+```{r, echo=FALSE}
+data("dallas.df")
+```
+
+```{r,fig.height=4.5,fig.width=7, eval=FALSE}
+dallas.df=read.csv("Dallas.csv",header=T, stringsAsFactors = TRUE)
+
+plot(cholestrol~age,data=dallas.df,main="Cholestrol by Age",
+     col=ifelse(genotype=="aa","red","blue")
+     ,pch=ifelse(genotype=="aa",1,2))
+legend('topleft',c("aa","Aa"),col=c("red","blue"),pch=c(1,2))
+```
+
+```{r,fig.height=4.5,fig.width=7, echo=FALSE}
+plot(cholestrol~age,data=dallas.df,main="Cholestrol by Age",
+     col=ifelse(genotype=="aa","red","blue")
+     ,pch=ifelse(genotype=="aa",1,2))
+legend('topleft',c("aa","Aa"),col=c("red","blue"),pch=c(1,2))
+```
+
+
+## Comment on plot
+
+It seems there is a slightly increasing linear relationship between age and cholesterol level, and the trend for genotype "aa" and "Aa" looks similar. It is difficult to see a difference between the two genotypes, but there are fewer high values for Aa and fewer low values for aa, so maybe aa tends to higher values.
+
+
+## Fit an appropriate linear model and Check Assumptions 
+
+```{r,fig.height=5.5,fig.width=6}
+dallas.lm1=lm(cholestrol~age*genotype,data=dallas.df)
+summary(dallas.lm1)
+
+
+# Drop interaction
+dallas.lm2=lm(cholestrol~age+genotype,data=dallas.df)
+modelcheck(dallas.lm2)
+summary(dallas.lm2)
+confint(dallas.lm2)
+```
+
+```{r, echo=FALSE}
+conf1 = as.data.frame(t(abs(confint(dallas.lm2)[2,]*10)))
+resultStr1 = paste0(sprintf("%.0f", conf1$`2.5 %`), " and ", sprintf("%.0f", conf1$`97.5 %`))
+
+conf2 = as.data.frame(t(abs(confint(dallas.lm2)[3,])))
+resultStr2 = paste0(sprintf("%.1f", conf2$`97.5 %`), " and ", sprintf("%.1f", conf2$`2.5 %`))
+
+```
+
+
+## Plot the data with your appropriate model superimposed over it
+```{r,fig.height=4.5,fig.width=6}
+plot(cholestrol~age,data=dallas.df,main="Cholestrol by Age",
+     col=ifelse(genotype=="aa","red","blue")
+     ,pch=ifelse(genotype=="aa",1,2))
+legend('topleft',c("aa","Aa"),col=c("red","blue"),pch=c(1,2))
+
+ests <- coef(dallas.lm2)
+abline(ests[1],ests[2], col="red")
+abline(ests[1]+ests[3], ests[2], col="blue")
+```
+
+
+## Method and Assumption Checks
+
+We have two explanatory variables, one factor and one numeric, so have fitted a linear model to the data and checked for evidence of interaction between age and genotype. As there was no evidence of interaction (P-value = 0.769), we dropped the interaction term and fitted the next model.  We have not been able to further simplify the model. 
+
+The assumptions were satisfied for this model. (There was a little bit of right skewness in the residuals, but nothing of major concern.)
+
+Our model is:
+$cholestrol_i = \beta_0 + \beta_1 \times Age_i  + \beta_2 \times genotypeAa_i + \epsilon_{i}$ 
+where $genotypeAa_i = 1$ if the $i$th subject has genotype Aa at the marker and 0 otherwise. $\epsilon_i \sim iid ~N(0,\sigma^2)$
+
+Our model explained 8.9% of the variability in the data.
+
+## Executive Summary
+
+We are interested in how the age and genotype at a locus are related to the cholesterol level and whether the effects of age are the same given different genotypes.
+
+We have evidence that both age and genotype affects cholesterol levels, but no evidence that the effects of age on cholesterol levels differ across different genotype groups. 
+
+Cholesterol levels tended to increase with age. For individuals with the same genotype, we estimate that the average cholesterol level increases by between `r resultStr1[1]` mg/dL for each additional 10 years of age.    
+
+On average, people with genotype "aa" have the higher cholesterol levels than people with  the Aa genotype, regardless of their age. For individuals with the same age, we estimate that the mean cholesterol level for people with genotype "aa" is between `r resultStr2[1]` mg/dL higher than those with genotype "Aa".
+
+
+
+
+
+
+
+
+
+
+
+
+
