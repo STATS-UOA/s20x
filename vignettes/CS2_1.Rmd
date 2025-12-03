@@ -1,7 +1,10 @@
 ---
 title: 'Case Study 2.1: Exam vs Test'
-output: pdf_document
-author: 'Tou Ohone Andate - staff number 1234567'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS2_1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 ```{r setup, include = FALSE}
 # Do not delete this!
@@ -21,16 +24,25 @@ The variables of interest are:
 ## Question of Interest
 We want to build a model to predict exam marks with test marks. In particular, we want to predict a student's exam mark when their test mark is either 0, 10, or 20.
 
+```{r, echo=FALSE}
+data("Stats20x.df")
+```
+
 ## Read in and Inspect the Data
-```{r, out.width = "75%", fig.align = 'center',fig.height=4}
+
+```{r, out.width = "75%", fig.align = 'center',fig.height=4, eval=FALSE}
 Stats20x.df = read.table("STATS20x.txt", header = T)
+plot(Exam ~ Test, data = Stats20x.df)
+```
+
+```{r,echo=FALSE, fig.align = 'center'}
 plot(Exam ~ Test, data = Stats20x.df)
 ```
 
 The plot reveals a positive linear relationship between exam marks and test marks.
 
 ## Model Building and Check Assumptions
-```{r, out.width = "72.5%", fig.align = 'center'}
+```{r, fig.align = 'center'}
 examTest.fit = lm(Exam ~ Test, data = Stats20x.df)
 plot(examTest.fit, which = 1)
 normcheck(examTest.fit)
@@ -39,12 +51,21 @@ summary(examTest.fit)
 confint(examTest.fit)
 ```
 
+```{r, echo=FALSE}
+cf = as.data.frame(confint(examTest.fit))
+resultConf = paste0(sprintf("%.1f", cf[2,1]), " to ", sprintf("%.1f", cf[2,2]))
+```
+
 ## Prediction Output
 ```{r}
 predTest.df = data.frame(Test = c(0, 10, 20))
 predict(examTest.fit, predTest.df, interval = "prediction")
 ```
 
+```{r, echo=FALSE}
+p = as.data.frame(predict(examTest.fit, predTest.df, interval = "prediction"))
+resultStr = paste0(sprintf("%.1f", p$lwr), " to ", sprintf("%.1f", p$upr))
+```
 
 # Method and Assumption Checks 
 A scatter plot of exam marks vs test marks showed a linear association with approximately constant scatter and so a linear model was fitted. 
@@ -59,7 +80,7 @@ Our model explained a modest 59% of the variability in the students' final exam 
 # Executive Summary
 We were interested in building a model to predict exam mark from test mark.
 
-There was a significant linear relationship between test mark and exam mark (_P-value_ $\approx$ 0). We estimate that each additional test mark (out of 20) obtained by the student would increase their exam mark by between 3.3 to 4.3 (out of 100) on average.
+There was a significant linear relationship between test mark and exam mark (_P-value_ $\approx$ 0). We estimate that each additional test mark (out of 20) obtained by the student would increase their exam mark by between `r resultConf[1]` (out of 100) on average.
 
-For test marks of 0, 10 and 20, we predict exam marks (for individual students) between -15.6 to 33.7, 23.0 to 70.9, and 60.5 to 109.1, respectively. These intervals are very wide\footnote{Due to considerable variabilty remaining even after taking into account the test mark.} and some of these intervals have bounds that are outside of the feasible values of exam mark (0-100). The  model is not reliable for prediction.
+For test marks of 0, 10 and 20, we predict exam marks (for individual students) between `r resultStr[1]`, `r resultStr[2]`, and `r resultStr[3]`, respectively. These intervals are very wide\footnote{Due to considerable variabilty remaining even after taking into account the test mark.} and some of these intervals have bounds that are outside of the feasible values of exam mark (0-100). The  model is not reliable for prediction.
 

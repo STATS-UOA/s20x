@@ -1,0 +1,101 @@
+---
+title: "Case Study 6.2: Students' expenditure on haircuts by gender"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS6_2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include=FALSE}
+# Do not delete this!
+# It loads the s20x library for you. If you delete it 
+# your document may not compile it.
+require(s20x)
+```
+
+# Problem
+The question of interest is "Do females spend more money on their hair than males?" Also, "how much do students typically spend on haircuts?" To answer these questions, a lecturer carried out a survey on 200 students. Also,  A variety of variables were measured including `hair` and `sex`. 
+
+The variables of interest are:
+
+* `hair`: The student's estimated monthly expenditure on haircuts.
+* `sex`: The student's gender, Male or Female.
+
+## Question of Interest
+Do females spend more money on their hair than males? Also, how much do students typically spend on haircuts?
+
+## Read in and Inspect the Data
+```{r, echo=FALSE}
+data("survey.df")
+```
+
+```{r, out.width = "75%", fig.align = 'center', eval=FALSE}
+survey.df = read.table("survey.txt", header = TRUE, stringsAsFactors = T)
+# To make things a little less cluttered we put the data in its own dataframe
+hair.df = with(survey.df, data.frame(hair = hair, sex = sex))
+plot(hair ~ sex, data = hair.df)
+```
+
+```{r, out.width = "75%", fig.align = 'center', echo=FALSE}
+hair.df = with(survey.df, data.frame(hair = hair, sex = sex))
+plot(hair ~ sex, data = hair.df)
+```
+
+Females seem to spend more money on haircuts than males. We can see the data is quite right-skewed. There also appears to be a problem with equality of variance. Maybe taking logs will help.
+
+```{r, out.width = "75%", fig.align = 'center'}
+plot(log(hair) ~ sex, data = hair.df)
+```
+
+Definitely makes things nicer, we should stick with the log-scale. So perhaps we should perform our inference on the log-scale. Even on the log-scale females appear to be spending more money on haircuts than males.
+
+## Model Building and Check Assumptions
+```{r, out.width = "70%", fig.align = 'center'}
+hair.fit = lm(log(hair) ~ sex, data = hair.df)
+plot(hair.fit, which = 1)
+normcheck(hair.fit)
+cooks20x(hair.fit)
+summary(hair.fit)
+# Column bind the backtransformed output together
+cbind(exp(coef(hair.fit)), exp(confint(hair.fit)))
+```
+
+## Confidence Interval Output
+```{r}
+pred.df = data.frame(sex = c("female", "male"))
+exp(predict(hair.fit, pred.df, interval = "confidence"))
+```
+
+```{r, echo=FALSE}
+conf1=as.data.frame(exp(predict(hair.fit, pred.df, interval = "confidence")))
+resultStr0 = sprintf("$%s", format(round(conf1$fit,0), big.mark = ",", trim = TRUE) )
+resultStr1 = sprintf("$%s and $%s",
+                    format(round(conf1$lwr,0), big.mark = ",", trim = TRUE),
+                    format(round(conf1$upr,0), big.mark = ",", trim = TRUE)
+                    )
+
+conf2 = as.data.frame(abs(100*(exp(confint(hair.fit)) - 1)))
+
+resultStr2 = sprintf("%s%% and %s%%",
+                    format(round(conf2$`97.5 %`,0), big.mark = ",", trim = TRUE),
+                    format(round(conf2$`2.5 %`,0), big.mark = ",", trim = TRUE)
+                    )
+```
+
+# Methods and Assumption Checks
+The boxplot of `hair` vs `sex` revealed that the data were right-skewed. Hence, we logged `hair`. The boxplot of `log(hair)` vs `sex` show visible improvement. So, we have fitted a linear model with `log(hair)` being explained by `sex`.
+
+We probably wouldn't say the data is normal from the Q-Q plot. What we have is evidence of a lot of rounding---people rounding to the nearest $5, $10, etc. However, the CLT should make things okay. The histogram of the residuals was unimodal and reasonably symmetric. The rest of our model assumptions have been satisfied.
+
+Our final model is $$log(Hair_i) = \beta_0 + \beta_1 \times SexMale_i + \epsilon_i,$$
+where $\epsilon_i \sim iid ~ N(0,\sigma^2)$. Here $SexMale_i=1$ if the student was male, otherwise it was zero.
+
+Our model explained 29% of the variability in the logged students' hair expenditure.
+
+# Executive Summary
+We have strong evidence that females typically spend more money on their hair than males.
+
+We estimate that males spend approximately half as much as females do on their hair. We are confident this factor is between `r resultStr2[2]`.
+
+We estimate the median amount females spend on their hair each month is `r resultStr0[1]` and are confident it is between `r resultStr1[1]`.
+For males we estimate a median spend of `r resultStr0[2]` and are confident it is between `r resultStr1[2]`. 

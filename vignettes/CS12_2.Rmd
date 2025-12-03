@@ -1,0 +1,100 @@
+---
+title: 'Case Study 12.2: Impact of a cyclone on coral reefs'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS12_2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+require(emmeans)
+```
+
+# Problem
+The Australian Institute of Marine Science monitors coral and fish assemblages along the Great Barrier Reef. These data consist of percentage cover of hard corals recorded from underwater video transects from various reef sites. In 1997, parts of the reef were affected by tropical cyclone "Justin". We wish to investigate the impact of the cyclone on coral cover.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics{scuba.jpg}
+\end{figure}
+
+__Source of data__: Anderson, M.J. and Thompson, A.A. (2004). Multivariate control charts for ecological and environmental monitoring. Ecological Applications 14: 1921-1935.
+
+This type of design is called a __BACI__ design, for _before-after_, _control-impact_. One factor is `Time` with two levels: `Before` and `After`. The other factor is `Reef` (or `Site`) with two levels: `Control` and `Impact`. An interaction would imply that the trend in coral cover over time differed between control sites and impacted sites. Here, the sites classified as `impacted` were outer reefs which take the brunt of any storms.
+
+The variables of interest were:
+
+* `Cover`: percentage cover of hard corals in the reef.
+* `Reef`: a two-level factor with levels `Control` and `Impact`.
+* `Time`: a two-level factor with levels `Before` and `After`.
+
+## Research question
+What was the impact of cyclone Justin on coral cover in the affected sites?
+
+## Read in and Inspect the Data
+
+```{r, echo = FALSE}
+data("Reef.df")
+```
+
+```{r, out.width = "80%", fig.align = 'center', eval = FALSE}
+Reef.df = read.csv("Reef.csv")
+```
+
+```{r, out.width = "80%", fig.align = 'center'}
+Reef.df = transform(Reef.df, Reef=factor(Reef), Time=factor(Time))
+interactionPlots(Cover ~ Reef + Time, data = Reef.df)
+# Also look at the interaction plot the other way around:
+interactionPlots(Cover ~ Time + Reef, data = Reef.df)
+```
+
+The trend in coral cover over time appears to differ for impacted and control reefs. The cover appears fairly similar in both reef categories before Cyclone Justin. However, for control reefs, the cover increased after the cyclone, whereas for impacted reefs, it decreased. From the highly non-parallel appearance of the coloured lines we suspect there is an interaction between the `Time` and `Reef` predictors.
+
+## Model Building and Check Assumptions
+```{r, out.width = "75%", fig.align = 'center'}
+Cover.fit = lm(Cover ~ Time * Reef, data = Reef.df)
+plot(Cover.fit, which=1)
+normcheck(Cover.fit)
+cooks20x(Cover.fit)
+anova(Cover.fit)
+summary(Cover.fit)
+```
+
+## Pairwise comparisons using emmeans
+```{r}
+Cover.pairs <- pairs(emmeans(Cover.fit, ~ Time*Reef), infer=T)
+# Simplify the display:
+displayPairs(Cover.pairs, c("Before", "After"), c("Control", "Impact"))
+```
+```{r, echo = FALSE}
+conf1=as.data.frame(Cover.pairs)
+resultStr1 = paste0(sprintf("%.0f", abs(conf1[6,]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[6,]$lower.CL)))
+resultStr2 = paste0(sprintf("%.0f", abs(conf1[2,]$lower.CL)), " and ", sprintf("%.0f", abs(conf1[2,]$upper.CL)))
+
+```
+
+# Methods and Assumption Checks 
+We have a numeric response, `Cover`, and two explanatory factors, `Reef` and `Time`, so we fitted a two-way ANOVA model with interaction between `Reef` and `Time`. The interaction term was significant (P-value < 0.001) so it was retained.
+
+The assumption checks were reasonable, except for the Cook's distance which exceeded 0.4 for a couple of points. However, this was not of great concern, since there were no obvious outliers. It is not surprising that some data points will have high influence when there are only 16 observations in the dataset.
+
+Our final model was $$\text{Cover}_i = \beta_0 + \beta_1\ \times \text{Time.Before}_i + \beta_2 \times \text{Reef.Impact}_i + \beta_3 \times \text{Time.Before}_i \times \text{Reef.Impact}_i + \epsilon_i,$$
+where $\text{Time.Before}_i$ and $\text{Reef.Impact}_i$ are the dummy variables that take the value 1 if observation $i$ was respectively recorded before Cyclone Justin and in an impacted reef site, otherwise 0; and $\epsilon_i \sim iid ~ N(0,\sigma^2)$. 
+
+Alternatively, our final model could be written as $$\text{Cover}_{ijk} = \mu + \alpha_i + \beta_j + \gamma_{ij} + \epsilon_{ijk},$$
+where $\text{Cover}_{ijk}$ denotes the coral cover for observation $k$ in time category $i$ and reef category $j$, and where $\mu$ is the overall mean percentage cover of the reefs, $\alpha_i$ is the effect of time category $i$, $\beta_j$ is the effect of reef category $j$, $\gamma_{ij}$ is the interaction effect for the combination of time category $i$ and reef category $j$, and $\epsilon_{ijk} \sim iid~N(0, \sigma^2)$.
+
+Our model explained 91% of the variation in the coral cover measurements. 
+
+# Executive Summary
+We aimed to investigate the effect of Cyclone Justin on coral cover in impacted reef sites.
+
+There was no evidence of a difference in the average amount of coral cover between impacted sites and control sites before Cyclone Justin. However, there was strong evidence of a difference after the cyclone.
+
+We estimate that the average coral cover in impacted reefs was between `r resultStr1[1]` percentage points lower after the cyclone than before. By comparison, there was no loss in the average coral cover in control reefs (in fact, there was weak evidence of an increase).
+
+After the cyclone, we estimate that the average coral cover was between `r resultStr2[1]` percentage points greater in control reefs than in impacted reefs.

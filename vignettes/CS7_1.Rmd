@@ -1,0 +1,129 @@
+---
+title: 'Case Study for Chapter 7: Power law model for cherry tree volumes'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS7_1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+```
+# Problem
+We want to build a model to estimate the volume of a tree from the measurement of its height and diameter. This data set provides measurements of the diameter, height and volume of timber in 31 felled black cherry trees\footnote{From Ryan, T. A., Joiner, B. L. and Ryan, B. F. (1976) The Minitab Student Handbook. Duxbury Press.}.
+
+The data consist of 31 observations on the following 3 variables:
+
+* `diameter`: Tree diameter in inches (measured at 4 ft 6 in above the ground).
+* `height`: Height in feet.
+* `volume`: Volume of timber in cubic feet.
+
+## Question of Interest
+
+The objective is to be able to estimate the volume of the tree from the measurement of its height and diameter.
+
+### Model Justification
+Using basic geometry, it can argued that volume will have a power law relationship
+with diameter and height. Specifically, it may be that the trunk of a tree can be reasonably approximated by a cylinder/or cone.
+
+For a cylinder the volume is $V=\pi h r^{2}$ where $r$ is radius and $h$ is height.
+
+For a cone it is  $V=\frac{\pi}{3} h r^{2}$.
+
+In general, this correponds to the power law $V\propto h d^{2}$, where $d$ is diameter.
+
+That is, $\log(V)=\beta_0+\log(h)+2*\log(d)$.
+
+This can be written $\log(V)=\beta_0+\beta_1*\log(h)+\beta_2\log(d)$ where $\beta_1=1$ and $\beta_2=2$.
+
+Hence, to explore whether the above geometric argument is valid, we also need to test the hypotheses $H_0:\beta_1=1$, $H_0:\beta_2=2$. 
+
+## Read in and Inspect the Data
+
+```{r, echo=FALSE}
+data("Cherry.df")
+```
+
+```{r, out.width = "70%", fig.align = 'center', eval=FALSE}
+Cherry.df = read.table("Cherry.txt", header = T)
+pairs20x(Cherry.df[, c("volume", "height", "diameter")])
+```
+
+```{r, out.width = "70%", fig.align = 'center', echo=TRUE}
+pairs20x(Cherry.df[, c("volume", "height", "diameter")])
+```
+
+Scatter in volume increases with size. Relationship between volume and height looks close to linear, and with diameter looks to be increasing in slope with size.
+
+```{r, out.width = "70%", fig.align = 'center'}
+# Let's create some new variables in Cherry.df
+Cherry.df$logvolume = log(Cherry.df$volume)
+Cherry.df$logheight = log(Cherry.df$height)
+Cherry.df$logdiameter = log(Cherry.df$diameter)
+
+# Check out the new names
+dimnames(Cherry.df)[[2]]
+
+pairs20x(Cherry.df[, c("logvolume", "logheight", "logdiameter")])
+```
+
+Scatter in logvolume looks constant, and relationship with logheight and logdiameter looks linear.
+
+```{r, out.width = "70%", fig.align = 'center'}
+Cherry.fit = lm(logvolume ~ logheight + logdiameter, data = Cherry.df)
+plot(Cherry.fit, which = 1)
+normcheck(Cherry.fit)
+cooks20x(Cherry.fit)
+summary(Cherry.fit)
+confint(Cherry.fit)
+```
+
+```{r, echo=FALSE}
+conf1 = as.data.frame(confint(Cherry.fit))
+resultStr1 = paste0(sprintf("%.2f%%", conf1$`2.5 %`), " and ", sprintf("%.2f%%", conf1$`97.5 %`))
+```
+
+## Test the Two Requested Hypotheses
+```{r}
+# Obtain the estimates of interest
+(estimates = summary(Cherry.fit)$coeff[2:3, 1])
+
+# and their associated std errors
+(std.errors = summary(Cherry.fit)$coeff[2:3, 2])
+
+# t-values for the two hypotheses beta1=1 and beta2=2
+(tstats = (estimates - c(1, 2))/std.errors)
+
+# p-values
+(pvals = 2 * (1 - pt(abs(tstats), 28)))
+```
+
+# Method and Assumption Checks 
+After logging the variables, the scatter plots showed the desired linear relationship between volume and the height and diameter variables, and constant scatter. So, we fitted a power law model explaining log volume with both log height and log diameter.
+
+The underlying model assumptions appear valid with no unduly influential points.
+
+Our final model is $$log(volume_i)=\beta_0 +\beta_1\times log(height_i)+ \beta_2*log(diameter_i)+ \epsilon_i,$$
+where $\epsilon_i \sim iid ~ N(0,\sigma^2)$.
+
+Our power law model explained 97.8% of the total variability in (log) volume.
+
+# Executive Summary
+The objective is to be able to estimate the volume of the tree from the measurement of its height and diameter. The postulated model was that cherry tree volume would follow a power law relationship with height and diameter. In particular, that volume would increase linearly with height, and with the square of diameter.
+
+Cherry tree volume was seen to follow a power law model with respect to both height and weight, and there was no evidence that these powers differ from the hypothesized values of 1 (_P-value = 0.57_) and 2 (_P-value = 0.82_), respectively. It would appear that our geometrical arguments were valid.
+
+We estimate that a 1% increase in height corresponds to an increase in median volume of between `r resultStr1[2]`, and a 1% increase in diameter corresponds to an increase in median volume of between `r resultStr1[3]`.
+
+## Addendum (not examinable)
+If you believe (and we have no reason not to) that the underlying relationship is indeed that $V \propto h r^2$ then the only term to be estimated is $\beta_0$. This is how you'd estimate it:
+
+```{r}
+# Intercept only model.
+fit.beta0 = lm(I(logvolume-logheight-2*logdiameter)~1, data = Cherry.df)
+# beta0 changes from -6.63 to -6.17
+summary(fit.beta0) 
+```

@@ -1,0 +1,102 @@
+---
+title: 'Case Study 6.1: Mazda price vs age'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS6_1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r include=FALSE}
+# Do not delete this!
+# It loads the s20x library for you. If you delete it 
+# your document may not compile it.
+require(s20x)
+```
+
+# Problem
+The ages and prices of 123 Mazda cars were collected from the Melbourne Age newspaper in 1991. We want to learn about Mazda prices, and how they decrease with age.
+
+The variables measured are:
+
+* `price`: Price in Australian $.
+* `year`: Year of manufacture (note that 1990 = 90).
+
+## Question of Interest
+We want to see how Mazda car prices decrease with age.
+
+## Read in and Inspect the Data
+```{r, echo=FALSE}
+data("mazda.df")
+Mazda.df <- mazda.df
+```
+
+```{r, out.width = "70%", fig.align = 'center', eval = FALSE}
+Mazda.df = read.table("mazda.txt", header = T)
+head(Mazda.df)
+# We need to creates a new variable called age ourselves
+Mazda.df$age = 91 - Mazda.df$year
+head(Mazda.df)
+# Plot these data
+trendscatter(price ~ age, data = Mazda.df)
+```
+
+```{r, out.width = "70%", fig.align = 'center', echo = FALSE}
+head(Mazda.df)
+# We need to creates a new variable called age ourselves
+Mazda.df$age = 91 - Mazda.df$year
+head(Mazda.df)
+# Plot these data
+trendscatter(price ~ age, data = Mazda.df)
+```
+
+The scatter plot shows a decreasing non-linear relationship. As the age increases, the price decreases - but the rate of decrease is rapid at first, then declines, so also decrease. This suggests an exponentially decreasing relationship.
+
+We also see that the scatter around the trend is not constant: it is higher when the price is higher and lower when the price is lower, so higher centre is associated with higher spread.
+
+Let's fit a naive simple linear model using age for now.\footnote{In practice, one could omit this step since our assumptions are obviously not valid.}
+
+## Model Building and Check Assumptions
+```{r, out.width = "70%", fig.align = 'center'}
+PriceAge.fit = lm(price ~ age, data = Mazda.df)
+plot(PriceAge.fit, which = 1)
+trendscatter(log(price) ~ age, data = Mazda.df)
+PriceAge.fit2 = lm(log(price) ~ age, data = Mazda.df)
+plot(PriceAge.fit2, which = 1)
+normcheck(PriceAge.fit2)
+cooks20x(PriceAge.fit2)
+summary(PriceAge.fit2)
+# Backtransform
+exp(confint(PriceAge.fit2))
+# Backtransform to % difference
+100 * (exp(confint(PriceAge.fit2)) - 1)
+```
+
+```{r, echo=FALSE}
+conf1 = as.data.frame(exp(confint(PriceAge.fit2)))
+resultStr1 = sprintf("A$%s to A$%s",
+                    format(round(conf1$`2.5 %`,-2), big.mark = ",", trim = TRUE),
+                    format(round(conf1$`97.5 %`,-2), big.mark = ",", trim = TRUE)
+                    )
+
+conf2 = as.data.frame(abs(100 * (exp(confint(PriceAge.fit2)) - 1)))
+resultStr2 = paste0(sprintf("%.1f%%", conf2$`97.5 %`), " to ", sprintf("%.1f%%", conf2$`2.5 %`))
+```
+
+# Method and Assumption Checks 
+The scatter plot of age vs price showed clear nonlinearity and an increase in variability with price.
+
+Residuals from a simple linear model showed failed the equality of variance and no-trend assumptions, and so the prices were log transformed. A simple linear model fitted to logged price satisfied all assumptions.
+
+Our final model is $$log(Price_i)=\beta_0 +\beta_1\times Age_i+\epsilon_i,$$
+where $\epsilon_i \sim iid ~ N(0,\sigma^2)$.
+
+Our model explained 82% of the variability in the logged Mazda prices.
+
+# Executive Summary
+We wanted to see how Mazda car prices decrease with age.
+
+There was clear evidence the price of the cars was exponentially decreasing as the cars got older (_P-value_ $\approx$ 0). 
+
+We estimate that the median price for new Mazda cars (in 1991) was between `r resultStr1[1]` (to the nearest A$100).
+
+We estimate that each additional year in age results in depreciation of between `r resultStr2[2]`.

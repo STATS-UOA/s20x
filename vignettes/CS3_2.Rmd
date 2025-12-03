@@ -1,0 +1,146 @@
+---
+title: "STATS 201/8 Extra Case Study - One Sample"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS3_2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.height=3)
+```
+
+```{r setup, echo=FALSE,message=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile
+library(s20x)
+```
+
+
+# Question 
+
+For this question, we are getting historic. In 1886, Francis Galton presented a data set on a sample of 928 adult British children from 197 sets of parents. For each child, he had recorded their adult height and the average of their parent’s heights. He then analysed the relationship between their heights. 
+
+However, for this question, we are just interested in a simpler question. How do heights of people in Britian in 1886 compare to heights of people now? We will use the sample of children's adults heights to answer this. In particular, we wish to see if the average height in 1886 in Britain is different from the average height of 70 inches, which is today's estimated average adult height in Britain.
+
+The data on the children's heights from Galton's 1886 dataset is in the file *Galton3.csv*, which contains the variable:
+
+Variable  | Description
+----------|---------------------------------------
+Height    | the adult height (inches) of the child
+
+**Instructions:**
+
+*	Make sure you change your name and UPI/ID number at the top of the assignment.
+*	Comment on the plot of the data.
+*	Manually calculate the *t*-statistic for comparing the mean height to 70 inches and the corresponding 95% confidence interval. 
+*	Galton's original data set originally included multiple children from families with over 500 children from the 197 families. For the purposes of this analysis, we took a subset of the data, with one child randomly selected from each family,reducing the data to 197 observations. Why did we do this?
+*	Write an appropriate **Executive Summary**.  
+
+
+## Question of interest/goal of the study
+We are interested in seeing if the average height if these British children (when they were adults) is different from the average height of 70 inches which is today's estimated average adult height.
+
+
+## Read in and inspect the data:
+```{r, echo=FALSE}
+data("Galton.df")
+```
+
+```{r,fig.height=4.2,fig.width=6, eval=FALSE}
+Galton.df=read.csv("Galton3.csv", header=T)
+hist(Galton.df$Height)
+summary(Galton.df$Height)
+```
+
+```{r,echo=FALSE, fig.align = 'center'}
+hist(Galton.df$Height)
+summary(Galton.df$Height)
+```
+
+## Comment on the plot/exploratory data analysis
+
+The heights appear to be centred around 67 and reasonably symmetric (and looking roughly normal).
+
+
+## Manually calculate the t-statistic for testing if the underlying mean is 70, and the 95\% confidence interval for the mean. 
+Formulas: $T = \frac{\bar{y}-\mu_0}{se(\bar{y})}$ and 95\% confidence interval $\bar{y} \pm t_{df, 0.975} \times se(\bar{y})$
+
+NOTES: The R code ```mean(y)``` calculates $\bar{y}$. The standard error is $se(\bar{y}) = \frac{s}{\sqrt{n}}$ where $s$ is the standard deviation of $y$ and is calculated by ```sd(y)```, and $n$ is the number of data-points calculated by ```length(y)```.  The degrees of freedom is $df = n-1$. The $t_{df,0.975}$ multiplier is given by the R code ```qt(0.975, df)```.
+
+
+```{r}
+ybar = mean(Galton.df$Height)
+n = length(Galton.df$Height)
+se.ybar = sd(Galton.df$Height)/sqrt(n)
+
+# t-statistic for H0: mu=70 :
+(ybar - 70) / se.ybar
+
+# 95% confidence interval for the mean:
+ybar - qt(0.975, n-1) * se.ybar
+ybar + qt(0.975, n-1) * se.ybar
+
+ybar + c(-1, 1) * qt(0.975, n-1) * se.ybar
+
+```
+
+##  Repeat the same calculation using the t.test function (done for you):
+```{r}
+t.test(Galton.df$Height, mu=70)
+```
+
+**Note:** 
+You should get exactly the same results from the manual calculations and using the $t.test$ function. Doing this was to give you practice using some R code. The $t.test$ function also delivers the p-value that we did not calculate above.
+
+
+## Fit and check the null model (done for you):
+```{r}
+Galton.fit=lm(Height~1,data=Galton.df)
+normcheck(Galton.fit)
+cooks20x(Galton.fit)
+summary(Galton.fit);
+confint(Galton.fit)
+70-confint(Galton.fit)
+```
+
+```{r, echo=FALSE}
+cf1 = as.data.frame(confint(Galton.fit))
+resultConf1 = paste0(sprintf("%.1f", cf1$`2.5 %`), " and ", sprintf("%.1f", cf1$`97.5 %`))
+```
+
+```{r, echo=FALSE}
+cf2 = as.data.frame(70-confint(Galton.fit))
+resultConf2 = paste0(sprintf("%.1f", cf2$`97.5 %`), " and ", sprintf("%.1f", cf2$`2.5 %`))
+```
+
+## Galton's original data set originally included multiple children from families with over 500 children from the 197 families. For the purposes of this analysis, we took a subset of the data, with one child randomly selected from each family,reducing the data to 197 observations. Why did we do this?
+
+Having multiple children from the same family would have violated the independence assumption (and required a more complicated form of analysis).
+
+## Method and Assumption Checks
+
+As this data consists of one measurement (the child's height as as an adult) we have applied a one sample t-test to it, equivalent to an intercept only linear model (null model).
+
+We have a random sample of 197 children (who were measured when adult), and we wished to see if their average height is the same as the current average height of people which is 70 inches. The child's height should be independent of each other. Checking the normality of the differences reveals no problems. There were no unduly influential points.
+
+Our model is:
+$Height_i = \mu + \epsilon_i$ where $\epsilon_i \sim iid ~ N(0,\sigma^2)$ 
+
+
+## Executive Summary 
+
+We are interested if the average height of these children (as adults) which was measured since 1886 is different from the current population average height  of 70 inches.
+
+There was evidence to suggest that British people have got taller on average since 1886. 
+
+We estimate the height of adults in 1886 to be, on average, between `r resultConf1[1]` inches.
+
+Thus, the average increase in height was estimated as between `r resultConf2[1]` inches since 1886.
+
+
+
+
+

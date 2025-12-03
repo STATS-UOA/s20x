@@ -1,0 +1,130 @@
+---
+title: "STATS 201/8 Extra Case Study - Twoway ANOVA Model, Interaction"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS12_4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.height=3)
+```
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile
+library(s20x)
+## From now on we also need the emmeans library:
+library(emmeans)
+```
+
+# Question 1
+
+Researchers were interested in which of three types of material for producing batteries lead to the longest effective battery life. They wanted a recommendation for which material (if any) performed better at each of three different temperatures and wanted to know if the temperature performance was the same for the three types of material used.
+
+Note: The researchers were NOT interested in the differences in performance of the batteries made of the same material between the three different temperatures at this time.
+
+36 batteries were made, 12 each from the three different materials available. They were then randomly allocated to one of three temperatures. The batteries were then tested using a standardised testing procedures under their allocated temperature to measure the effective life of the battery.
+
+The resulting data is in the file *Batteries.csv*, which contains the variables:
+
+Variable  | Description
+----------|--------------------------------------------------------
+lifetime  | The effective lifetime of the battery (hours).
+material  | The material the battery was made of (coded as A, B or C). 
+temp      | The temperature the battery was tested at (low, med or high). 
+
+
+**Instructions:**
+
+*	Comment on the interaction plot of the data.
+* Fit an appropriate linear model to answer the questions of interest and check its assumptions. Determine whether the model can be simplified to decide on an appropriate final model. Generate the inference output you need from the final model.
+* Write a Method and Assumption Checks section.
+* Write an *Executive Summary*. Remember to answer the researchers questions, including recommendations. Only focus on what is requested.
+
+## Question of interest/goal of the study
+
+Researchers were interested in which of three types of material for producing batteries lead to the longest effective battery life at each of three different temperatures and wanted to know if the temperature performance was the same for the three types of material used.
+
+
+## Read in and inspect the data
+```{r, echo=FALSE}
+data("Batteries.df")
+```
+
+```{r,fig.height=5,fig.width=8, eval= FALSE}
+Batteries.df=read.csv("Batteries.csv", stringsAsFactors=TRUE)
+interactionPlots(lifetime~temp+material,data=Batteries.df)
+```
+
+```{r,fig.height=5,fig.width=8, echo= FALSE}
+interactionPlots(lifetime~temp+material,data=Batteries.df)
+```
+
+## Comment on the plot.
+The plots don't appear to be parallel suggesting the will be interaction.
+At both high and low temperature there doesn't seem to be much difference in battery life between the three materials. However at medium temperature, Material A seems to have a lower lifetime than the others.
+
+
+## Fit model, simplify as necessary, and generate inference output
+
+```{r, fig.height=7,fig.width=7}
+battery.fit=lm(lifetime~temp*material,data=Batteries.df)
+
+modelcheck(battery.fit)
+
+anova(battery.fit)
+summary(battery.fit)
+
+battery.pairs <- pairs(emmeans(battery.fit, ~temp*material), infer=T)
+displayPairs(battery.pairs, c("low", "med","high"), c("A", "B","C"))
+```
+
+```{r, echo=FALSE}
+conf1 = data.frame(battery.pairs)
+conf1 = subset(conf1, p.value<0.05)
+resultStr1 = paste0(sprintf("%.0f", abs(conf1[11,]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[11,]$lower.CL)))
+resultStr2 = paste0(sprintf("%.0f", abs(conf1[9,]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[9,]$lower.CL)))
+
+```
+
+
+## Methods and assumption checks
+
+As we have two explanatory factors, we fitted a two-way ANOVA model with interactions. After fitting the model the residuals look good, there are no major problems with normality or overly influential observations. We should have independence due to the experimental design. There is reasonably strong evidence suggesting there is an interaction between temperature and material, and thus we keep the interaction term in the model. 
+
+Our model is:  model: $lifetime_i = \beta_0 + \beta_1 \times templow_i + ... + \beta_8 \times tempmed_i \times materialC_i +\epsilon_i$, 
+
+where $templow_i=1$ if the $i^{th}$ battery was tested at low temperature , and 0 otherwise; ...
+and $\epsilon_i \sim iid N(0,\sigma^2)$
+
+Alternatively, our model is: $lifetime_{ijk}=\mu+\alpha_i+\beta_j+\gamma_{ij}+\epsilon_{ijk},\epsilon_{ijk} \sim N(0,\sigma^2)$,
+
+where $\mu$ is the overall mean lifetime, $\alpha_i$ is the effect due to the $i^{th}$ temperature, $i \in \{low, med, high\}$, $\beta_j$ is the effect due to the $j^{th}$ material, $j \in \{A, B, C\}$, $\gamma_{ij}$ is the effect due to the $i^{th}$ temperature and $j^{th}$ material combination.  
+
+Our model explains about 77\% of variation in the lifetimes.
+
+
+## Executive Summary
+
+Researchers were interested in which of three types of material for producing batteries lead to the longest effective battery life at each of three different temperatures and wanted to know if the temperature performance was the same for the three types of material used.
+
+We found evidence that the effects of material on battery life did depend on the temperature.
+
+At both low temperatures and high temperatures there was no evidence of any difference in performance between the three types of material.
+
+However, at medium temperature, batteries made from material A performed worse than batteries made from material B or C. We could not find any evidence of a better performer between batteries made from materials B or C. 
+
+At medium temperature, we estimate batteries made from material A had a lifetime that was, on average, between:
+
+- `r resultStr2[1]` hours lower than that of batteries made with material B.
+
+- `r resultStr1[1]` hours lower than that of batteries made with material C.
+
+Overall, it doesn't appear to matter which material is used at low or high temperatures, but at medium temperatures (probably the most important) all we can do is rule out material A, so we are left with either material B or C.
+
+
+
+

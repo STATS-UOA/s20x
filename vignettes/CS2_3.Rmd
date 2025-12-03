@@ -1,0 +1,126 @@
+---
+title: 'Case Study 2.3: Diamond Rings'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS2_2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, echo=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+library(s20x)
+```
+
+
+# Problem
+
+This data set contains the prices of ladies' diamond rings and the carat size of their diamond stones from  a random sample of rings from Singaporean retailers. The rings are made of 20 carat\footnote{In the context of gold, ``carat'' refers to the purity of the gold.} gold and are each mounted with a single diamond stone. The data was collected by a lecturer quite a few years ago when they were in Singapore and they were interested in building a model to explain the price of diamond rings.
+
+In particular, it was hoped that the prices of two rings could be predicted using the model: a 0.3-carat diamond ring and a 1.2-carat diamond ring.\footnote{In the context of diamonds, ``carat'' refers to the weight, specifically, one carat is 200 milligrams.} 
+
+The variables measured were:
+
+- `price`:  price of ring (in Singapore dollars)
+- `weight`:	weight of diamond (in carats)
+
+
+
+# Question of interest/goal of the study
+We were interested in building a model to explain the price of diamond rings. In particular, we want to predict the price of a 0.3-carat diamond ring and a 1.2-carat diamond ring.  
+
+```{r plot-real, echo=FALSE, out.width = "80%", fig.align = 'center',fig.height=4}
+data(diamonds.df) 
+```
+
+# Read in and inspect the data:
+```{r fig.height=3.5,eval=FALSE}
+# import the data
+diamonds.df=read.table("diamonds.txt", header=T)
+head(diamonds.df)
+plot(price~weight,main="Price versus weight of diamonds",data=diamonds.df)
+```
+
+```{r,echo=FALSE,out.width = "85%", fig.align = 'center'}
+head(diamonds.df)
+plot(price~weight,main="Price versus weight of diamonds",data=diamonds.df)
+```
+
+# Comment on the plot
+
+The scatter plot of price versus weight shows a strong, increasing, linear relationship. The greater the weight of the diamond, the greater the mean price of the diamond ring.
+
+# Fit model and check assumptions
+```{r, fig.align = 'center'}
+# fit the model
+diamond.fit<-lm(price~weight,data=diamonds.df)
+
+#Assumption checks
+plot(diamond.fit,which=1) 
+normcheck(diamond.fit)
+cooks20x(diamond.fit)
+
+#Get summary output and confidence intervals
+summary(diamond.fit)
+confint(diamond.fit)
+```
+
+```{r, echo=FALSE}
+cf = as.data.frame(confint(diamond.fit) * 0.1)
+resultConf = sprintf("$%s to $%s",
+        format(round(cf$`2.5 %`, -1), big.mark = ",", trim = TRUE),
+        format(round(cf$`97.5 %`, -1), big.mark = ",", trim = TRUE))
+```
+
+# Plot with superimposed line
+```{r, fig.align = 'center'}
+plot(price~weight,main="Price versus weight of diamonds",data=diamonds.df)
+abline(diamond.fit$coef[1],diamond.fit$coef[2])
+```
+
+
+# Get additional predicted output required
+```{r}
+predweight.df=data.frame(weight=c(0.3,1.2))
+predict(diamond.fit,predweight.df,interval="prediction")
+```
+
+```{r, echo=FALSE}
+predweight.df=data.frame(weight=c(0.3,1.2))
+p = as.data.frame(predict(diamond.fit, predweight.df, interval = "prediction"))
+resultStr = sprintf("$%s to $%s",
+                    format(round(p$lwr,-1), big.mark = ",", trim = TRUE),
+                    format(round(p$upr,-1), big.mark = ",", trim = TRUE)
+                    )
+```
+
+# Method and Assumption Checks 
+A scatter plot of price vs diamond weight showed a linear association with approximately constant
+scatter and so a simple linear regression model was fitted. 
+
+All the assumptions were met so we have no problems with the analysis.
+
+Our final model is  $price_i=\beta_0 +\beta_1\times weight_i+\epsilon_i$ 
+where $\epsilon_i \sim iid ~ N(0,\sigma^2)$.
+
+Our model explains 98% of the variation in diamond ring prices.
+
+# Executive Summary
+
+We have data on diamond ring prices and the weights of the diamonds in those rings from Singapore retailers. Our aim is to predict the price of a diamond ring using the weight of the diamond.
+
+There is a strong positive association between the weight of the diamond and the price of the ring -  the bigger the diamond, the higher the price of the diamond ring.
+
+We estimate that for every 0.1-carat increase in the weight of the diamond, the mean diamond ring price increases by somewhere between `r resultConf[2]`.
+
+Our model explains 98% of the variation in diamond ring prices and therefore should be excellent for predicting the price of diamond rings. 
+
+Using our model, we predict that the 0.3-carat diamond ring will be priced between `r resultStr[1]`. 
+
+Our data only has diamond rings weighing up to 0.35 carats, so we cannot rely on the predictions for the 1.2-carat ring.
+\bigskip
+
+[Note: the range of the orignal data was around 900 dollars, this has been reduced to around 130 dollars which is roughly 15% of this and much more useful for prediction.]
+
+

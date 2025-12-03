@@ -1,0 +1,169 @@
+---
+title: 'Additional Time Series Case Study C: Auckland Rental Data'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS17_3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+
+Dataframe `AkldRent` contains the average weekly rents in Auckland,
+by month from January 2006 to November 2015.
+(Data courtesy of the Ministry of Business, Innovation and Enterprise, 
+and are compiled from rental bonds lodged by landlords.)
+
+It is of particular interest to describe the overall trend in rents,
+and to see whether it broadly follows the same trend in Auckland houses prices -
+house prices in Auckland peaked in late 2007, then dropped slightly and began rising
+again in late 2011.
+
+
+The variables are:
+
+| Variable | Description |
+|---------|-------------|
+| `Month` | month of the year |
+| `Rent` | average weekly rent in Auckland (\$) |
+
+
+
+
+```{r, echo=FALSE,warning=FALSE}
+data("AkldRent.df")
+AkldRent.df$Rent=AkldRent.df$Auckland
+AkldRent=subset(AkldRent.df,select=c(Month,Rent))
+```
+
+```{r,fig.height=4.5}
+Rent.ts=ts(AkldRent$Rent,frequency=12,start=c(2006,1))
+plot(log(Rent.ts),main="Average log-weekly rent in Auckland")
+abline(v=c(2006:2016),lty=2)
+```
+
+```{r,fig.height=7}
+logRent.stl=stl(log(Rent.ts),s.window="periodic")
+plot(logRent.stl)
+abline(v=c(2006:2016),lty=2)
+```
+
+
+```{r ,fig.height=7}
+head(logRent.stl$time.series,13)
+```
+
+```{r ,fig.height=5}
+logRent.hw=HoltWinters(log(Rent.ts))
+predict(logRent.hw,n.ahead=6,prediction.interval = TRUE)
+```
+
+
+```{r ,fig.height=4}
+n=nrow(AkldRent)
+time.pt=seq(2006+1/12,2015+11/12,1/12)
+time.pt
+```
+
+```{r ,fig.height=4}
+months=factor(rep(month.abb, 10))[1:n]
+months=factor(months,levels=month.abb)
+months
+```
+
+
+
+```{r ,fig.height=4}
+logRent=log(AkldRent$Rent)
+logRentfit1.lm=lm(logRent~time.pt++months)
+acf(resid(logRentfit1.lm))
+logRentfit2.lm=lm(logRent[-1]~time.pt[-1]+logRent[-n]+months[-1])
+acf(resid(logRentfit2.lm))
+```
+
+```{r,fig.height=4}
+plot(residuals(logRentfit2.lm),type="l")
+normcheck(logRentfit2.lm,main="Histogram",xlab="Residuals")
+```
+
+```{r ,fig.height=4}
+summary(logRentfit2.lm)
+```
+
+```{r ,fig.height=4}
+anova(logRentfit2.lm)
+```
+
+
+
+```{r,fig.height=4,include=F}
+fit.lm2q=lm(logRent[-1]~time.pt[-1]+I(time.pt[-1]^2)+logRent[-n]+months[-1])
+summary(fit.lm2q)
+plot(fit.lm2q,which=1)
+normcheck(fit.lm2q)
+acf(resid(fit.lm2q))
+```
+
+
+
+```{r,include=F}
+#For purpose of predicting Dec 2015 rent
+c(time.pt[n],logRent[n])
+pred=exp(-28.604938+0.0076+time.pt[n]*0.01551+logRent[n]*0.571065)
+```
+
+
+
+
+
+
+### Question
+We have analysed log rents instead of rents. The initial analysis of the raw
+data has been omitted from the appendix. What aspects of this data do you think leads to a log model being more appropriate? 
+
+### Solution
+It would be natural to expect that higher rents would be associated with more variability and greater seasonal effects so a log model would be more appropriate. Also, any effects of inflation tend to be percentage changes which suggests a multiplicative model, hence a log model.
+
+
+### Question
+Comment on the STL decomposition plot, paying particular attention to address the comparison with house price trends stated in the introduction to the data.
+
+
+### Solution
+We can see a steady linear increase in rental price, except from 2008 to 2010 where the trend flattens out. This seems to have followed on from the pattern in house prices, but not quite as extreme - taking a few more months for the effect to kick in and the recovery happening a few months earlier. 
+There is a seasonal pattern, but it is not very large relative to the trend (looking at the scale of the plots). The trend isn't consistent every year, but does suggest there can be a drop in rents in March followed by a rise around May.
+
+
+
+### Question
+Using the Holt-Winters model, provide a 95\% prediction interval for the average weekly rent in Auckland in Feb 2016.
+
+
+### Solution 
+exp(6.300755) = 544.98,    exp(6.233003) = 509.28. 
+We predict that the average weekly rent in Auckland in Feb 2016 is somewhere between \$509 and \$545.
+
+
+
+### Question
+Usually we code the variable time as an integer from 1 for the first observation
+and then increasing by 1 for each consecutive observation. How have we coded
+`time.pt` in the regression model? 
+
+
+### Solution
+We have coded time from 2006.083 to 2015.917. The integer part of this represents the year and the decimal part of this represent the month, being a fraction out of 12 corresponding to the number of the month. So 2010.417 is the year 2010 and month is 0.417 $\times$ 12 = 5  so May.
+
+
+
+### Question
+What does the variable `logRent[-n]` fitted in model `logRentfit2` represent
+and why did we add it to the model?
+
+
+
+ {\bf Solution:} \newline
+The variable `logRent[-n]` fitted in model `logRentfit2` is the lagged values of `logRent` and represents the autocorrelation term in the model. This uses the previous `logRent` value to predict the next `logRent` value to allow for the autocorrelation. 
+An autocorrelation term was added as the acf plot showed clear signs of positive autocorrelation. Many of the vertical lines are greatly exceeding the dotted line. After adding a term for autocorrelation to the model, this is much improved.
+
