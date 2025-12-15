@@ -26,7 +26,7 @@ We want to quantify the relationship between exam marks and attendance. In parti
 
 ## Read in and Inspect the Data
 ```{r, echo=FALSE}
-data("Stats20x.df")
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', eval=FALSE}

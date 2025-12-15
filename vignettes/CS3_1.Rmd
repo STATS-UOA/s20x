@@ -26,7 +26,7 @@ We were interested in building a model to describe exam marks. In particular, we
 ## Read in and Inspect Data
 
 ```{r, echo=FALSE}
-data("Stats20x.df")
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width='80%', fig.align='center', eval=FALSE}

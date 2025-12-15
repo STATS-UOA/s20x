@@ -47,7 +47,7 @@ How does sexual activity affect male fruitfly longevity?
 
 ## Read in and Inspect the Data
 ```{r, echo = FALSE}
-data("fruitfly.df")
+load(system.file("extdata", "Fruitfly.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
@@ -72,7 +72,7 @@ summary(ff.fit)
 ```
 
 ## Multiple Comparisons Output
-```{r, out.width = "75%", fig.align = 'center'}
+```{r, out.width = "75%", fig.align = 'center', eval=requireNamespace("emmeans", quietly=TRUE)}
 library(emmeans)
 Fruitfly.emm = emmeans(ff.fit, ~group)
 # View all pairwise comparisons:

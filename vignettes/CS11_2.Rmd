@@ -28,7 +28,7 @@ Is the degree a student is enrolled for related to their final 20x exam score?
 
 ## Read in and Inspect the Data
 ```{r}
-data("Stats20x.df")
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "85%", fig.align = 'center', eval=FALSE}

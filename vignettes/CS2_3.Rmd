@@ -2,7 +2,7 @@
 title: 'Case Study 2.3: Diamond Rings'
 output: html_document
 vignette: >
-  %\VignetteIndexEntry{CS2_2}
+  %\VignetteIndexEntry{CS2_3}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

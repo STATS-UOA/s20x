@@ -20,7 +20,7 @@ To quantify students' exam marks relationship with attendance and test marks. Al
 
 ## Read in and Inspect the Data
 ```{r, echo=FALSE}
-data("Stats20x.df")
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "90%", fig.align = 'center', eval = FALSE}

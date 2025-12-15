@@ -44,7 +44,7 @@ Hence, to explore whether the above geometric argument is valid, we also need to
 ## Read in and Inspect the Data
 
 ```{r, echo=FALSE}
-data("Cherry.df")
+load(system.file("extdata", "Cherry.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "70%", fig.align = 'center', eval=FALSE}

@@ -35,7 +35,7 @@ require(s20x)
 ```
 
 ```{r, echo=FALSE}
-data("ML.df")
+load(system.file("extdata", "ML.df.rda", package = "s20x"))
 ```
 
 
@@ -102,11 +102,11 @@ summary(ML.fit3)
 
 ## Rcode 
 
-```{r, fig.height=4}
-## this is outside the context of the course
-## a more appropraite way to model this
-# you will need to download this libaray from CRAN first
-require(nlme)
+```{r, fig.height=4, eval = requireNamespace("nlme", quietly = TRUE)}
+## This is outside the context of the course.
+## A more appropriate way to model this is to model the AR(1) correlation structure.
+## You will need to download this libaray from CRAN first: install.packages("nlme")
+library(nlme)
 
 ML.fit4 =gls(CO2~Yearnew+I(Yearnew^2)+Season, correlation = corAR1(), data=ML.df)
 

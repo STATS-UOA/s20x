@@ -38,7 +38,7 @@ What was the impact of cyclone Justin on coral cover in the affected sites?
 ## Read in and Inspect the Data
 
 ```{r, echo = FALSE}
-data("Reef.df")
+load(system.file("extdata", "Reef.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', eval = FALSE}

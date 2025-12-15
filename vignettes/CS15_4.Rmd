@@ -56,7 +56,7 @@ It is of interest to learn about the survival probability of discarded snapper, 
 
 ## Read in and inspect the data:
 ```{r, echo=FALSE}
-data("Snapper1.df")
+load(system.file("extdata", "Snapper1.df.rda", package = "s20x"))
 Snapper.df <- Snapper1.df
 ```
 

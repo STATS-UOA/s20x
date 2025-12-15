@@ -27,7 +27,7 @@ We are interested in the relationship between final exam mark and passing the te
 
 ## Read in and Inspect the Data
 ```{r, echo = FALSE}
-data("Stats20x.df")
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', eval = FALSE}

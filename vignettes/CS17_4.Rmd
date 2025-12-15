@@ -28,7 +28,7 @@ The variables are:
 
 
 ```{r, echo=FALSE,warning=FALSE}
-data("MilkProd.df")
+load(system.file("extdata", "MilkProd.df.rda", package = "s20x"))
 ```
 
 

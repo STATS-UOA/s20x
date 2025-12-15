@@ -57,7 +57,7 @@ annual income, partnership status, dependents, gender and age.
 ## inspect the data:
 
 ```{r, echo = FALSE}
-data("CarSpend.df")
+load(system.file("extdata", "CarSpend.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5,fig.width=5, eval = FALSE}

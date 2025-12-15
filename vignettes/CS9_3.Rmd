@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 The data in this case study were collected in an investigation of environmental causes of disease. They show the annual mortality rate per 100,000 for males, averaged over the years 1958--1964, and the calcium concentration (in parts per million) in the drinking water supply for 61 large towns in England and Wales. (The higher the calcium concentration, the harder the water.) Towns at least as far north as Derby are identified in the data set with the code `N`. In this study we will use R to investigate how are mortality and water hardness related, and if there a geographical factor in the relationship. The data is in the file `water.csv` on Canvas
 
 ```{r,echo=FALSE}
-data("water.df")
+load(system.file("extdata", "water.df.rda", package = "s20x"))
 ```
 
 ```{r, eval=FALSE}

@@ -51,7 +51,7 @@ Researchers were interested in which of three types of material for producing ba
 
 ## Read in and inspect the data
 ```{r, echo=FALSE}
-data("Batteries.df")
+load(system.file("extdata", "Batteries.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5,fig.width=8, eval= FALSE}

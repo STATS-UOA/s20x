@@ -34,7 +34,7 @@ The variables measured were:
 Note: Week 53 has been standardised as it is an incomplete week.
 
 ```{r, echo=FALSE}
-data("influenza.df")
+load(system.file("extdata", "influenza.df.rda", package = "s20x"))
 ```
 
 

@@ -46,7 +46,7 @@ We are interested in seeing if the average height if these British children (whe
 
 ## Read in and inspect the data:
 ```{r, echo=FALSE}
-data("Galton.df")
+load(system.file("extdata", "Galton.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.2,fig.width=6, eval=FALSE}

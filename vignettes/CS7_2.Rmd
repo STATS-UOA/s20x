@@ -45,7 +45,7 @@ We want to build a model to explain the sale price of houses using their annual 
 
 ## Inspect the data: livingArea as an explanatory variable
 ```{r, echo=FALSE}
-data("hometax.df")
+load(system.file("extdata", "hometax.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.2,fig.width=6, eval = FALSE}

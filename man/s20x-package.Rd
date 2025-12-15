@@ -26,6 +26,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Hannah Yun \email{hyun536@aucklanduni.ac.nz} [contributor]
   \item Rachel Fewster \email{r.fewster@auckland.ac.nz} [contributor]
   \item Russell Millar \email{r.millar@auckland.ac.nz} [contributor]
   \item Ben Stevenson \email{ben.stevenson@auckland.ac.nz} [contributor]

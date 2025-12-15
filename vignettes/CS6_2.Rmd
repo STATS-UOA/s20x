@@ -26,7 +26,7 @@ Do females spend more money on their hair than males? Also, how much do students
 
 ## Read in and Inspect the Data
 ```{r, echo=FALSE}
-data("survey.df")
+load(system.file("extdata", "survey.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval=FALSE}

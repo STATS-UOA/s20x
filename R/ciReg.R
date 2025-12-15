@@ -3,7 +3,7 @@
 #' Calculates and prints the confidence intervals for the fitted model.
 #' 
 #' 
-#' @param fit an object of class{lm}, i.e. the output from \code{\link{lm}}.
+#' @param fit an object of class \code{lm}, i.e. the output from \code{\link{lm}}.
 #' @param conf.level confidence level of the intervals.
 #' @param print.out if \code{TRUE}, print out the output on the screen.
 #' @return The function returns a two-column matrix containing the upper and

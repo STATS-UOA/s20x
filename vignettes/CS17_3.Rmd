@@ -32,7 +32,7 @@ The variables are:
 
 
 ```{r, echo=FALSE,warning=FALSE}
-data("AkldRent.df")
+load(system.file("extdata", "AkldRent.df.rda", package = "s20x"))
 AkldRent.df$Rent=AkldRent.df$Auckland
 AkldRent=subset(AkldRent.df,select=c(Month,Rent))
 ```

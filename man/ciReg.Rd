@@ -7,7 +7,7 @@
 ciReg(fit, conf.level = 0.95, print.out = TRUE)
 }
 \arguments{
-\item{fit}{an object of class{lm}, i.e. the output from \code{\link{lm}}.}
+\item{fit}{an object of class \code{lm}, i.e. the output from \code{\link{lm}}.}
 
 \item{conf.level}{confidence level of the intervals.}
 

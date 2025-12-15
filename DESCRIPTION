@@ -1,12 +1,13 @@
 Package: s20x
-Version: 3.1-40
-Date: 2023-08-21
+Version: 3.2-00
+Date: 2025-12-16
 Title: Functions for University of Auckland Course STATS 201/208 Data Analysis
 Authors@R: c(
     person("Brant", "Deppa", role = "aut",
            comment = "Wrote the original R scripts this package is derived from"),
     person("James", "Curran", , "j.curran@auckland.ac.nz", role = c("aut", "cre"),
            comment = "Wrote the original R package. Current maintainer."),
+    person("Hannah", "Yun", , "hyun536@aucklanduni.ac.nz", role = "ctb"),
     person("Rachel", "Fewster", , "r.fewster@auckland.ac.nz", role = "ctb"),
     person("Russell", "Millar", , "r.millar@auckland.ac.nz", role = "ctb"),
     person("Ben", "Stevenson", , "ben.stevenson@auckland.ac.nz", role = "ctb"),
@@ -22,9 +23,14 @@ Description: A set of functions used in teaching STATS 201/208 Data Analysis at
     majors.
 Depends: R (>= 4.0.0)
 Suggests: 
+    bootstrap,
+    dafs,
     emmeans,
+    formatR,
+    ggplot2,
     knitr,
     markdown,
+    nlme,
     rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8

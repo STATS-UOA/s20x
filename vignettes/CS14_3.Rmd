@@ -51,7 +51,7 @@ It was of interest to compare e-mail habits of adults, depending on their marita
 
 ## Read in and inspect the data:
 ```{r, echo=FALSE}
-data("email.df")
+load(system.file("extdata", "email.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.5,fig.width=8, eval = FALSE}

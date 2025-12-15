@@ -49,7 +49,7 @@ We want to compare prices for houses with living areas categorised as small and 
 
 ## Inspect the data: livingSpace as an explanatory variable
 ```{r, echo=FALSE}
-data("houses.df")
+load(system.file("extdata", "houses.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=3.8,fig.width=6, eval= FALSE}

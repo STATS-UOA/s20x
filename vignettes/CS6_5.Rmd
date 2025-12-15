@@ -45,7 +45,7 @@ We wish to investigate how the prices of houses in Saratoga, New York, are affec
 
 ## Inspect the data: livingArea as an explanatory variable
 ```{r, echo=FALSE}
-data("houses.df")
+load(system.file("extdata", "houses.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.2,fig.width=6, eval=FALSE}

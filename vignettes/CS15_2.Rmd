@@ -33,7 +33,7 @@ Does whio chick survival differ by region and/or flood status? Quantify all find
 
 ## Read in and inspect the data
 ```{r, echo = FALSE}
-data("whio.df")
+load(system.file("extdata", "whio.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "100%", fig.align = 'center', eval = FALSE}

@@ -50,7 +50,7 @@ We wish to identify the most promising trombone practice method. Do any of the m
 ## Inspect the data
 
 ```{r}
-data("trombone.df")
+load(system.file("extdata", "trombone.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5.2,fig.width=8, eval = FALSE}

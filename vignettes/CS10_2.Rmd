@@ -33,7 +33,7 @@ We want to build a model to explain salary. In particular, the effect (if any) o
 ## Read in and Inspect the Data
 
 ```{r, echo=FALSE}
-data("salary.df")
+load(system.file("extdata", "salary.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}

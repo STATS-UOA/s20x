@@ -33,7 +33,7 @@ We want to build a model to explain the birth weight of babies.
 
 ## Read in and Inspect the Data
 ```{r, echo=FALSE}
-data("Babies.df")
+load(system.file("extdata", "Babies.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center',fig.height=4.25,echo=-1, eval = FALSE}

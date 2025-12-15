@@ -56,7 +56,7 @@ The questions we want answered are: how does the population of geoducks change w
 
 ## Read in and inspect the data:
 ```{r, echo=FALSE}
-data("Geoduck.df")
+load(system.file("extdata", "Geoduck.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5,fig.width=8,eval = FALSE}

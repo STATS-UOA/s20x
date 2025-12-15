@@ -25,7 +25,7 @@ How much money do students spend on clothing on average?
 
 ## Read in and Inspect the Data
 ```{r, echo=FALSE}
-data("survey.df")
+load(system.file("extdata", "survey.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "70%", fig.align = 'center', eval=FALSE}
@@ -73,9 +73,10 @@ ci
 
 Oh dear! Our sample median is outside of our confidence interval for the median. Maybe we should forget the normal theory and try bootstrapping? **Note:** to perform this next step you need to install the `bootstrap` package. You can do this by uncommenting (removing `#`) the first line in the R chunk below. You only have to do this one time, and then it is installed forever more. So put back the `#` after knitting the document for the first time.
 
-```{r}
-# install.packages("bootstrap")
+```{r, eval=requireNamespace("bootstrap", quietly = TRUE)}
+#install.packages("bootstrap")
 library(bootstrap)
+
 m = bootstrap(clothes.df$clothes, 10000, median)$thetastar
 quantile(m, c(0.025, 0.975))
 ```

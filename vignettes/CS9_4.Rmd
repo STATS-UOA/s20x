@@ -30,7 +30,7 @@ To quantify the relationship between smoking and FEV.
 
 ## Read in and Inspect the Data
 ```{r, echo=FALSE}
-data("fev.df")
+load(system.file("extdata", "fev.df.rda", package = "s20x"))
 ```
 
 ```{r RC-CS9_4-001, out.width = "75%", fig.align = 'center', eval=FALSE}
@@ -160,7 +160,7 @@ lines(teens.pred ~ ht, data = pred.df[1:2, ], col = "red")
 
 What we're seeing here is that the smoking is making this line close to flat, regardless of height. It is probably this group alone that is driving the interaction between smoking, gender and height. We might also ask whether we really think males who smoke have a higher rate of increase in FEV?
 
-```{r RC-CS9_4-019, out.width = "75%", fig.align = 'center'}
+```{r RC-CS9_4-019, out.width = "75%", fig.align = 'center', eval=requireNamespace("ggplot2", quietly = TRUE)}
 teens.df$smoke = relevel(teens.df$smoke, ref = "No")
 teens.df$sex  = factor(ifelse(teens.df$sex == 0, "Female", "Male"))
 library(ggplot2)

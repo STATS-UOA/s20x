@@ -27,7 +27,7 @@ We want to build a model to estimate exam marks with assignment marks. In partic
 ## Read in and Inspect the Data
 
 ```{r, echo=FALSE}
-data("Stats20x.df")
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center',fig.height=4, eval=FALSE, echo=TRUE}

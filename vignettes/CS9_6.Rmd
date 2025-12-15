@@ -51,7 +51,7 @@ We are interested in how the age and genotype at a locus are related to the chol
 
 ## inspect the data:
 ```{r, echo=FALSE}
-data("dallas.df")
+load(system.file("extdata", "dallas.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.5,fig.width=7, eval=FALSE}

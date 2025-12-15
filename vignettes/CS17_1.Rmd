@@ -20,7 +20,7 @@ The variables are:
 
 
 ```{r, echo = FALSE}
-data("minne.df")
+load(system.file("extdata", "minne.df.rda", package = "s20x"))
 ```
 
 ```{r, eval=FALSE,warning=FALSE}

@@ -87,7 +87,7 @@ summary(thyroid.fit2)
 ```
 
 ## Is `trt` really insignifcant?
-```{r RC-CS92-005, out.width = "75%", fig.align = 'center'}
+```{r RC-CS92-005, out.width = "75%", fig.align = 'center', eval=requireNamespace("ggplot2", quietly = TRUE)}
 b = coef(thyroid.fit2)
 # Note this won't work unless you have ggplot2 installed
 library(ggplot2)

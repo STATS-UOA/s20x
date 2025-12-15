@@ -32,7 +32,7 @@ It was of interest to explore the relative count of snapper with regard to locat
 
 ## Read in and Inspect the Data
 ```{r, echo = FALSE}
-data("Snap.df")
+load(system.file("extdata", "Snap.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}

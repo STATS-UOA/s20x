@@ -50,7 +50,7 @@ We wish to describe the relationship between daily ozone concentration and tempe
 
 ## Read in and inspect the data:
 ```{r, echo=FALSE}
-data("ozone.df")
+load(system.file("extdata", "ozone.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.0,fig.width=6, eval=FALSE}

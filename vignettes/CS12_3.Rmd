@@ -38,7 +38,7 @@ We wish to determine how the yield of fucoidan from _Undaria_ depends on the tem
 
 ## Read in and Inspect the Data
 ```{r, echo = FALSE}
-data("Weed.df")
+load(system.file("extdata", "Weed.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}

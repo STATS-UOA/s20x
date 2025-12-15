@@ -54,7 +54,7 @@ Does the fluoride treatment seem to be decreasing the average number of adverse 
 ## inspect the data:
 
 ```{r, echo=FALSE}
-data("Dental.df")
+load(system.file("extdata", "Dental.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5,fig.width=7, eval = FALSE}

@@ -27,7 +27,7 @@ How does the length of the fish affect the odds of it being caught in the trawl 
 
 ## Read in and Inspect the Data
 ```{r, echo=FALSE}
-data("Haddock.df")
+load(system.file("extdata", "Haddock.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', eval = FALSE}

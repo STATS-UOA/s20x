@@ -55,7 +55,7 @@ It was of interest to see how increasing APACHE II scores related to the mortali
 
 ## Read in and inspect the data:
 ```{r, echo=FALSE}
-data("Apache.df")
+load(system.file("extdata", "Apache.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.8,fig.width=8, eval=FALSE}
