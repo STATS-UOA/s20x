@@ -61,6 +61,7 @@ plot(residuals(minne.fit),type="l")
 ```
 
 ```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
+library(s20x)
 normcheck(minne.fit, xlab = "Residuals")
 ```
 

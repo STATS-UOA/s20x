@@ -88,6 +88,7 @@ MilkProd.lm2=lm(production~time+past.prod+month.fac, data=MilkProd2.df)
 ```{r,fig.height=4,echo=-1}
 par(mar=c(4,4,2,0))
 plot(residuals(MilkProd.lm2),type="l")
+library(s20x)
 normcheck(MilkProd.lm2, main="",xlab="Residuals")
 ```
 

@@ -83,6 +83,7 @@ acf(resid(logRentfit2.lm))
 ```
 
 ```{r,fig.height=4}
+library(s20x)
 plot(residuals(logRentfit2.lm),type="l")
 normcheck(logRentfit2.lm,main="Histogram",xlab="Residuals")
 ```
