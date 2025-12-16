@@ -1,0 +1,91 @@
+---
+title: 'Case Study 11.2: Exam vs Degree'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS11_2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+require(emmeans)
+```
+
+# Problem
+We want to quantify the expected final exam mark (out of 100) in Stats 20x for each type of degree. In particular, we want to investigate whether there is a "degree" effect on the final exam mark.
+
+The variables of interest were:
+
+* `Exam`: A student's exam mark out of 100.
+* `Degree`: A four-level factor with levels corresponding to a student's degree.
+    + "BA", "BCom", "BSc", and "Other".
+
+## Question of Interest
+Is the degree a student is enrolled for related to their final 20x exam score?
+
+## Read in and Inspect the Data
+```{r}
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "85%", fig.align = 'center', eval=FALSE}
+Stats20x.df = read.table("STATS20x.txt", header = T)
+```
+
+```{r, out.width = "85%", fig.align = 'center'}
+Stats20x.df$Degree=factor(Stats20x.df$Degree)
+#Draw boxplot
+plot(Exam ~ Degree, data = Stats20x.df)
+#Summary stats:
+summaryStats(Exam ~ Degree, Stats20x.df)
+```
+
+
+The "BSc" group is centred noticeably lower than the others. The standard deviations are within a factor of two from smallest to largest, so we can accept the equality of variance assumption. (The midspreads do exceed the factor-of-two rule-of-thumb, so we might need to be cautious in our interpretations.)
+
+## Model Building and Check Assumptions
+```{r, out.width = "85%", fig.align = 'center'}
+degree.fit = lm(Exam ~ Degree, data = Stats20x.df)
+modelcheck(degree.fit)
+anova(degree.fit)
+summary(degree.fit)
+```
+
+## Multiple Comparisons Output
+```{r, out.width = "90%", fig.align = 'center',echo=-1}
+options(digits=4)
+pairs(emmeans(degree.fit, ~Degree), infer=T)
+```
+```{r, echo = FALSE}
+options(digits=4)
+stats.pair=as.data.frame(pairs(emmeans(degree.fit, ~Degree), infer=T))
+conf1=subset(stats.pair, p.value<0.05)
+resultStr1 = paste0(sprintf("%.0f", conf1$lower.CL), " and ", sprintf("%.0f", conf1$upper.CL))
+resultStr2 = paste0(sprintf("%.0f", abs(conf1$upper.CL)), " and ", sprintf("%.0f", abs(conf1$lower.CL)))
+
+```
+# Methods and Assumption Checks
+We wish to explain exam marks using degree, a factor with four levels, so we fitted a One-way ANOVA model to these data.
+
+The model assumptions seem satisfied.
+
+Our final model is $$\text{Exam}_i = \beta_0 + \beta_1 \times Degree.BCom_i + \beta_2 \times Degree.BSc_i + \beta_3 \times Degree.Other_i + \epsilon_i,$$
+where $Degree.x_i$ is 1 if a student is enrolled in degree $x$ and 0 otherwise (with $x \in \{\text{BCom}, \text{BSc}, \text{Other}\}$), and $\epsilon_i \sim iid~N(0,\sigma^2)$.
+
+Alternatively, our final model could be written as $$\text{Exam}_{ij} = \mu + \alpha_i + \epsilon_{ij},$$
+where $\mu$ is the overall mean exam mark and $\alpha_i$ is the effect of being in the $i$th degree (with $i \in \{\text{BA}, \text{BCom}, \text{BSc}, \text{Other}\}$), and $\epsilon_{ij} \sim iid~N(0,\sigma^2)$.
+
+Our model explained 13.2% of the variability in students' exam marks.
+
+# Executive Summary
+Is the degree a student is enrolled in related to their final 20x exam mark?
+
+We do have evidence that expected exam marks were not identical between the four degree groups (Ba, BCom, BSc, and Other). However, the only significant differences we found were that BSc students had lower marks than BCom and Other degree students.
+
+With 95% confidence we can say that:
+
+* on average, "BSc" students do worse than "BCom" students by between `r resultStr1[1]` marks.
+* on average, "BSc" students do worse than "Other" students by between `r resultStr2[2]` marks.

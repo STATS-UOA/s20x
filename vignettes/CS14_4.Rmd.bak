@@ -1,0 +1,163 @@
+---
+title: "STATS 201/8 Extra Case Study - Poisson GLM. Parallel Curves"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS14_4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.height=3)
+```
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile
+library(s20x)
+## From now on we also need the emmeans library:
+library(emmeans)
+```
+
+# Question 1
+
+A marine scientist was interested in modelling the population of geoducks from the west coast of the North Island taking into account their age and an extreme storm event 10 years before. A random sample of geoducks (a big clam, the name is actually pronounced “gooey-duck”) was taken off the west coast of a North Island surf beach in 2013. Each geoduck was aged by counting rings in the shell, and the count of geoduck at each age was recorded. The population theory of geoducks suggests using the following model for the expected count at each age:
+
+\[ \log(E[Count_i]) = \beta_0 + \beta_1 \times Age_i \]
+
+Here, we’ll be using a modified version of this model since there was as extreme storm event that all geoduck of age 10 or older experienced. The initial model to be fitted includes the storm effect and its interaction with age in the following way:
+
+
+\[ \log(E[Count_i]) = \beta_0 + \beta_1 \times Age_i + \beta_2 \times Storm_i + \beta_3 \times Age_i\times Storm_i  \]
+
+where $Count_i$ is the geoduck count at age i and $Storm_i$ is an indicator variable that takes the value 0 if age is less than 10, or 1 if age is at least 10.
+
+The data is stored is *Geoduck.csv* which contains the following variables:
+
+Variable   | Description
+-----------|--------------------------------------------------------------------------
+Count      | Number of geoducks counted at given value of age.
+Age        | Years of age of geoduck.
+Storm      | Indicator variable (0 if age less than 10 after storm, or 1 if age at least 10 before storm).
+
+
+**Instructions:**
+
+*	Comment on the plot of the data.
+*	Fit an appropriate Poisson GLM to model the number of geoducks. Determine whether the model can be simplified and determine an appropriate final model. Generate confidence interval output for this model. 
+* Write appropriate **Methods and Assumption Checks**.
+*	Write an appropriate **Executive Summary**. Remember to address all the questions asked.
+* **Bonus** Produce predicted values for the expected number of geoducks at each age group using this model, including intervals. Add these intervals to a plot of the data.
+
+## Questions of Interest
+
+The questions we want answered are: how does the population of geoducks change with age, did the storm event have any impact on the population, and did the relationship between age and the population count change after the storm?
+
+## Read in and inspect the data:
+```{r, echo=FALSE}
+load(system.file("extdata", "Geoduck.df.rda", package = "s20x"))
+```
+
+```{r,fig.height=5,fig.width=8,eval = FALSE}
+Geoduck.df=read.csv("Geoduck.csv", stringsAsFactors = TRUE)
+plot(Count~Age,main="Number of Geoducks by Age",
+     sub="dashed line = year of storm",data=Geoduck.df)
+abline(v=10,lty=2)
+```
+
+```{r,fig.height=5,fig.width=8, echo = FALSE}
+plot(Count~Age,main="Number of Geoducks by Age",
+     sub="dashed line = year of storm",data=Geoduck.df)
+abline(v=10,lty=2)
+```
+
+## Comment on plot.
+
+The scatter plot shows an exponential (i.e., multiplicative) decline in 
+geoduck count with age. 
+There is some indication of a storm effect at age 10, but it is hard to be sure.  
+
+
+## Fit an appropriate GLM:
+```{r,fig.height=5,fig.width=6}
+duckfit1=glm(Count~Age*Storm,family=poisson,data=Geoduck.df)
+plot(duckfit1,which=1)
+summary(duckfit1)
+1-pchisq(60.985,44) 
+
+# Evidence of overdispersion
+duckfit2=glm(Count~Age*Storm,family=quasipoisson,data=Geoduck.df)
+summary(duckfit2)
+
+# Drop interaction
+duckfit3=glm(Count~Age+Storm,family=quasipoisson,data=Geoduck.df)
+summary(duckfit3)
+exp(confint(duckfit3))
+100*(exp(confint(duckfit3))[2:3,]-1)
+
+```
+```{r, echo = FALSE, message=FALSE}
+conf1 = data.frame(100*(exp(confint(duckfit3))[2:3,]-1))
+names(conf1) <- c("lower", "upper")
+resultStr1 = paste0(sprintf("%.1f%%", abs(conf1$upper)), " and ", sprintf("%.1f%%", abs(conf1$lower)))
+```
+
+## Method and Assumption Checks
+
+A Poisson log-linear model was fitted to the geoduck counts. The explanatory variables were Age and an indicator variable for the storm event. The initial model included interaction. 
+Residuals looked fine but there was evidence that over--dispersion was present (P-value = 0.0457) so the model was refitted as quasipoisson,
+The interaction term was not significant and so was removed. After this, both Age and Storm were significant so the model was not simplified any further.
+
+The Age and Storm effects were significant and the final model was
+\[ \log (\mu_i) = \beta_0 + \beta_1 \times age_i + \beta_2 \times Storm_i\]
+
+where $Count_i$ is the count of geoduck of age $i$ geoduck and has an overdispersed distribution with mean $\mu_i$. $Storm_i$ is an indicator variable that takes the value 0 if age is less than 10 years (before the storm) and 1 if 10 or more.
+
+**Note 1:** this is not a Poisson distribution in this case as we used a QuasiPoisson model.)
+ 
+**Note 2:** could use $E[Count_i]$ for $\mu_i$ as have the same definition.
+
+## Executive Summary
+
+We want to model the population of geoducks from the west coast of the North Island taking into account their age and an extreme storm event 10 years prior to the sample being taken.
+
+Both age and the storm event have a significant effect on expected count of geoduck. However, there was no evidence that the the relationship between age and the expected count of geoducks differed for geoducks born before and after the storm.
+
+For every year increase in age (notwithstanding the storm event), the expected count of geoduck decreases by between `r resultStr1[1]`.
+
+For any age class of geoducks old enough to be affected by the storm, there was a further decrease in their expected count of between `r resultStr1[2]`.
+
+
+## Produce predicted values for the expected number of geoducks at each age group using this model, including intervals. Add these intervals to a plot of the data.
+```{r,fig.height=5,fig.width=8}
+
+# Create predictions for geoducks age less than 10, after the storm
+Pred.data1 = data.frame(Age = seq(1,9),Storm=rep(0,9))
+PredAfter=predictGLM(duckfit3,Pred.data1,type="response")
+PredAfter
+
+# Create predictions for geoducks age 10 or more, before the storm but don't display these.
+Pred.data2 = data.frame(Age = seq(10,50),Storm=rep(1,41))
+PredBefore=predictGLM(duckfit3,Pred.data2,type="response")
+
+# Redo plot from above.
+plot(Count~Age,main="Number of Geoducks by Age",
+     sub="dashed line = year of storm",data=Geoduck.df)
+abline(v=10,lty=2)
+
+
+# Add after lines to plot.Interval bounds as dashed lines.
+lines(seq(1,9),PredAfter[,1],col="Green" )
+lines(seq(1,9),PredAfter[,2],col="Green",lty=2 )
+lines(seq(1,9),PredAfter[,3],col="Green",lty=2 )
+
+
+# Add before lines to plot.Interval bounds as dashed lines.
+lines(seq(10,50),PredBefore[,1],col="Blue" )
+lines(seq(10,50),PredBefore[,2],col="Blue",lty=2 )
+lines(seq(10,50),PredBefore[,3],col="Blue",lty=2 )
+
+```
+
+

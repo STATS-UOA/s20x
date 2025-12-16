@@ -1,0 +1,104 @@
+---
+title: 'Case Study 14.1: Decline in expected earthquake numbers with magnitude '
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS14_1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+```
+
+# Problem
+The Gutenberg-Richter law says that the expected frequency of earthquakes decreases multiplicatively with their magnitude. The formula is $$\log_{10} N = a - b M,$$
+where $N$ is the expected number of earthquakes of magnitude $M$ or more on the Richter scale. Here, $a$ and $b$ are unknown parameters. 
+
+After applying a healthy dash of calculus, this formula can be re-expressed in a form that is more familiar to us $$E[Y|x] = \exp(\beta_0 + \beta_1 x),$$
+where $Y$ is the number of number of earthquakes of magnitude between $x-\delta$ and $x+\delta$.\footnote{In the above formula, $\beta_0$ and $\beta_1$ depend on $a$, $b$ and $\delta$ in a complicated way that we are not going to concern ourselves with.}
+
+The variables of interest were:
+
+* `Magnitude`: The strength of a recorded earthquake.
+* `Locn`: A two-level factor which describe the location of the earthquakes. 
+    + It has two levels Southern California ("SC") and Washington ("WA").
+* `Freq`: The number of earthquakes recorded at `Locn` with magnitude `Magnitude`.
+
+## Question of Interest
+The research question is to quantify the rate of decrease in earthquake frequency (with increasing magnitude) in both California and Washington states, and to assess whether these rates are the same.
+
+## Read in and Inspect the Data
+```{r, echo=FALSE}
+load(system.file("extdata", "Quakes.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
+Quakes.df = read.table("EarthquakeMagnitudes.txt", header = TRUE)
+Quakes.df$Locn=as.factor(Quakes.df$Locn)
+Quakes.df
+plot(Freq ~ Magnitude, data = Quakes.df, pch = substr(Locn, 1, 1))
+```
+
+```{r, out.width = "75%", fig.align = 'center', echo = FALSE}
+Quakes.df$Locn=as.factor(Quakes.df$Locn)
+Quakes.df
+plot(Freq ~ Magnitude, data = Quakes.df, pch = substr(Locn, 1, 1))
+```
+
+
+The plot is consistent with an exponential decreasing relationship between frequency and magnitude. It is unclear whether the multiplicative rate of decay is the same in the two locations.
+
+## Model Building and Check Assumptions
+```{r,  out.width = "69%", fig.align = 'center'}
+Quake.gfit = glm(Freq ~ Locn * Magnitude, family = poisson, data = Quakes.df)
+plot(Quake.gfit, which = 1, pch = substr(Quakes.df$Locn, 1, 1))
+plot(Quake.gfit, which = 4)
+```
+
+Observation 16 has a largish residual, but as this observation has a very small fitted value of $\mu$ this can be ignored.
+
+```{r,  out.width = "69%", fig.align = 'center'}
+summary(Quake.gfit)
+1 - pchisq(8.23, 14)
+exp(confint(Quake.gfit)) # Row 3 gives multiplicative annual change in CA
+100 * (exp(confint(Quake.gfit)[3,])-1) # Percentage annual change in CA
+```
+
+## Additional Output with `WA` as the baseline Level
+```{r}
+Quakes.df$Locn = relevel(Quakes.df$Locn, ref = "WA")
+Quake2.gfit = glm(Freq ~ Locn * Magnitude, family = poisson, data = Quakes.df)
+exp(confint(Quake2.gfit)) # Row 3 gives multiplicative annual change in WA
+100 * (exp(confint(Quake2.gfit)[3,])-1) # Percentage annual change in WA
+```
+```{r, echo= FALSE,message=FALSE}
+conf1 = t(100 * (exp(confint(Quake2.gfit)[3,])-1))
+conf1 = data.frame(conf1)
+names(conf1) <- c("lower", "upper")
+resultStr1 = paste0(sprintf("%.1f%%", abs(conf1$upper)), " to ", sprintf("%.1f%%", abs(conf1$lower)))
+
+conf2 = t(100 * (exp(confint(Quake.gfit)[3,])-1))
+conf2 = data.frame(conf2)
+names(conf2) <- c("lower", "upper")
+resultStr2 = paste0(sprintf("%.1f%%", abs(conf2$upper)), " and ", sprintf("%.1f%%", abs(conf2$lower)))
+```
+# Methods and Assumption Checks
+The response variable, earthquake frequency, is a count, so we fitted a generalised linear model with a Poisson response distribution. We have two explanatory variables: Magnitude (Numeric) and Location (Categorical). The scatterplot of magnitude vs frequency showed an exponentially decreasing trend for both locations. We fitted a Poisson model with interaction between magnitude and location. The interaction was significant (_P-value_ $\approx$ 0.03) so it was retained for the final model.
+
+All model assumptions were satisfied. There was no evidence of overdispersion so we can trust the results from the Poisson model. 
+
+For our final model, we assume the number of earthquakes in observation $i$ is Poisson($\mu_i$), where 
+$$\log(\mu_i) = \beta_0 + \beta_1 \times \text{Locn.WA}_i + \beta_2 \times \text{Magnitude}_i  + \beta_3 \times \text{Locn.WA}_i \times \text{Magnitude}_i~,$$ 
+and where $\text{Locn.WA}_i$ is 1 if observation $i$ was in Washington State and 0 otherwise, and $\text{Magnitude}_i$ is the magnitude of earthquakes that are being counted in observation $i$. 
+
+# Executive Summary
+The research question is to quantify the rate of decrease in earthquake frequency with increasing magnitude in both California and Washington states, and to assess whether these rates are the same.
+
+The rate of decline in the frequency of earthquakes with increasing magnitude is more rapid in Washington than California.
+
+In Washington, there is a `r resultStr1[1]` drop in the expected number of earthquakes for a one unit increase in their magnitude on the Richter scale.
+
+In California, the corresponding decrease is between `r resultStr2[1]`.

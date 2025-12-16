@@ -1,0 +1,79 @@
+---
+title: 'Case Study 15.1: Haddock retention in a trawl'
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS15_1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+```
+# Problem
+The experiment consisted of observing the number of fish at given fork lengths that entered a trawl codend, and the number of those fish that were retained by it.
+
+In dataframe `Haddock.df`, `codend` is the number retained in the codend and `cover` is the number that escaped the codend into the cover region. The total number of fish is therefore `codend + cover`.
+
+The variables of interest were:
+
+* `propn`: The proportion of fish caught in the trawl codend.
+* `forklen`: The fork length of the fish (in cm). (This is the length measured from snout to the end of tail fin rays.)
+
+## Question of Interest
+How does the length of the fish affect the odds of it being caught in the trawl codend?
+
+## Read in and Inspect the Data
+```{r, echo=FALSE}
+load(system.file("extdata", "Haddock.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "80%", fig.align = 'center', eval = FALSE}
+Haddock.df = read.table("Haddock.txt", head = T)
+Haddock.df$n = with(Haddock.df, codend + cover)
+Haddock.df$propn = with(Haddock.df, codend/n)
+plot(propn ~ forklen, data = Haddock.df, xlab = "Fork length (cm)", las = 1)
+```
+
+```{r, out.width = "80%", fig.align = 'center', echo = FALSE}
+Haddock.df$n = with(Haddock.df, codend + cover)
+Haddock.df$propn = with(Haddock.df, codend/n)
+plot(propn ~ forklen, data = Haddock.df, xlab = "Fork length (cm)", las = 1)
+```
+
+We can see that as the length of the fish increases, the proportion of fish caught in the trawl codend increases. Notably, it follows a S-shaped curve.
+
+## Model Building and Check Assumptions
+```{r,  out.width = "80%", fig.align = 'center'}
+Haddock.glm = glm(propn ~ forklen, family = binomial, weight = n, data = Haddock.df)
+plot(Haddock.glm, which = 1)
+summary(Haddock.glm)
+1 - pchisq(23.436, 34)
+exp(confint(Haddock.glm))
+100*(exp(confint(Haddock.glm))-1)
+```
+```{r, echo= FALSE,message=FALSE}
+conf1 = data.frame(100*(exp(confint(Haddock.glm))-1))
+names(conf1) <- c("lower", "upper")
+resultStr1 = paste0(sprintf("%.0f%%", abs(conf1[2,]$lower)), " and ", sprintf("%.0f%%", abs(conf1[2,]$upper)))
+```
+
+
+# Methods and assumption Checks
+The data recorded the number of fish that entered the codend and the number of those fish that were retained, for fish of different fork lengths. We therefore fitted a Binomial GLM with a single predictor of fork length (numeric). The response was treated as grouped data, with each group corresponding to a specific value of fork length.
+
+Taking into account the fact that we expect small positive residuals from length classes with high retention probability, the residual plot from fitting the binomial model showed no strong trends. There was no evidence of overdispersion (_P-value_ = 0.91) so we can trust the results from this binomial model.
+
+Our final model was
+$$ \log(\text{Odds_i}) = \beta_0 + \beta_1 \times \text{length}_i, $$ where $\text{Odds}_i$ is the odds of retention for fish at the $i$th value of fork length.
+
+# Executive Summary
+We aimed to investigate the relationship between fish fork length and the odds that the fish is retained in the trawl codend after entering it.
+
+We estimate that for every 1 cm increase in the fork length of a haddock, the odds that it is retained in the codend increase by between `r resultStr1[1]`.
+
+
+
+

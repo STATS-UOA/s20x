@@ -1,0 +1,151 @@
+---
+title: "STATS 201/8 Extra Case Study - Non-parallel Lines Model"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{CS8_3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.height=3)
+```
+
+```{r setup, echo=FALSE, warning=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile
+library(s20x)
+```
+
+# Question 1
+
+In a two year randomised controlled trial into the effectiveness of various forms of fluoride on dental health, female children were randomly allocated to one of two groups: using a distilled water mouth rinse along with brushing their teeth (the placebo group) or using a mouth rinse where the distilled water had added acid-phosphate fluoride (which is tasteless). The children’s age at the start of the experiment was recorded, along with the change in the number of decayed, missing or filled teeth. 47 children completed the study.
+
+The resulting data is in the file *Dental.csv*, which contains the variables:
+
+Variable  | Description
+----------|--------------------------------------------------------
+DMF       | The change in the number of decayed, missing or filled teeth over the duration of the experiment.(The higher the value, the worse the dental outcome.) We will model this as numeric (it is discrete ranging from 0-5).
+Treatment	| The allocated treatment:  *Water* for water or *Fluoride* for acid-phosphate fluoride. 
+Age       | The age of the children at the start of the experiment.
+
+
+
+We are interested in the effect of fluoride on dental outcomes. For this question we  wish to see what effect, if any, there is when we also take into account the age of the children when they started treatment. In particular, does the effect of fluoride on the dental outcomes differ depending on the children\'s age?  
+
+**Instructions:**
+
+*	Comment on plot.
+* Fit an appropriate model to the data. Check the model assumptions.
+* Write appropriate Methods and Assumption Checks.
+* Plot the data with your appropriate model superimposed over it.
+* Can we conclude that treatment has no effect on DMF? If so, justify this with a relevant P-value. If not, briefly explain why not.
+* Does the effect of the treatment on the average number of adverse dental outcomes depends on the age that the children started taking the fluoride treatment? Justify your answer with a relevant P-value.
+* For children receiving the fluoride treatment, is there any evidence of an age effect? If so, write sentences, as if for an Executive Summary, quantifying the effects of a one year increase in age on DMF. If not, quote the *P-value* you used to come to this conclusion.
+* For children receiving the water treatment, is there any evidence of an age effect? If so, write a sentence, as if for an Executive Summary, quantifying the effects of a one year increase in age on DMF. If not, quote the *P-value* you used to come to this conclusion.
+
+
+## Question of interest/goal of the study
+
+Does the fluoride treatment seem to be decreasing the average number of adverse dental outcomes? How is the age of children related to the number of adverse dental treatments? In particular, does the effect of fluoride on the dental outcomes differ depending on the children\'s age?  
+
+
+## inspect the data:
+
+```{r, echo=FALSE}
+load(system.file("extdata", "Dental.df.rda", package = "s20x"))
+```
+
+```{r,fig.height=5,fig.width=7, eval = FALSE}
+Dental.df=read.csv("Dental.csv",header=T, stringsAsFactors = TRUE)
+plot(DMF~Age, data = Dental.df, pch  = ifelse(Treatment == 'Fluoride', 'F', 'W'),
+     col = ifelse(Treatment == 'Fluoride', 'blue', 'red'), main="DMF versus Age")
+legend("topleft", pch=c("F", "W"), col=c('blue', 'red'), legend=c("Fluoride", "Water"))
+```
+
+```{r,fig.height=5,fig.width=7, echo = FALSE}
+plot(DMF~Age, data = Dental.df, pch  = ifelse(Treatment == 'Fluoride', 'F', 'W'),
+     col = ifelse(Treatment == 'Fluoride', 'blue', 'red'), main="DMF versus Age")
+legend("topleft", pch=c("F", "W"), col=c('blue', 'red'), legend=c("Fluoride", "Water"))
+```
+
+## Comment on plot
+
+Looking at the data for the children treated with water, we see an increasing pattern with DMF and age, the higher the age at the start of the experiment, the larger the number of decayed, missing or filled teeth. Unusually, we seem to see the opposite pattern for the children given fluoride. There is also little difference between the groups when they are young, but looking at the children aged 14+, all the high numbers of DMF were for the water group and the low numbers for the fluoride group, so there is a distinct difference.
+
+
+## Fit an appropriate linear model and Check Assumptions 
+
+```{r,fig.height=4,fig.width=6}
+dental.fit1 = lm(DMF~Age*Treatment,data=Dental.df)
+modelcheck(dental.fit1)
+summary(dental.fit1)
+confint(dental.fit1)
+
+# Rotate factor to get slope for treatment = Water
+Dental.df=within(Dental.df, {TreatmentR=factor(Treatment,levels=c("Water","Fluoride"))})
+dental.fit2 = lm(DMF~Age*TreatmentR,data=Dental.df)
+summary(dental.fit2)
+confint(dental.fit2)
+```
+```{r, echo=FALSE}
+conf1 = as.data.frame(t(confint(dental.fit2)[2,]))
+resultStr1 = paste0(sprintf("%.2f", conf1$`2.5 %`), " to ", sprintf("%.2f", conf1$`97.5 %`))
+
+```
+
+## Plot the data with your appropriate model superimposed over it
+```{r,fig.height=4.5,fig.width=6}
+plot(DMF~Age, data = Dental.df, pch  = ifelse(Treatment == 'Fluoride', 'F', 'W'),
+     col = ifelse(Treatment == 'Fluoride', 'blue', 'red'), main="DMF versus Age")
+legend("topleft", pch=c("F", "W"), col=c('blue', 'red'), legend=c("Fluoride", "Water"))
+
+ests <- coef(dental.fit1)
+abline(ests[1],ests[2],col='blue')
+abline(ests[1]+ests[3], ests[2]+ests[4], col='red')
+```
+
+
+## Method and Assumption Checks
+
+We have two explanatory variables, one factor and one numeric, so have  fitted a linear model to the data and checked for evidence of interaction between age and treatment. As there was evidence of interaction we have not been able to simplify the model.
+
+The residual plot showed reasonably constant variability and no trend. Normality looks good (slightly short tails, but nothing too extreme) and no influential points were detected. Model assumptions are satisfied.
+
+Our model is:
+$DMF_i = \beta_0 + \beta_1 \times Age_i  + \beta_2 \times TreatmentWater_i  + \beta_3 \times Age_i\times TreatmentWater_i + \epsilon_{i}$ 
+where $TreatmentWater_i = 1$ if the $i$th child is in the Water treatment group and 0 if the child is in the Fluoride treatment group, and $\epsilon_i \sim iid ~N(0,\sigma^2)$
+
+Our model explained 47.4% of the variability in the data.
+
+## Can we conclude that treatment has no effect on DMF? If so, justify this with a relevant P-value. If not, briefly explain why not.
+
+No, we cannot conclude this. Though the *P-value* for Treatment is large, the *P-value* for the interaction term is small, so we need treatment in combination with Age. There is a Treatment effect, but the size of the Treatment effect changes depending on Age.
+
+## Does the effect of the treatment on the average number of adverse dental outcomes depends on the age that the children started taking the treatment? Justify your answer with a relevant P-value.
+
+We have evidence that any effect of the fluoride treatment on the average number of adverse dental outcomes depends on the age that the children started taking the treatment. This is because we have evidence of an interaction between the effects of age and treatment with a *P-value* of 0.006.
+
+## For children receiving the fluoride treatment, is there any evidence of an age effect? If so, write sentences, as if for an Executive Summary, quantifying the effects of a one year increase in age on DMF. If not, quote the *P-value* you used to come to this conclusion.
+
+For the children given fluoride, we have no evidence that the average number of decayed, missing or filled teeth changes with age. (*P-value* for Age = 0.10843 when Treatment is Fluoride.)
+
+## For children receiving the water treatment, is there any evidence of an age effect? If so, write a sentence, as if for an Executive Summary, quantifying the effects of a one year increase in age on DMF. If not, quote the *P-value* you used to come to this conclusion.
+
+We have evidence that for the children given water only, the average number of decayed, missing or filled teeth increases with age. (*P-value* for Age = 0.018 when Treatment is Water.)
+
+We estimate that the number of decayed, missing or filled teeth increases by between `r resultStr1[1]` teeth per additional year of age, on average.
+
+
+
+
+
+
+
+
+
+
+
+
+
