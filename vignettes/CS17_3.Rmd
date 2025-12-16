@@ -1,6 +1,9 @@
 ---
 title: 'Additional Time Series Case Study C: Auckland Rental Data'
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS17_3}
   %\VignetteEngine{knitr::rmarkdown}

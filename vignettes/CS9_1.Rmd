@@ -1,6 +1,9 @@
 ---
 title: 'Case Study 9.1: Language score vs teaching method and student IQ '
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS9_1}
   %\VignetteEngine{knitr::rmarkdown}

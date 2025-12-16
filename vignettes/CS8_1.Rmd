@@ -1,6 +1,9 @@
 ---
 title: 'Case Study 8.1: Exam vs attendance and test mark'
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS8_1}
   %\VignetteEngine{knitr::rmarkdown}

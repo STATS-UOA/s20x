@@ -1,6 +1,9 @@
 ---
 title: "STATS 201/8 Extra Case Study - Parallel Lines Model"
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS9_6}
   %\VignetteEngine{knitr::rmarkdown}

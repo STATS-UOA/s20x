@@ -1,6 +1,9 @@
 ---
 title: 'Additional Time Series Case Study B: Google Influenza Searches Data'
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS17_2}
   %\VignetteEngine{knitr::rmarkdown}

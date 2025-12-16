@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
+^vignettes/.*\.pdf$
+^vignettes/.*_cache$
+^vignettes/.*_files$

@@ -1,6 +1,9 @@
 ---
 title: "Case Study 6.3: Students' expenditure on clothing"
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS6_3}
   %\VignetteEngine{knitr::rmarkdown}

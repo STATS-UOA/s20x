@@ -1,6 +1,9 @@
 ---
 title: "STATS 201/8 Extra Case Study - Log-Log Model"
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS7_2}
   %\VignetteEngine{knitr::rmarkdown}

@@ -1,6 +1,9 @@
 ---
 title: "STATS 201/8 Extra Case Study - Twoway ANOVA Model, Interaction"
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS12_4}
   %\VignetteEngine{knitr::rmarkdown}

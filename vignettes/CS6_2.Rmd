@@ -1,6 +1,9 @@
 ---
 title: "Case Study 6.2: Students' expenditure on haircuts by gender"
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS6_2}
   %\VignetteEngine{knitr::rmarkdown}

@@ -1,6 +1,9 @@
 ---
 title: 'Case Study 4.1: Exam vs Assignment mark'
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS4_1}
   %\VignetteEngine{knitr::rmarkdown}

@@ -1,6 +1,9 @@
 ---
 title: 'Case Study 2.1: Exam vs Test'
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS2_1}
   %\VignetteEngine{knitr::rmarkdown}

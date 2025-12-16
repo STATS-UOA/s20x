@@ -1,6 +1,9 @@
 ---
 title: 'Case study: CO2 Emissions Data from Mauna Loa'
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS9_5}
   %\VignetteEngine{knitr::rmarkdown}

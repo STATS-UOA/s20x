@@ -1,6 +1,9 @@
 ---
 title: "STATS 201/8 Extra Case Study - One Sample"
-output: html_document
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
 vignette: >
   %\VignetteIndexEntry{CS3_2}
   %\VignetteEngine{knitr::rmarkdown}
