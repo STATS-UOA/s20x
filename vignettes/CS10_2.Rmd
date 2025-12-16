@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 10.2: Gender differences in salary'
+title: "Case Study 10.2: Gender differences in salary"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS10_2}
+  %\VignetteIndexEntry{Case Study 10.2: Gender differences in salary}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

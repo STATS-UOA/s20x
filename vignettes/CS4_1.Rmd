@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 4.1: Exam vs Assignment mark'
+title: "Case Study 4.1: Exam vs Assignment mark"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS4_1}
+  %\VignetteIndexEntry{Case Study 4.1: Exam vs Assignment mark}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

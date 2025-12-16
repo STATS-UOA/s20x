@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 15.1: Haddock retention in a trawl'
+title: "Case Study 15.1: Haddock retention in a trawl"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS15_1}
+  %\VignetteIndexEntry{Case Study 15.1: Haddock retention in a trawl}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

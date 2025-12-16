@@ -1,12 +1,12 @@
 ---
-title: "STATS 201/8 Extra Case Study - Quadratic Model"
+title: "Case Study 4.2: STATS 201/8 Extra Case Study - Quadratic Model"
 
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS4_2}
+  %\VignetteIndexEntry{Case Study 4.2: STATS 201/8 Extra Case Study - Quadratic Model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

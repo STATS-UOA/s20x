@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 9.4: Forced Expiratory Volume'
+title: "Case Study 9.4: Forced Expiratory Volume"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS9_4}
+  %\VignetteIndexEntry{Case Study 9.4: Forced Expiratory Volume}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 6.1: Mazda price vs age'
+title: "Case Study 6.1: Mazda price vs age"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS6_1}
+  %\VignetteIndexEntry{Case Study 6.1: Mazda price vs age}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

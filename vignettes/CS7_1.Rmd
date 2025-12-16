@@ -1,11 +1,11 @@
 ---
-title: 'Case Study for Chapter 7: Power law model for cherry tree volumes'
+title: "Case Study 7.1: Case Study for Chapter 7: Power law model for cherry tree volumes"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS7_1}
+  %\VignetteIndexEntry{Case Study 7.1: Case Study for Chapter 7: Power law model for cherry tree volumes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 10.1: Birthweight of babies'
+title: "Case Study 10.1: Birthweight of babies"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS10_1}
+  %\VignetteIndexEntry{Case Study 10.1: Birthweight of babies}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

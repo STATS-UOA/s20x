@@ -1,11 +1,11 @@
 ---
-title: 'Additional Time Series Case Study C: Auckland Rental Data'
+title: "Case Study 17.3: Additional Time Series Case Study C: Auckland Rental Data"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS17_3}
+  %\VignetteIndexEntry{Case Study 17.3: Additional Time Series Case Study C: Auckland Rental Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

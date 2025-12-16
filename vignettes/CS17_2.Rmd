@@ -1,11 +1,11 @@
 ---
-title: 'Additional Time Series Case Study B: Google Influenza Searches Data'
+title: "Case Study 17.2: Additional Time Series Case Study B: Google Influenza Searches Data"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS17_2}
+  %\VignetteIndexEntry{Case Study 17.2: Additional Time Series Case Study B: Google Influenza Searches Data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 12.2: Impact of a cyclone on coral reefs'
+title: "Case Study 12.2: Impact of a cyclone on coral reefs"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS12_2}
+  %\VignetteIndexEntry{Case Study 12.2: Impact of a cyclone on coral reefs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

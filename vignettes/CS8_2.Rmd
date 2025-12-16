@@ -5,7 +5,7 @@ output:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS8_2}
+  %\VignetteIndexEntry{Case Study 8.2: Refractive Index Calibration}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

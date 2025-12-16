@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 2.3: Diamond Rings'
+title: "Case Study 2.3: Diamond Rings"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS2_3}
+  %\VignetteIndexEntry{Case Study 2.3: Diamond Rings}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 2.2: Fire Damage'
+title: "Case Study 2.2: Fire Damage"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS2_2}
+  %\VignetteIndexEntry{Case Study 2.2: Fire Damage}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

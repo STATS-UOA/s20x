@@ -1,5 +1,5 @@
 ---
-title: "STATS 201/8 Extra Case Study - Multiple Regression Model"
+title: "Case Study 10.3: STATS 201/8 Extra Case Study - Multiple Regression Model"
 ---
 title: 'Case Study 15.1: Haddock retention in a trawl'
 output: html_document

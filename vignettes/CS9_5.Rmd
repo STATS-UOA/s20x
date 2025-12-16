@@ -1,11 +1,11 @@
 ---
-title: 'Case study: CO2 Emissions Data from Mauna Loa'
+title: "Case Study 9.5: Case study: CO2 Emissions Data from Mauna Loa"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS9_5}
+  %\VignetteIndexEntry{Case Study 9.5: Case study: CO2 Emissions Data from Mauna Loa}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

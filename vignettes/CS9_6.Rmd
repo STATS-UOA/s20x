@@ -1,11 +1,11 @@
 ---
-title: "STATS 201/8 Extra Case Study - Parallel Lines Model"
+title: "Case Study 9.6: STATS 201/8 Extra Case Study - Parallel Lines Model"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS9_6}
+  %\VignetteIndexEntry{Case Study 9.6: STATS 201/8 Extra Case Study - Parallel Lines Model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

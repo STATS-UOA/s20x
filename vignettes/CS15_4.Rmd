@@ -1,11 +1,11 @@
 ---
-title: "STATS 201/8 Extra Case Study - Binomial GLM - Binary Data."
+title: "Case Study 15.4: STATS 201/8 Extra Case Study - Binomial GLM - Binary Data."
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS15_4}
+  %\VignetteIndexEntry{Case Study 15.4: STATS 201/8 Extra Case Study - Binomial GLM - Binary Data.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

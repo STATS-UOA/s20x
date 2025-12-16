@@ -1,11 +1,11 @@
 ---
-title: 'Case Study 14.1: Decline in expected earthquake numbers with magnitude '
+title: "Case Study 14.1: Decline in expected earthquake numbers with magnitude"
 output:
   rmarkdown::html_document:
     self_contained: false
     lib_dir: vignette_libs
 vignette: >
-  %\VignetteIndexEntry{CS14_1}
+  %\VignetteIndexEntry{Case Study 14.1: Decline in expected earthquake numbers with magnitude}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
