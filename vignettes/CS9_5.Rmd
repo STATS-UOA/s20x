@@ -11,11 +11,6 @@ vignette: >
 # Background
 
 
-The following discussion and data can be found in:
-
-http://www.seattlecentral.edu/qelp/sets/078/078.html
-
-
 The carbon dioxide (CO2) content of the atmosphere at the Mauna Loa Observatory on the Big Island of Hawai'i has been measured continuously since 1959 until 2010. Mauna Loa is an excellent site for determining atmospheric CO2 content because of the geographic isolation of the Hawai'ian Islands and because of the high elevation (3400 meters or 11,000 feet above sea level) of the sampling equipment.  The site yields high quality, monthly data for the CO2 concentration in the atmosphere of the Northern Hemisphere (see reference below).
 
 

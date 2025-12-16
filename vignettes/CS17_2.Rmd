@@ -20,7 +20,7 @@ We have found a close relationship between how many people search for flu-relate
  
 The following  data was obtained courtesy of: Google Flu Trends 
 
-(http://www.stat.berkeley.edu/users/statlabs/labs.html).
+(https://www.stat.berkeley.edu/users/statlabs/labs.html).
 
 
 The variables measured were:

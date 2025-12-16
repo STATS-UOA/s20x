@@ -14,7 +14,8 @@ require(s20x)
 ```
 
 # Problem:
-In this study, we look at how the male fruit-flies longevity is related to reproductive activity. (Data is from http://www.cvgs.k12.va.us:81/digstats/Imain.html)
+In this study, we look at how the male fruit-flies longevity is related to reproductive activity. (Data is described in more 
+detail [here](https://www.tandfonline.com/doi/full/10.1080/10691898.1994.11910467#d1e114))
  
 How does one define "interest" in fruit-flies? Here is this study's definition: 
 
