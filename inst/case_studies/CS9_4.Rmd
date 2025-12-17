@@ -1,0 +1,177 @@
+---
+title: "Case Study 9.4: Forced Expiratory Volume"
+output:
+  rmarkdown::html_document:
+    self_contained: true
+---
+```{r RC-CS9_4-000,  setup, include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+knitr::opts_chunk$set(echo = TRUE, tidy = TRUE)
+```
+
+# Problem
+The data in this case study comes from a study which was interested in the relationship between smoking and Forced Expiratory Volume (FEV). FEV measures how much air a person can exhale during a forced breath. You can think of it as a measure of lung function---the higher the FEV value, the better your lungs work. The data in this study is a random sample of 654 youths, aged 3 to 19, in the area of East Boston during middle to late 1970's. The question of interest concerns the relationship between smoking and FEV. 
+
+The variables of interest are:
+
+* `age`: age in years
+* `fev`: FEV measurement
+* `ht`: height in inches
+* `sex`: 0 or 1 (we don't know which is male or female but we might be able to guess)
+* `smoke`: 1 for smoker and 0 for non-smoker
+
+## Question of Interest
+To quantify the relationship between smoking and FEV.
+
+## Read in and Inspect the Data
+```{r, echo=FALSE}
+load(system.file("extdata", "fev.df.rda", package = "s20x"))
+```
+
+```{r RC-CS9_4-001, out.width = "75%", fig.align = 'center', eval=FALSE}
+fev.df = read.csv("fev.csv")
+head(fev.df)
+```
+
+```{r RC-CS9_4-0011, out.width = "75%", fig.align = 'center', echo=FALSE}
+head(fev.df)
+```
+
+```{r RC-CS9_4-0012, out.width = "75%", fig.align = 'center'}
+# Any missing values?
+sum(is.na(fev.df))
+plot(fev~ht, pch = as.character(smoke), data = fev.df)
+```
+
+It's a little hard to see what is happening here. We can see that FEV gets more variable as the height increases. We should probably take logs. How about if we change visualising smokers from text to colours?
+
+```{r RC-CS9_4-002, out.width = "75%", fig.align = 'center'}
+plot(log(fev)~ht, col = ifelse(smoke == 1, "red", "black"), 
+             pch = ifelse(smoke == 1, 19, 3), data = fev.df,
+     xlab = "Height (inches)")
+legend("topleft", col = c("red", "black"), pch = c(19, 3), 
+       legend = c("Smoker", "Non-smoker"), bty = "n")
+```
+
+Taking logs has definitely helped, and it looks like there is a positive relationship between FEV and height. However, what also looks a little odd is that most of the smokers seem to be taller. What is going on?
+
+```{r RC-CS9_4-003, out.width = "75%", fig.align = 'center'}
+plot(ht ~ age, col = ifelse(smoke == 1, "red", "black"), 
+               pch = ifelse(smoke == 1, 19, 3), data = fev.df,
+     ylab = "Height (inches)")
+```
+
+Hmmm--sneaky sneaky. Looks like we've got quite a few very young people in this study. Let's remove everyone below 9 years old (under the youngest smoking case) and take another look at the data.
+
+```{r RC-CS9_4-004, out.width = "75%", fig.align = 'center'}
+teens.df = subset(fev.df, age >= 9)
+teens.df$ht = 25.4 * teens.df$ht # Who wants height in inches. We want millimetres (mm)
+plot(log(fev)~ht, col = ifelse(smoke == 1, "red", "black"), 
+             pch = ifelse(smoke == 1, 19, 3), data = teens.df,
+     xlab = "Height (inches)")
+legend("topleft", col = c("red", "black"), pch = c(19, 3), 
+       legend = c("Smoker", "Non-smoker"), bty = "n")
+
+```
+
+So is there any difference between the smokers and the non-smokers? It's a little hard to tell, but we should fit an interaction model to find out. We're also going to include the effect of sex, so there is an extra intraction to be included. We said we might be able to guess which are the males and which are the females. How? Possibly shorter? 
+
+```{r RC-CS9_4-005, out.width = "70%", fig.align = 'center'}
+plot(ht~factor(sex), data = teens.df)
+```
+
+Well it is marginal. We could assume that the females are smaller than the males, but remember girls often grow faster at this age than boys, so that might be a silly assumption. Does it matter? Not really at this point. Let's just leave it undetermined at this point in time. Because each of our factors only has two levels, we don't need to really worry about coding them as factors, however we will do it anyway.
+
+```{r RC-CS9_4-006}
+teens.df$sex = factor(teens.df$sex)
+teens.df$smoke = factor(ifelse(as.numeric(teens.df$smoke) == 1, "Yes", "No"), levels = c("Yes", "No"))
+```
+
+Let's have a quick look at the gender balance of smokers and non-smokers. `table` gives us a table of counts, `prop.table` turns it into row proportions (if we set `margin` to `1`).
+```{r RC-CS9_4-007}
+prop.table(table(teens.df$sex, teens.df$smoke), margin = 1)
+```
+
+Looks okay.
+
+## Model Building and Check Assumptions
+```{r RC-CS9_4-008, out.width = "70%", fig.align = 'center'}
+teens.fit = lm(log(fev) ~ ht * sex * smoke, data = teens.df)
+plot(teens.fit, which = 1)
+normcheck(teens.fit)
+cooks20x(teens.fit)
+anova(teens.fit)
+summary(teens.fit)
+confint(teens.fit)
+100 * (exp(confint(teens.fit)) - 1)
+```
+
+## Visualising the Final Model
+Looking at the ANOVA table we can see that there is evidence of an interaction between height, sex, and smoking. Let's proceed with this model first (we might simplify it later). You might think this is really complicated, but it isn't. Each factor in our model has two levels, therefore there are four ($2 \times 2$) combinations of the levels. These are:
+
+1. sex = 0, smoke = "Yes"
+2. sex = 0, smoke = "No"
+3. sex = 1, smoke = "Yes"
+4. sex = 1, smoke = "No"
+
+So we can think of this as a model with four lines, each with different intercepts and slopes. To draw straight lines we only need two points---the start and the finish. The range of the heights is
+
+```{r RC-CS9_4_009}
+range(teens.df$ht)
+```
+
+so let's build a data.frame that predicts at 1300 mm and 1900 mm, for each combination of the factors
+
+```{r RC-CS9_4-010, out.width = "100%", fig.align = 'center'}
+pred.df = data.frame(ht = rep(c(1300, 1900), 4), 
+                     sex = factor(rep(c(0,1), c(4, 4))),
+                     smoke = rep(c("Yes", "No"), c(2, 2)))
+pred.df
+
+teens.pred = predict(teens.fit, newdata = pred.df)
+pred.df = cbind(pred.df, teens.pred)
+plot(log(fev)~ht, col = ifelse(smoke == "Yes", "red", "black"), 
+             pch = ifelse(smoke == "Yes", 19, 3), data = teens.df,
+     xlab = "Height (inches)")
+legend("topleft", col = c("red", "black"), pch = c(19, 3), 
+       legend = c("Smoker", "Non-smoker"), bty = "n")
+lines(teens.pred ~ ht, data = pred.df[1:2, ], col = "red")
+lines(teens.pred ~ ht, data = pred.df[3:4, ], col = "blue")
+lines(teens.pred ~ ht, data = pred.df[5:6, ], col = "green")
+lines(teens.pred ~ ht, data = pred.df[7:8, ], col = "pink")
+legend("bottomright", col = c("red", "blue", "green", "pink"), lty = 1, lwd = 2, 
+       legend = c("Sex 0, Smoker", "Sex 0, Non-smoker",
+                  "Sex 1, Smoker", "Sex 1, Non-smoker"), bty = "n")
+```
+
+Looking at this plot, do we think we could get away with different lines? Probably not. To interpret this model we need to back-transform. However, this case study is probably complicated enough already :) What we can see is that the most striking difference is between the two genders in the smoking group. For simplicity, let's assume that `Sex 0` is female, and `Sex 1` is male. If we have this coding, then we can see that the rate of increase in FEV (with height) is much more severely affected for female smokers, in that tall female smokers seem to have a lower rate of increase in FEV than the other groups. Let's just take a quick look at the group `Sex 0, Smoker`.
+
+```{r RC-CS9_4-011, out.width = "75%", fig.align = 'center'}
+femaleSmokers.df = subset(teens.df, sex == 0 & smoke == "Yes")
+nrow(femaleSmokers.df)
+plot(log(fev) ~ ht, data = femaleSmokers.df)
+lines(teens.pred ~ ht, data = pred.df[1:2, ], col = "red")
+```
+
+What we're seeing here is that the smoking is making this line close to flat, regardless of height. It is probably this group alone that is driving the interaction between smoking, gender and height. We might also ask whether we really think males who smoke have a higher rate of increase in FEV?
+
+```{r RC-CS9_4-019, out.width = "75%", fig.align = 'center', eval=requireNamespace("ggplot2", quietly = TRUE)}
+teens.df$smoke = relevel(teens.df$smoke, ref = "No")
+teens.df$sex  = factor(ifelse(teens.df$sex == 0, "Female", "Male"))
+library(ggplot2)
+ggplot(data = teens.df, aes(x = ht, y = log(fev))) + geom_point(shape = 1) + facet_grid(sex~smoke) + stat_smooth(method = "lm")
+```
+
+I'm guessing probably not, and if you wanted to spend the time, you might find that the slope is the same as the other groups. It looks like there are two males who might be influencing our view of things.
+
+# "The Hanging Chads"
+Who are these guys? Well they're shorter than the rest, they're male and they smoke. Let's remove them and see what happens to the plot
+
+```{r RC-CS9_4-020, out.width = "75%", fig.align = 'center'}
+outM = with(teens.df, which(sex == "Male" & smoke == "Yes" & log(fev) < 0.75))
+outM
+ggplot(data = teens.df[-outM, ], aes(x = ht, y = log(fev))) + geom_point(shape = 1) + facet_grid(sex~smoke) + stat_smooth(method = "lm")
+```

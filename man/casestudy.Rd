@@ -2,13 +2,57 @@
 % Please edit documentation in R/casestudy.R
 \name{casestudy}
 \alias{casestudy}
-\title{Open a case study vignette}
+\alias{cs}
+\title{Render a case study to HTML}
 \usage{
-casestudy(name)
+casestudy(
+  id,
+  output_dir = tempfile("s20x_case_study_"),
+  open = interactive(),
+  quiet = TRUE,
+  ...
+)
+
+cs(...)
 }
 \arguments{
-\item{name}{The case study identifier, e.g. "CSH21"}
+\item{id}{A case study identifier. Flexible formats are accepted, including
+\code{"CS9_2"}, \code{"CS9.2"}, \code{"9_2"}, or \code{"9.2"}.}
+
+\item{output_dir}{Directory where the rendered HTML file should be written.
+Defaults to a temporary directory.}
+
+\item{open}{Logical; if \code{TRUE} (default), open the rendered HTML file in
+the default web browser.}
+
+\item{quiet}{Logical; passed to \code{rmarkdown::render()} to suppress output.}
+
+\item{...}{Additional arguments passed to \code{rmarkdown::render()}.}
+}
+\value{
+Invisibly returns the path to the rendered HTML file.
 }
 \description{
-Open a case study vignette
+Renders a specified case study R Markdown file shipped with the package to
+HTML and optionally opens it in a web browser.
+}
+\details{
+Case studies are expected to live in \code{inst/case_studies} and to be named
+using the pattern \code{CS<chapter>_<number>.Rmd} (for example,
+\code{CS9_2.Rmd}).
+
+
+The case study is rendered on demand using \code{rmarkdown::render()}.
+Figures and other outputs are generated at render time; users therefore need
+any required packages installed for the selected case study.
+
+The rendered HTML file is returned invisibly.
+}
+\examples{
+\dontrun{
+casestudy("CS9_2")
+casestudy("9.2")
+cs("9_2")
+}
+
 }

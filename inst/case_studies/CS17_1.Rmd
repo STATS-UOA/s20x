@@ -1,0 +1,138 @@
+---
+title: "Case Study 17.1: Additional Time Series Case Study A: Public Drunkenness Data"
+output:
+  rmarkdown::html_document:
+    self_contained: true
+---
+
+The data in this question comes from public records about the number of people arrested for public drunkenness in Minneapolis, Minnesota in the United States. The data was recorded monthly from January 1966 to June 1979. In 1973 Minnesota lowered the legal drinking age to 18, in line with the 26th amendment to the US Constitution (in 1971) which lowered the minimum voting age to 18. 
+
+
+The variables are:
+
+| Variable | Description |
+|---------|-------------|
+| `year` | the year the measurement was made, starting at 1966 and ending in 1978 |
+| `month` | the month (1, …, 12) the measurement was made (1 = January, …) |
+| `arrests` | the number of arrests made in a given month in a particular year |
+
+
+```{r, echo = FALSE}
+load(system.file("extdata", "minne.df.rda", package = "s20x"))
+```
+
+```{r, eval=FALSE,warning=FALSE}
+## when you load data make sure it is in the Data directory
+minne.df = read.csv("Data/minneapolis.csv")
+```
+
+```{r, fig.height = 5, fig.width = 6, fig.align='center'}
+minne.ts = ts(minne.df$arrests, start = c(1966,1), frequency = 12)
+plot(minne.ts, ylab = "Number of people arrested")
+abline(v=c(1966:1979), lty = 2)
+```
+
+```{r, fig.height = 4, fig.width = 6, fig.align='center'}
+minne.stl = stl(minne.ts, s.window = "periodic")
+plot(minne.stl)
+abline(v=c(1966:1979), lty = 2)
+```
+
+
+```{r}
+minne.df = within(minne.df, {
+  month = factor(c(rep(month.abb, 12), month.abb[1:7]), 
+                 levels = month.abb);
+  t     = 1:151
+  change=1*(t>5*12)
+                              })
+```
+
+```{r}
+minne.fit = lm(arrests~  change + month + t, data = minne.df)
+anova(minne.fit)
+```
+
+
+```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
+plot(residuals(minne.fit),type="l")
+```
+
+```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
+library(s20x)
+normcheck(minne.fit, xlab = "Residuals")
+```
+
+```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
+acf(residuals(minne.fit))
+```
+
+```{r}
+minne.fit1 = lm(arrests[-1]~ change[-1]+month[-1] + arrests[-151]
+              +  t[-1], data = minne.df)
+
+anova(minne.fit1)
+```
+
+```{r,fig.height = 3.5, fig.width = 6, fig.align='center'}
+
+minne.fit2 = lm(arrests[-1]~ change[-1]+month[-1] + arrests[-151], 
+               data = minne.df)
+anova(minne.fit2)
+acf(residuals(minne.fit2))
+```
+
+```{r}
+summary(minne.fit2)
+```
+
+
+```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
+plot(residuals(minne.fit2),type="l")
+```
+
+```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
+normcheck(minne.fit2, main = "Lagged response model", xlab = "Residuals")
+```
+
+
+### Question 
+What is the most important feature of the time series plot at the start of this analysis?
+
+### Solution 
+The large drop in the trend in 1971-2. This was around when the law was being proposed to lower the drinking age to 18, so shows the effects of the legislation. 
+
+### Question
+Looking at the Seasonal Trend Lowess (STL) plot, do you think there is evidence of seasonality in this time series. 
+
+### Solution
+There is evidence of a seasonal trend, with the number of arrests being higher in summer and lower in winter. However, the seasonal effects are more pronounced in the first part of the time series and are not at all apparent after 1974.  (This could be due to the number of underage people being arrested for drinking during summer and spring breaks that were no longer underage after the drinking age was lowered.) 
+
+
+### Question 
+What is the variable `change`? What is it being used to test?  
+
+### Solution
+`change` is is a binary variable that is 0 for the first 5 years (60 months) and 1 for the rest of the time series. It is being used to measure the change between the number of arrests before and after the law was passed.
+
+### Question 
+Discuss the reasoning behind changing between models `minne.fit`,
+`minne.fit1` and `minne.fit2`. 
+
+
+### Solution 
+The ACF plot of the residuals for `minne.fit` had many bars outside the dotted lines, revealing the presence of autocorrelation, so an autocorrelation term was added to create `minne.fit1`. In `minne.fit1` the variable `t` was found to be non-significant, so it was dropped to give `minne.fit2`.
+
+### Question
+Did time end up being related to the number of arrests? If not, justify your
+answer. If so, in what ways was it related?
+
+
+### Solution 
+Time was related to the number of arrests, even though the variable t was dropped from the model. Time was included in the model as: 
+
+- **change**: this measured the effect of the change in time from the first 5 years.
+- **month**: this measured the seasonal effect of time.
+- **lagged arrests**: this was an autocorrelation term that used the previous result  
+  to predict the next value, thus taking time into account.
+

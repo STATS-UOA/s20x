@@ -1,0 +1,126 @@
+---
+title: "Case Study 12.3: Extracting dietary supplements from seaweed"
+output:
+  rmarkdown::html_document:
+    self_contained: true
+---
+```{r include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+
+knitr::opts_chunk$set(
+  dev = "png",
+  fig.ext = "png",
+  dpi = 96
+)
+
+require(emmeans)
+```
+
+# Problem
+_Fucoidan_ is a dietary supplement found in several species of brown seaweed, including the invasive species _Undaria_ which is now widespread in New Zealand.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics{undaria.jpg}
+\end{figure}
+
+One silver lining to the invasion of _Undaria_ is that it has potential to be a valuable source of _fucoidan_. These data come from a study investigating the yield of _fucoidan_ from _Undaria_ under different laboratory conditions.
+
+The response is `HikDa` (a measurement based on molecular weight), and the explanatory variables are the two factor variables `fTemp` (temperature level) and `fTime` (time level), each of which has three levels.
+
+
+The variables of interest were:
+
+* `HiKda`: A measurement based on molecular weight.
+* `fTemp`: A three-level factor with the levels "60", "70", and "80".
+* `fTime`: A three-level factor with the levels "2", "3", and "4".
+
+## Question of Interest
+We wish to determine how the yield of fucoidan from _Undaria_ depends on the temperature and time level, and whether these factors influence each other.
+
+## Read in and Inspect the Data
+```{r, echo = FALSE}
+load(system.file("extdata", "Weed.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
+# The call for tab delimited data
+Weed.df = read.table("Weed.txt", header = TRUE, sep = "\t") 
+```
+
+```{r, out.width = "75%", fig.align = 'center'}
+# Several R commands to subset the data for answering the question of interest:
+WeedDf = transform(Weed.df, logAlg = log(Alg), Ratio = as.character(Ratio))
+WeedDf = transform(WeedDf, Ratio = as.numeric(substr(Ratio, 3, nchar(Ratio))))
+WeedDf = transform(WeedDf, fTime = factor(Time), fTemp = factor(Temp), 
+                           fRatio = factor(Ratio))
+KdaDf = subset(WeedDf, subset = (!is.na(HiKda)))
+interactionPlots(HiKda ~ fTemp + fTime, data = KdaDf)
+# Also look at the interaction plot the other way around:
+interactionPlots(HiKda ~ fTime + fTemp, data = KdaDf)
+```
+
+An interaction is suggested because of the non-parallel lines. When the temperature is 80 degrees, the yield is similar for all time levels. When temperature is 60 and 70 degrees, the yield decreases as time increases.
+
+## Model Building and Check Assumptions
+```{r, out.width = "75%", fig.align = 'center'}
+Kda.lm = lm(HiKda ~ fTime * fTemp, data = KdaDf)
+plot(Kda.lm, which=1)
+normcheck(Kda.lm)
+cooks20x(Kda.lm)
+anova(Kda.lm)
+summary(Kda.lm)
+```
+
+## Pairwise comparisons
+```{r}
+Kda.pairs = pairs(emmeans(Kda.lm, ~ fTime*fTemp), infer=T)
+# Simplify the display of pairwise comparisons.
+# Because factor levels are numbers, need to enter as "fTime2", "fTime3", etc:
+displayPairs(Kda.pairs, c("fTime2", "fTime3", "fTime4"), c("fTemp60", "fTemp70", "fTemp80"))
+```
+
+```{r, echo = FALSE}
+conf1=data.frame(Kda.pairs)
+conf1= subset(conf1, p.value<0.05)
+resultStr1 = paste0(sprintf("%.0f", abs(conf1[3,]$lower.CL)), " and ", sprintf("%.0f", abs(conf1[3,]$upper.CL)))
+
+```
+
+
+# Methods and Assumption Checks
+We have a numeric response `HiKda`, and two explanatory factors, `fTime` and `fTemp`, so we fitted a two-way ANOVA model with interaction. The interaction term was significant (_P-value_ =0.04) so it was retained for the final model. 
+
+The model assumptions were satisfied.
+
+The final model is
+$$\text{HiKda}_{ijk} = \mu + \alpha_i + \beta_j + \gamma_{ij} + \epsilon_{ijk},$$
+where $\mu$ is the overall mean yield, $\alpha_i$ is the effect of the $i$th time-point, $\beta_j$ is the effect of the $j$th temperature, $\gamma_{ij}$ is the interaction effect for the combination of the $i$th time-point and the $j$th temperature, and $\epsilon_{ijk} \sim iid~N(0,\sigma^2)$. 
+
+Our model explained 40% of the variability in the yield (`HiKda`).
+
+# Executive Summary
+We wish to determine how the yield of fucoidan from _Undaria_ depends on the temperature and time level, and whether these factors influence each other.
+
+We found that the effect that temperature had on the yield depended on the time level, so we could not look at the effects of temperature and time individually.
+
+At the temperature of 60 degrees, the expected yield was estimated to be between `r resultStr1[1]` units higher at time-point 2 than time-point 4. The same statement also applies to the temperature of 70 degrees.\footnote{Note that only simple contrasts are reported.}
+
+There was some (though weaker) evidence that yield at time-point 2 was higher at a temperature of 60 degrees than at a temperature of 80 degrees.
+
+# Additional Comments
+
+Looking at the interaction plot, there appears to be little if any difference between the distribution of `HiKda` values at the two lower temperatures. It might be worth combining these two groups into a single group, because this would reduce `fTemp` to a two-level factor which increases the degrees of freedom and reduces the magnitude of the multi-comparison adjustment, thereby resulting in more statistical power. This is something that would need to be discussed with the researchers.
+
+# Example code if there is no interaction
+
+Had there been no interaction then the multi-comparison adjustment would have proceeded thus:
+
+```{r}
+Kda.Wrong.lm = lm(HiKda ~ fTime + fTemp, data = KdaDf)
+pairs(emmeans(Kda.Wrong.lm, ~fTime), infer=T)
+pairs(emmeans(Kda.Wrong.lm, ~fTemp), infer=T)
+```

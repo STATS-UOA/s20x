@@ -1,0 +1,95 @@
+---
+title: "Case Study 8.1: Exam vs attendance and test mark"
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
+vignette: >
+  %\VignetteIndexEntry{Case Study 8.1: Exam vs attendance and test mark}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+
+knitr::opts_chunk$set(
+  dev = "png",
+  fig.ext = "png",
+  dpi = 96
+)
+
+```
+# Problem
+We've previously used test marks and attendance seperately in order to explain variability in exam marks. The objective here is to use them together. 
+
+## Question of Interest
+To quantify students' exam marks relationship with attendance and test marks. Also, does any relationship between exam marks and test marks depend on whether students attended lectures.
+
+## Read in and Inspect the Data
+```{r, echo=FALSE}
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "90%", fig.align = 'center', eval = FALSE}
+Stats20x.df = read.table("STATS20x.txt", header = T)
+plot(Exam ~ Test, data = Stats20x.df, pch = substr(Attend, 1, 1), cex = 0.7,
+    col = ifelse(Attend == "Yes", "blue", "red"))
+```
+
+```{r, out.width = "90%", fig.align = 'center', echo = FALSE}
+plot(Exam ~ Test, data = Stats20x.df, pch = substr(Attend, 1, 1), cex = 0.7,
+    col = ifelse(Attend == "Yes", "blue", "red"))
+```
+
+A scatter plot of test score versus exam suggested that the positive relationship between test and exam was reasonably linear within each attendance group ("Yes" or "No"), but that the slope could be different in the two groups.
+
+## Model Building and Check Assumptions
+```{r, out.width = "82.5%", fig.align = 'center'}
+examTestAttend.fit = lm(Exam ~ Test * Attend, data = Stats20x.df)
+plot(examTestAttend.fit, which = 1)
+normcheck(examTestAttend.fit)
+cooks20x(examTestAttend.fit)
+summary(examTestAttend.fit)
+confint(examTestAttend.fit)
+```
+
+```{r, echo=FALSE}
+conf1 = as.data.frame(t(confint(examTestAttend.fit)[2,]))
+resultStr1 = paste0(sprintf("%.1f", conf1$`2.5 %`), " to ", sprintf("%.1f", conf1$`97.5 %`))
+
+conf2 = as.data.frame(t(confint(examTestAttend.fit)[4,]))
+resultStr2 = paste0(sprintf("%.2f", conf2$`2.5 %`), " to ", sprintf("%.2f", conf2$`97.5 %`))
+```
+
+## Visualise the Final Model
+```{r, out.width = "90%", fig.align = 'center'}
+predAttend.df = data.frame(Test = 1:21, Attend = "Yes")
+predSlackers.df = data.frame(Test = 1:21, Attend = "No")
+plot(Exam ~ Test, data = Stats20x.df,pch = substr(Attend, 1, 1), cex = 0.7,
+    col = ifelse(Attend == "Yes", "blue", "red"))
+lines(1:21, predict(examTestAttend.fit, predAttend.df), col = "blue", lty = 2)
+lines(1:21, predict(examTestAttend.fit, predSlackers.df), col = "red", lty = 2)
+```
+
+# Method and Assumption Checks 
+As we have two explanatory variables, one numeric and one factor, we have fitted a linear model that used different intercept and slopes for each attendance group (i.e., interaction model). We could not drop the interaction term (_P-value_ = 0.043).
+
+All model assumptions were satisfied.
+
+Our final model is $$Exam_i=\beta_0 +\beta_1\times Test_i+ \beta_2\times Attend_i + \beta_3\times Attend_i\times Test_i+ \epsilon_i,$$ 
+where $Attend_i=1$ if student $i$ is a regular attender, otherwise 0, and $\epsilon_i \sim iid ~ N(0,\sigma^2)$.
+
+Our model explained a modest 63% of the variability in students' exam marks.
+
+# Executive Summary 
+
+We wanted to quantify students' exam marks relationship with attendance and test marks.\footnote{Since there are different slopes in the two groups, we need to discuss each slope individually.}
+
+There was a clear linear relationship between test and exam scores, but this  relationship differed between students who attended and who did not attend lectures. 
+
+We estimate that each additional test mark (out of 20) obtained by a non-attending student would increase their expected exam mark by between `r resultStr1[1]`.  
+
+For regular attenders, the increase is an additional `r resultStr2[1]` expected exam marks per test mark.

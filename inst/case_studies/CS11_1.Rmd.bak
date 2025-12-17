@@ -1,0 +1,129 @@
+---
+title: "Case Study 11.1: Fruit-flies, sex and frustration"
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
+vignette: >
+  %\VignetteIndexEntry{Case Study 11.1: Fruit-flies, sex and frustration}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r include = FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+
+knitr::opts_chunk$set(
+  dev = "png",
+  fig.ext = "png",
+  dpi = 96
+)
+
+```
+
+# Problem:
+In this study, we look at how the male fruit-flies longevity is related to reproductive activity. (Data is described in more 
+detail [here](https://www.tandfonline.com/doi/full/10.1080/10691898.1994.11910467#d1e114))
+ 
+How does one define "interest" in fruit-flies? Here is this study's definition: 
+
+>Newly inseminated females will not usually mate again for at least two days.
+
+So the males in the uninterested groups were always living with newly inseminated females! 
+
+The hypothesis was that the males living alone and with the uninterested females would live longer than the males living with the interested females. Since there are more than two group means, a one-way ANOVA is used to determine if there is a significant difference between the group means.  
+
+The design of the study placed male fruit-flies in the following groups: 
+
+1) Males living alone, 
+2) Males living with one interested female, 
+3) Males living with eight interested females, 
+4) Males living with one uninterested female, and 
+5) Males living with eight uninterested females. 
+ 
+The variables of interest were:
+
+* `days`: A male fruitfly's longevity in days.
+* `group`: A five-level factor with the levels which corresponds to the group a male fruitfly is in:
+    + "G1": males living alone, 
+    + "G2": males with one interested female,
+    + "G3": males with eight interested females,
+    + "G4": males with one uninterested female,
+    + "G5": males with eight uninterested females,
+  
+## Question of Interest
+How does sexual activity affect male fruitfly longevity? 
+
+## Read in and Inspect the Data
+```{r, echo = FALSE}
+load(system.file("extdata", "Fruitfly.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
+Fruitfly.df = read.csv("Fruitfly.csv", stringsAsFactors=TRUE)
+plot(days ~ group, data = Fruitfly.df)
+summaryStats(days ~ group, Fruitfly.df)
+```
+
+```{r, out.width = "75%", fig.align = 'center', echo = FALSE}
+plot(days ~ group, data = Fruitfly.df)
+summaryStats(days ~ group, Fruitfly.df)
+```
+
+Our hypothesis that the males living alone and with the uninterested females would live longer than the males living with the interested females does not seem plausible with our data.
+
+## Model Building and Check Assumptions
+```{r, out.width = "75%", fig.align = 'center'}
+ff.fit = lm(days ~ group, data = Fruitfly.df)
+modelcheck(ff.fit)
+anova(ff.fit)
+summary(ff.fit)
+```
+
+## Multiple Comparisons Output
+```{r, out.width = "75%", fig.align = 'center', eval=requireNamespace("emmeans", quietly=TRUE)}
+library(emmeans)
+Fruitfly.emm = emmeans(ff.fit, ~group)
+# View all pairwise comparisons:
+pairs(Fruitfly.emm, infer=TRUE)
+# View only the comparisons that are significant at the 5% level:
+Fruitfly.pairs = data.frame(pairs(Fruitfly.emm, infer=T))
+subset(Fruitfly.pairs, p.value<0.05)
+```
+```{r, echo=FALSE}
+conf1=as.data.frame(subset(Fruitfly.pairs, p.value<0.05))
+resultStr1 = paste0(sprintf("%.0f", conf1$lower.CL), " to ", sprintf("%.0f", conf1$upper.CL))
+
+```
+
+
+\pagebreak{}
+
+# Methods and Assumption Checks
+The boxplot of `days` by `group` indicated that males living with 8 uninterested females have shorter lives compared to their counterparts in other groups. So, we fitted a One-way ANOVA model to these data.
+
+The model assumptions seem satisfied.
+
+Our final model is $$\text{days}_i = \beta_0 + \beta_1 \times Group2_i + \beta_2 \times Group3_i + \beta_3 \times Group4_i + \beta_4 \times Group5_i + \epsilon_i,$$
+where $GroupX_i$ is 1 if the $i$th male fruitfly is in group $X$ and 0 otherwise, and $\epsilon_i \sim iid N(0,\sigma^2)$.
+
+Alternatively, our final model could be written as $$\text{days}_{ij} = \mu + \alpha_i + \epsilon_{ij},$$
+where $\mu$ is the overall mean survival time and $\alpha_i$ is the effect of being in the $i$th group and $\epsilon_{ij} \sim iid~N(0,\sigma^2)$.
+
+Our model explained 31% of variability in male fruitfly longevity.
+
+# Executive Summary
+Researchers were interested in how sexual activity affects male fruitfly longevity.
+
+We see that the effect of Group 5, males with 8 uninterested females, seems markedly different from all the others.
+
+In particular group 5 males, on average, lived fewer days than:
+
+* Group 1 males (living alone) by between 13 to 36 fewer days.
+* Group 2 males (living with one interested female) by between `r resultStr1[2]` fewer days.
+* Group 3 males (living with eight interested females) by between `r resultStr1[1]` fewer days.
+* Group 4 males (living with one uninterested female) by between `r resultStr1[4]` fewer days.
+
+On a lighter note these male fruit flies are fine if no females are about or if they are there they need to be 'interested' in them --- otherwise they die earlier (they 'drop like flies'). It's tempting to make similar inference about the human species but that may be going too far!

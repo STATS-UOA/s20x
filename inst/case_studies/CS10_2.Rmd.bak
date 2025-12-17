@@ -1,0 +1,157 @@
+---
+title: "Case Study 10.2: Gender differences in salary"
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
+vignette: >
+  %\VignetteIndexEntry{Case Study 10.2: Gender differences in salary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+
+knitr::opts_chunk$set(
+  dev = "png",
+  fig.ext = "png",
+  dpi = 96
+)
+
+#The next line is required for pairs plots to work in R4.0.0
+#In future, pairs may be updated and then this will no longer be required.
+```
+
+# Problem
+These are the salary data used in Weisberg's book\footnote{S. Weisberg (1985). Applied Linear Regression, Second Edition. New York: John Wiley and Sons. Page 194.} consisting of observations on six variables for 52 professors in a small college. We want to build a model to predict salary. Of particular interest was the effect (if any) of gender on salary.
+
+The variables of interest were:
+
+* `sx`: Sex, (female or male) 
+* `rk`: Rank, (assistant, associate or full)
+* `yr`: Number of years in current rank
+* `dg`: Highest degree (masters or doctorate)
+* `yd`: Number of years since highest degree was earned,
+* `sl`: Academic year salary, in dollars. 
+
+## Question of Interest 
+We want to build a model to explain salary. In particular, the effect (if any) of gender on salary.
+
+## Read in and Inspect the Data
+
+```{r, echo=FALSE}
+load(system.file("extdata", "salary.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
+salary.df = read.table("salary.txt", header = T)
+salary.df$sx=factor(salary.df$sx)
+salary.df$dg=factor(salary.df$dg)
+salary.df$rk=factor(salary.df$rk)
+head(salary.df)
+tail(salary.df)
+pairs20x(salary.df[, c("sl", "sx", "rk", "yr", "dg", "yd")])
+```
+
+```{r, out.width = "75%", fig.align = 'center', echo = FALSE}
+salary.df$sx=factor(salary.df$sx)
+salary.df$dg=factor(salary.df$dg)
+salary.df$rk=factor(salary.df$rk)
+head(salary.df)
+tail(salary.df)
+pairs20x(salary.df[, c("sl", "sx", "rk", "yr", "dg", "yd")])
+```
+
+It seems that males have a larger mean `sl` than females. The higher the rank, the higher the `sl` (Note that the levels of `rk` are in alphabetical order). As `yr` increases the expected `sl` increases. Not too much going on in the relationship between `sl` and `dg`.  There is a weak positive relationship between `sl` and `yd`. Also, as `yd` increases the variability in `sl` increases.
+
+Since the response variable is salary, it would make sense to use log-salary so that effects will be multiplicative. Some previous analyses have also used `log(yr)` and `log(yd)` as explanatory variables. It is not obvious that this is the best choice, but for consistency we will follow these previous analyses. 
+
+```{r, out.width = "75%", fig.align = 'center'} 
+salary.df$log.yr = log(salary.df$yr+1) # log(yr + 1) since log(0) = -infinity
+salary.df$log.yd = log(salary.df$yd) 
+salary.df$log.sl= log(salary.df$sl)
+pairs20x(salary.df[, c("log.sl", "sx", "rk", "log.yr", "dg", "log.yd")])
+```
+It seems that males have a larger mean `log(sl)` than females. The higher the rank, the higher the `log(sl)`. As `log(yr)` increases the expected `log(sl)` increases. However, the low `log(sl)`s do not follow this observed trend. Still not too much going on in the relationship between `log(sl)` and `dg`.  There is a weak positive relationship between `log(sl)` and `log(yd)`. Also, as `log(yd)` increases the variability in `log(sl)` increases. In comparison to `sl` and `yd`, there is some improvement.
+
+We'll find our preferred model by fitting all terms, and then successively removing the one that is least significant, until all remaining terms are significant.
+
+## Model Building and Check Assumptions
+```{r, out.width = "65%", fig.align = 'center'}
+salary.fit = lm(log.sl ~ sx + rk + log.yr + dg + log.yd, data = salary.df)
+plot(salary.fit, which = 1)
+summary(salary.fit)
+salary.fit2 = lm(log.sl ~ rk + log.yr + dg + log.yd, data = salary.df)
+summary(salary.fit2)
+salary.fit3 = lm(log.sl ~ rk + log.yr + dg, data = salary.df)
+summary(salary.fit3)
+salary.fit4 = lm(log.sl ~ rk + log.yr, data = salary.df)
+summary(salary.fit4)
+plot(salary.fit4, which = 1)
+normcheck(salary.fit4)
+cooks20x(salary.fit4)
+exp(confint(salary.fit4))
+```
+
+## Get `log.yr` Effect for Doubling of Time at Current Rrank
+```{r}
+2^confint(salary.fit4)[4, ]
+```
+
+```{r, echo = FALSE}
+conf1 = as.data.frame(t(100*(2^confint(salary.fit4)[4, ]-1)))
+resultStr1 = paste0(sprintf("%.1f%%", conf1$`2.5 %`), " and ", sprintf("%.1f%%", conf1$`97.5 %`))
+
+conf2 = as.data.frame(100*(exp(confint(salary.fit4)[2:3,])-1))
+resultStr2 = paste0(sprintf("%.0f%%", conf2$`2.5 %`), " and ", sprintf("%.0f%%", conf2$`97.5 %`))
+```
+
+# Method and Assumption Checks 
+We have a numeric response and multiple explanatory variables, so we fitted a multiple linear regression model. After looking at pairwise plots, salary and the two year explanatory variables were logged.
+
+After fitting all explanatory terms, Occam's razor was applied to remove those that were not significant\footnote{This is an example of backward selection - see STATS 330.}. We dropped the variables in the following order:
+
+* `sx` (_P-value_ = 0.92).
+* `log(yd)` (_P-value_ = 0.87).
+* `dg` (_P-value_ = 0.36).
+
+All model assumptions looked reasonably well satisfied, notwithstanding that the residuals were a bit right skewed.
+
+Our final model is $$log(salary_i)=\beta_0 +\beta_1 \times rank.associate_i + \beta_2 \times rank.full_i + \beta_3 \times log(yr_i) + \epsilon_i,$$
+where $\epsilon_i \sim iid~N(0,\sigma^2)$. Here $rank.associate$ and $rank.full$ are equal to 1 if rank is associate or full, respectively, otherwise they are zero.
+
+Our model explains about 85% of the variability in the log of salary.
+
+# Executive Summary
+We wanted to build a model to explain salary. In particular, the effect (if any) of gender on salary.
+
+Our final model used the rank of the professor and the number of years at the current rank to explain their salary. After adjusting for these, gender, highest degree, and number of years since highest degree was earned were not required.
+
+We estimate that being promoted from assistant to associate professor increases median salary by between `r resultStr2[1]`.
+
+We estimate that being promoted from assistant to full professor increases median salary by between `r resultStr2[2]`.
+
+We estimate that a doubling in years\footnote{Actually, it's a doubling in (years + 1) since `log.yr = log(yr + 1)`} (at current rank) increases median salary by between `r resultStr1[1]`.
+
+It appears that after adjusting for these in our model variables the effect of gender is not significant, however other question may need to be asked about why so few females are in senior academic positions in the first place -- it could be argued that more work needs to be done to determine the cause of the "gender gap".
+
+\pagebreak{}
+
+# Addendum - what happened to the gender gap?
+In a regression by itself (i.e., two sample t-test), we can show that gender is marginally significant --- what could be driving this apparent effect?
+```{r}
+table(salary.df$rk, salary.df$sx)
+table(salary.df$dg, salary.df$sx)
+```
+To really understand what is going on, we need to ask why there are so few females in the higher professorial ranks (relative to males).
+
+### Exercises
+ 
+ + Perform a two-sample t-test using only sex as the explanatory factor variable (this confirms that sex is marginally statistically significant if no other explanatories are included in the model.)
+ 
+ + Redo the analysis using forward selection (as in the Chapter notes). That is, build the model up by adding the most relevant terms in succession (provided they are significant). Do you end up with the same final model?
+ 
+ + Redo the analysis but using `yr` and `yd` rather than `log(yr)` and `log(yd)`. Does this make any meaningful difference?

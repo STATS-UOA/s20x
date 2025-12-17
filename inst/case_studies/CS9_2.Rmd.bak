@@ -1,0 +1,165 @@
+---
+title: "Case Study 9.2: Thyroid drug experiment"
+output:
+  rmarkdown::html_document:
+    self_contained: false
+    lib_dir: vignette_libs
+vignette: >
+  %\VignetteIndexEntry{Case Study 9.2: Thyroid drug experiment}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r RC-CS92-000, include=FALSE}
+## Do not delete this!
+## It loads the s20x library for you. If you delete it 
+## your document may not compile it.
+require(s20x)
+
+knitr::opts_chunk$set(
+  dev = "png",
+  fig.ext = "png",
+  dpi = 96
+)
+
+```
+
+# Problem
+Hypothyroidism; (from hypo- meaning under or reduced, plus thyroid), often called under-active thyroid or low thyroid and sometimes hypothyreosis, is a common endocrine disorder in which the thyroid gland does not produce enough thyroid hormone. It can cause a number of symptoms, such as tiredness, poor ability to tolerate cold, and weight gain. In children, hypothyroidism leads to delays in growth and intellectual development, which is called cretinism in severe cases\footnote{Shamelessly stolen form Wiki: http://en.wikipedia.org/wiki/Hypothyroidism}.
+
+Drug companies attempt to develop drugs to help to grow the thyroid gland. Before these drugs are tested on humans they are tested on mice as they share a lot of physical characteristics of humans. 
+
+With the above in mind, an experiment was conducted to assess the effect of a newly developed drug that was intended to increase the weight of the thyroid gland (in mg). 
+
+Sixteen laboratory animals (mice) were randomly allocated into 2 groups:
+
+1. The control group (1) received water orally for 7 days.
+2. The drug group (2) received the new drug orally for 7 days.
+
+The body weight of each mouse (g) was also recorded, since it was felt that it might explain variability in thyroid weight.
+
+The variables of interest were:
+
+* `thyroid`: The weight of the mouse's thyroid gland.
+* `body`: The body weight of the mouse (g).
+* `group`: A two-level factor with levels "1" and "2"
+
+## Question of Interest
+To assess the effect of a newly developed drug that was intended to increase the weight of the thyroid gland (in mg). 
+
+## Read in and Inspect the Data
+
+```{r, echo=FALSE}
+data("thyroid.df")
+```
+
+```{r RC-CS92-001, out.width = "70%", fig.align = 'center',eval=FALSE}
+thyroid.df = read.table("thyroid-1.txt", header = TRUE)
+head(thyroid.df)
+str(thyroid.df)
+```
+
+```{r, out.width = "70%", fig.align = 'center', echo=FALSE}
+head(thyroid.df)
+str(thyroid.df)
+```
+
+```{r , out.width = "70%", fig.align = 'center'}
+# Create a factor variable for the drug vs control
+thyroid.df$trt = with(thyroid.df, factor(ifelse(group == 1, "control", "drug")))
+plot(thyroid ~ trt, data = thyroid.df, xlab = "Treatment", ylab = "Thyroid weights")
+plot(thyroid ~ body, type = "n", data = thyroid.df)
+text(thyroid.df$body, thyroid.df$thyroid, thyroid.df$group)
+```
+In the first plot it looks like there is an effect due to the treatment. Should we worry about the innate differences between animals? That is, do we expect larger mice to have larger thyroids?
+
+In the second plot it looks like we should indeed adjust for the differences in body weight. Let's fit an interaction model.
+
+## Model Building and Check Assumptions
+```{r RC-CS92-002, out.width = "70%", fig.align = 'center'}
+thyroid.fit = lm(thyroid ~ body * trt, data = thyroid.df)
+plot(thyroid.fit, which = 1)
+normcheck(thyroid.fit)
+cooks20x(thyroid.fit)
+cooks.distance(thyroid.fit)[12]
+```
+
+## Is Observation 12 Influential?
+```{r RC-CS92-003, out.width = "70%", fig.align = 'center'}
+plot(thyroid ~ body, type = "n", data = thyroid.df)
+text(thyroid.df$body, thyroid.df$thyroid, 1:16)
+```
+
+## Model Building and Check Assumptions Continued...
+```{r RC-CS92-004}
+summary(thyroid.fit)
+thyroid.fit2 = lm(thyroid ~ body + trt, data = thyroid.df)
+summary(thyroid.fit2)
+```
+
+## Is `trt` really insignifcant?
+```{r RC-CS92-005, out.width = "75%", fig.align = 'center', eval=requireNamespace("ggplot2", quietly = TRUE)}
+b = coef(thyroid.fit2)
+# Note this won't work unless you have ggplot2 installed
+library(ggplot2)
+thyroid.df = cbind(thyroid.df, predict(thyroid.fit2, interval = "confidence"))
+ggplot(thyroid.df, aes(x = body, y = thyroid, color = trt)) + geom_point() +
+      geom_line(aes(y = fit)) + geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.4) + 
+      scale_color_manual(values = c("#000000", "#FF0000"))
+```
+
+## Model Building and Check Assumptions Continued...
+```{r RC-CS92-006}
+thyroid.fit3 = lm(thyroid ~ body, data = thyroid.df)
+summary(thyroid.fit3)
+```
+
+## Why was `trt` insignficant?
+```{r RC-CS92-007, out.width = "70%", fig.align = 'center'}
+plot(body ~ trt, data = thyroid.df, main = "", xlab = "Treatment", ylab = "Mouse weight")
+```
+
+We can see that heavier mice have heavier thyroids, and the mice in the drug group are heavier. 
+
+# Methods and Assumption Checks 
+The exploratory plots suggested to explain thyroid weight in mice, we first fitted the linear model with explanatory variables drug treatment and body weight, and their interaction. But, the interaction term was not significant (_P-value_ = 0.11). The model was refitted with the interaction term removed. However, treatment was not signficant (_P-value_ = 0.37), and was removed.
+
+Mice were randomly allocated to groups and the measurements were done independently of each other. All other model assumptions were satisfied. (One potentially influential observation was investigated, however given its location and the stupidly small size of this data set (16 obs.) we will overlook it.)
+
+Our final model is $$thyroid_i = \beta_0 + \beta_1 \times weight_i + \epsilon_i,$$
+where $\epsilon_i \sim iid ~ N(0,\sigma^2)$.
+
+Our model explains about 82% of the variability in the weight of thyroid glands.
+
+# Executive Summary
+We wanted to assess the effect of a newly developed drug that was intended to increase the weight of the thyroid gland (in mg). 
+
+The only thing we can report is that larger mice have larger thyroids. We could report on the size of this effect, but won't since it wasn't part of the research question.
+
+We have no evidence to believe that this drug increases the expected size of the thyroid gland in mice.
+
+# Addendum
+From the initial boxplot it appeared that mice in the drug group had noticeably higher thyroid weight than those in the control group. However, it turned out that the drug group had bigger mice! The randomisation has, unfortunately, failed us here. Usually randomisation works out---but don't assume it always does for smaller sample sizes like this.
+
+In the future it may be best to put 2 mice into each of 8 weight classes and randomly allocate (via a coin toss) one of these two mice into the treatment group or not.
+
+
+## Bootstrapping
+
+We can bootstrap to avoid the normality assumption. The vertical line is where the coeffcient is zero. If it's towards the middle of the plot then that is evidence for the null---i.e. that there is no treatment effect. 
+```{r RC-CS92-008, out.width = "85%", fig.align = 'center', fig.width = 8, fig.height = 6}
+set.seed(234)
+library(bootstrap)
+theta = function(rows, data = thyroid.df) {
+  fit = lm(thyroid ~ body + trt, data = data[rows, ])
+  coef(fit)
+}
+b = bootstrap(1:nrow(thyroid.df), 10000, theta)$thetastar
+
+op = par(mfrow = c(2, 2))
+on.exit(par(op), add = TRUE)
+
+plot(density(b[1, ]), main = expression(beta[0])); abline(v = 0)
+plot(density(b[2, ]), main = expression(beta[1])); abline(v = 0)
+plot(density(b[3, ]), main = expression(beta[2])); abline(v = 0)
+```
+

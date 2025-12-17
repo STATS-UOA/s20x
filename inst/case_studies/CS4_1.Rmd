@@ -1,0 +1,93 @@
+---
+title: "Case Study 4.1: Exam vs Assignment mark"
+output:
+  rmarkdown::html_document:
+    self_contained: true
+---
+```{r, include = FALSE}
+# Do not delete this!
+# It loads the s20x library for you. If you delete it 
+# your document may not compile it.
+require(s20x)
+
+knitr::opts_chunk$set(
+  dev = "png",
+  fig.ext = "png",
+  dpi = 96
+)
+
+```
+
+# Problem
+We wish to quantify the relationship between exam mark and assignment score. In particular, we want to estimate the typical exam mark for all students when the assignment marks are 0, 10, and 20.
+
+The variables of interest are:
+
+* `Exam`: Exam mark out of 100.
+* `Assign`: Assignment mark out of 20.
+
+## Question of Interest
+We want to build a model to estimate exam marks with assignment marks. In particular, we want to estimate the typical exam mark for all students when the assignment marks are 0, 10, and 20.
+
+## Read in and Inspect the Data
+
+```{r, echo=FALSE}
+load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
+```
+
+```{r, out.width = "75%", fig.align = 'center',fig.height=4, eval=FALSE, echo=TRUE}
+Stats20x.df = read.table("STATS20x.txt", header = T)
+plot(Exam ~ Assign, data = Stats20x.df)
+```
+
+```{r, echo=FALSE, fig.align = 'center'}
+plot(Exam ~ Assign, data = Stats20x.df)
+```
+
+We see an increasing relationship between assignment marks and exam marks. However, this relationship does not seem very strong, and there is some suggestion of curvature in the relationship. We'll need to fit a linear model and scrutinise the residual plot to verify the extent of the curvature.
+
+## Model Building and Check Assumptions
+```{r, out.width = "65%", fig.align = 'center'}
+examAssign.fit = lm(Exam ~ Assign, data = Stats20x.df)
+plot(examAssign.fit, which = 1) # We can use this code as an alternative to eovcheck
+examAssign.fit2 = lm(Exam ~ Assign + I(Assign^2), data = Stats20x.df)
+plot(examAssign.fit2, which = 1)
+normcheck(examAssign.fit2)
+cooks20x(examAssign.fit2)
+summary(examAssign.fit2)
+confint(examAssign.fit2)
+```
+
+## Get additional Confidence Intervals
+Note, since we are after typical exam marks we have to use confidence intervals rather than prediction intervals.
+```{r}
+predAssign.df = data.frame(Assign = c(0, 10, 20))
+predict(examAssign.fit2, predAssign.df, interval = "confidence")
+```
+
+```{r, echo=FALSE}
+predAssign.df = data.frame(Assign = c(0, 10, 20))
+p = as.data.frame(predict(examAssign.fit2, predAssign.df, interval = "confidence"))
+resultStr = paste0(sprintf("%.1f", p$lwr), " to ", sprintf("%.1f", p$upr))
+```
+
+# Method and Assumption Checks 
+The scatter plot of exam mark vs assignment mark suggested curvature in the relationship.
+
+We began with a linear model to describe exam marks with assignment marks. The residual plot from the fit of a simple linear model showed fairly constant scatter but had strong curvature. So, a quadratic term was added to the linear model.
+
+All model assumptions look satisfied once we added the quadratic term to the linear model.
+
+Our final model is $$Exam_i=\beta_0 +\beta_1\times Assign_i+\beta_2\times Assign_i^2 +\epsilon_i,$$ 
+where $\epsilon_i \sim iid ~ N(0,\sigma^2)$. 
+
+Our model explained 55% of the variability in the students' final exam marks.
+
+# Executive Summary
+We were interested in building a model to estimate exam marks with assignment marks.
+
+The relationship between expected exam mark and assignment score was modelled as quadratic.
+
+Here, for a one mark increase in assignment score, the increase in expected exam score was greater as assignment score increased. For example, there was little difference in expected exam score for those getting 7 or 8 in assignments, but a much bigger difference for those getting 17 or 18.\footnote{What could be causing this? Cheating on assignments? Over-zealous lab demonstrators giving too many hints?}
+ 
+For assignment marks of 0, 10 and 20, the estimate expected exam marks were between `r resultStr[1]`, `r resultStr[2]`, and `r resultStr[3]`, respectively.
