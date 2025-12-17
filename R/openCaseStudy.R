@@ -72,9 +72,12 @@ openCaseStudy = function(id, dest_dir = getwd(), overwrite = FALSE) {
 
 #' @rdname openCaseStudy
 #' @export
-opencs = function(...) openCaseStudy(...)
-
+opencs = function(id, dest_dir = getwd(), overwrite = FALSE) {
+  openCaseStudy(id = id, dest_dir = dest_dir, overwrite = overwrite)
+}
 
 #' @rdname openCaseStudy
 #' @export
-ocs = function(...) openCaseStudy(...)
+ocs = function(id, dest_dir = getwd(), overwrite = FALSE) {
+  openCaseStudy(id = id, dest_dir = dest_dir, overwrite = overwrite)
+}

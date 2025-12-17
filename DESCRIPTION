@@ -31,8 +31,8 @@ Suggests:
     knitr,
     markdown,
     nlme,
-    rmarkdown
-VignetteBuilder: knitr
+    rmarkdown,
+    rstudioapi
 Encoding: UTF-8
 Imports: stats, graphics, methods
 License: GPL-2 | file LICENSE

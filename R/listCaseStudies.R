@@ -1,28 +1,25 @@
 #' List available case studies
 #'
-#' Lists all case study R Markdown files shipped with the package and returns
-#' them in numerical order, together with their titles.
+#' Lists all case study R Markdown files shipped with the package and prints
+#' them as a formatted text table.
 #'
 #' Case studies are expected to live in \code{inst/case_studies} and to be named
 #' using the pattern \code{CS<chapter>_<number>.Rmd} (e.g. \code{CS9_2.Rmd}).
 #'
 #' @details
-#' The returned object is a named character vector. Each element has the form
-#' \code{"CSx_y: <title>"}, and the names are the case study identifiers
-#' (e.g. \code{"CS9_2"}).
+#' The table has two columns: \code{File} (the case study identifier) and
+#' \code{Title} (extracted from the YAML header). Case studies are listed in
+#' numerical order, not alphabetical order.
 #'
-#' Sorting is numerical rather than alphabetical, so for example
-#' \code{CS17_1} appears after \code{CS9_2}.
+#' The function invisibly returns a character vector of case study identifiers.
 #'
 #' @return
-#' A named character vector of case study identifiers and titles. If no case
-#' studies are found, an empty character vector is returned.
+#' Invisibly returns a character vector of case study identifiers.
 #'
 #' @examples
 #' \dontrun{
 #' listCaseStudies()
-#' listCS()
-#' lcs()
+#' ids = listCaseStudies()
 #' }
 #'
 #' @export
@@ -34,7 +31,7 @@ listCaseStudies = function() {
   
   files = list.files(cs_dir, pattern = "\\.Rmd$", full.names = TRUE)
   if (length(files) == 0) {
-    return(character())
+    return(invisible(character()))
   }
   
   extract_title = function(file) {
@@ -42,14 +39,12 @@ listCaseStudies = function() {
     
     start = which(trimws(lines) == "---")[1]
     end   = which(trimws(lines) == "---")[2]
-    
     if (is.na(start) || is.na(end) || end <= start) {
       return(NA_character_)
     }
     
     yaml = lines[(start + 1):(end - 1)]
     idx = grep("^title\\s*:", yaml)
-    
     if (length(idx) == 0) {
       return(NA_character_)
     }
@@ -58,8 +53,7 @@ listCaseStudies = function() {
     title = trimws(title)
     title = sub('^"(.*)"$', "\\1", title)
     title = sub("^'(.*)'$", "\\1", title)
-    
-    title
+    trimws(title)
   }
   
   parse_number = function(fname) {
@@ -86,23 +80,37 @@ listCaseStudies = function() {
     vapply(info, `[[`, integer(1), "major"),
     vapply(info, `[[`, integer(1), "minor")
   )
-  
   info = info[ord]
   
-  out = vapply(
-    info,
-    function(x) {
-      if (is.na(x$title) || !nzchar(x$title)) {
-        x$id
-      } else {
-        paste0(x$id, ": ", x$title)
-      }
-    },
-    character(1)
+  ids = vapply(info, `[[`, character(1), "id")
+  titles = vapply(info, `[[`, character(1), "title")
+  
+  # Column widths
+  file_width  = max(nchar(c("File", ids)))
+  title_width = max(nchar(c("Title", titles)), na.rm = TRUE)
+  
+  # Header
+  header = sprintf(
+    "%-*s | %-*s",
+    file_width, "File",
+    title_width, "Title"
   )
   
-  names(out) = vapply(info, `[[`, character(1), "id")
-  out
+  separator = sprintf(
+    "%s-+-%s",
+    paste(rep("-", file_width), collapse = ""),
+    paste(rep("-", title_width), collapse = "")
+  )
+  
+  rows = sprintf(
+    "%-*s | %-*s",
+    file_width, ids,
+    title_width, ifelse(is.na(titles) | titles == "", "(no title)", titles)
+  )
+  
+  cat(header, "\n", separator, "\n", paste(rows, collapse = "\n"), "\n", sep = "")
+  
+  invisible(ids)
 }
 
 #' @rdname listCaseStudies

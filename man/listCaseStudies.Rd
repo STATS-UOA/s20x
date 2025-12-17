@@ -13,30 +13,27 @@ listCS()
 lcs()
 }
 \value{
-A named character vector of case study identifiers and titles. If no case
-studies are found, an empty character vector is returned.
+Invisibly returns a character vector of case study identifiers.
 }
 \description{
-Lists all case study R Markdown files shipped with the package and returns
-them in numerical order, together with their titles.
+Lists all case study R Markdown files shipped with the package and prints
+them as a formatted text table.
 }
 \details{
 Case studies are expected to live in \code{inst/case_studies} and to be named
 using the pattern \code{CS<chapter>_<number>.Rmd} (e.g. \code{CS9_2.Rmd}).
 
 
-The returned object is a named character vector. Each element has the form
-\code{"CSx_y: <title>"}, and the names are the case study identifiers
-(e.g. \code{"CS9_2"}).
+The table has two columns: \code{File} (the case study identifier) and
+\code{Title} (extracted from the YAML header). Case studies are listed in
+numerical order, not alphabetical order.
 
-Sorting is numerical rather than alphabetical, so for example
-\code{CS17_1} appears after \code{CS9_2}.
+The function invisibly returns a character vector of case study identifiers.
 }
 \examples{
 \dontrun{
 listCaseStudies()
-listCS()
-lcs()
+ids = listCaseStudies()
 }
 
 }
