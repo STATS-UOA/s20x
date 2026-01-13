@@ -407,7 +407,12 @@ NULL
 #' 
 #' @name larain.df
 #' @docType data
-#' @format A time series with 66 observations.
+#' @format A data frame with 66 rows and 3 variables:
+#' \describe{
+#'   \item{LA.Rain}{Annual rainfall in Los Angeles, measured in inches.}
+#'   \item{t}{Integer time index from 1 to 66.}
+#'   \item{year}{Year of observation as an integer from 1908 to 1973.}
+#' }
 #' @keywords datasets
 
 NULL
