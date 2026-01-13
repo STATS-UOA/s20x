@@ -41,10 +41,11 @@ NULL
 #' 
 #' @name apples.df
 #' @docType data
-#' @format The data consist of a data frame with 104 observations on 3 variables.
+#' @format The data consist of a data frame with 104 observations on 4 variables.
 #' \describe{
 #' \item{Rootstock}{factor. levels (I, II, III, IV, IX, V, VI, VII, X, XII, XIII, XV, XVI)}
-#' \item{Weight}{integer. .}
+#' \item{Weight}{integer. Above-ground weight of tree (pounds, lb).}
+#' \item{Weight_kg}{numeric. Above-ground weight of tree (kilograms, kg); \code{Weight_kg = Weight * 0.45359237}.}
 #' \item{Propagated}{factor. levels (cutting, seed)}
 #' }
 #' @keywords datasets
@@ -317,10 +318,11 @@ NULL
 #' 
 #' @name fire.df
 #' @docType data
-#' @format A data frame with 15 observations on 2 variables.
+#' @format A data frame with 15 observations on 3 variables.
 #' \describe{
 #' \item{damage}{numeric. Damage (1000s of dollars)}
 #' \item{distance}{numeric. Distance from the fire station (miles)}
+#' \item{distance_km}{numeric. Distance from the fire station (kilometres); \code{distance_km = distance * 1.60934}.}
 #' }
 #' @keywords datasets
 
@@ -407,9 +409,10 @@ NULL
 #' 
 #' @name larain.df
 #' @docType data
-#' @format A data frame with 66 rows and 3 variables:
+#' @format A data frame with 66 rows and 4 variables:
 #' \describe{
 #'   \item{LA.Rain}{Annual rainfall in Los Angeles, measured in inches.}
+#'   \item{rain_mm}{Annual rainfall in Los Angeles, measured in millimetres (mm); \code{rain_mm = LA.Rain * 25.4}.}
 #'   \item{t}{Integer time index from 1 to 66.}
 #'   \item{year}{Year of observation as an integer from 1908 to 1973.}
 #' }
@@ -531,7 +534,7 @@ NULL
 #' \item{years}{numeric. Number of years since migration}
 #' \item{weight}{numeric. Subject's weight (kg)}
 #' \item{height}{numeric. Subject's height (mm)}
-#' \item{BP}{numeric. Subject's systolic blood pressure (mm Hg)}
+#' \item{BP}{numeric. Subject's systolic blood pressure (mm Hg; standard clinical unit in New Zealand).}
 #' }
 #' @keywords datasets
 
@@ -545,13 +548,12 @@ NULL
 #' 
 #' @name rain.df
 #' @docType data
-#' @format A data frame with 50 observations on 2 variables.
+#' @format A data frame with 50 observations on 3 variables.
 #' \describe{
-#' \item{rain}{numeric. Amount of rain}
+#' \item{rain}{Amount of rain, measured in acre-feet (the volume of water required to cover one acre of land to a depth of one foot).}
+#' \item{rain_ML}{Amount of rain expressed in megalitres (ML); \code{rain_ML = rain * 1.23348184}.}
 #' \item{seed}{factor. Whether the clouds are seeded or not (seeded, unseeded)}
 #' }
-#' @source Chambers, Cleveland, Kleiner, Tukey. (1983). Graphical Methods for
-#' Data Analysis.
 #' @keywords datasets
 
 NULL
@@ -585,7 +587,7 @@ NULL
 #' @docType data
 #' @format A data frame with 100 observations on 3 variables.
 #' \describe{
-#' \item{Weight}{integer. .}
+#' \item{Weight}{integer. Weight of sheep (kilograms, kg).}
 #' \item{Copper}{factor. levels (No, Yes)}
 #' \item{Cobalt}{factor. levels (No, Yes)}
 #' }
@@ -686,7 +688,7 @@ NULL
 #' \item{salary}{numeric. Annual Salary (dollars)}
 #' \item{yrs.empl}{numeric. Number of years employed at Technitron}
 #' \item{prior.yrs}{numeric. Number of years prior experience}
-#' \item{edu}{numeric. Years of education after high school}
+#' \item{educ}{numeric. Years of education after high school}
 #' \item{id}{numeric. Company identification number}
 #' \item{gender}{numeric. Gender (0 = female, 1 = male)}
 #' \item{dept}{numeric. Department employee works in (1 = Sales, 2 = Purchasing, 3 = Advertising, 4 = Engineering)}
@@ -750,7 +752,7 @@ NULL
 #' \item{attendance}{numeric. Number of visitors}
 #' \item{time}{numeric. Time in days since the start of the study}
 #' \item{sun.yesterday}{numeric. Hours of sunshine the previous day}
-#' \item{tv.adds}{numeric. Average spending on TV advertising in the previous week (1000s of dollars per day)}
+#' \item{tv.ads}{numeric. Average spending on TV advertising in the previous week (1000s of dollars per day)}
 #' \item{nice.day}{factor. Assessment based on number of hours of sunshine (0 = No, 1 = Yes)}
 #' \item{day.type}{factor. Type of day (1 = ordinary weekday, 2 = weekend day, 3 = school holiday weekday, 4 = public holday)}
 #' }

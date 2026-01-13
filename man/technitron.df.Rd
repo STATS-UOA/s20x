@@ -10,7 +10,7 @@ A data frame with 46 observations on 8 variables.
 \item{salary}{numeric. Annual Salary (dollars)}
 \item{yrs.empl}{numeric. Number of years employed at Technitron}
 \item{prior.yrs}{numeric. Number of years prior experience}
-\item{edu}{numeric. Years of education after high school}
+\item{educ}{numeric. Years of education after high school}
 \item{id}{numeric. Company identification number}
 \item{gender}{numeric. Gender (0 = female, 1 = male)}
 \item{dept}{numeric. Department employee works in (1 = Sales, 2 = Purchasing, 3 = Advertising, 4 = Engineering)}

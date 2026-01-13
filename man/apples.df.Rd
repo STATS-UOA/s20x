@@ -5,10 +5,11 @@
 \alias{apples.df}
 \title{Apples Data}
 \format{
-The data consist of a data frame with 104 observations on 3 variables.
+The data consist of a data frame with 104 observations on 4 variables.
 \describe{
 \item{Rootstock}{factor. levels (I, II, III, IV, IX, V, VI, VII, X, XII, XIII, XV, XVI)}
-\item{Weight}{integer. .}
+\item{Weight}{integer. Above-ground weight of tree (pounds, lb).}
+\item{Weight_kg}{numeric. Above-ground weight of tree (kilograms, kg); \code{Weight_kg = Weight * 0.45359237}.}
 \item{Propagated}{factor. levels (cutting, seed)}
 }
 }

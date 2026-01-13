@@ -5,15 +5,12 @@
 \alias{rain.df}
 \title{Cloud Seeding and Levels of Rainfall}
 \format{
-A data frame with 50 observations on 2 variables.
+A data frame with 50 observations on 3 variables.
 \describe{
-\item{rain}{numeric. Amount of rain}
+\item{rain}{Amount of rain, measured in acre-feet (the volume of water required to cover one acre of land to a depth of one foot).}
+\item{rain_ML}{Amount of rain expressed in megalitres (ML); \code{rain_ML = rain * 1.23348184}.}
 \item{seed}{factor. Whether the clouds are seeded or not (seeded, unseeded)}
 }
-}
-\source{
-Chambers, Cleveland, Kleiner, Tukey. (1983). Graphical Methods for
-Data Analysis.
 }
 \description{
 Data from an experiment to see if seeding clouds with Silver Nitrate effects

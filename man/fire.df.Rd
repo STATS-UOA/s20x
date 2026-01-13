@@ -5,10 +5,11 @@
 \alias{fire.df}
 \title{Fire Damage and Distance from the Fire Station}
 \format{
-A data frame with 15 observations on 2 variables.
+A data frame with 15 observations on 3 variables.
 \describe{
 \item{damage}{numeric. Damage (1000s of dollars)}
 \item{distance}{numeric. Distance from the fire station (miles)}
+\item{distance_km}{numeric. Distance from the fire station (kilometres); \code{distance_km = distance * 1.60934}.}
 }
 }
 \description{

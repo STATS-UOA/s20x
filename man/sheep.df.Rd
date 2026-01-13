@@ -7,7 +7,7 @@
 \format{
 A data frame with 100 observations on 3 variables.
 \describe{
-\item{Weight}{integer. .}
+\item{Weight}{integer. Weight of sheep (kilograms, kg).}
 \item{Copper}{factor. levels (No, Yes)}
 \item{Cobalt}{factor. levels (No, Yes)}
 }

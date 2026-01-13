@@ -5,7 +5,13 @@
 \alias{larain.df}
 \title{Los Angeles Rainfall}
 \format{
-A time series with 66 observations.
+A data frame with 66 rows and 4 variables:
+\describe{
+  \item{LA.Rain}{Annual rainfall in Los Angeles, measured in inches.}
+  \item{rain_mm}{Annual rainfall in Los Angeles, measured in millimetres (mm); \code{rain_mm = LA.Rain * 25.4}.}
+  \item{t}{Integer time index from 1 to 66.}
+  \item{year}{Year of observation as an integer from 1908 to 1973.}
+}
 }
 \description{
 Annual rainfall (in inches) for Los Angeles from 1908 to 1973.

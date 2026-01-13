@@ -11,7 +11,7 @@ A data frame with 39 observations on 5 variables.
 \item{years}{numeric. Number of years since migration}
 \item{weight}{numeric. Subject's weight (kg)}
 \item{height}{numeric. Subject's height (mm)}
-\item{BP}{numeric. Subject's systolic blood pressure (mm Hg)}
+\item{BP}{numeric. Subject's systolic blood pressure (mm Hg; standard clinical unit in New Zealand).}
 }
 }
 \description{

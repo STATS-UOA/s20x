@@ -5,7 +5,13 @@
 \alias{airpass.df}
 \title{International Airline Passengers}
 \format{
-A time series with 144 observations.
+A data frame with 144 rows and 4 variables:
+\describe{
+  \item{passengers}{Monthly total number of international airline passengers (in thousands).}
+  \item{t}{Integer time index from 1 to 144.}
+  \item{month}{Month of observation as a factor with levels \code{Jan} to \code{Dec}.}
+  \item{year}{Year of observation as a factor with levels \code{1949} to \code{1960}.}
+}
 }
 \description{
 Number of international airline passengers (in thousands) recorded monthly

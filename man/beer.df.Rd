@@ -5,7 +5,18 @@
 \alias{beer.df}
 \title{US Beer Production}
 \format{
-A time series with 96 observations.
+A data frame with 96 rows and 4 variables:
+\describe{
+  \item{beer}{Monthly beer production, expressed in megalitres
+    (converted from millions of 31-US-gallon barrels;
+    1 million 31-gallon barrels is approximately equal to 117.35 megalitres).}
+  \item{t}{Integer time index from 1 to 96.}
+  \item{month}{Month of observation as a factor with levels
+    \code{Jul}, \code{Aug}, \code{Sep}, \code{Oct}, \code{Nov}, \code{Dec},
+    \code{Jan}, \code{Feb}, \code{Mar}, \code{Apr}, \code{May}, \code{Jun}.}
+  \item{year}{Year of observation as a factor with levels
+    \code{1970} to \code{1978}.}
+}
 }
 \description{
 Monthly United States beer production figures (in millions of 31-gallon
