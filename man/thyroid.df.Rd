@@ -5,11 +5,12 @@
 \alias{thyroid.df}
 \title{Effect of a New Drug on Thyroid Weights}
 \format{
-A data frame with 16 observations on 3 variables. \tabular{rlll}{
-[,1] \tab thyroid \tab numeric \tab Weight of thyroid gland after 7 days
-(mg)\cr [,2] \tab body \tab numeric \tab Animal body weight before
-experiment began (g) \cr [,3] \tab group \tab factor \tab Animal's group (1
-= control, 2 = drug) }
+A data frame with 16 observations on 3 variables.
+\describe{
+\item{thyroid}{numeric. Weight of thyroid gland after 7 days (mg)}
+\item{body}{numeric. Animal body weight before experiment began (g)}
+\item{group}{factor. Animal's group (1 = control, 2 = drug)}
+}
 }
 \description{
 Data from an experiment to asses the effect of a new drug on the weight of

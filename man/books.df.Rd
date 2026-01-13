@@ -6,9 +6,10 @@
 \title{Books Data}
 \format{
 The data frame consists of 400 observations on 2 variables.
-\tabular{rlll}{ [,1] \tab length \tab integer \tab \cr [,2] \tab book \tab
-factor \tab levels (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag, \cr \tab
-\tab \tab Rising.Sun, Shining, Stand, T.Knock) }
+\describe{
+\item{length}{integer}
+\item{book}{factor. levels (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag,}
+}
 }
 \description{
 This data consists of 50 sentence lengths from each of 8 books. The books

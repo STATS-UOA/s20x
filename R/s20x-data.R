@@ -8,6 +8,7 @@
 #' @docType data
 #' @format A time series with 144 observations.
 #' @keywords datasets
+
 NULL
 
 #' Apples Data
@@ -33,12 +34,14 @@ NULL
 #' 
 #' @name apples.df
 #' @docType data
-#' @format The data consist of a data frame with 104 observations on 3
-#' variables. \tabular{rlll}{ [,1] \tab Rootstock \tab factor \tab levels (I,
-#' II, III, IV, IX, V, VI, VII, X, XII, XIII, XV, XVI) \cr [,2] \tab Weight
-#' \tab integer \tab . \cr [,3] \tab Propagated \tab factor \tab levels
-#' (cutting, seed) }
+#' @format The data consist of a data frame with 104 observations on 3 variables.
+#' \describe{
+#' \item{Rootstock}{factor. levels (I, II, III, IV, IX, V, VI, VII, X, XII, XIII, XV, XVI)}
+#' \item{Weight}{integer. .}
+#' \item{Propagated}{factor. levels (cutting, seed)}
+#' }
 #' @keywords datasets
+
 NULL
 
 #' Changes in Pupil Size with Emotional Arousal
@@ -51,16 +54,15 @@ NULL
 #' 
 #' @name arousal.df
 #' @docType data
-#' @format A data frame with 160 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab arousal \tab numeric \tab Change in the subject's pupil size \cr
-#' [,2] \tab gender \tab factor \tab Subject's gender (female, male) \cr [,3]
-#' \tab picture \tab factor \tab Picture shown to subject (infant, landscape,
-#' nude female, nude male) }
+#' @format A data frame with 160 observations on 3 variables.
+#' \describe{
+#' \item{arousal}{numeric. Change in the subject's pupil size}
+#' \item{gender}{factor. Subject's gender (female, male)}
+#' \item{picture}{factor. Picture shown to subject (infant, landscape, nude female, nude male)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
 
 #' US Beer Production
 #' 
@@ -72,11 +74,8 @@ NULL
 #' @docType data
 #' @format A time series with 96 observations.
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Body Image and Ethnicity
 #' 
@@ -86,18 +85,20 @@ NULL
 #' 
 #' @name body.df
 #' @docType data
-#' @format A data frame with 246 observations on 8 variables. \tabular{rlll}{
-#' [,1] \tab ethnicity \tab factor \tab Subject's ethnicity (Asian, Europn,
-#' Maori, Pacific) \cr [,2] \tab married \tab . \tab . \cr [,3] \tab bodyim
-#' \tab factor \tab Subject's rating of themself (slight.uw, right, slight.ow,
-#' mod.ow, very.ow)\cr [,4] \tab sm.ever \tab . \tab . \cr [,5] \tab weight
-#' \tab . \tab . \cr [,6] \tab height \tab . \tab . \cr [,7] \tab age \tab .
-#' \tab . \cr [,8] \tab stressgp \tab . \tab . }
+#' @format A data frame with 246 observations on 8 variables.
+#' \describe{
+#' \item{ethnicity}{factor. Subject's ethnicity (Asian, Europn, Maori, Pacific)}
+#' \item{married}{.. .}
+#' \item{bodyim}{factor. Subject's rating of themself (slight.uw, right, slight.ow, mod.ow, very.ow)}
+#' \item{sm.ever}{.. .}
+#' \item{weight}{.. .}
+#' \item{height}{.. .}
+#' \item{age}{.. .}
+#' \item{stressgp}{.. .}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
 
 #' Books Data
 #' 
@@ -114,15 +115,13 @@ NULL
 #' @name books.df
 #' @docType data
 #' @format The data frame consists of 400 observations on 2 variables.
-#' \tabular{rlll}{ [,1] \tab length \tab integer \tab \cr [,2] \tab book \tab
-#' factor \tab levels (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag, \cr \tab
-#' \tab \tab Rising.Sun, Shining, Stand, T.Knock) }
+#' \describe{
+#' \item{length}{integer}
+#' \item{book}{factor. levels (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag,}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Bursary Results for Auckland Secondary Schools
 #' 
@@ -133,16 +132,14 @@ NULL
 #' 
 #' @name bursary.df
 #' @docType data
-#' @format A data frame with 75 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab decile \tab numeric \tab Decile rating of the school \cr [,2] \tab
-#' pass.rate \tab numeric \tab Percentage of eligible students who gained a 'B'
-#' Busary or better }
+#' @format A data frame with 75 observations on 2 variables.
+#' \describe{
+#' \item{decile}{numeric. Decile rating of the school}
+#' \item{pass.rate}{numeric. Percentage of eligible students who gained a 'B' Busary or better}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Butterfat Data
 #' 
@@ -154,11 +151,12 @@ NULL
 #' 
 #' @name butterfat.df
 #' @docType data
-#' @format A data frame with 100 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab Butterfat \tab numeric \tab Mean percentage of butterfat per cow
-#' \cr [,2] \tab Breed \tab factor \tab Breed (ayrshire, canadian, guernesy,
-#' holst.fres, jersey) \cr [,3] \tab Age \tab factor \tab Age group (2yo,
-#' mature) }
+#' @format A data frame with 100 observations on 3 variables.
+#' \describe{
+#' \item{Butterfat}{numeric. Mean percentage of butterfat per cow}
+#' \item{Breed}{factor. Breed (ayrshire, canadian, guernesy, holst.fres, jersey)}
+#' \item{Age}{factor. Age group (2yo, mature)}
+#' }
 #' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
 #' Chapman and Hall/CRC.
@@ -167,11 +165,8 @@ NULL
 #' Francisco: W.H. Freeman, 368.
 #' @source A Handbook of Small Data Sets
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Age and Length of Camp Lake Bluegills
 #' 
@@ -181,16 +176,15 @@ NULL
 #' 
 #' @name camplake.df
 #' @docType data
-#' @format A data frame with 66 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab Age \tab numeric \tab Age of fish (years)\cr [,2] \tab
-#' Scale.Radius \tab numeric \tab Age of fish (radius of the key scale (mm/100)
-#' )\cr [,3] \tab Length \tab numeric \tab Length at capture (mm) }
+#' @format A data frame with 66 observations on 3 variables.
+#' \describe{
+#' \item{Age}{numeric. Age of fish (years)}
+#' \item{Scale.Radius}{numeric. Age of fish (radius of the key scale (mm/100) )}
+#' \item{Length}{numeric. Length at capture (mm)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Chalk Data
 #' 
@@ -201,16 +195,15 @@ NULL
 #' 
 #' @name chalk.df
 #' @docType data
-#' @format A data frame with 66 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab Density \tab numeric \tab Density of the chalk \cr [,2] \tab Lab
-#' \tab integer \tab Laboratory where testing done \cr [,3] \tab Chalk \tab
-#' factor \tab Chalk tested (A, B) }
+#' @format A data frame with 66 observations on 3 variables.
+#' \describe{
+#' \item{Density}{numeric. Density of the chalk}
+#' \item{Lab}{integer. Laboratory where testing done}
+#' \item{Chalk}{factor. Chalk tested (A, B)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Computer Questionnaire
 #' 
@@ -222,16 +215,14 @@ NULL
 #' 
 #' @name computer.df
 #' @docType data
-#' @format A data frame with 19 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab score \tab numeric \tab Questionnaire score \cr [,2] \tab
-#' selfassess \tab ordered factor \tab Self-assessed level of expertise (1 =
-#' low, 2 = medium, 3 = high) }
+#' @format A data frame with 19 observations on 2 variables.
+#' \describe{
+#' \item{score}{numeric. Questionnaire score}
+#' \item{selfassess}{ordered factor. Self-assessed level of expertise (1 = low, 2 = medium, 3 = high)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Stats 20x Summer School Data
 #' 
@@ -241,28 +232,27 @@ NULL
 #' 
 #' @name course.df
 #' @docType data
-#' @format A data frame with 146 observations on 15 variables. \tabular{rlll}{
-#' [,1] \tab Grade \tab factor \tab Final grade for the course (A, B, C, D)\cr
-#' [,2] \tab Pass \tab factor \tab Passed the course (No, Yes)\cr [,3] \tab
-#' Exam \tab numeric \tab Mark in the final exam \cr [,4] \tab Degree \tab
-#' factor \tab Degree enrolled in (BA, BCom, BSc, Other)\cr [,5] \tab Gender
-#' \tab factor \tab Gender (Female, Male) \cr [,6] \tab Attend \tab factor \tab
-#' Regularly attended class (No, Yes)\cr [,7] \tab Assign \tab numeric \tab
-#' Assignment mark \cr [,8] \tab Test \tab numeric \tab Test mark \cr [,9] \tab
-#' B \tab numeric \tab Mark for the short answer section of the exam \cr [,10]
-#' \tab C \tab numeric \tab Mark for the long answer section of the exam \cr
-#' [,11] \tab MC \tab numeric \tab Mark for the multiple choice section of the
-#' exam \cr [,12] \tab Colour \tab factor \tab Colour of the exam booklet
-#' (Blue, Green, Pink, Yellow)\cr [,13] \tab Stage1 \tab factor \tab Stage one
-#' grade (A, B, C)\cr [,14] \tab Years.Since \tab numeric \tab Number of years
-#' since doing Stage 1 \cr [,15] \tab Repeat \tab factor \tab Repeating the
-#' paper (No, Yes) }
+#' @format A data frame with 146 observations on 15 variables.
+#' \describe{
+#' \item{Grade}{factor. Final grade for the course (A, B, C, D)}
+#' \item{Pass}{factor. Passed the course (No, Yes)}
+#' \item{Exam}{numeric. Mark in the final exam}
+#' \item{Degree}{factor. Degree enrolled in (BA, BCom, BSc, Other)}
+#' \item{Gender}{factor. Gender (Female, Male)}
+#' \item{Attend}{factor. Regularly attended class (No, Yes)}
+#' \item{Assign}{numeric. Assignment mark}
+#' \item{Test}{numeric. Test mark}
+#' \item{B}{numeric. Mark for the short answer section of the exam}
+#' \item{C}{numeric. Mark for the long answer section of the exam}
+#' \item{MC}{numeric. Mark for the multiple choice section of the exam}
+#' \item{Colour}{factor. Colour of the exam booklet (Blue, Green, Pink, Yellow)}
+#' \item{Stage1}{factor. Stage one grade (A, B, C)}
+#' \item{Years.Since}{numeric. Number of years since doing Stage 1}
+#' \item{Repeat}{factor. Repeating the paper (No, Yes)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Exam Mark, Gender and Attendance for Stats 20x Summer School Students
 #' 
@@ -274,16 +264,15 @@ NULL
 #' 
 #' @name course2way.df
 #' @docType data
-#' @format A data frame with 40 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab Exam \tab numeric \tab Final exam mark (out of 100) \cr [,2] \tab
-#' Gender \tab factor \tab Gender (Female, Male) \cr [,2] \tab Attend \tab
-#' factor \tab Regularly attended or not (No, Yes) }
+#' @format A data frame with 40 observations on 3 variables.
+#' \describe{
+#' \item{Exam}{numeric. Final exam mark (out of 100)}
+#' \item{Gender}{factor. Gender (Female, Male)}
+#' \item{Attend}{factor. Regularly attended or not (No, Yes)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Prices and Weights of Diamonds
 #' 
@@ -293,15 +282,14 @@ NULL
 #' 
 #' @name diamonds.df
 #' @docType data
-#' @format A data frame with 48 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab price \tab numeric \tab Price of ring (Singapore dollars) \cr [,2]
-#' \tab weight \tab numeric \tab Weight of Diamond (carats) }
+#' @format A data frame with 48 observations on 2 variables.
+#' \describe{
+#' \item{price}{numeric. Price of ring (Singapore dollars)}
+#' \item{weight}{numeric. Weight of Diamond (carats)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Fire Damage and Distance from the Fire Station
 #' 
@@ -311,15 +299,14 @@ NULL
 #' 
 #' @name fire.df
 #' @docType data
-#' @format A data frame with 15 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab damage \tab numeric \tab Damage (1000s of dollars)\cr [,2] \tab distance
-#' \tab numeric \tab Distance from the fire station (miles) }
+#' @format A data frame with 15 observations on 2 variables.
+#' \describe{
+#' \item{damage}{numeric. Damage (1000s of dollars)}
+#' \item{distance}{numeric. Distance from the fire station (miles)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Fruitfly Data
 #' 
@@ -333,10 +320,11 @@ NULL
 #' 
 #' @name fruitfly.df
 #' @docType data
-#' @format A data frame with 75 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab fecundity \tab numeric \tab Number of eggs laid, per day, per
-#' fruitfly \cr [,2] \tab strain \tab factor \tab Strain of fruitfly (NS, RS,
-#' SS) }
+#' @format A data frame with 75 observations on 2 variables.
+#' \describe{
+#' \item{fecundity}{numeric. Number of eggs laid, per day, per fruitfly}
+#' \item{strain}{factor. Strain of fruitfly (NS, RS, SS)}
+#' }
 #' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
 #' Chapman and Hall/CRC.
@@ -345,11 +333,8 @@ NULL
 #' Francisco: W.H. Freeman, 239.
 #' @source A Handbook of Small Data Sets
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Sale and Advertised Prices of Houses
 #' 
@@ -359,15 +344,14 @@ NULL
 #' 
 #' @name house.df
 #' @docType data
-#' @format A data frame with 100 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab advertised.price \tab numeric \tab Advertised price (dollars)\cr [,2]
-#' \tab sell.price \tab numeric \tab Final sale price (dollars) }
+#' @format A data frame with 100 observations on 2 variables.
+#' \describe{
+#' \item{advertised.price}{numeric. Advertised price (dollars)}
+#' \item{sell.price}{numeric. Final sale price (dollars)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Mean Family Incomes
 #' 
@@ -377,12 +361,10 @@ NULL
 #' 
 #' @name incomes.df
 #' @docType data
+#' @format A numeric vector with 152 observations.
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Ages and Lengths of Lake Mary Bluegills
 #' 
@@ -391,15 +373,14 @@ NULL
 #' 
 #' @name lakemary.df
 #' @docType data
-#' @format A data frame with 78 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab Age \tab numeric \tab Age of the fish (years)\cr [,2] \tab Length
-#' \tab numeric \tab Length at capture (mm) }
+#' @format A data frame with 78 observations on 2 variables.
+#' \describe{
+#' \item{Age}{numeric. Age of the fish (years)}
+#' \item{Length}{numeric. Length at capture (mm)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Los Angeles Rainfall
 #' 
@@ -410,11 +391,8 @@ NULL
 #' @docType data
 #' @format A time series with 66 observations.
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Year and Price of Mazda Cars
 #' 
@@ -424,15 +402,14 @@ NULL
 #' 
 #' @name mazda.df
 #' @docType data
-#' @format A data frame with 124 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab price \tab numeric \tab Price (Australian dollars)\cr [,2] \tab
-#' year \tab numeric \tab Year of manufacture }
+#' @format A data frame with 124 observations on 2 variables.
+#' \describe{
+#' \item{price}{numeric. Price (Australian dollars)}
+#' \item{year}{numeric. Year of manufacture}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Monthly Notifications of Meningococcal Disease
 #' 
@@ -442,14 +419,10 @@ NULL
 #' 
 #' @name mening.df
 #' @docType data
-#' @format A data frame with 144 observations on 3 variables: Month, Year and
-#' mening.
+#' @format A data frame with 144 observations on 3 variables: Month, Year and mening.
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Merger Days
 #' 
@@ -460,12 +433,10 @@ NULL
 #' 
 #' @name mergers.df
 #' @docType data
+#' @format A numeric vector with 38 observations.
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Length of Mozart's Movements
 #' 
@@ -475,16 +446,15 @@ NULL
 #' 
 #' @name mozart.df
 #' @docType data
-#' @format A data frame with 88 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab Time \tab numeric \tab Time of each movement (seconds) \cr [,2]
-#' \tab Movement \tab factor \tab Movement (M1, M2, M3, M4) \cr [,3] \tab
-#' Period \tab factor \tab Period that the symphony was written (early, late) }
+#' @format A data frame with 88 observations on 3 variables.
+#' \describe{
+#' \item{Time}{numeric. Time of each movement (seconds)}
+#' \item{Movement}{factor. Movement (M1, M2, M3, M4)}
+#' \item{Period}{factor. Period that the symphony was written (early, late)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Nail Polish Data
 #' 
@@ -495,15 +465,14 @@ NULL
 #' 
 #' @name nail.df
 #' @docType data
-#' @format A data frame with 60 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab polish \tab factor \tab Type of polish (Regular, Quick) \cr [,2]
-#' \tab dry \tab integer \tab Time (in seconds) for the polish to dry }
+#' @format A data frame with 60 observations on 2 variables.
+#' \describe{
+#' \item{polish}{factor. Type of polish (Regular, Quick)}
+#' \item{dry}{integer. Time (in seconds) for the polish to dry}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Oyster Abundances over Different Sites
 #' 
@@ -515,17 +484,14 @@ NULL
 #' 
 #' @name oysters.df
 #' @docType data
-#' @format A data frame with 87 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab Oysters \tab numeric \tab Number of oysters on each experimental
-#' panel \cr [,2] \tab Site \tab factor \tab Location of the experimental
-#' panels (GR = Georges River, PS1 = First Port Stephens Site, PS2 = Second
-#' Port Stephens Site) }
+#' @format A data frame with 87 observations on 2 variables.
+#' \describe{
+#' \item{Oysters}{numeric. Number of oysters on each experimental panel}
+#' \item{Site}{factor. Location of the experimental panels (GR = Georges River, PS1 = First Port Stephens Site, PS2 = Second Port Stephens Site)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Peruvian Indians
 #' 
@@ -536,18 +502,17 @@ NULL
 #' 
 #' @name peru.df
 #' @docType data
-#' @format A data frame with 39 observations on 5 variables. \tabular{rlll}{
-#' [,1] \tab age \tab numeric \tab Subject's age \cr [,2] \tab years \tab
-#' numeric \tab Number of years since migration \cr [,3] \tab weight \tab
-#' numeric \tab Subject's weight (kg) \cr [,4] \tab height \tab numeric \tab
-#' Subject's height (mm) \cr [,5] \tab BP \tab numeric \tab Subject's systolic
-#' blood pressure (mm Hg) }
+#' @format A data frame with 39 observations on 5 variables.
+#' \describe{
+#' \item{age}{numeric. Subject's age}
+#' \item{years}{numeric. Number of years since migration}
+#' \item{weight}{numeric. Subject's weight (kg)}
+#' \item{height}{numeric. Subject's height (mm)}
+#' \item{BP}{numeric. Subject's systolic blood pressure (mm Hg)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Cloud Seeding and Levels of Rainfall
 #' 
@@ -557,17 +522,16 @@ NULL
 #' 
 #' @name rain.df
 #' @docType data
-#' @format A data frame with 50 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab rain \tab numeric \tab Amount of rain \cr [,2] \tab seed \tab
-#' factor \tab Whether the clouds are seeded or not (seeded, unseeded) }
+#' @format A data frame with 50 observations on 2 variables.
+#' \describe{
+#' \item{rain}{numeric. Amount of rain}
+#' \item{seed}{factor. Whether the clouds are seeded or not (seeded, unseeded)}
+#' }
 #' @source Chambers, Cleveland, Kleiner, Tukey. (1983). Graphical Methods for
 #' Data Analysis.
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Seeds Data
 #' 
@@ -579,17 +543,15 @@ NULL
 #' 
 #' @name seeds.df
 #' @docType data
-#' @format A data frame with 48 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab Light \tab integer \tab Seeds exposed to light (N=No, Y=Yes) \cr
-#' [,2] \tab Water \tab integer \tab Amount of water, higher levels correspond
-#' to more water (1, 2, 3, 4, 5, 6) \cr [,3] \tab Count \tab integer \tab
-#' Number of seeds that germinated (out of 100) }
+#' @format A data frame with 48 observations on 3 variables.
+#' \describe{
+#' \item{Light}{integer. Seeds exposed to light (N=No, Y=Yes)}
+#' \item{Water}{integer. Amount of water, higher levels correspond to more water (1, 2, 3, 4, 5, 6)}
+#' \item{Count}{integer. Number of seeds that germinated (out of 100)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Sheep Data
 #' 
@@ -598,15 +560,15 @@ NULL
 #' 
 #' @name sheep.df
 #' @docType data
-#' @format A data frame with 100 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab Weight \tab integer \tab . \cr [,2] \tab Copper \tab factor \tab
-#' levels (No, Yes) \cr [,3] \tab Cobalt \tab factor \tab levels (No, Yes) }
+#' @format A data frame with 100 observations on 3 variables.
+#' \describe{
+#' \item{Weight}{integer. .}
+#' \item{Copper}{factor. levels (No, Yes)}
+#' \item{Cobalt}{factor. levels (No, Yes)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Skulls Data
 #' 
@@ -620,8 +582,10 @@ NULL
 #' 
 #' @name skulls.df
 #' @docType data
-#' @format A data frame with 150 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab measurement \tab integer \tab \cr [,2] \tab year \tab integer \tab
+#' @format A data frame with 150 observations on 2 variables.
+#' \describe{
+#' \item{measurement}{integer}
+#' \item{year}{integer}
 #' }
 #' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
@@ -631,10 +595,8 @@ NULL
 #' Thebaid}. Oxford: Oxford University Press.
 #' @source A Handbook of Small Data Sets
 #' @keywords datasets
+
 NULL
-
-
-
 
 #' Snapper Weight Data
 #' 
@@ -644,20 +606,11 @@ NULL
 #' 
 #' @name snapper.df
 #' @docType data
-#' @format A data frame with 844 observations on 2 variables.
-#' \describe{
-#' \item{len}{Fork length in centimetres. The fork length of a fish measured from the tip of the snout to 
-#' the end of the middle caudal fin rays and is used in fishes in which it is difficult to tell where the vertebral column ends. 
-#' Essentially it is the measurement from the tip of the 'nose' of the fish to the 'vee' in the tail.}
-#' \item{wgt}{Weight of the fish in kilograms (kg).}
-#' }
-#' 
+#' @format A data frame with 844 observations on 2 variables. \describe{ \item{len}{Fork length in centimetres. The fork length of a fish measured from the tip of the snout to the end of the middle caudal fin rays and is used in fishes in which it is difficult to tell where the vertebral column ends. Essentially it is the measurement from the tip of the 'nose' of the fish to the 'vee' in the tail.} \item{wgt}{Weight of the fish in kilograms (kg).} }
 #' @source Russell Millar, University of Auckland.
 #' @keywords datasets
+
 NULL
-
-
-
 
 #' Soya Bean Yields
 #' 
@@ -667,17 +620,16 @@ NULL
 #' 
 #' @name soyabean.df
 #' @docType data
-#' @format A data frame with 32 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab yield \tab numeric \tab Yield of each plant \cr [,2] \tab cultivar
-#' \tab factor \tab Cultivar used (cult1, cult2, cult3, cult4)\cr [,3] \tab
-#' planttime \tab factor \tab Month of planting (Novemb, Decemb) }
+#' @format A data frame with 32 observations on 3 variables.
+#' \describe{
+#' \item{yield}{numeric. Yield of each plant}
+#' \item{cultivar}{factor. Cultivar used (cult1, cult2, cult3, cult4)}
+#' \item{planttime}{factor. Month of planting (Novemb, Decemb)}
+#' }
 #' @source Littler, R. University of Waikato
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Comparison of Three Teaching Methods
 #' 
@@ -689,16 +641,15 @@ NULL
 #' 
 #' @name teach.df
 #' @docType data
-#' @format A data frame with 30 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab lang \tab numeric \tab Language test score after instruction \cr
-#' [,2] \tab IQ \tab numeric \tab Student's IQ \cr [,3] \tab method \tab factor
-#' \tab Teaching method (1, 2, 3) }
+#' @format A data frame with 30 observations on 3 variables.
+#' \describe{
+#' \item{lang}{numeric. Language test score after instruction}
+#' \item{IQ}{numeric. Student's IQ}
+#' \item{method}{factor. Teaching method (1, 2, 3)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Technitron Salary Information
 #' 
@@ -707,22 +658,20 @@ NULL
 #' 
 #' @name technitron.df
 #' @docType data
-#' @format A data frame with 46 observations on 8 variables. \tabular{rlll}{
-#' [,1] \tab salary \tab numeric \tab Annual Salary (dollars)\cr [,2] \tab yrs.empl
-#' \tab numeric \tab Number of years employed at Technitron \cr [,3] \tab
-#' prior.yrs \tab numeric \tab Number of years prior experience \cr [,4] \tab
-#' edu \tab numeric \tab Years of education after high school \cr [,5] \tab id
-#' \tab numeric \tab Company identification number \cr [,6] \tab gender \tab
-#' numeric \tab Gender (0 = female, 1 = male)\cr [,7] \tab dept \tab numeric
-#' \tab Department employee works in (1 = Sales, 2 = Purchasing, 3 =
-#' Advertising, 4 = Engineering) \cr [,8] \tab super \tab numeric \tab Number
-#' of employees supervised }
+#' @format A data frame with 46 observations on 8 variables.
+#' \describe{
+#' \item{salary}{numeric. Annual Salary (dollars)}
+#' \item{yrs.empl}{numeric. Number of years employed at Technitron}
+#' \item{prior.yrs}{numeric. Number of years prior experience}
+#' \item{edu}{numeric. Years of education after high school}
+#' \item{id}{numeric. Company identification number}
+#' \item{gender}{numeric. Gender (0 = female, 1 = male)}
+#' \item{dept}{numeric. Department employee works in (1 = Sales, 2 = Purchasing, 3 = Advertising, 4 = Engineering)}
+#' \item{super}{numeric. Number of employees supervised}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Effect of a New Drug on Thyroid Weights
 #' 
@@ -735,17 +684,15 @@ NULL
 #' 
 #' @name thyroid.df
 #' @docType data
-#' @format A data frame with 16 observations on 3 variables. \tabular{rlll}{
-#' [,1] \tab thyroid \tab numeric \tab Weight of thyroid gland after 7 days
-#' (mg)\cr [,2] \tab body \tab numeric \tab Animal body weight before
-#' experiment began (g) \cr [,3] \tab group \tab factor \tab Animal's group (1
-#' = control, 2 = drug) }
+#' @format A data frame with 16 observations on 3 variables.
+#' \describe{
+#' \item{thyroid}{numeric. Weight of thyroid gland after 7 days (mg)}
+#' \item{body}{numeric. Animal body weight before experiment began (g)}
+#' \item{group}{factor. Animal's group (1 = control, 2 = drug)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Crest Toothpaste
 #' 
@@ -756,17 +703,14 @@ NULL
 #' 
 #' @name toothpaste.df
 #' @docType data
-#' @format A data frame with 20 observations on 2 variables. \tabular{rlll}{
-#' [,1] \tab purchasers \tab numeric \tab Age of the person in the household
-#' responsible for purchases of Crest \cr [,2] \tab nonpurchasers \tab numeric
-#' \tab Age of the person in the household responsible for purchases of other
-#' brands of toothpaste \cr }
+#' @format A data frame with 20 observations on 2 variables.
+#' \describe{
+#' \item{purchasers}{numeric. Age of the person in the household responsible for purchases of Crest}
+#' \item{nonpurchasers}{numeric. Age of the person in the household responsible for purchases of other brands of toothpaste}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-
-
 
 #' Zoo Attendance during an Advertising Campaign
 #' 
@@ -778,17 +722,15 @@ NULL
 #' 
 #' @name zoo.df
 #' @docType data
-#' @format A data frame with 440 observations on 6 variables. \tabular{rlll}{
-#' [,1] \tab attendance \tab numeric \tab Number of visitors \cr [,2] \tab time
-#' \tab numeric \tab Time in days since the start of the study \cr [,3] \tab
-#' sun.yesterday \tab numeric \tab Hours of sunshine the previous day \cr [,4]
-#' \tab tv.adds \tab numeric \tab Average spending on TV advertising in the
-#' previous week (1000s of dollars per day)\cr [,5] \tab nice.day \tab factor \tab
-#' Assessment based on number of hours of sunshine (0 = No, 1 = Yes)\cr [,6]
-#' \tab day.type \tab factor \tab Type of day (1 = ordinary weekday, 2 =
-#' weekend day, 3 = school holiday weekday, 4 = public holday) }
+#' @format A data frame with 440 observations on 6 variables.
+#' \describe{
+#' \item{attendance}{numeric. Number of visitors}
+#' \item{time}{numeric. Time in days since the start of the study}
+#' \item{sun.yesterday}{numeric. Hours of sunshine the previous day}
+#' \item{tv.adds}{numeric. Average spending on TV advertising in the previous week (1000s of dollars per day)}
+#' \item{nice.day}{factor. Assessment based on number of hours of sunshine (0 = No, 1 = Yes)}
+#' \item{day.type}{factor. Type of day (1 = ordinary weekday, 2 = weekend day, 3 = school holiday weekday, 4 = public holday)}
+#' }
 #' @keywords datasets
+
 NULL
-
-
-

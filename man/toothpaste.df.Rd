@@ -5,11 +5,11 @@
 \alias{toothpaste.df}
 \title{Crest Toothpaste}
 \format{
-A data frame with 20 observations on 2 variables. \tabular{rlll}{
-[,1] \tab purchasers \tab numeric \tab Age of the person in the household
-responsible for purchases of Crest \cr [,2] \tab nonpurchasers \tab numeric
-\tab Age of the person in the household responsible for purchases of other
-brands of toothpaste \cr }
+A data frame with 20 observations on 2 variables.
+\describe{
+\item{purchasers}{numeric. Age of the person in the household responsible for purchases of Crest}
+\item{nonpurchasers}{numeric. Age of the person in the household responsible for purchases of other brands of toothpaste}
+}
 }
 \description{
 Two random samples of households, one of households who purchase Crest

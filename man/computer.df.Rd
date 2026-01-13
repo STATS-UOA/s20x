@@ -5,10 +5,11 @@
 \alias{computer.df}
 \title{Computer Questionnaire}
 \format{
-A data frame with 19 observations on 2 variables. \tabular{rlll}{
-[,1] \tab score \tab numeric \tab Questionnaire score \cr [,2] \tab
-selfassess \tab ordered factor \tab Self-assessed level of expertise (1 =
-low, 2 = medium, 3 = high) }
+A data frame with 19 observations on 2 variables.
+\describe{
+\item{score}{numeric. Questionnaire score}
+\item{selfassess}{ordered factor. Self-assessed level of expertise (1 = low, 2 = medium, 3 = high)}
+}
 }
 \description{
 Data from a test to see if a questionnaire was properly designed. The

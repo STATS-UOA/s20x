@@ -5,10 +5,11 @@
 \alias{fruitfly.df}
 \title{Fruitfly Data}
 \format{
-A data frame with 75 observations on 2 variables. \tabular{rlll}{
-[,1] \tab fecundity \tab numeric \tab Number of eggs laid, per day, per
-fruitfly \cr [,2] \tab strain \tab factor \tab Strain of fruitfly (NS, RS,
-SS) }
+A data frame with 75 observations on 2 variables.
+\describe{
+\item{fecundity}{numeric. Number of eggs laid, per day, per fruitfly}
+\item{strain}{factor. Strain of fruitfly (NS, RS, SS)}
+}
 }
 \source{
 A Handbook of Small Data Sets

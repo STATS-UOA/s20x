@@ -5,11 +5,11 @@
 \alias{oysters.df}
 \title{Oyster Abundances over Different Sites}
 \format{
-A data frame with 87 observations on 2 variables. \tabular{rlll}{
-[,1] \tab Oysters \tab numeric \tab Number of oysters on each experimental
-panel \cr [,2] \tab Site \tab factor \tab Location of the experimental
-panels (GR = Georges River, PS1 = First Port Stephens Site, PS2 = Second
-Port Stephens Site) }
+A data frame with 87 observations on 2 variables.
+\describe{
+\item{Oysters}{numeric. Number of oysters on each experimental panel}
+\item{Site}{factor. Location of the experimental panels (GR = Georges River, PS1 = First Port Stephens Site, PS2 = Second Port Stephens Site)}
+}
 }
 \description{
 Data from an experiment to determine the abundance of oysters recruiting

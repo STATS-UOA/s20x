@@ -5,15 +5,15 @@
 \alias{zoo.df}
 \title{Zoo Attendance during an Advertising Campaign}
 \format{
-A data frame with 440 observations on 6 variables. \tabular{rlll}{
-[,1] \tab attendance \tab numeric \tab Number of visitors \cr [,2] \tab time
-\tab numeric \tab Time in days since the start of the study \cr [,3] \tab
-sun.yesterday \tab numeric \tab Hours of sunshine the previous day \cr [,4]
-\tab tv.adds \tab numeric \tab Average spending on TV advertising in the
-previous week (1000s of dollars per day)\cr [,5] \tab nice.day \tab factor \tab
-Assessment based on number of hours of sunshine (0 = No, 1 = Yes)\cr [,6]
-\tab day.type \tab factor \tab Type of day (1 = ordinary weekday, 2 =
-weekend day, 3 = school holiday weekday, 4 = public holday) }
+A data frame with 440 observations on 6 variables.
+\describe{
+\item{attendance}{numeric. Number of visitors}
+\item{time}{numeric. Time in days since the start of the study}
+\item{sun.yesterday}{numeric. Hours of sunshine the previous day}
+\item{tv.adds}{numeric. Average spending on TV advertising in the previous week (1000s of dollars per day)}
+\item{nice.day}{factor. Assessment based on number of hours of sunshine (0 = No, 1 = Yes)}
+\item{day.type}{factor. Type of day (1 = ordinary weekday, 2 = weekend day, 3 = school holiday weekday, 4 = public holday)}
+}
 }
 \description{
 Data for 455 days of attendance records for Auckland Zoo, from January 1,

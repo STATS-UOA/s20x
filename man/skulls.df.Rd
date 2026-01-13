@@ -5,8 +5,10 @@
 \alias{skulls.df}
 \title{Skulls Data}
 \format{
-A data frame with 150 observations on 2 variables. \tabular{rlll}{
-[,1] \tab measurement \tab integer \tab \cr [,2] \tab year \tab integer \tab
+A data frame with 150 observations on 2 variables.
+\describe{
+\item{measurement}{integer}
+\item{year}{integer}
 }
 }
 \source{

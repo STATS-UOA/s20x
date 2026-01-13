@@ -5,12 +5,14 @@
 \alias{peru.df}
 \title{Peruvian Indians}
 \format{
-A data frame with 39 observations on 5 variables. \tabular{rlll}{
-[,1] \tab age \tab numeric \tab Subject's age \cr [,2] \tab years \tab
-numeric \tab Number of years since migration \cr [,3] \tab weight \tab
-numeric \tab Subject's weight (kg) \cr [,4] \tab height \tab numeric \tab
-Subject's height (mm) \cr [,5] \tab BP \tab numeric \tab Subject's systolic
-blood pressure (mm Hg) }
+A data frame with 39 observations on 5 variables.
+\describe{
+\item{age}{numeric. Subject's age}
+\item{years}{numeric. Number of years since migration}
+\item{weight}{numeric. Subject's weight (kg)}
+\item{height}{numeric. Subject's height (mm)}
+\item{BP}{numeric. Subject's systolic blood pressure (mm Hg)}
+}
 }
 \description{
 A random sample of Peruvian Indians born in the Andes mountains, but who

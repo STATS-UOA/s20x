@@ -4,6 +4,9 @@
 \name{mergers.df}
 \alias{mergers.df}
 \title{Merger Days}
+\format{
+A numeric vector with 38 observations.
+}
 \description{
 A random selection of 38 consummated mergers from the USA, 1982, giving the
 number of days between the date the merger was announced and the date the

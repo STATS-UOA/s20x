@@ -5,11 +5,12 @@
 \alias{seeds.df}
 \title{Seeds Data}
 \format{
-A data frame with 48 observations on 3 variables. \tabular{rlll}{
-[,1] \tab Light \tab integer \tab Seeds exposed to light (N=No, Y=Yes) \cr
-[,2] \tab Water \tab integer \tab Amount of water, higher levels correspond
-to more water (1, 2, 3, 4, 5, 6) \cr [,3] \tab Count \tab integer \tab
-Number of seeds that germinated (out of 100) }
+A data frame with 48 observations on 3 variables.
+\describe{
+\item{Light}{integer. Seeds exposed to light (N=No, Y=Yes)}
+\item{Water}{integer. Amount of water, higher levels correspond to more water (1, 2, 3, 4, 5, 6)}
+\item{Count}{integer. Number of seeds that germinated (out of 100)}
+}
 }
 \description{
 These data record the number of seeds (out of 100) that germinated when

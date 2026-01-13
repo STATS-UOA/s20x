@@ -5,16 +5,17 @@
 \alias{technitron.df}
 \title{Technitron Salary Information}
 \format{
-A data frame with 46 observations on 8 variables. \tabular{rlll}{
-[,1] \tab salary \tab numeric \tab Annual Salary (dollars)\cr [,2] \tab yrs.empl
-\tab numeric \tab Number of years employed at Technitron \cr [,3] \tab
-prior.yrs \tab numeric \tab Number of years prior experience \cr [,4] \tab
-edu \tab numeric \tab Years of education after high school \cr [,5] \tab id
-\tab numeric \tab Company identification number \cr [,6] \tab gender \tab
-numeric \tab Gender (0 = female, 1 = male)\cr [,7] \tab dept \tab numeric
-\tab Department employee works in (1 = Sales, 2 = Purchasing, 3 =
-Advertising, 4 = Engineering) \cr [,8] \tab super \tab numeric \tab Number
-of employees supervised }
+A data frame with 46 observations on 8 variables.
+\describe{
+\item{salary}{numeric. Annual Salary (dollars)}
+\item{yrs.empl}{numeric. Number of years employed at Technitron}
+\item{prior.yrs}{numeric. Number of years prior experience}
+\item{edu}{numeric. Years of education after high school}
+\item{id}{numeric. Company identification number}
+\item{gender}{numeric. Gender (0 = female, 1 = male)}
+\item{dept}{numeric. Department employee works in (1 = Sales, 2 = Purchasing, 3 = Advertising, 4 = Engineering)}
+\item{super}{numeric. Number of employees supervised}
+}
 }
 \description{
 Salary information for all salaried employees of the Technitron Company.

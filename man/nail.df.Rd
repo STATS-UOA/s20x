@@ -5,9 +5,11 @@
 \alias{nail.df}
 \title{Nail Polish Data}
 \format{
-A data frame with 60 observations on 2 variables. \tabular{rlll}{
-[,1] \tab polish \tab factor \tab Type of polish (Regular, Quick) \cr [,2]
-\tab dry \tab integer \tab Time (in seconds) for the polish to dry }
+A data frame with 60 observations on 2 variables.
+\describe{
+\item{polish}{factor. Type of polish (Regular, Quick)}
+\item{dry}{integer. Time (in seconds) for the polish to dry}
+}
 }
 \description{
 These data were collected to determine whether quick drying nail polish or

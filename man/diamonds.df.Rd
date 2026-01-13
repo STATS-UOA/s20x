@@ -5,9 +5,11 @@
 \alias{diamonds.df}
 \title{Prices and Weights of Diamonds}
 \format{
-A data frame with 48 observations on 2 variables. \tabular{rlll}{
-[,1] \tab price \tab numeric \tab Price of ring (Singapore dollars) \cr [,2]
-\tab weight \tab numeric \tab Weight of Diamond (carats) }
+A data frame with 48 observations on 2 variables.
+\describe{
+\item{price}{numeric. Price of ring (Singapore dollars)}
+\item{weight}{numeric. Weight of Diamond (carats)}
+}
 }
 \description{
 Prices of ladies' diamond rings from a Singaporean retailer and the weight

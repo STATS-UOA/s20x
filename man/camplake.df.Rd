@@ -5,10 +5,12 @@
 \alias{camplake.df}
 \title{Age and Length of Camp Lake Bluegills}
 \format{
-A data frame with 66 observations on 3 variables. \tabular{rlll}{
-[,1] \tab Age \tab numeric \tab Age of fish (years)\cr [,2] \tab
-Scale.Radius \tab numeric \tab Age of fish (radius of the key scale (mm/100)
-)\cr [,3] \tab Length \tab numeric \tab Length at capture (mm) }
+A data frame with 66 observations on 3 variables.
+\describe{
+\item{Age}{numeric. Age of fish (years)}
+\item{Scale.Radius}{numeric. Age of fish (radius of the key scale (mm/100) )}
+\item{Length}{numeric. Length at capture (mm)}
+}
 }
 \description{
 66 bluegills were captured from Camp Lake, Minnesota. For each bluegill we

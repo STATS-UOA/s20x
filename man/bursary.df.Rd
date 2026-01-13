@@ -5,10 +5,11 @@
 \alias{bursary.df}
 \title{Bursary Results for Auckland Secondary Schools}
 \format{
-A data frame with 75 observations on 2 variables. \tabular{rlll}{
-[,1] \tab decile \tab numeric \tab Decile rating of the school \cr [,2] \tab
-pass.rate \tab numeric \tab Percentage of eligible students who gained a 'B'
-Busary or better }
+A data frame with 75 observations on 2 variables.
+\describe{
+\item{decile}{numeric. Decile rating of the school}
+\item{pass.rate}{numeric. Percentage of eligible students who gained a 'B' Busary or better}
+}
 }
 \description{
 Data for the 2001 Bursary results for 75 secondary schools in the Auckland

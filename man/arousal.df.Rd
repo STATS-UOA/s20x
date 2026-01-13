@@ -5,11 +5,12 @@
 \alias{arousal.df}
 \title{Changes in Pupil Size with Emotional Arousal}
 \format{
-A data frame with 160 observations on 3 variables. \tabular{rlll}{
-[,1] \tab arousal \tab numeric \tab Change in the subject's pupil size \cr
-[,2] \tab gender \tab factor \tab Subject's gender (female, male) \cr [,3]
-\tab picture \tab factor \tab Picture shown to subject (infant, landscape,
-nude female, nude male) }
+A data frame with 160 observations on 3 variables.
+\describe{
+\item{arousal}{numeric. Change in the subject's pupil size}
+\item{gender}{factor. Subject's gender (female, male)}
+\item{picture}{factor. Picture shown to subject (infant, landscape, nude female, nude male)}
+}
 }
 \description{
 Data from an experiment to measure the effect of different images on
