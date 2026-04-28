@@ -12,8 +12,8 @@ AR(p) errors, for example `y ~ x + ar(1)`.}
 
 \item{data}{a data frame containing the variables in the model.}
 
-\item{time}{optional unquoted name of the time variable in `data`. If omitted
-for an AR model, the row order of `data` is used.}
+\item{time}{optional unquoted or quoted name of the time variable in `data`.
+If omitted for an AR model, the row order of `data` is used.}
 
 \item{method}{fitting method passed to [nlme::gls()] for AR models. Defaults
 to `"REML"`.}

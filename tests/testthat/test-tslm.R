@@ -79,7 +79,7 @@ test_that("tslm validates AR order", {
   )
 })
 
-test_that("tslm requires time as an unquoted column name", {
+test_that("tslm accepts quoted and unquoted time column names", {
   skip_if_not_installed("nlme")
 
   data = data.frame(
@@ -88,8 +88,21 @@ test_that("tslm requires time as an unquoted column name", {
     t = seq_len(8)
   )
 
-  expect_error(
-    tslm(y ~ x + ar(1), data = data, time = "t"),
-    "unquoted column name"
-  )
+  quotedFit = tslm(y ~ x + ar(1), data = data, time = "t")
+  unquotedFit = tslm(y ~ x + ar(1), data = data, time = t)
+
+  expect_equal(quotedFit$time, "t")
+  expect_equal(unquotedFit$time, "t")
+})
+
+test_that("tslm exposes common model generics", {
+  fit = tslm(dist ~ speed, data = cars)
+  lmFit = lm(dist ~ speed, data = cars)
+
+  expect_equal(formula(fit), dist ~ speed)
+  expect_equal(vcov(fit), vcov(lmFit))
+  expect_equal(nobs(fit), nobs(lmFit))
+  expect_equal(as.numeric(logLik(fit)), as.numeric(logLik(lmFit)))
+  expect_equal(AIC(fit), AIC(lmFit))
+  expect_equal(BIC(fit), BIC(lmFit))
 })

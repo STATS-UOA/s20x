@@ -11,8 +11,8 @@
 #' @param formula a model formula. Use `ar(p)` in the right hand side to specify
 #'   AR(p) errors, for example `y ~ x + ar(1)`.
 #' @param data a data frame containing the variables in the model.
-#' @param time optional unquoted name of the time variable in `data`. If omitted
-#'   for an AR model, the row order of `data` is used.
+#' @param time optional unquoted or quoted name of the time variable in `data`.
+#'   If omitted for an AR model, the row order of `data` is used.
 #' @param method fitting method passed to [nlme::gls()] for AR models. Defaults
 #'   to `"REML"`.
 #' @param ... additional arguments passed to [stats::lm()] or [nlme::gls()].
@@ -29,7 +29,8 @@
 #' summary(fitAr)
 #'
 #' @export
-#' @importFrom stats lm as.formula formula terms coef residuals fitted predict
+#' @importFrom stats AIC BIC lm as.formula formula terms coef residuals fitted predict
+#' @importFrom stats logLik model.frame nobs vcov
 #' @importFrom utils packageVersion
 #' @importFrom methods is
 #' @seealso [stats::lm()], [nlme::gls()], [nlme::corARMA()]
@@ -146,6 +147,41 @@ predict.tslm = function(object, ...) {
   stats::predict(object$fit, ...)
 }
 
+#' @export
+formula.tslm = function(x, ...) {
+  x$formula
+}
+
+#' @export
+model.frame.tslm = function(formula, ...) {
+  stats::model.frame(formula$fit, ...)
+}
+
+#' @export
+vcov.tslm = function(object, ...) {
+  stats::vcov(object$fit, ...)
+}
+
+#' @export
+nobs.tslm = function(object, ...) {
+  stats::nobs(object$fit, ...)
+}
+
+#' @export
+logLik.tslm = function(object, ...) {
+  stats::logLik(object$fit, ...)
+}
+
+#' @export
+AIC.tslm = function(object, ..., k = 2) {
+  stats::AIC(object$fit, ..., k = k)
+}
+
+#' @export
+BIC.tslm = function(object, ...) {
+  stats::BIC(object$fit, ...)
+}
+
 parseTslmFormula = function(formula) {
   if (!inherits(formula, "formula")) {
     stop("'formula' must be a formula", call. = FALSE)
@@ -256,11 +292,15 @@ captureOptionalName = function(argumentExpression) {
     return(NULL)
   }
 
-  if (!is.symbol(argumentExpression)) {
-    stop("'time' must be supplied as an unquoted column name", call. = FALSE)
+  if (is.symbol(argumentExpression)) {
+    return(as.character(argumentExpression))
   }
 
-  as.character(argumentExpression)
+  if (is.character(argumentExpression) && length(argumentExpression) == 1 && nzchar(argumentExpression)) {
+    return(argumentExpression)
+  }
+
+  stop("'time' must be supplied as a column name", call. = FALSE)
 }
 
 requireSuggestedPackage = function(package) {
