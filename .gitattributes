@@ -1,9 +1,28 @@
-*.txt   text
-*.Rmd   text
-*.md    text
-*.r	text
-*.R     text
-*.Rd	text
-*.yaml	text
-*.yml   text
-*.Rproj text
+* text=auto eol=lf
+
+*.R text eol=lf
+*.Rmd text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+*.tsv text eol=lf
+*.sh text eol=lf
+DESCRIPTION text eol=lf
+NAMESPACE text eol=lf
+.Rbuildignore text eol=lf
+.Renviron text eol=lf
+.gitignore text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.rds binary
+*.RData binary

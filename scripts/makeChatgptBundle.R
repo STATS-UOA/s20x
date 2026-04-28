@@ -3,15 +3,15 @@
 # Create a compact ChatGPT bundle for staged s20x development.
 #
 # Run from the package root, for example:
-#   Rscript scripts/makeChatgptBundle.R --stage 10.1
-#   Rscript scripts/makeChatgptBundle.R --stage 10.1 --base master
-#   Rscript scripts/makeChatgptBundle.R --stage 10.1 --base HEAD
-#   Rscript scripts/makeChatgptBundle.R --stage 10.1 --include-tests
+#   Rscript scripts/makeChatgptBundle.R --stage s20x_stage3
+#   Rscript scripts/makeChatgptBundle.R --stage s20x_stage3 --base master
+#   Rscript scripts/makeChatgptBundle.R --stage s20x_stage3 --base HEAD
+#   Rscript scripts/makeChatgptBundle.R --stage s20x_stage3 --include-tests
 
 readArgs = function(args) {
     out = list(
         stage = NULL,
-        base = "HEAD",
+        base = "master",
         outputDir = "chatgpt-bundles",
         includeTests = FALSE,
         includeAllChangedFiles = TRUE
@@ -59,15 +59,15 @@ printUsage = function() {
             "",
             "Options:",
             "  --stage STAGE            Stage label, for example 10.1",
-            "  --base REF               Git ref to diff against; default: HEAD/current branch tip",
+            "  --base REF               Git ref to diff against; default: master",
             "  --output-dir DIR         Output directory; default: chatgpt-bundles",
             "  --include-tests          Include tests/testthat if present",
             "  --help, -h               Show this help",
             "",
             "Examples:",
-            "  Rscript scripts/makeChatgptBundle.R --stage 10.1",
-            "  Rscript scripts/makeChatgptBundle.R --stage 10.1 --base master",
-            "  Rscript scripts/makeChatgptBundle.R --stage 10.1 --base stage9_completed",
+            "  Rscript scripts/makeChatgptBundle.R --stage s20x_stage3",
+            "  Rscript scripts/makeChatgptBundle.R --stage s20x_stage3 --base master",
+            "  Rscript scripts/makeChatgptBundle.R --stage s20x_stage3 --base HEAD",
             sep = "\n"
         ),
         "\n"
@@ -261,7 +261,7 @@ makeContextMarkdown = function(stage, baseRef, fileSets) {
         "",
         paste0(
             "I am working on Stage ", stage,
-            " of the What is my fitted model App. Treat this bundle as the current project context. ",
+            " of the s20x R package. Treat this bundle as the current project context. ",
             "Please use my R development style and staged workflow conventions."
         ),
         "",
@@ -329,7 +329,7 @@ createBundle = function(options) {
 
     stageName = safeStageName(options$stage)
     timestamp = format(Sys.time(), "%Y%m%d-%H%M%S")
-    bundleName = paste0("stage", stageName, "_chatgpt_bundle_", timestamp)
+    bundleName = paste0(stageName, "_chatgpt_bundle_", timestamp)
     bundleRoot = file.path(options$outputDir, bundleName)
 
     dir.create(bundleRoot, recursive = TRUE, showWarnings = FALSE)

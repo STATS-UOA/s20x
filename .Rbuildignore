@@ -13,3 +13,6 @@
 ^\.positai$
 ^\.claude$
 ^\.stage.*_changes($|/)
+^\.DS_Store$
+^\.gitattributes$
+^s20x_stage.*_completed\.zip$
