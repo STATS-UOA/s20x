@@ -7,9 +7,9 @@
 \format{
 A data frame with 66 observations on 3 variables.
 \describe{
-\item{Density}{numeric. Density of the chalk}
-\item{Lab}{integer. Laboratory where testing done}
-\item{Chalk}{factor. Chalk tested (A, B)}
+\item{Density}{Numeric density of the chalk.}
+\item{Lab}{Integer laboratory identifier.}
+\item{Chalk}{Factor giving the chalk brand tested (A, B).}
 }
 }
 \description{

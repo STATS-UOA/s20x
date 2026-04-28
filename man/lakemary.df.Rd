@@ -7,8 +7,8 @@
 \format{
 A data frame with 78 observations on 2 variables.
 \describe{
-\item{Age}{numeric. Age of the fish (years)}
-\item{Length}{numeric. Length at capture (mm)}
+\item{Age}{Numeric Age of the fish (years)}
+\item{Length}{Numeric Length at capture (mm)}
 }
 }
 \description{

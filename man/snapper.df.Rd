@@ -5,13 +5,18 @@
 \alias{snapper.df}
 \title{Snapper Weight Data}
 \format{
-A data frame with 844 observations on 2 variables. \describe{ \item{len}{Fork length in centimetres. The fork length of a fish measured from the tip of the snout to the end of the middle caudal fin rays and is used in fishes in which it is difficult to tell where the vertebral column ends. Essentially it is the measurement from the tip of the 'nose' of the fish to the 'vee' in the tail.} \item{wgt}{Weight of the fish in kilograms (kg).} }
+A data frame with 844 observations on 2 variables.
+\describe{
+\item{len}{Numeric fork length in centimetres. Fork length is measured from the tip of the snout to the fork of the tail.}
+\item{wgt}{Numeric weight of the fish, in kilograms.}
+}
 }
 \source{
 Russell Millar, University of Auckland.
 }
 \description{
-Weight and length measurements of 844 snapper (\href{https://en.wikipedia.org/wiki/Australasian_snapper}{Pagrus auratus})
+Weight and length measurements of 844 snapper
+(\href{https://en.wikipedia.org/wiki/Australasian_snapper}{Pagrus auratus})
 caught in the Hauraki Gulf, near Auckland, New Zealand.
 }
 \keyword{datasets}

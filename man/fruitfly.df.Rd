@@ -7,8 +7,8 @@
 \format{
 A data frame with 75 observations on 2 variables.
 \describe{
-\item{fecundity}{numeric. Number of eggs laid, per day, per fruitfly}
-\item{strain}{factor. Strain of fruitfly (NS, RS, SS)}
+\item{fecundity}{Numeric Number of eggs laid, per day, per fruitfly.}
+\item{strain}{Factor Strain of fruitfly (NS, RS, SS)}
 }
 }
 \source{

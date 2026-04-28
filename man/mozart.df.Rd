@@ -7,9 +7,9 @@
 \format{
 A data frame with 88 observations on 3 variables.
 \describe{
-\item{Time}{numeric. Time of each movement (seconds)}
-\item{Movement}{factor. Movement (M1, M2, M3, M4)}
-\item{Period}{factor. Period that the symphony was written (early, late)}
+\item{Time}{Numeric Time of each movement (seconds)}
+\item{Movement}{Factor Movement (M1, M2, M3, M4)}
+\item{Period}{Factor Period that the symphony was written (early, late)}
 }
 }
 \description{

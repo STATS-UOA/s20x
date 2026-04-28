@@ -7,8 +7,8 @@
 \format{
 A data frame with 20 observations on 2 variables.
 \describe{
-\item{purchasers}{numeric. Age of the person in the household responsible for purchases of Crest}
-\item{nonpurchasers}{numeric. Age of the person in the household responsible for purchases of other brands of toothpaste}
+\item{purchasers}{Numeric Age of the person in the household responsible for purchases of Crest.}
+\item{nonpurchasers}{Numeric Age of the person in the household responsible for purchases of other brands of toothpaste.}
 }
 }
 \description{

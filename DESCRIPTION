@@ -1,5 +1,5 @@
 Package: s20x
-Version: 3.2.202
+Version: 3.2.203
 Title: Functions for University of Auckland Course STATS 201/208 Data
         Analysis
 Authors@R: c(
@@ -30,20 +30,4 @@ License: GPL-2 | file LICENSE
 RoxygenNote: 7.3.3
 URL: https://github.com/STATS-UOA/s20x
 BugReports: https://github.com/STATS-UOA/s20x/issues
-NeedsCompilation: no
-Packaged: 2026-04-28 01:08:18 UTC; jcur002
-Author: Brant Deppa [aut] (Wrote the original R scripts this package is derived
-    from),
-  James Curran [aut, cre] (Wrote the original R package. Current
-    maintainer.),
-  Hannah Yun [ctb],
-  Rachel Fewster [ctb],
-  Russell Millar [ctb],
-  Ben Stevenson [ctb],
-  Andrew Balemi [ctb],
-  Chris Wild [ctb],
-  Sophie Jones [ctb],
-  Dineika Chandra [ctr],
-  Brendan McArdle [ctr]
-Maintainer: James Curran <j.curran@auckland.ac.nz>
 Config/testthat/edition: 3

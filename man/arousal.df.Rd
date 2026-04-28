@@ -7,9 +7,9 @@
 \format{
 A data frame with 160 observations on 3 variables.
 \describe{
-\item{arousal}{numeric. Change in the subject's pupil size}
-\item{gender}{factor. Subject's gender (female, male)}
-\item{picture}{factor. Picture shown to subject (infant, landscape, nude female, nude male)}
+\item{arousal}{Numeric Change in the subject's pupil size.}
+\item{gender}{Factor Subject's gender (female, male)}
+\item{picture}{Factor Picture shown to subject (infant, landscape, nude female, nude male)}
 }
 }
 \description{

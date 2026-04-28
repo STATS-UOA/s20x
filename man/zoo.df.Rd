@@ -7,12 +7,12 @@
 \format{
 A data frame with 440 observations on 6 variables.
 \describe{
-\item{attendance}{numeric. Number of visitors}
-\item{time}{numeric. Time in days since the start of the study}
-\item{sun.yesterday}{numeric. Hours of sunshine the previous day}
-\item{tv.ads}{numeric. Average spending on TV advertising in the previous week (1000s of dollars per day)}
-\item{nice.day}{factor. Assessment based on number of hours of sunshine (0 = No, 1 = Yes)}
-\item{day.type}{factor. Type of day (1 = ordinary weekday, 2 = weekend day, 3 = school holiday weekday, 4 = public holday)}
+\item{attendance}{Numeric Number of visitors.}
+\item{time}{Numeric Time in days since the start of the study.}
+\item{sun.yesterday}{Numeric Hours of sunshine the previous day.}
+\item{tv.ads}{Numeric Average spending on TV advertising in the previous week (1000s of dollars per day)}
+\item{nice.day}{Factor Assessment based on number of hours of sunshine (0 = No, 1 = Yes)}
+\item{day.type}{Factor Type of day (1 = ordinary weekday, 2 = weekend day, 3 = school holiday weekday, 4 = public holiday)}
 }
 }
 \description{

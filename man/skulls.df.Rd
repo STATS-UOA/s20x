@@ -7,8 +7,8 @@
 \format{
 A data frame with 150 observations on 2 variables.
 \describe{
-\item{measurement}{integer}
-\item{year}{integer}
+\item{measurement}{Integer maximum breadth measurement of the skull.}
+\item{year}{Integer epoch year group for the skull.}
 }
 }
 \source{

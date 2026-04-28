@@ -7,8 +7,10 @@
 \format{
 The data frame consists of 400 observations on 2 variables.
 \describe{
-\item{length}{integer}
-\item{book}{factor. levels (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag,}
+\item{length}{Integer sentence length, measured as the number of words in the sentence.}
+\item{book}{Factor giving the book from which the sentence was sampled
+  (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag, Rising.Sun, Shining, Stand,
+  T.Knock).}
 }
 }
 \description{
@@ -16,8 +18,8 @@ This data consists of 50 sentence lengths from each of 8 books. The books
 \dQuote{Disclosure} and \dQuote{Rising Sun} were written by Michael
 Crichton, whilst the others \dQuote{Four Past Midnight}, \dQuote{The Dark
 Half}, \dQuote{ Eye of the Dragon}, \dQuote{The Shining}, \dQuote{The Stand}
-and \dQuote{The Tommy-Knockers} where written by Stephen King. The pages and
-sentences where chosen using a multistage design where the pages where
+and \dQuote{The Tommy-Knockers} were written by Stephen King. The pages and
+sentences were chosen using a multistage design where the pages were
 selected at random, and then sentences within each page were selected at
 random. These data were collected by James Curran.
 }

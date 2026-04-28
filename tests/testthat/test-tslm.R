@@ -59,3 +59,37 @@ test_that("tslm reports missing time variables clearly", {
     "time variable 'missingTime'"
   )
 })
+
+test_that("tslm rejects multiple error structures", {
+  expect_error(
+    s20x:::parseTslmFormula(dist ~ speed + ar(1) + ar(2)),
+    "Specify only one error structure"
+  )
+})
+
+test_that("tslm validates AR order", {
+  expect_error(
+    s20x:::parseTslmFormula(dist ~ speed + ar(0)),
+    "positive integer"
+  )
+
+  expect_error(
+    s20x:::parseTslmFormula(dist ~ speed + ar(1.5)),
+    "positive integer"
+  )
+})
+
+test_that("tslm requires time as an unquoted column name", {
+  skip_if_not_installed("nlme")
+
+  data = data.frame(
+    y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
+    x = seq_len(8),
+    t = seq_len(8)
+  )
+
+  expect_error(
+    tslm(y ~ x + ar(1), data = data, time = "t"),
+    "unquoted column name"
+  )
+})

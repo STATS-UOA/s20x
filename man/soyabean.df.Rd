@@ -7,9 +7,9 @@
 \format{
 A data frame with 32 observations on 3 variables.
 \describe{
-\item{yield}{numeric. Yield of each plant}
-\item{cultivar}{factor. Cultivar used (cult1, cult2, cult3, cult4)}
-\item{planttime}{factor. Month of planting (Novemb, Decemb)}
+\item{yield}{Numeric Yield of each plant.}
+\item{cultivar}{Factor Cultivar used (cult1, cult2, cult3, cult4)}
+\item{planttime}{Factor Month of planting (Novemb, Decemb)}
 }
 }
 \source{
