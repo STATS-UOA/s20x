@@ -244,6 +244,28 @@ formatFileList = function(paths) {
     }
 }
 
+removeBundleDirectory = function(bundleRootAbs) {
+    if (!dir.exists(bundleRootAbs)) {
+        return(invisible(TRUE))
+    }
+
+    files = list.files(bundleRootAbs, recursive = TRUE, all.files = TRUE, no.. = TRUE, full.names = TRUE)
+    if (length(files) > 0) {
+        Sys.chmod(files, mode = "0777", use_umask = FALSE)
+    }
+    Sys.chmod(bundleRootAbs, mode = "0777", use_umask = FALSE)
+
+    for (attempt in seq_len(5)) {
+        unlink(bundleRootAbs, recursive = TRUE, force = TRUE)
+        if (!dir.exists(bundleRootAbs)) {
+            return(invisible(TRUE))
+        }
+        Sys.sleep(0.25 * attempt)
+    }
+
+    invisible(FALSE)
+}
+
 makeContextMarkdown = function(stage, baseRef, fileSets) {
     paste(
         "# ChatGPT stage bundle",
@@ -416,11 +438,9 @@ createBundle = function(options) {
 
     setwd(oldWd)
 
-    if (dir.exists(bundleRootAbs)) {
-        cleanupOk = unlink(bundleRootAbs, recursive = TRUE, force = TRUE) == 0
-        if (!isTRUE(cleanupOk) && dir.exists(bundleRootAbs)) {
-            warning("Created bundle zip but could not remove temporary directory: ", bundleRootAbs, call. = FALSE)
-        }
+    cleanupOk = removeBundleDirectory(bundleRootAbs)
+    if (!isTRUE(cleanupOk) && dir.exists(bundleRootAbs)) {
+        warning("Created bundle zip but could not remove temporary directory: ", bundleRootAbs, call. = FALSE)
     }
 
     normalizePath(zipPath, winslash = "/", mustWork = TRUE)
