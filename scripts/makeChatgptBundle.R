@@ -124,14 +124,19 @@ normaliseGitPaths = function(paths) {
 }
 
 isInsidePath = function(path, parent) {
+    path = gsub("\\\\", "/", path)
     parent = gsub("\\\\", "/", parent)
     parent = sub("/+$", "", parent)
 
-    if (!nzchar(parent) || identical(parent, ".")) {
-        return(FALSE)
+    if (length(path) == 0) {
+        return(logical(0))
     }
 
-    startsWith(path, paste0(parent, "/")) || identical(path, parent)
+    if (length(parent) != 1 || !nzchar(parent) || identical(parent, ".")) {
+        return(rep(FALSE, length(path)))
+    }
+
+    startsWith(path, paste0(parent, "/")) | path == parent
 }
 
 filterBundleGeneratedFiles = function(paths, outputDir) {
