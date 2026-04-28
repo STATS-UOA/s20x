@@ -21,7 +21,7 @@ NULL
 #' Apples Data
 #' 
 #' These data come from a classic long-term experiment conducted at the East
-#' Malling Research Station, Kent, which is the centre four research into apple
+#' Malling Research Station, Kent, which is the centre for research into apple
 #' growing in the U.K. Commercial apple trees consist of two parts grafted
 #' together. The lowest part, the \emph{rootstock}, largely determines the size
 #' of the tree, while the upper part (the \emph{scion}) determines the fruit
@@ -32,22 +32,26 @@ NULL
 #' rootstock were planted, all trees having the same scion. Rootstocks I-IX
 #' were asexually produced, while X-XVI were sexually produced. In the winter
 #' of 1933-4 a number of trees were removed to make room for more, and the data
-#' presented here consists of the above ground weights of 104 trees felled in
-#' this period. No trees of types VIII, XI or XIV were felled.  The description
-#' is from Lee (\cite{Lee, A.J. Data analysis. An introduction based on R.
-#' University of Auckland 1994}). The data are from Andrews and Herzberg
-#' (1985).
+#' presented here consists of the above-ground weights of 104 trees felled in
+#' this period. No trees of types VIII, XI or XIV were felled. The description
+#' is adapted from Lee (1994). The data are from Andrews and Herzberg (1985).
 #' 
 #' 
 #' @name apples.df
 #' @docType data
 #' @format The data consist of a data frame with 104 observations on 4 variables.
 #' \describe{
-#' \item{Rootstock}{factor. levels (I, II, III, IV, IX, V, VI, VII, X, XII, XIII, XV, XVI)}
-#' \item{Weight}{integer. Above-ground weight of tree (pounds, lb).}
-#' \item{Weight_kg}{numeric. Above-ground weight of tree (kilograms, kg); \code{Weight_kg = Weight * 0.45359237}.}
-#' \item{Propagated}{factor. levels (cutting, seed)}
+#' \item{Rootstock}{Factor giving the rootstock type (I, II, III, IV, IX, V, VI, VII, X, XII, XIII, XV, XVI).}
+#' \item{Weight}{Integer Above-ground weight of tree (pounds, lb).}
+#' \item{Weight_kg}{Numeric Above-ground weight of tree (kilograms, kg); \code{Weight_kg = Weight * 0.45359237}.}
+#' \item{Propagated}{Factor giving the propagation method (cutting, seed).}
 #' }
+#' @references Andrews, D. F. and Herzberg, A. M. (1985). \emph{Data: A
+#' Collection of Problems from Many Fields for the Student and Research Worker}.
+#' New York: Springer.
+#'
+#' Lee, A. J. (1994). \emph{Data Analysis: An Introduction Based on R}.
+#' University of Auckland.
 #' @keywords datasets
 
 NULL
@@ -64,9 +68,9 @@ NULL
 #' @docType data
 #' @format A data frame with 160 observations on 3 variables.
 #' \describe{
-#' \item{arousal}{numeric. Change in the subject's pupil size}
-#' \item{gender}{factor. Subject's gender (female, male)}
-#' \item{picture}{factor. Picture shown to subject (infant, landscape, nude female, nude male)}
+#' \item{arousal}{Numeric Change in the subject's pupil size.}
+#' \item{gender}{Factor Subject's gender (female, male)}
+#' \item{picture}{Factor Picture shown to subject (infant, landscape, nude female, nude male)}
 #' }
 #' @keywords datasets
 
@@ -92,29 +96,37 @@ NULL
 #'   \item{year}{Year of observation as a factor with levels
 #'     \code{1970} to \code{1978}.}
 #' }
+#' @note The original primary source for this monthly beer-production series is
+#'   not identified in the available package materials.
 #' @keywords datasets
 
 NULL
 
-#' Body Image and Ethnicity
-#' 
-#' Data collected to examine how women from various ethnic groups rate their
-#' body image. All subjects were slightly underweight for their body size.
-#' 
-#' 
 #' @name body.df
 #' @docType data
+#' @title Body Image and Ethnicity Data
+#' @description This dataset originates from a study conducted at the University of Auckland 
+#' in the early 1990s by Dr. R.A. Marshall and colleagues from the Department of Psychology. 
+#' The research explored how cultural background and ethnic identity influence body image 
+#' perceptions within the specific context of Aotearoa New Zealand.
+#' @details The study specifically focused on a cohort of women who were generally 
+#' "thin" (slightly underweight for their body size). This was designed to investigate 
+#' whether body dissatisfaction and varying self-perceptions persisted even among individuals 
+#' who already met or approached Western "thin" ideals, and how these perceptions 
+#' differed across Asian, European, Māori, and Pacific ethnic groups.
 #' @format A data frame with 246 observations on 8 variables.
 #' \describe{
-#' \item{ethnicity}{factor. Subject's ethnicity (Asian, Europn, Maori, Pacific)}
-#' \item{married}{.. .}
-#' \item{bodyim}{factor. Subject's rating of themself (slight.uw, right, slight.ow, mod.ow, very.ow)}
-#' \item{sm.ever}{.. .}
-#' \item{weight}{.. .}
-#' \item{height}{.. .}
-#' \item{age}{.. .}
-#' \item{stressgp}{.. .}
+#' \item{ethnicity}{Factor Subject's ethnicity (Asian, Europn, Maori, Pacific)}
+#' \item{married}{Factor Whether the subject is married (no, yes)}
+#' \item{bodyim}{Factor Subject's rating of themself (slight.uw, right, slight.ow, mod.ow, very.ow)}
+#' \item{sm.ever}{Factor Whether the subject has ever smoked (no, yes)}
+#' \item{weight}{Numeric Weight in kg.}
+#' \item{height}{Numeric Height in cm.}
+#' \item{age}{Numeric Age in years.}
+#' \item{stressgp}{Factor Stress level group (low, medium, high)}
 #' }
+#' @source Marshall, R.A., Department of Psychology, University of Auckland.
+#' @references Lee, A. J. (1994). Data Analysis: An Introduction Based on R. University of Auckland.
 #' @keywords datasets
 
 NULL
@@ -125,8 +137,8 @@ NULL
 #' \dQuote{Disclosure} and \dQuote{Rising Sun} were written by Michael
 #' Crichton, whilst the others \dQuote{Four Past Midnight}, \dQuote{The Dark
 #' Half}, \dQuote{ Eye of the Dragon}, \dQuote{The Shining}, \dQuote{The Stand}
-#' and \dQuote{The Tommy-Knockers} where written by Stephen King. The pages and
-#' sentences where chosen using a multistage design where the pages where
+#' and \dQuote{The Tommy-Knockers} were written by Stephen King. The pages and
+#' sentences were chosen using a multistage design where the pages were
 #' selected at random, and then sentences within each page were selected at
 #' random. These data were collected by James Curran.
 #' 
@@ -135,8 +147,10 @@ NULL
 #' @docType data
 #' @format The data frame consists of 400 observations on 2 variables.
 #' \describe{
-#' \item{length}{integer}
-#' \item{book}{factor. levels (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag,}
+#' \item{length}{Integer sentence length, measured as the number of words in the sentence.}
+#' \item{book}{Factor giving the book from which the sentence was sampled
+#'   (4.Past.Mid, Dark.Half, Disclosure, Eye.Drag, Rising.Sun, Shining, Stand,
+#'   T.Knock).}
 #' }
 #' @keywords datasets
 
@@ -153,8 +167,8 @@ NULL
 #' @docType data
 #' @format A data frame with 75 observations on 2 variables.
 #' \describe{
-#' \item{decile}{numeric. Decile rating of the school}
-#' \item{pass.rate}{numeric. Percentage of eligible students who gained a 'B' Busary or better}
+#' \item{decile}{Numeric Decile rating of the school.}
+#' \item{pass.rate}{Numeric percentage of eligible students who gained a B Bursary or better.}
 #' }
 #' @keywords datasets
 
@@ -172,9 +186,9 @@ NULL
 #' @docType data
 #' @format A data frame with 100 observations on 3 variables.
 #' \describe{
-#' \item{Butterfat}{numeric. Mean percentage of butterfat per cow}
-#' \item{Breed}{factor. Breed (ayrshire, canadian, guernesy, holst.fres, jersey)}
-#' \item{Age}{factor. Age group (2yo, mature)}
+#' \item{Butterfat}{Numeric mean percentage of butterfat per cow.}
+#' \item{Breed}{Factor giving the cattle breed (ayrshire, canadian, guernesy, holst.fres, jersey).}
+#' \item{Age}{Factor giving the age group (2yo, mature).}
 #' }
 #' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
@@ -197,9 +211,9 @@ NULL
 #' @docType data
 #' @format A data frame with 66 observations on 3 variables.
 #' \describe{
-#' \item{Age}{numeric. Age of fish (years)}
-#' \item{Scale.Radius}{numeric. Age of fish (radius of the key scale (mm/100) )}
-#' \item{Length}{numeric. Length at capture (mm)}
+#' \item{Age}{Numeric age of the fish, in years.}
+#' \item{Scale.Radius}{Numeric radius of the key scale, in hundredths of a millimetre.}
+#' \item{Length}{Numeric length at capture, in millimetres.}
 #' }
 #' @keywords datasets
 
@@ -216,9 +230,9 @@ NULL
 #' @docType data
 #' @format A data frame with 66 observations on 3 variables.
 #' \describe{
-#' \item{Density}{numeric. Density of the chalk}
-#' \item{Lab}{integer. Laboratory where testing done}
-#' \item{Chalk}{factor. Chalk tested (A, B)}
+#' \item{Density}{Numeric density of the chalk.}
+#' \item{Lab}{Integer laboratory identifier.}
+#' \item{Chalk}{Factor giving the chalk brand tested (A, B).}
 #' }
 #' @keywords datasets
 
@@ -236,8 +250,8 @@ NULL
 #' @docType data
 #' @format A data frame with 19 observations on 2 variables.
 #' \describe{
-#' \item{score}{numeric. Questionnaire score}
-#' \item{selfassess}{ordered factor. Self-assessed level of expertise (1 = low, 2 = medium, 3 = high)}
+#' \item{score}{Numeric questionnaire score.}
+#' \item{selfassess}{Ordered factor giving the self-assessed level of expertise (1 = low, 2 = medium, 3 = high).}
 #' }
 #' @keywords datasets
 
@@ -253,21 +267,21 @@ NULL
 #' @docType data
 #' @format A data frame with 146 observations on 15 variables.
 #' \describe{
-#' \item{Grade}{factor. Final grade for the course (A, B, C, D)}
-#' \item{Pass}{factor. Passed the course (No, Yes)}
-#' \item{Exam}{numeric. Mark in the final exam}
-#' \item{Degree}{factor. Degree enrolled in (BA, BCom, BSc, Other)}
-#' \item{Gender}{factor. Gender (Female, Male)}
-#' \item{Attend}{factor. Regularly attended class (No, Yes)}
-#' \item{Assign}{numeric. Assignment mark}
-#' \item{Test}{numeric. Test mark}
-#' \item{B}{numeric. Mark for the short answer section of the exam}
-#' \item{C}{numeric. Mark for the long answer section of the exam}
-#' \item{MC}{numeric. Mark for the multiple choice section of the exam}
-#' \item{Colour}{factor. Colour of the exam booklet (Blue, Green, Pink, Yellow)}
-#' \item{Stage1}{factor. Stage one grade (A, B, C)}
-#' \item{Years.Since}{numeric. Number of years since doing Stage 1}
-#' \item{Repeat}{factor. Repeating the paper (No, Yes)}
+#' \item{Grade}{Factor Final grade for the course (A, B, C, D)}
+#' \item{Pass}{Factor Passed the course (No, Yes)}
+#' \item{Exam}{Numeric Mark in the final exam.}
+#' \item{Degree}{Factor Degree enrolled in (BA, BCom, BSc, Other)}
+#' \item{Gender}{Factor Gender (Female, Male)}
+#' \item{Attend}{Factor Regularly attended class (No, Yes)}
+#' \item{Assign}{Numeric Assignment mark.}
+#' \item{Test}{Numeric Test mark.}
+#' \item{B}{Numeric Mark for the short answer section of the exam.}
+#' \item{C}{Numeric Mark for the long answer section of the exam.}
+#' \item{MC}{Numeric Mark for the multiple choice section of the exam.}
+#' \item{Colour}{Factor Colour of the exam booklet (Blue, Green, Pink, Yellow)}
+#' \item{Stage1}{Factor Stage one grade (A, B, C)}
+#' \item{Years.Since}{Numeric Number of years since doing Stage 1.}
+#' \item{Repeat}{Factor Repeating the paper (No, Yes)}
 #' }
 #' @keywords datasets
 
@@ -285,9 +299,9 @@ NULL
 #' @docType data
 #' @format A data frame with 40 observations on 3 variables.
 #' \describe{
-#' \item{Exam}{numeric. Final exam mark (out of 100)}
-#' \item{Gender}{factor. Gender (Female, Male)}
-#' \item{Attend}{factor. Regularly attended or not (No, Yes)}
+#' \item{Exam}{Numeric Final exam mark (out of 100)}
+#' \item{Gender}{Factor Gender (Female, Male)}
+#' \item{Attend}{Factor Regularly attended or not (No, Yes)}
 #' }
 #' @keywords datasets
 
@@ -303,8 +317,8 @@ NULL
 #' @docType data
 #' @format A data frame with 48 observations on 2 variables.
 #' \describe{
-#' \item{price}{numeric. Price of ring (Singapore dollars)}
-#' \item{weight}{numeric. Weight of Diamond (carats)}
+#' \item{price}{Numeric Price of ring (Singapore dollars)}
+#' \item{weight}{Numeric Weight of Diamond (carats)}
 #' }
 #' @keywords datasets
 
@@ -320,9 +334,9 @@ NULL
 #' @docType data
 #' @format A data frame with 15 observations on 3 variables.
 #' \describe{
-#' \item{damage}{numeric. Damage (1000s of dollars)}
-#' \item{distance}{numeric. Distance from the fire station (miles)}
-#' \item{distance_km}{numeric. Distance from the fire station (kilometres); \code{distance_km = distance * 1.60934}.}
+#' \item{damage}{Numeric Damage (1000s of dollars)}
+#' \item{distance}{Numeric Distance from the fire station (miles)}
+#' \item{distance_km}{Numeric Distance from the fire station (kilometres); \code{distance_km = distance * 1.60934}.}
 #' }
 #' @keywords datasets
 
@@ -342,8 +356,8 @@ NULL
 #' @docType data
 #' @format A data frame with 75 observations on 2 variables.
 #' \describe{
-#' \item{fecundity}{numeric. Number of eggs laid, per day, per fruitfly}
-#' \item{strain}{factor. Strain of fruitfly (NS, RS, SS)}
+#' \item{fecundity}{Numeric Number of eggs laid, per day, per fruitfly.}
+#' \item{strain}{Factor Strain of fruitfly (NS, RS, SS)}
 #' }
 #' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
@@ -366,8 +380,8 @@ NULL
 #' @docType data
 #' @format A data frame with 100 observations on 2 variables.
 #' \describe{
-#' \item{advertised.price}{numeric. Advertised price (dollars)}
-#' \item{sell.price}{numeric. Final sale price (dollars)}
+#' \item{advertised.price}{Numeric Advertised price (dollars)}
+#' \item{sell.price}{Numeric Final sale price (dollars)}
 #' }
 #' @keywords datasets
 
@@ -381,7 +395,10 @@ NULL
 #' 
 #' @name incomes.df
 #' @docType data
-#' @format A numeric vector with 152 observations.
+#' @format A data frame with 152 observations on 1 variable.
+#' \describe{
+#' \item{incomes}{Numeric mean family income, in thousands of dollars.}
+#' }
 #' @keywords datasets
 
 NULL
@@ -395,8 +412,8 @@ NULL
 #' @docType data
 #' @format A data frame with 78 observations on 2 variables.
 #' \describe{
-#' \item{Age}{numeric. Age of the fish (years)}
-#' \item{Length}{numeric. Length at capture (mm)}
+#' \item{Age}{Numeric Age of the fish (years)}
+#' \item{Length}{Numeric Length at capture (mm)}
 #' }
 #' @keywords datasets
 
@@ -430,8 +447,8 @@ NULL
 #' @docType data
 #' @format A data frame with 124 observations on 2 variables.
 #' \describe{
-#' \item{price}{numeric. Price (Australian dollars)}
-#' \item{year}{numeric. Year of manufacture}
+#' \item{price}{Numeric Price (Australian dollars)}
+#' \item{year}{Numeric Year of manufacture.}
 #' }
 #' @keywords datasets
 
@@ -445,7 +462,12 @@ NULL
 #' 
 #' @name mening.df
 #' @docType data
-#' @format A data frame with 144 observations on 3 variables: Month, Year and mening.
+#' @format A data frame with 144 observations on 3 variables.
+#' \describe{
+#' \item{Month}{Factor giving the month of notification.}
+#' \item{Year}{Factor giving the year of notification.}
+#' \item{mening}{Numeric number of notifications of meningococcal disease.}
+#' }
 #' @keywords datasets
 
 NULL
@@ -459,7 +481,10 @@ NULL
 #' 
 #' @name mergers.df
 #' @docType data
-#' @format A numeric vector with 38 observations.
+#' @format A data frame with 38 observations on 1 variable.
+#' \describe{
+#' \item{mergerdays}{Numeric number of days between the merger announcement and the effective date.}
+#' }
 #' @keywords datasets
 
 NULL
@@ -474,9 +499,9 @@ NULL
 #' @docType data
 #' @format A data frame with 88 observations on 3 variables.
 #' \describe{
-#' \item{Time}{numeric. Time of each movement (seconds)}
-#' \item{Movement}{factor. Movement (M1, M2, M3, M4)}
-#' \item{Period}{factor. Period that the symphony was written (early, late)}
+#' \item{Time}{Numeric Time of each movement (seconds)}
+#' \item{Movement}{Factor Movement (M1, M2, M3, M4)}
+#' \item{Period}{Factor Period that the symphony was written (early, late)}
 #' }
 #' @keywords datasets
 
@@ -493,8 +518,8 @@ NULL
 #' @docType data
 #' @format A data frame with 60 observations on 2 variables.
 #' \describe{
-#' \item{polish}{factor. Type of polish (Regular, Quick)}
-#' \item{dry}{integer. Time (in seconds) for the polish to dry}
+#' \item{polish}{Factor Type of polish (Regular, Quick)}
+#' \item{dry}{Integer Time (in seconds) for the polish to dry.}
 #' }
 #' @keywords datasets
 
@@ -503,8 +528,8 @@ NULL
 #' Oyster Abundances over Different Sites
 #' 
 #' Data from an experiment to determine the abundance of oysters recruiting
-#' from three sites in two different estuaries in New South Whales. One in
-#' Georges River and two in Port Stephens. The number of oysters were recorded
+#' from three sites in two different estuaries in New South Wales. One in
+#' Georges River and two in Port Stephens. The number of oysters was recorded
 #' for 10 cm by 10 cm panels over a two year period.
 #' 
 #' 
@@ -512,8 +537,8 @@ NULL
 #' @docType data
 #' @format A data frame with 87 observations on 2 variables.
 #' \describe{
-#' \item{Oysters}{numeric. Number of oysters on each experimental panel}
-#' \item{Site}{factor. Location of the experimental panels (GR = Georges River, PS1 = First Port Stephens Site, PS2 = Second Port Stephens Site)}
+#' \item{Oysters}{Numeric number of oysters on each experimental panel.}
+#' \item{Site}{Factor giving the location of the experimental panels (GR = Georges River, PS1 = first Port Stephens site, PS2 = second Port Stephens site).}
 #' }
 #' @keywords datasets
 
@@ -530,11 +555,11 @@ NULL
 #' @docType data
 #' @format A data frame with 39 observations on 5 variables.
 #' \describe{
-#' \item{age}{numeric. Subject's age}
-#' \item{years}{numeric. Number of years since migration}
-#' \item{weight}{numeric. Subject's weight (kg)}
-#' \item{height}{numeric. Subject's height (mm)}
-#' \item{BP}{numeric. Subject's systolic blood pressure (mm Hg; standard clinical unit in New Zealand).}
+#' \item{age}{Numeric Subject's age.}
+#' \item{years}{Numeric Number of years since migration.}
+#' \item{weight}{Numeric Subject's weight (kg)}
+#' \item{height}{Numeric Subject's height (mm)}
+#' \item{BP}{Numeric Subject's systolic blood pressure (mm Hg; standard clinical unit in New Zealand).}
 #' }
 #' @keywords datasets
 
@@ -550,9 +575,9 @@ NULL
 #' @docType data
 #' @format A data frame with 50 observations on 3 variables.
 #' \describe{
-#' \item{rain}{Amount of rain, measured in acre-feet (the volume of water required to cover one acre of land to a depth of one foot).}
-#' \item{rain_ML}{Amount of rain expressed in megalitres (ML); \code{rain_ML = rain * 1.23348184}.}
-#' \item{seed}{factor. Whether the clouds are seeded or not (seeded, unseeded)}
+#' \item{rain}{Numeric amount of rain, measured in acre-feet (the volume of water required to cover one acre of land to a depth of one foot).}
+#' \item{rain_ML}{Numeric amount of rain expressed in megalitres (ML); \code{rain_ML = rain * 1.23348184}.}
+#' \item{seed}{Factor indicating whether the clouds were seeded (seeded, unseeded).}
 #' }
 #' @keywords datasets
 
@@ -570,9 +595,9 @@ NULL
 #' @docType data
 #' @format A data frame with 48 observations on 3 variables.
 #' \describe{
-#' \item{Light}{integer. Seeds exposed to light (N=No, Y=Yes)}
-#' \item{Water}{integer. Amount of water, higher levels correspond to more water (1, 2, 3, 4, 5, 6)}
-#' \item{Count}{integer. Number of seeds that germinated (out of 100)}
+#' \item{Light}{Factor indicating whether the seeds were exposed to light (N = No, Y = Yes).}
+#' \item{Water}{Integer amount of water, with higher levels corresponding to more water (1, 2, 3, 4, 5, 6).}
+#' \item{Count}{Integer number of seeds that germinated, out of 100.}
 #' }
 #' @keywords datasets
 
@@ -580,16 +605,17 @@ NULL
 
 #' Sheep Data
 #' 
-#' Sheep Data
+#' Weight measurements for sheep under combinations of copper and cobalt
+#' supplementation.
 #' 
 #' 
 #' @name sheep.df
 #' @docType data
 #' @format A data frame with 100 observations on 3 variables.
 #' \describe{
-#' \item{Weight}{integer. Weight of sheep (kilograms, kg).}
-#' \item{Copper}{factor. levels (No, Yes)}
-#' \item{Cobalt}{factor. levels (No, Yes)}
+#' \item{Weight}{Integer Weight of sheep (kilograms, kg).}
+#' \item{Copper}{Factor indicating whether copper supplementation was given (No, Yes).}
+#' \item{Cobalt}{Factor indicating whether cobalt supplementation was given (No, Yes).}
 #' }
 #' @keywords datasets
 
@@ -609,8 +635,8 @@ NULL
 #' @docType data
 #' @format A data frame with 150 observations on 2 variables.
 #' \describe{
-#' \item{measurement}{integer}
-#' \item{year}{integer}
+#' \item{measurement}{Integer maximum breadth measurement of the skull.}
+#' \item{year}{Integer epoch year group for the skull.}
 #' }
 #' @references Hand, D.J., Daly, F., Lunn, A.D., McConway, K.J. and Ostrowski,
 #' E. (1994). \emph{A Handbook of Small Data Sets}. Boca Raton, Florida:
@@ -625,13 +651,18 @@ NULL
 
 #' Snapper Weight Data
 #' 
-#' Weight and length measurements of 844 snapper (\href{https://en.wikipedia.org/wiki/Australasian_snapper}{Pagrus auratus})
+#' Weight and length measurements of 844 snapper
+#' (\href{https://en.wikipedia.org/wiki/Australasian_snapper}{Pagrus auratus})
 #' caught in the Hauraki Gulf, near Auckland, New Zealand.
 #' 
 #' 
 #' @name snapper.df
 #' @docType data
-#' @format A data frame with 844 observations on 2 variables. \describe{ \item{len}{Fork length in centimetres. The fork length of a fish measured from the tip of the snout to the end of the middle caudal fin rays and is used in fishes in which it is difficult to tell where the vertebral column ends. Essentially it is the measurement from the tip of the 'nose' of the fish to the 'vee' in the tail.} \item{wgt}{Weight of the fish in kilograms (kg).} }
+#' @format A data frame with 844 observations on 2 variables.
+#' \describe{
+#' \item{len}{Numeric fork length in centimetres. Fork length is measured from the tip of the snout to the fork of the tail.}
+#' \item{wgt}{Numeric weight of the fish, in kilograms.}
+#' }
 #' @source Russell Millar, University of Auckland.
 #' @keywords datasets
 
@@ -647,9 +678,9 @@ NULL
 #' @docType data
 #' @format A data frame with 32 observations on 3 variables.
 #' \describe{
-#' \item{yield}{numeric. Yield of each plant}
-#' \item{cultivar}{factor. Cultivar used (cult1, cult2, cult3, cult4)}
-#' \item{planttime}{factor. Month of planting (Novemb, Decemb)}
+#' \item{yield}{Numeric Yield of each plant.}
+#' \item{cultivar}{Factor Cultivar used (cult1, cult2, cult3, cult4)}
+#' \item{planttime}{Factor Month of planting (Novemb, Decemb)}
 #' }
 #' @source Littler, R. University of Waikato
 #' @keywords datasets
@@ -668,9 +699,9 @@ NULL
 #' @docType data
 #' @format A data frame with 30 observations on 3 variables.
 #' \describe{
-#' \item{lang}{numeric. Language test score after instruction}
-#' \item{IQ}{numeric. Student's IQ}
-#' \item{method}{factor. Teaching method (1, 2, 3)}
+#' \item{lang}{Numeric Language test score after instruction.}
+#' \item{IQ}{Numeric Student's IQ.}
+#' \item{method}{Factor Teaching method (1, 2, 3)}
 #' }
 #' @keywords datasets
 
@@ -685,14 +716,14 @@ NULL
 #' @docType data
 #' @format A data frame with 46 observations on 8 variables.
 #' \describe{
-#' \item{salary}{numeric. Annual Salary (dollars)}
-#' \item{yrs.empl}{numeric. Number of years employed at Technitron}
-#' \item{prior.yrs}{numeric. Number of years prior experience}
-#' \item{educ}{numeric. Years of education after high school}
-#' \item{id}{numeric. Company identification number}
-#' \item{gender}{numeric. Gender (0 = female, 1 = male)}
-#' \item{dept}{numeric. Department employee works in (1 = Sales, 2 = Purchasing, 3 = Advertising, 4 = Engineering)}
-#' \item{super}{numeric. Number of employees supervised}
+#' \item{salary}{Numeric Annual Salary (dollars)}
+#' \item{yrs.empl}{Numeric Number of years employed at Technitron.}
+#' \item{prior.yrs}{Numeric Number of years prior experience.}
+#' \item{educ}{Numeric Years of education after high school.}
+#' \item{id}{Numeric Company identification number.}
+#' \item{gender}{Numeric Gender (0 = female, 1 = male)}
+#' \item{dept}{Numeric Department employee works in (1 = Sales, 2 = Purchasing, 3 = Advertising, 4 = Engineering)}
+#' \item{super}{Numeric Number of employees supervised.}
 #' }
 #' @keywords datasets
 
@@ -700,7 +731,7 @@ NULL
 
 #' Effect of a New Drug on Thyroid Weights
 #' 
-#' Data from an experiment to asses the effect of a new drug on the weight of
+#' Data from an experiment to assess the effect of a new drug on the weight of
 #' the thyroid gland using 16 laboratory animals. The animals were randomly
 #' assigned into either a control group, or a treatment group, and each animal
 #' had its bodyweight recorded at the beginning of the experiment and its
@@ -711,9 +742,9 @@ NULL
 #' @docType data
 #' @format A data frame with 16 observations on 3 variables.
 #' \describe{
-#' \item{thyroid}{numeric. Weight of thyroid gland after 7 days (mg)}
-#' \item{body}{numeric. Animal body weight before experiment began (g)}
-#' \item{group}{factor. Animal's group (1 = control, 2 = drug)}
+#' \item{thyroid}{Numeric Weight of thyroid gland after 7 days (mg)}
+#' \item{body}{Numeric Animal body weight before experiment began (g)}
+#' \item{group}{Factor Animal's group (1 = control, 2 = drug)}
 #' }
 #' @keywords datasets
 
@@ -730,8 +761,8 @@ NULL
 #' @docType data
 #' @format A data frame with 20 observations on 2 variables.
 #' \describe{
-#' \item{purchasers}{numeric. Age of the person in the household responsible for purchases of Crest}
-#' \item{nonpurchasers}{numeric. Age of the person in the household responsible for purchases of other brands of toothpaste}
+#' \item{purchasers}{Numeric Age of the person in the household responsible for purchases of Crest.}
+#' \item{nonpurchasers}{Numeric Age of the person in the household responsible for purchases of other brands of toothpaste.}
 #' }
 #' @keywords datasets
 
@@ -749,12 +780,12 @@ NULL
 #' @docType data
 #' @format A data frame with 440 observations on 6 variables.
 #' \describe{
-#' \item{attendance}{numeric. Number of visitors}
-#' \item{time}{numeric. Time in days since the start of the study}
-#' \item{sun.yesterday}{numeric. Hours of sunshine the previous day}
-#' \item{tv.ads}{numeric. Average spending on TV advertising in the previous week (1000s of dollars per day)}
-#' \item{nice.day}{factor. Assessment based on number of hours of sunshine (0 = No, 1 = Yes)}
-#' \item{day.type}{factor. Type of day (1 = ordinary weekday, 2 = weekend day, 3 = school holiday weekday, 4 = public holday)}
+#' \item{attendance}{Numeric Number of visitors.}
+#' \item{time}{Numeric Time in days since the start of the study.}
+#' \item{sun.yesterday}{Numeric Hours of sunshine the previous day.}
+#' \item{tv.ads}{Numeric Average spending on TV advertising in the previous week (1000s of dollars per day)}
+#' \item{nice.day}{Factor Assessment based on number of hours of sunshine (0 = No, 1 = Yes)}
+#' \item{day.type}{Factor Type of day (1 = ordinary weekday, 2 = weekend day, 3 = school holiday weekday, 4 = public holiday)}
 #' }
 #' @keywords datasets
 
