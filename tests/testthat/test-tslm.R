@@ -38,3 +38,24 @@ test_that("tslm fits AR models when nlme is available", {
   expect_equal(fit$errorSpec$p, 1L)
   expect_equal(fit$time, "t")
 })
+
+test_that("tslm preserves no-intercept mean formulas", {
+  parsedFormula = s20x:::parseTslmFormula(dist ~ 0 + speed + ar(1))
+
+  expect_equal(deparse(parsedFormula$meanFormula), "dist ~ speed - 1")
+})
+
+test_that("tslm reports missing time variables clearly", {
+  skip_if_not_installed("nlme")
+
+  data = data.frame(
+    y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
+    x = seq_len(8),
+    t = seq_len(8)
+  )
+
+  expect_error(
+    tslm(y ~ x + ar(1), data = data, time = missingTime),
+    "time variable 'missingTime'"
+  )
+})
