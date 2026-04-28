@@ -21,16 +21,16 @@ A data frame with 246 observations on 8 variables.
 Marshall, R.A., Department of Psychology, University of Auckland.
 }
 \description{
-This dataset originates from a study conducted at the University of Auckland 
-in the early 1990s by Dr. R.A. Marshall and colleagues from the Department of Psychology. 
-The research explored how cultural background and ethnic identity influence body image 
+This dataset originates from a study conducted at the University of Auckland
+in the early 1990s by Dr. R.A. Marshall and colleagues from the Department of Psychology.
+The research explored how cultural background and ethnic identity influence body image
 perceptions within the specific context of Aotearoa New Zealand.
 }
 \details{
-The study specifically focused on a cohort of women who were generally 
-"thin" (slightly underweight for their body size). This was designed to investigate 
-whether body dissatisfaction and varying self-perceptions persisted even among individuals 
-who already met or approached Western "thin" ideals, and how these perceptions 
+The study specifically focused on a cohort of women who were generally
+"thin" (slightly underweight for their body size). This was designed to investigate
+whether body dissatisfaction and varying self-perceptions persisted even among individuals
+who already met or approached Western "thin" ideals, and how these perceptions
 differed across Asian, European, Māori, and Pacific ethnic groups.
 }
 \references{

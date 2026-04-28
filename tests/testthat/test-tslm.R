@@ -106,3 +106,42 @@ test_that("tslm exposes common model generics", {
   expect_equal(AIC(fit), AIC(lmFit))
   expect_equal(BIC(fit), BIC(lmFit))
 })
+
+test_that("summary.tslm prints a compact teaching summary", {
+  skip_if_not_installed("nlme")
+
+  data = data.frame(
+    y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
+    x = seq_len(8),
+    t = seq_len(8)
+  )
+
+  fit = tslm(y ~ x + ar(1), data = data, time = t)
+  summaryOutput = capture.output(summary(fit))
+
+  expect_s3_class(summary(fit), "summary.tslm")
+  expect_true(any(grepl("Time series linear model with AR\\(1\\) errors", summaryOutput)))
+  expect_true(any(grepl("Mean model:", summaryOutput)))
+  expect_true(any(grepl("Error model:", summaryOutput)))
+  expect_true(any(grepl("Coefficients:", summaryOutput)))
+  expect_false(any(grepl("Correlation:", summaryOutput)))
+  expect_false(any(grepl("Standardized residuals:", summaryOutput)))
+})
+
+test_that("summary.tslm can return the verbose underlying summary", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  expect_s3_class(summary(fit, verbose = TRUE), "summary.lm")
+})
+
+test_that("plot.tslm supports the teaching diagnostic plots", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(plot(fit))
+  expect_silent(plot(fit, which = "time"))
+  expect_silent(plot(fit, which = "acf"))
+  expect_silent(plot(fit, which = "qq"))
+})

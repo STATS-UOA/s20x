@@ -4,8 +4,9 @@ set -euo pipefail
 usage() {
   echo "Usage: $0 STAGE [DOWNLOADS_DIR]"
   echo "Example: $0 5"
-  echo "Example: $0 s20x_stage5"
-  echo "Example: $0 run_s20x_stage5.sh /c/Users/james/Downloads"
+  echo "Example: $0 7_1"
+  echo "Example: $0 s20x_stage7_1"
+  echo "Example: $0 run_s20x_stage7_1.sh /c/Users/james/Downloads"
   echo ""
   echo "This runs run_s20x_stageSTAGE.sh with s20x_stageSTAGE_changes.zip."
 }
@@ -15,7 +16,8 @@ if [ $# -lt 1 ] || [ $# -gt 2 ]; then
   exit 1
 fi
 
-stage="$1"
+stageInput="$1"
+stage="$stageInput"
 
 stage="${stage##*/}"
 stage="${stage%.sh}"
@@ -30,8 +32,11 @@ elif [[ "$stage" == stage* ]]; then
   stage="${stage#stage}"
 fi
 
-if [[ ! "$stage" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
-  echo "Stage must be a stage number or an s20x-prefixed stage name; got: $1"
+stage="${stage//./_}"
+
+if [[ ! "$stage" =~ ^[0-9]+(_[0-9]+)?$ ]]; then
+  echo "Stage must be a stage number or an s20x-prefixed stage name; got: $stageInput"
+  echo "Use forms such as 7, 7_1, s20x_stage7_1, or run_s20x_stage7_1.sh."
   exit 1
 fi
 

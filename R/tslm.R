@@ -31,6 +31,8 @@
 #' @export
 #' @importFrom stats AIC BIC lm as.formula formula terms coef residuals fitted predict
 #' @importFrom stats logLik model.frame nobs vcov
+#' @importFrom graphics abline plot
+#' @importFrom stats acf printCoefmat qqline qqnorm
 #' @importFrom utils packageVersion
 #' @importFrom methods is
 #' @seealso [stats::lm()], [nlme::gls()], [nlme::corARMA()]
@@ -48,6 +50,7 @@ tslm = function(formula, data, time, method = "REML", ...) {
   }
 
   parsedFormula = parseTslmFormula(formula)
+  dataCall = substitute(data)
   timeName = if (missing(time)) {
     NULL
   } else {
@@ -56,6 +59,8 @@ tslm = function(formula, data, time, method = "REML", ...) {
 
   if (is.null(parsedFormula$errorSpec)) {
     fit = stats::lm(parsedFormula$meanFormula, data = data, ...)
+    fit$call$formula = parsedFormula$meanFormula
+    fit$call$data = dataCall
   } else {
     requireSuggestedPackage("nlme")
 
@@ -83,6 +88,8 @@ tslm = function(formula, data, time, method = "REML", ...) {
       method = method,
       ...
     )
+    fit$call$model = parsedFormula$meanFormula
+    fit$call$data = dataCall
   }
 
   structure(
@@ -123,8 +130,130 @@ print.tslm = function(x, ...) {
 }
 
 #' @export
-summary.tslm = function(object, ...) {
-  summary(object$fit, ...)
+summary.tslm = function(object, verbose = FALSE, ...) {
+  if (isTRUE(verbose)) {
+    return(summary(object$fit, ...))
+  }
+
+  fitSummary = summary(object$fit, ...)
+
+  out = list(
+    call = object$call,
+    formula = object$formula,
+    meanFormula = object$meanFormula,
+    errorSpec = object$errorSpec,
+    time = object$time,
+    coefficients = getTslmCoefficientTable(fitSummary),
+    sigma = fitSummary$sigma,
+    df = getTslmResidualDf(object$fit, fitSummary),
+    n = stats::nobs(object$fit),
+    aic = tryCatch(stats::AIC(object$fit), error = function(e) NA_real_),
+    bic = tryCatch(stats::BIC(object$fit), error = function(e) NA_real_),
+    logLik = tryCatch(stats::logLik(object$fit), error = function(e) NA),
+    arParameters = getTslmArParameters(object)
+  )
+
+  class(out) = "summary.tslm"
+  out
+}
+
+#' @export
+print.summary.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...) {
+  if (is.null(x$errorSpec)) {
+    cat("Time series linear model with independent errors\n\n")
+  } else {
+    cat("Time series linear model with AR(", x$errorSpec$p, ") errors\n\n", sep = "")
+  }
+
+  cat("Mean model:\n  ")
+  cat(paste(deparse(x$meanFormula), collapse = " "), "\n\n", sep = "")
+
+  cat("Error model:\n  ")
+  if (is.null(x$errorSpec)) {
+    cat("Independent errors\n\n")
+  } else {
+    arText = paste0("AR(", x$errorSpec$p, ")")
+    if (length(x$arParameters) > 0) {
+      arText = paste0(
+        arText,
+        ", estimated ",
+        paste(
+          names(x$arParameters),
+          format(signif(x$arParameters, digits = digits)),
+          sep = " = ",
+          collapse = ", "
+        )
+      )
+    }
+    cat(arText, "\n", sep = "")
+
+    if (is.null(x$time)) {
+      cat("  Time variable: row order\n\n")
+    } else {
+      cat("  Time variable: ", x$time, "\n\n", sep = "")
+    }
+  }
+
+  cat("Coefficients:\n")
+  stats::printCoefmat(x$coefficients, digits = digits, signif.stars = FALSE, ...)
+
+  cat("\nResidual standard error:", format(signif(x$sigma, digits = digits)))
+  if (!is.na(x$df)) {
+    cat(" on ", x$df, " degrees of freedom", sep = "")
+  }
+  cat("\n")
+
+  if (!is.na(x$aic)) {
+    cat("AIC:", format(signif(x$aic, digits = digits)), "\n")
+  }
+
+  if (!is.na(x$bic)) {
+    cat("BIC:", format(signif(x$bic, digits = digits)), "\n")
+  }
+
+  invisible(x)
+}
+
+#' @export
+plot.tslm = function(x, which = c("residuals", "time", "acf", "qq"), ...) {
+  which = match.arg(which)
+  residualValues = stats::residuals(x)
+
+  if (which == "residuals") {
+    graphics::plot(
+      stats::fitted(x),
+      residualValues,
+      xlab = "Fitted values",
+      ylab = "Residuals",
+      main = "Residuals versus fitted values",
+      ...
+    )
+    graphics::abline(h = 0, lty = 2)
+  } else if (which == "time") {
+    timeValues = if (!is.null(x$time)) {
+      stats::model.frame(x)[[x$time]]
+    } else {
+      seq_along(residualValues)
+    }
+
+    graphics::plot(
+      timeValues,
+      residualValues,
+      type = "b",
+      xlab = if (is.null(x$time)) "Observation order" else x$time,
+      ylab = "Residuals",
+      main = "Residuals over time",
+      ...
+    )
+    graphics::abline(h = 0, lty = 2)
+  } else if (which == "acf") {
+    stats::acf(residualValues, main = "ACF of residuals", ...)
+  } else {
+    stats::qqnorm(residualValues, main = "Normal Q-Q plot of residuals", ...)
+    stats::qqline(residualValues)
+  }
+
+  invisible(x)
 }
 
 #' @export
@@ -301,6 +430,58 @@ captureOptionalName = function(argumentExpression) {
   }
 
   stop("'time' must be supplied as a column name", call. = FALSE)
+}
+
+getTslmCoefficientTable = function(fitSummary) {
+  if (!is.null(fitSummary$tTable)) {
+    out = fitSummary$tTable
+    colnames(out) = c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
+    return(out)
+  }
+
+  if (!is.null(fitSummary$coefficients) && is.matrix(fitSummary$coefficients)) {
+    return(fitSummary$coefficients)
+  }
+
+  if (!is.null(fitSummary$coefficients) && is.data.frame(fitSummary$coefficients)) {
+    return(as.matrix(fitSummary$coefficients))
+  }
+
+  stop("Could not extract coefficient table from the fitted model", call. = FALSE)
+}
+
+getTslmResidualDf = function(fit, fitSummary) {
+  if (!is.null(fitSummary$df) && length(fitSummary$df) >= 2) {
+    return(unname(fitSummary$df[[2]]))
+  }
+
+  if (!is.null(fit$dims$N) && !is.null(fit$dims$p)) {
+    return(fit$dims$N - fit$dims$p)
+  }
+
+  NA_integer_
+}
+
+getTslmArParameters = function(object) {
+  if (is.null(object$errorSpec)) {
+    return(numeric())
+  }
+
+  corStruct = object$fit$modelStruct$corStruct
+  if (is.null(corStruct)) {
+    return(numeric())
+  }
+
+  out = tryCatch(
+    stats::coef(corStruct, unconstrained = FALSE),
+    error = function(e) numeric()
+  )
+
+  if (length(out) > 0 && is.null(names(out))) {
+    names(out) = paste0("phi", seq_along(out))
+  }
+
+  out
 }
 
 requireSuggestedPackage = function(package) {
