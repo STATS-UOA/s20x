@@ -3,8 +3,9 @@ set -euo pipefail
 
 usage() {
   echo "Usage: $0 STAGE [DOWNLOADS_DIR]"
-  echo "Example: $0 4"
-  echo "Example: $0 4 /c/Users/james/Downloads"
+  echo "Example: $0 5"
+  echo "Example: $0 s20x_stage5"
+  echo "Example: $0 run_s20x_stage5.sh /c/Users/james/Downloads"
   echo ""
   echo "This runs run_s20x_stageSTAGE.sh with s20x_stageSTAGE_changes.zip."
 }
@@ -16,10 +17,22 @@ fi
 
 stage="$1"
 
-if [[ "$stage" == s20x_stage* ]]; then
+stage="${stage##*/}"
+stage="${stage%.sh}"
+
+if [[ "$stage" == run_s20x_stage* ]]; then
+  stage="${stage#run_s20x_stage}"
+elif [[ "$stage" == s20x_stage* ]]; then
   stage="${stage#s20x_stage}"
+elif [[ "$stage" == run_stage* ]]; then
+  stage="${stage#run_stage}"
 elif [[ "$stage" == stage* ]]; then
   stage="${stage#stage}"
+fi
+
+if [[ ! "$stage" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+  echo "Stage must be a stage number or an s20x-prefixed stage name; got: $1"
+  exit 1
 fi
 
 if [ $# -eq 2 ]; then
@@ -43,5 +56,4 @@ if [ ! -f "$changesZip" ]; then
   exit 1
 fi
 
-chmod +x "$scriptPath"
-"$scriptPath" -if -cz "$changesZip"
+bash "$scriptPath" --install-files --changes-zip "$changesZip"

@@ -396,6 +396,7 @@ createBundle = function(options) {
     }
 
     outputDirAbs = normalizePath(options$outputDir, winslash = "/", mustWork = TRUE)
+    bundleRootAbs = normalizePath(bundleRoot, winslash = "/", mustWork = TRUE)
 
     oldWd = getwd()
     on.exit(setwd(oldWd), add = TRUE)
@@ -413,8 +414,13 @@ createBundle = function(options) {
         stop("Failed to create zip file: ", zipPath, call. = FALSE)
     }
 
-    if (dir.exists(bundleName)) {
-        unlink(bundleName, recursive = TRUE, force = TRUE)
+    setwd(oldWd)
+
+    if (dir.exists(bundleRootAbs)) {
+        cleanupOk = unlink(bundleRootAbs, recursive = TRUE, force = TRUE) == 0
+        if (!isTRUE(cleanupOk) && dir.exists(bundleRootAbs)) {
+            warning("Created bundle zip but could not remove temporary directory: ", bundleRootAbs, call. = FALSE)
+        }
     }
 
     normalizePath(zipPath, winslash = "/", mustWork = TRUE)
