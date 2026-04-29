@@ -16,3 +16,5 @@
 ^\.DS_Store$
 ^\.gitattributes$
 ^s20x_stage.*_completed\.zip$
+
+^\.github$
