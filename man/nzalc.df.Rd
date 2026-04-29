@@ -8,9 +8,9 @@
 A data frame with quarterly observations on 4 variables.
 \describe{
 \item{year}{Integer Year.}
-\item{month}{Factor Month at the end of the quarter.}
+\item{month}{Ordered factor giving the month at the end of the quarter.}
 \item{volume}{Numeric volume available for consumption, in million litres.}
-\item{category}{Factor Beverage category.}
+\item{category}{Factor beverage category: `Total beer`, `Total wine`, or `Total spirits`.}
 }
 }
 \source{
@@ -20,5 +20,17 @@ Stats NZ, Alcohol available for consumption: Year ended December 2021.
 Quarterly alcohol available for consumption in New Zealand from 1935 to 2021.
 The data give volumes of alcoholic beverages available for consumption,
 grouped into broad beverage categories.
+}
+\details{
+The `month` variable gives the month ending the quarter. It should be treated
+in calendar order for plotting and summaries. For this quarterly data set the
+intended order is March, June, September, and December.
+
+The `category` variable has three levels:
+\describe{
+\item{`Total beer`}{Total beer available for consumption.}
+\item{`Total wine`}{Total wine available for consumption.}
+\item{`Total spirits`}{Total spirits and spirit-based drinks available for consumption.}
+}
 }
 \keyword{datasets}

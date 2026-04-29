@@ -145,3 +145,29 @@ test_that("plot.tslm supports the teaching diagnostic plots", {
   expect_silent(plot(fit, which = "acf"))
   expect_silent(plot(fit, which = "qq"))
 })
+
+test_that("tslm residuals are numeric for student diagnostics", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  expect_type(residuals(fit), "double")
+  expect_equal(residuals(fit), as.numeric(residuals(lm(dist ~ speed, data = cars))))
+})
+
+test_that("normcheck works directly on tslm objects", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(normcheck(fit))
+})
+
+test_that("plot.tslm defaults to the full teaching diagnostic set", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(plot(fit))
+  expect_silent(plot(fit, which = "acf"))
+})

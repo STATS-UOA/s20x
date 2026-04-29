@@ -236,3 +236,50 @@ normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""),
             whichPlot = whichPlot, usePar = usePar, ...)
 }
 
+
+#' @describeIn normcheck Testing for normality plot for tslm residuals
+#' @export
+normcheck.tslm = function(x,
+                          xlab = c("Theoretical Quantiles", ""),
+                          ylab = c("Sample Quantiles", ""),
+                          main = c("", ""), col = "light blue",
+                          bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
+                          shapiro.wilk = FALSE,
+                          whichPlot = 1:2,
+                          usePar = TRUE, ...) {
+  if (missing(x) || !methods::is(x, "tslm")) {
+    stop("missing or incorrect tslm object")
+  }
+
+  if (!all(whichPlot %in% 1:2)) {
+    stop("whichPlot must be in 1:2")
+  }
+
+  if (2 %in% whichPlot) {
+    if (length(xlab) == 2) {
+      if (!is.na(xlab[2]) && xlab[2] == "") {
+        xlab[2] = "Residuals from tslm model"
+      }
+    } else {
+      if (!is.na(xlab) && xlab == "") {
+        xlab = "Residuals from tslm model"
+      }
+    }
+  }
+
+  normcheck(
+    residuals(x),
+    xlab = xlab,
+    ylab = ylab,
+    main = main,
+    col = col,
+    bootstrap = bootstrap,
+    B = B,
+    bpch = bpch,
+    bcol = bcol,
+    shapiro.wilk = shapiro.wilk,
+    whichPlot = whichPlot,
+    usePar = usePar,
+    ...
+  )
+}

@@ -215,8 +215,22 @@ print.summary.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...
 }
 
 #' @export
-plot.tslm = function(x, which = c("residuals", "time", "acf", "qq"), ...) {
+plot.tslm = function(x, which = c("all", "residuals", "time", "acf", "qq"), ...) {
   which = match.arg(which)
+
+  if (which == "all") {
+    oldPar = graphics::par(no.readonly = TRUE)
+    on.exit(graphics::par(oldPar), add = TRUE)
+    graphics::par(mfrow = c(2, 2))
+
+    plot(x, which = "residuals", ...)
+    plot(x, which = "time", ...)
+    plot(x, which = "acf", ...)
+    plot(x, which = "qq", ...)
+
+    return(invisible(x))
+  }
+
   residualValues = stats::residuals(x)
 
   if (which == "residuals") {
@@ -255,7 +269,6 @@ plot.tslm = function(x, which = c("residuals", "time", "acf", "qq"), ...) {
 
   invisible(x)
 }
-
 #' @export
 coef.tslm = function(object, ...) {
   stats::coef(object$fit, ...)
@@ -263,7 +276,7 @@ coef.tslm = function(object, ...) {
 
 #' @export
 residuals.tslm = function(object, ...) {
-  stats::residuals(object$fit, ...)
+  as.numeric(stats::residuals(object$fit, ...))
 }
 
 #' @export

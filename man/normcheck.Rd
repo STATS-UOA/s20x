@@ -4,6 +4,7 @@
 \alias{normcheck}
 \alias{normcheck.default}
 \alias{normcheck.lm}
+\alias{normcheck.tslm}
 \title{Testing for normality plot}
 \usage{
 normcheck(x, ...)
@@ -25,6 +26,22 @@ normcheck(x, ...)
 )
 
 \method{normcheck}{lm}(
+  x,
+  xlab = c("Theoretical Quantiles", ""),
+  ylab = c("Sample Quantiles", ""),
+  main = c("", ""),
+  col = "light blue",
+  bootstrap = FALSE,
+  B = 5,
+  bpch = 3,
+  bcol = "lightgrey",
+  shapiro.wilk = FALSE,
+  whichPlot = 1:2,
+  usePar = TRUE,
+  ...
+)
+
+\method{normcheck}{tslm}(
   x,
   xlab = c("Theoretical Quantiles", ""),
   ylab = c("Sample Quantiles", ""),
@@ -96,6 +113,8 @@ will be extracted from \code{x}.
 \item \code{normcheck(default)}: Testing for normality plot
 
 \item \code{normcheck(lm)}: Testing for normality plot
+
+\item \code{normcheck(tslm)}: Testing for normality plot for tslm residuals
 
 }}
 \examples{
