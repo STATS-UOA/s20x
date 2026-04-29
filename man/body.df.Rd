@@ -3,22 +3,37 @@
 \docType{data}
 \name{body.df}
 \alias{body.df}
-\title{Body Image and Ethnicity}
+\title{Body Image and Ethnicity Data}
 \format{
 A data frame with 246 observations on 8 variables.
 \describe{
-\item{ethnicity}{factor. Subject's ethnicity (Asian, Europn, Maori, Pacific)}
-\item{married}{.. .}
-\item{bodyim}{factor. Subject's rating of themself (slight.uw, right, slight.ow, mod.ow, very.ow)}
-\item{sm.ever}{.. .}
-\item{weight}{.. .}
-\item{height}{.. .}
-\item{age}{.. .}
-\item{stressgp}{.. .}
+\item{ethnicity}{Factor Subject's ethnicity (Asian, Europn, Maori, Pacific)}
+\item{married}{Factor Whether the subject is married (no, yes)}
+\item{bodyim}{Factor Subject's rating of themself (slight.uw, right, slight.ow, mod.ow, very.ow)}
+\item{sm.ever}{Factor Whether the subject has ever smoked (no, yes)}
+\item{weight}{Numeric Weight in kg.}
+\item{height}{Numeric Height in cm.}
+\item{age}{Numeric Age in years.}
+\item{stressgp}{Factor Stress level group (low, medium, high)}
 }
+}
+\source{
+Marshall, R.A., Department of Psychology, University of Auckland.
 }
 \description{
-Data collected to examine how women from various ethnic groups rate their
-body image. All subjects were slightly underweight for their body size.
+This dataset originates from a study conducted at the University of Auckland
+in the early 1990s by Dr. R.A. Marshall and colleagues from the Department of Psychology.
+The research explored how cultural background and ethnic identity influence body image
+perceptions within the specific context of Aotearoa New Zealand.
+}
+\details{
+The study specifically focused on a cohort of women who were generally
+"thin" (slightly underweight for their body size). This was designed to investigate
+whether body dissatisfaction and varying self-perceptions persisted even among individuals
+who already met or approached Western "thin" ideals, and how these perceptions
+differed across Asian, European, Māori, and Pacific ethnic groups.
+}
+\references{
+Lee, A. J. (1994). Data Analysis: An Introduction Based on R. University of Auckland.
 }
 \keyword{datasets}

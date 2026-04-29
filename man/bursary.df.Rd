@@ -7,8 +7,8 @@
 \format{
 A data frame with 75 observations on 2 variables.
 \describe{
-\item{decile}{numeric. Decile rating of the school}
-\item{pass.rate}{numeric. Percentage of eligible students who gained a 'B' Busary or better}
+\item{decile}{Numeric Decile rating of the school.}
+\item{pass.rate}{Numeric percentage of eligible students who gained a B Bursary or better.}
 }
 }
 \description{

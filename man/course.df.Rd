@@ -7,21 +7,21 @@
 \format{
 A data frame with 146 observations on 15 variables.
 \describe{
-\item{Grade}{factor. Final grade for the course (A, B, C, D)}
-\item{Pass}{factor. Passed the course (No, Yes)}
-\item{Exam}{numeric. Mark in the final exam}
-\item{Degree}{factor. Degree enrolled in (BA, BCom, BSc, Other)}
-\item{Gender}{factor. Gender (Female, Male)}
-\item{Attend}{factor. Regularly attended class (No, Yes)}
-\item{Assign}{numeric. Assignment mark}
-\item{Test}{numeric. Test mark}
-\item{B}{numeric. Mark for the short answer section of the exam}
-\item{C}{numeric. Mark for the long answer section of the exam}
-\item{MC}{numeric. Mark for the multiple choice section of the exam}
-\item{Colour}{factor. Colour of the exam booklet (Blue, Green, Pink, Yellow)}
-\item{Stage1}{factor. Stage one grade (A, B, C)}
-\item{Years.Since}{numeric. Number of years since doing Stage 1}
-\item{Repeat}{factor. Repeating the paper (No, Yes)}
+\item{Grade}{Factor Final grade for the course (A, B, C, D)}
+\item{Pass}{Factor Passed the course (No, Yes)}
+\item{Exam}{Numeric Mark in the final exam.}
+\item{Degree}{Factor Degree enrolled in (BA, BCom, BSc, Other)}
+\item{Gender}{Factor Gender (Female, Male)}
+\item{Attend}{Factor Regularly attended class (No, Yes)}
+\item{Assign}{Numeric Assignment mark.}
+\item{Test}{Numeric Test mark.}
+\item{B}{Numeric Mark for the short answer section of the exam.}
+\item{C}{Numeric Mark for the long answer section of the exam.}
+\item{MC}{Numeric Mark for the multiple choice section of the exam.}
+\item{Colour}{Factor Colour of the exam booklet (Blue, Green, Pink, Yellow)}
+\item{Stage1}{Factor Stage one grade (A, B, C)}
+\item{Years.Since}{Numeric Number of years since doing Stage 1.}
+\item{Repeat}{Factor Repeating the paper (No, Yes)}
 }
 }
 \description{

@@ -7,14 +7,14 @@
 \format{
 A data frame with 87 observations on 2 variables.
 \describe{
-\item{Oysters}{numeric. Number of oysters on each experimental panel}
-\item{Site}{factor. Location of the experimental panels (GR = Georges River, PS1 = First Port Stephens Site, PS2 = Second Port Stephens Site)}
+\item{Oysters}{Numeric number of oysters on each experimental panel.}
+\item{Site}{Factor giving the location of the experimental panels (GR = Georges River, PS1 = first Port Stephens site, PS2 = second Port Stephens site).}
 }
 }
 \description{
 Data from an experiment to determine the abundance of oysters recruiting
-from three sites in two different estuaries in New South Whales. One in
-Georges River and two in Port Stephens. The number of oysters were recorded
+from three sites in two different estuaries in New South Wales. One in
+Georges River and two in Port Stephens. The number of oysters was recorded
 for 10 cm by 10 cm panels over a two year period.
 }
 \keyword{datasets}

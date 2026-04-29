@@ -7,8 +7,8 @@
 \format{
 A data frame with 19 observations on 2 variables.
 \describe{
-\item{score}{numeric. Questionnaire score}
-\item{selfassess}{ordered factor. Self-assessed level of expertise (1 = low, 2 = medium, 3 = high)}
+\item{score}{Numeric questionnaire score.}
+\item{selfassess}{Ordered factor giving the self-assessed level of expertise (1 = low, 2 = medium, 3 = high).}
 }
 }
 \description{

@@ -1,6 +1,7 @@
 Package: s20x
-Version: 3.2.2
-Title: Functions for University of Auckland Course STATS 201/208 Data Analysis
+Version: 3.2.209
+Title: Functions for University of Auckland Course STATS 201/208 Data
+        Analysis
 Authors@R: c(
     person("Brant", "Deppa", role = "aut",
            comment = "Wrote the original R scripts this package is derived from"),
@@ -21,20 +22,12 @@ Description: A set of functions used in teaching STATS 201/208 Data Analysis at
     accessible to a large undergraduate population who are mostly not statistics
     majors.
 Depends: R (>= 4.0.0)
-Suggests: 
-    bootstrap,
-    dafs,
-    emmeans,
-    formatR,
-    ggplot2,
-    knitr,
-    markdown,
-    nlme,
-    rmarkdown,
-    rstudioapi
+Suggests: bootstrap, dafs, emmeans, formatR, ggplot2, knitr, markdown,
+        nlme, rmarkdown, rstudioapi, testthat (>= 3.0.0)
 Encoding: UTF-8
 Imports: stats, graphics, methods
 License: GPL-2 | file LICENSE
 RoxygenNote: 7.3.3
 URL: https://github.com/STATS-UOA/s20x
 BugReports: https://github.com/STATS-UOA/s20x/issues
+Config/testthat/edition: 3

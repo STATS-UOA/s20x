@@ -7,8 +7,8 @@
 \format{
 A data frame with 124 observations on 2 variables.
 \describe{
-\item{price}{numeric. Price (Australian dollars)}
-\item{year}{numeric. Year of manufacture}
+\item{price}{Numeric Price (Australian dollars)}
+\item{year}{Numeric Year of manufacture.}
 }
 }
 \description{

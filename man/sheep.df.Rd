@@ -7,12 +7,13 @@
 \format{
 A data frame with 100 observations on 3 variables.
 \describe{
-\item{Weight}{integer. Weight of sheep (kilograms, kg).}
-\item{Copper}{factor. levels (No, Yes)}
-\item{Cobalt}{factor. levels (No, Yes)}
+\item{Weight}{Integer Weight of sheep (kilograms, kg).}
+\item{Copper}{Factor indicating whether copper supplementation was given (No, Yes).}
+\item{Cobalt}{Factor indicating whether cobalt supplementation was given (No, Yes).}
 }
 }
 \description{
-Sheep Data
+Weight measurements for sheep under combinations of copper and cobalt
+supplementation.
 }
 \keyword{datasets}

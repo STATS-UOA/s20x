@@ -7,9 +7,9 @@
 \format{
 A data frame with 30 observations on 3 variables.
 \describe{
-\item{lang}{numeric. Language test score after instruction}
-\item{IQ}{numeric. Student's IQ}
-\item{method}{factor. Teaching method (1, 2, 3)}
+\item{lang}{Numeric Language test score after instruction.}
+\item{IQ}{Numeric Student's IQ.}
+\item{method}{Factor Teaching method (1, 2, 3)}
 }
 }
 \description{

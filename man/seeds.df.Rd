@@ -7,9 +7,9 @@
 \format{
 A data frame with 48 observations on 3 variables.
 \describe{
-\item{Light}{integer. Seeds exposed to light (N=No, Y=Yes)}
-\item{Water}{integer. Amount of water, higher levels correspond to more water (1, 2, 3, 4, 5, 6)}
-\item{Count}{integer. Number of seeds that germinated (out of 100)}
+\item{Light}{Factor indicating whether the seeds were exposed to light (N = No, Y = Yes).}
+\item{Water}{Integer amount of water, with higher levels corresponding to more water (1, 2, 3, 4, 5, 6).}
+\item{Count}{Integer number of seeds that germinated, out of 100.}
 }
 }
 \description{

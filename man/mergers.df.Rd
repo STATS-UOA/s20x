@@ -5,7 +5,10 @@
 \alias{mergers.df}
 \title{Merger Days}
 \format{
-A numeric vector with 38 observations.
+A data frame with 38 observations on 1 variable.
+\describe{
+\item{mergerdays}{Numeric number of days between the merger announcement and the effective date.}
+}
 }
 \description{
 A random selection of 38 consummated mergers from the USA, 1982, giving the

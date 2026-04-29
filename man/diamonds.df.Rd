@@ -7,8 +7,8 @@
 \format{
 A data frame with 48 observations on 2 variables.
 \describe{
-\item{price}{numeric. Price of ring (Singapore dollars)}
-\item{weight}{numeric. Weight of Diamond (carats)}
+\item{price}{Numeric Price of ring (Singapore dollars)}
+\item{weight}{Numeric Weight of Diamond (carats)}
 }
 }
 \description{

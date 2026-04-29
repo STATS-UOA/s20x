@@ -7,8 +7,8 @@
 \format{
 A data frame with 100 observations on 2 variables.
 \describe{
-\item{advertised.price}{numeric. Advertised price (dollars)}
-\item{sell.price}{numeric. Final sale price (dollars)}
+\item{advertised.price}{Numeric Advertised price (dollars)}
+\item{sell.price}{Numeric Final sale price (dollars)}
 }
 }
 \description{

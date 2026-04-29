@@ -4,6 +4,7 @@
 \alias{normcheck}
 \alias{normcheck.default}
 \alias{normcheck.lm}
+\alias{normcheck.tslm}
 \title{Testing for normality plot}
 \usage{
 normcheck(x, ...)
@@ -37,6 +38,23 @@ normcheck(x, ...)
   shapiro.wilk = FALSE,
   whichPlot = 1:2,
   usePar = TRUE,
+  ...
+)
+
+\method{normcheck}{tslm}(
+  x,
+  xlab = c("Theoretical Quantiles", ""),
+  ylab = c("Sample Quantiles", ""),
+  main = c("", ""),
+  col = "light blue",
+  bootstrap = FALSE,
+  B = 5,
+  bpch = 3,
+  bcol = "lightgrey",
+  shapiro.wilk = FALSE,
+  whichPlot = 1:2,
+  usePar = TRUE,
+  residualType = "normalized",
   ...
 )
 }
@@ -78,6 +96,11 @@ reordered automatically if the order is anything other than \code{1:2}.}
 \item{usePar}{if \code{TRUE}, then this function will set \code{\link{par}} for the user. If \code{FALSE},
 then this function assumes \code{\link{par}} has been set by the user and therefore should not be
 be over-ridden.}
+
+\item{residualType}{for \code{tslm} objects, the residual scale to use in the normality plots.
+The default is \code{"normalized"}, which checks the residuals after accounting for
+the fitted error correlation structure. Other choices are \code{"response"} and
+\code{"pearson"}.}
 }
 \description{
 Plots two plots side by side. Firstly it draws a Normal QQ-plot of the
@@ -96,6 +119,8 @@ will be extracted from \code{x}.
 \item \code{normcheck(default)}: Testing for normality plot
 
 \item \code{normcheck(lm)}: Testing for normality plot
+
+\item \code{normcheck(tslm)}: Testing for normality plot
 
 }}
 \examples{

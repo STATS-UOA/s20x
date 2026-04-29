@@ -22,4 +22,8 @@ A data frame with 96 rows and 4 variables:
 Monthly United States beer production figures (in millions of 31-gallon
 barrels) for the period July 1970 to June 1978.
 }
+\note{
+The original primary source for this monthly beer-production series is
+  not identified in the available package materials.
+}
 \keyword{datasets}

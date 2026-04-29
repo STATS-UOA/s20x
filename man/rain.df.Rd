@@ -7,9 +7,9 @@
 \format{
 A data frame with 50 observations on 3 variables.
 \describe{
-\item{rain}{Amount of rain, measured in acre-feet (the volume of water required to cover one acre of land to a depth of one foot).}
-\item{rain_ML}{Amount of rain expressed in megalitres (ML); \code{rain_ML = rain * 1.23348184}.}
-\item{seed}{factor. Whether the clouds are seeded or not (seeded, unseeded)}
+\item{rain}{Numeric amount of rain, measured in acre-feet (the volume of water required to cover one acre of land to a depth of one foot).}
+\item{rain_ML}{Numeric amount of rain expressed in megalitres (ML); \code{rain_ML = rain * 1.23348184}.}
+\item{seed}{Factor indicating whether the clouds were seeded (seeded, unseeded).}
 }
 }
 \description{

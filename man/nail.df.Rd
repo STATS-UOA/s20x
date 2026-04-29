@@ -7,8 +7,8 @@
 \format{
 A data frame with 60 observations on 2 variables.
 \describe{
-\item{polish}{factor. Type of polish (Regular, Quick)}
-\item{dry}{integer. Time (in seconds) for the polish to dry}
+\item{polish}{Factor Type of polish (Regular, Quick)}
+\item{dry}{Integer Time (in seconds) for the polish to dry.}
 }
 }
 \description{

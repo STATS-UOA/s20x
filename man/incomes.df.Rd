@@ -5,7 +5,10 @@
 \alias{incomes.df}
 \title{Mean Family Incomes}
 \format{
-A numeric vector with 152 observations.
+A data frame with 152 observations on 1 variable.
+\describe{
+\item{incomes}{Numeric mean family income, in thousands of dollars.}
+}
 }
 \description{
 Random sample of 152 families giving their mean income (1000s of dollars). The sample

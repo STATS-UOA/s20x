@@ -7,9 +7,9 @@
 \format{
 A data frame with 100 observations on 3 variables.
 \describe{
-\item{Butterfat}{numeric. Mean percentage of butterfat per cow}
-\item{Breed}{factor. Breed (ayrshire, canadian, guernesy, holst.fres, jersey)}
-\item{Age}{factor. Age group (2yo, mature)}
+\item{Butterfat}{Numeric mean percentage of butterfat per cow.}
+\item{Breed}{Factor giving the cattle breed (ayrshire, canadian, guernesy, holst.fres, jersey).}
+\item{Age}{Factor giving the age group (2yo, mature).}
 }
 }
 \source{

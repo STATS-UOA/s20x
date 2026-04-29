@@ -7,9 +7,9 @@
 \format{
 A data frame with 40 observations on 3 variables.
 \describe{
-\item{Exam}{numeric. Final exam mark (out of 100)}
-\item{Gender}{factor. Gender (Female, Male)}
-\item{Attend}{factor. Regularly attended or not (No, Yes)}
+\item{Exam}{Numeric Final exam mark (out of 100)}
+\item{Gender}{Factor Gender (Female, Male)}
+\item{Attend}{Factor Regularly attended or not (No, Yes)}
 }
 }
 \description{

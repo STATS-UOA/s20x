@@ -7,9 +7,9 @@
 \format{
 A data frame with 66 observations on 3 variables.
 \describe{
-\item{Age}{numeric. Age of fish (years)}
-\item{Scale.Radius}{numeric. Age of fish (radius of the key scale (mm/100) )}
-\item{Length}{numeric. Length at capture (mm)}
+\item{Age}{Numeric age of the fish, in years.}
+\item{Scale.Radius}{Numeric radius of the key scale, in hundredths of a millimetre.}
+\item{Length}{Numeric length at capture, in millimetres.}
 }
 }
 \description{

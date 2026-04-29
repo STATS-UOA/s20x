@@ -5,7 +5,12 @@
 \alias{mening.df}
 \title{Monthly Notifications of Meningococcal Disease}
 \format{
-A data frame with 144 observations on 3 variables: Month, Year and mening.
+A data frame with 144 observations on 3 variables.
+\describe{
+\item{Month}{Factor giving the month of notification.}
+\item{Year}{Factor giving the year of notification.}
+\item{mening}{Numeric number of notifications of meningococcal disease.}
+}
 }
 \description{
 This data shows the monthly number of notifications meningococcal disease in
