@@ -34,13 +34,37 @@ ordinary formula and add an `ar(p)` term to request autoregressive errors.
 When no `ar(p)` term is present, `tslm()` fits an ordinary [stats::lm()]
 model. When an `ar(p)` term is present, `tslm()` fits a [nlme::gls()] model
 with an AR(p) correlation structure using [nlme::corARMA()].
+
+
+The formula describes the mean model, just as it does for [stats::lm()]. The
+special term `ar(p)` is removed from the mean model before fitting and is used
+only to specify the correlation structure for the errors. For example,
+`log(passengers) ~ t + month + ar(1)` fits a trend and seasonal mean model
+with AR(1) errors.
+
+For AR models, `time` should usually name the variable giving the time order
+of the observations. If `time` is omitted, `tslm()` fits the model using the
+row order of `data` and gives a warning so that this assumption is visible.
+
+Diagnostic methods for AR-error models use normalized residuals by default,
+because these residuals account for the fitted correlation structure. Use
+`residualType = "response"` when the raw response residuals are required.
 }
 \examples{
-fit = tslm(dist ~ speed, data = cars)
+data(beer.df)
+fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
 coef(fit)
 
-fitAr = tslm(dist ~ speed + ar(1), data = cars)
+data(airpass.df)
+fitAr = tslm(log(passengers) ~ t + month + ar(1),
+  data = airpass.df,
+  time = t
+)
 summary(fitAr)
+anova(fitAr)
+
+plot(fitAr)
+plot(fitAr, residualType = "response")
 
 }
 \seealso{
