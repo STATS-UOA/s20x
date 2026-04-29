@@ -245,6 +245,9 @@ test_that("anova.tslm prints a compact teaching table for AR fits", {
   expect_false("(Intercept)" %in% rownames(out))
   expect_true(any(grepl("Analysis of Variance Table", printed)))
   expect_true(any(grepl("Response:", printed)))
+  expect_true(any(grepl("Tests of model terms allowing for AR errors", printed)))
+  expect_true(is.character(out[["Pr(>F)"]]))
+  expect_false(any(grepl("e-", out[["Pr(>F)"]]))) 
 })
 
 test_that("anova.tslm can return verbose underlying anova output", {
@@ -287,6 +290,8 @@ test_that("documented airpass.df teaching workflow is stable", {
   expect_true(any(grepl("Time series linear model with AR\\(1\\) errors", summaryOutput)))
   expect_true(any(grepl("Analysis of Variance Table", anovaOutput)))
   expect_true(any(grepl("Response: log\\(passengers\\)", anovaOutput)))
+  expect_true(any(grepl("Tests of model terms allowing for AR errors", anovaOutput)))
+  expect_true(any(grepl("<0.001", anovaOutput))) 
 })
 
 test_that("documented tslm diagnostic residual choices run", {

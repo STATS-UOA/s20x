@@ -291,6 +291,35 @@ residuals.tslm = function(object, type = c("response", "pearson", "normalized"),
   as.numeric(stats::residuals(object$fit, type = type, ...))
 }
 
+#' ANOVA tables for time series linear models
+#'
+#' Produces analysis-of-variance-style tables for `tslm` objects.
+#'
+#' @param object a fitted `tslm` object.
+#' @param ... optional additional fitted model objects for model comparisons.
+#' @param verbose logical. For AR-error models, use `TRUE` to return the raw
+#'   underlying [nlme::anova.gls()] output.
+#'
+#' @details
+#' For ordinary `tslm()` fits without autoregressive error terms, `anova()`
+#' returns the usual analysis of variance table from [stats::anova.lm()].
+#'
+#' For AR-error models fitted through [nlme::gls()], the reported tests are
+#' Wald-style tests of model terms. These test whether each term contributes to
+#' the fitted mean model after allowing for the estimated autocorrelation
+#' structure. Because these models do not use the ordinary independent-error
+#' sum-of-squares decomposition, the compact table reports `Df`, `F value`, and
+#' `Pr(>F)`, but does not report `Sum Sq` or `Mean Sq`.
+#'
+#' Use `verbose = TRUE` to see the underlying [nlme::anova.gls()] output.
+#'
+#' @return An analysis-of-variance-style table.
+#'
+#' @examples
+#' fit = tslm(dist ~ speed, data = cars)
+#' anova(fit)
+#'
+#' @method anova tslm
 #' @export
 anova.tslm = function(object, ..., verbose = FALSE) {
   modelList = list(object, ...)
@@ -312,7 +341,7 @@ anova.tslm = function(object, ..., verbose = FALSE) {
     heading = c(
       "Analysis of Variance Table",
       paste("Response:", deparse(object$meanFormula[[2]])),
-      "Wald tests for terms in the fitted mean model"
+      "Tests of model terms allowing for AR errors"
     ),
     class = c("anova.tslm", "data.frame")
   )
@@ -582,6 +611,10 @@ formatTslmAnovaTable = function(rawTable) {
 
   if ("Df" %in% names(out)) {
     out$Df = as.integer(out$Df)
+  }
+
+  if ("Pr(>F)" %in% names(out)) {
+    out[["Pr(>F)"]] = format.pval(out[["Pr(>F)"]], digits = 3, eps = 0.001)
   }
 
   out
