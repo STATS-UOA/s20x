@@ -267,17 +267,44 @@ residuals.tslm = function(object, type = c("response", "pearson", "normalized"),
 }
 
 #' @export
-anova.tslm = function(object, ...) {
+anova.tslm = function(object, ..., verbose = FALSE) {
   modelList = list(object, ...)
-  fitList = lapply(modelList, function(model) {
-    if (methods::is(model, "tslm")) {
-      model$fit
-    } else {
-      model
-    }
-  })
 
-  do.call(stats::anova, fitList)
+  if (length(modelList) > 1 || isTRUE(verbose)) {
+    fitList = lapply(modelList, extractTslmFit)
+    return(do.call(stats::anova, fitList))
+  }
+
+  if (is.null(object$errorSpec)) {
+    return(stats::anova(object$fit))
+  }
+
+  rawTable = stats::anova(object$fit)
+  out = formatTslmAnovaTable(rawTable)
+
+  structure(
+    out,
+    heading = c(
+      "Analysis of Variance Table",
+      paste("Response:", deparse(object$meanFormula[[2]])),
+      "Wald tests for terms in the fitted mean model"
+    ),
+    class = c("anova.tslm", "data.frame")
+  )
+}
+
+#' @export
+print.anova.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...) {
+  heading = attr(x, "heading")
+  if (!is.null(heading)) {
+    cat(paste(heading, collapse = "
+"), "
+
+", sep = "")
+  }
+
+  print.data.frame(x, digits = digits, ...)
+  invisible(x)
 }
 
 #' @export
@@ -493,6 +520,43 @@ getTslmArParameters = function(object) {
 
   if (length(out) > 0 && is.null(names(out))) {
     names(out) = paste0("phi", seq_along(out))
+  }
+
+  out
+}
+
+extractTslmFit = function(model) {
+  if (methods::is(model, "tslm")) {
+    return(model$fit)
+  }
+
+  model
+}
+
+formatTslmAnovaTable = function(rawTable) {
+  out = as.data.frame(rawTable)
+
+  if ("numDF" %in% names(out)) {
+    names(out)[names(out) == "numDF"] = "Df"
+  }
+
+  if ("F-value" %in% names(out)) {
+    names(out)[names(out) == "F-value"] = "F value"
+  }
+
+  if ("p-value" %in% names(out)) {
+    names(out)[names(out) == "p-value"] = "Pr(>F)"
+  }
+
+  if ("(Intercept)" %in% rownames(out)) {
+    out = out[rownames(out) != "(Intercept)", , drop = FALSE]
+  }
+
+  wantedColumns = intersect(c("Df", "F value", "Pr(>F)"), names(out))
+  out = out[, wantedColumns, drop = FALSE]
+
+  if ("Df" %in% names(out)) {
+    out$Df = as.integer(out$Df)
   }
 
   out

@@ -223,3 +223,42 @@ test_that("normcheck.tslm can use normalized residuals", {
   expect_silent(normcheck(fit, residualType = "normalized"))
   expect_silent(normcheck(fit, residualType = "response"))
 })
+
+test_that("anova.tslm prints a compact teaching table for AR fits", {
+  skip_if_not_installed("nlme")
+
+  data = data.frame(
+    y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
+    x = seq_len(8),
+    z = rep(c("a", "b"), 4),
+    t = seq_len(8)
+  )
+
+  fit = tslm(y ~ x + z + ar(1), data = data, time = t)
+  out = anova(fit)
+  printed = capture.output(print(out))
+
+  expect_s3_class(out, "anova.tslm")
+  expect_true("Df" %in% names(out))
+  expect_true("F value" %in% names(out))
+  expect_true("Pr(>F)" %in% names(out))
+  expect_false("(Intercept)" %in% rownames(out))
+  expect_true(any(grepl("Analysis of Variance Table", printed)))
+  expect_true(any(grepl("Response:", printed)))
+})
+
+test_that("anova.tslm can return verbose underlying anova output", {
+  skip_if_not_installed("nlme")
+
+  data = data.frame(
+    y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
+    x = seq_len(8),
+    t = seq_len(8)
+  )
+
+  fit = tslm(y ~ x + ar(1), data = data, time = t)
+  out = anova(fit, verbose = TRUE)
+
+  expect_false(inherits(out, "anova.tslm"))
+  expect_true("numDF" %in% names(as.data.frame(out)))
+})
