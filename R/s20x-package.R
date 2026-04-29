@@ -3,7 +3,7 @@
 
 ## usethis namespace: start
 #' @import stats
-#' @import graphics 
+#' @import graphics
 #' @importFrom utils packageDescription vignette
 #' @importFrom utils read.table
 #' @importFrom methods is
