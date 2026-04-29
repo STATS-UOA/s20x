@@ -37,7 +37,8 @@
 #'   the underlying fitted model.
 #'
 #' @examples
-#' fit = tslm(dist ~ speed, data = cars)
+#' data(beer.df)
+#' fit = tslm(beer ~ t, data = beer.df)
 #' coef(fit)
 #'
 #' data(airpass.df)
@@ -316,7 +317,8 @@ residuals.tslm = function(object, type = c("response", "pearson", "normalized"),
 #' @return An analysis-of-variance-style table.
 #'
 #' @examples
-#' fit = tslm(dist ~ speed, data = cars)
+#' data(beer.df)
+#' fit = tslm(beer ~ t, data = beer.df)
 #' anova(fit)
 #'
 #' @method anova tslm

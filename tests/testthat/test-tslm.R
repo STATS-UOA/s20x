@@ -1,23 +1,25 @@
+data(beer.df)
+
 test_that("tslm falls back to lm when no AR term is supplied", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   expect_s3_class(fit, "tslm")
   expect_s3_class(fit$fit, "lm")
   expect_null(fit$errorSpec)
-  expect_equal(coef(fit), coef(lm(dist ~ speed, data = cars)))
+  expect_equal(coef(fit), coef(lm(beer ~ t, data = beer.df)))
 })
 
 test_that("tslm removes ar terms from the mean formula", {
-  parsedFormula = s20x:::parseTslmFormula(dist ~ speed + ar(2))
+  parsedFormula = s20x:::parseTslmFormula(beer ~ t + ar(2))
 
   expect_equal(parsedFormula$errorSpec$type, "ar")
   expect_equal(parsedFormula$errorSpec$p, 2L)
-  expect_equal(deparse(parsedFormula$meanFormula), "dist ~ speed")
+  expect_equal(deparse(parsedFormula$meanFormula), "beer ~ t")
 })
 
 test_that("tslm rejects unsupported future error structures", {
   expect_error(
-    s20x:::parseTslmFormula(dist ~ speed + arma(1, 1)),
+    s20x:::parseTslmFormula(beer ~ t + arma(1, 1)),
     "Only ar\\(p\\) error structures"
   )
 })
@@ -40,9 +42,9 @@ test_that("tslm fits AR models when nlme is available", {
 })
 
 test_that("tslm preserves no-intercept mean formulas", {
-  parsedFormula = s20x:::parseTslmFormula(dist ~ 0 + speed + ar(1))
+  parsedFormula = s20x:::parseTslmFormula(beer ~ 0 + t + ar(1))
 
-  expect_equal(deparse(parsedFormula$meanFormula), "dist ~ speed - 1")
+  expect_equal(deparse(parsedFormula$meanFormula), "beer ~ t - 1")
 })
 
 test_that("tslm reports missing time variables clearly", {
@@ -62,19 +64,19 @@ test_that("tslm reports missing time variables clearly", {
 
 test_that("tslm rejects multiple error structures", {
   expect_error(
-    s20x:::parseTslmFormula(dist ~ speed + ar(1) + ar(2)),
+    s20x:::parseTslmFormula(beer ~ t + ar(1) + ar(2)),
     "Specify only one error structure"
   )
 })
 
 test_that("tslm validates AR order", {
   expect_error(
-    s20x:::parseTslmFormula(dist ~ speed + ar(0)),
+    s20x:::parseTslmFormula(beer ~ t + ar(0)),
     "positive integer"
   )
 
   expect_error(
-    s20x:::parseTslmFormula(dist ~ speed + ar(1.5)),
+    s20x:::parseTslmFormula(beer ~ t + ar(1.5)),
     "positive integer"
   )
 })
@@ -96,10 +98,10 @@ test_that("tslm accepts quoted and unquoted time column names", {
 })
 
 test_that("tslm exposes common model generics", {
-  fit = tslm(dist ~ speed, data = cars)
-  lmFit = lm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
+  lmFit = lm(beer ~ t, data = beer.df)
 
-  expect_equal(formula(fit), dist ~ speed)
+  expect_equal(formula(fit), beer ~ t)
   expect_equal(vcov(fit), vcov(lmFit))
   expect_equal(nobs(fit), nobs(lmFit))
   expect_equal(as.numeric(logLik(fit)), as.numeric(logLik(lmFit)))
@@ -129,13 +131,13 @@ test_that("summary.tslm prints a compact teaching summary", {
 })
 
 test_that("summary.tslm can return the verbose underlying summary", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   expect_s3_class(summary(fit, verbose = TRUE), "summary.lm")
 })
 
 test_that("plot.tslm supports the teaching diagnostic plots", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   pdf(NULL)
   on.exit(dev.off(), add = TRUE)
@@ -169,7 +171,7 @@ test_that("plot.tslm aligns AR model diagnostics without dropping values", {
 })
 
 test_that("normcheck works with tslm objects", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   pdf(NULL)
   on.exit(dev.off(), add = TRUE)
@@ -178,7 +180,7 @@ test_that("normcheck works with tslm objects", {
 })
 
 test_that("tslm residuals support normalized residuals", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   responseResiduals = residuals(fit, type = "response")
   normalizedResiduals = residuals(fit, type = "normalized")
@@ -189,7 +191,7 @@ test_that("tslm residuals support normalized residuals", {
 })
 
 test_that("plot.tslm can use response and normalized residuals", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   pdf(NULL)
   on.exit(dev.off(), add = TRUE)
@@ -200,22 +202,22 @@ test_that("plot.tslm can use response and normalized residuals", {
 })
 
 test_that("anova works with tslm objects", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   out = anova(fit)
   expect_true(is.data.frame(out) || is.matrix(out) || inherits(out, "anova"))
 })
 
 test_that("anova compares compatible tslm models", {
-  fitSmall = tslm(dist ~ 1, data = cars)
-  fitLarge = tslm(dist ~ speed, data = cars)
+  fitSmall = tslm(beer ~ 1, data = beer.df)
+  fitLarge = tslm(beer ~ t, data = beer.df)
 
   out = anova(fitSmall, fitLarge)
   expect_true(is.data.frame(out) || is.matrix(out) || inherits(out, "anova"))
 })
 
 test_that("normcheck.tslm can use normalized residuals", {
-  fit = tslm(dist ~ speed, data = cars)
+  fit = tslm(beer ~ t, data = beer.df)
 
   pdf(NULL)
   on.exit(dev.off(), add = TRUE)

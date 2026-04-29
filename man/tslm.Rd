@@ -51,7 +51,8 @@ because these residuals account for the fitted correlation structure. Use
 `residualType = "response"` when the raw response residuals are required.
 }
 \examples{
-fit = tslm(dist ~ speed, data = cars)
+data(beer.df)
+fit = tslm(beer ~ t, data = beer.df)
 coef(fit)
 
 data(airpass.df)

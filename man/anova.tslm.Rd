@@ -34,7 +34,8 @@ sum-of-squares decomposition, the compact table reports `Df`, `F value`, and
 Use `verbose = TRUE` to see the underlying [nlme::anova.gls()] output.
 }
 \examples{
-fit = tslm(dist ~ speed, data = cars)
+data(beer.df)
+fit = tslm(beer ~ t, data = beer.df)
 anova(fit)
 
 }
