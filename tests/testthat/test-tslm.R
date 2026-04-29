@@ -273,7 +273,6 @@ test_that("documented airpass.df teaching workflow is stable", {
   skip_if_not_installed("nlme")
 
   data(airpass.df)
-  airpass.df$month = factor(as.character(airpass.df$month), levels = month.abb)
 
   fit = tslm(log(passengers) ~ t + month + ar(1),
     data = airpass.df,
@@ -300,7 +299,6 @@ test_that("documented tslm diagnostic residual choices run", {
   skip_if_not_installed("nlme")
 
   data(airpass.df)
-  airpass.df$month = factor(as.character(airpass.df$month), levels = month.abb)
 
   fit = tslm(log(passengers) ~ t + month + ar(1),
     data = airpass.df,

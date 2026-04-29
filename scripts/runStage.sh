@@ -34,9 +34,9 @@ fi
 
 stage="${stage//./_}"
 
-if [[ ! "$stage" =~ ^[0-9]+(_[0-9]+)?$ ]]; then
+if [[ ! "$stage" =~ ^[0-9]+(_[0-9]+)*$ ]]; then
   echo "Stage must be a stage number or an s20x-prefixed stage name; got: $stageInput"
-  echo "Use forms such as 7, 7_1, s20x_stage7_1, or run_s20x_stage7_1.sh."
+  echo "Use forms such as 7, 7_1, 8_2_1, s20x_stage8_2_1, or run_s20x_stage8_2_1.sh."
   exit 1
 fi
 

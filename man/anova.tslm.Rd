@@ -35,7 +35,7 @@ Use `verbose = TRUE` to see the underlying [nlme::anova.gls()] output.
 }
 \examples{
 data(beer.df)
-fit = tslm(beer ~ t, data = beer.df)
+fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
 anova(fit)
 
 }

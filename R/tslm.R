@@ -38,12 +38,10 @@
 #'
 #' @examples
 #' data(beer.df)
-#' fit = tslm(beer ~ t, data = beer.df)
+#' fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
 #' coef(fit)
 #'
 #' data(airpass.df)
-#' airpass.df$month = factor(as.character(airpass.df$month), levels = month.abb)
-#'
 #' fitAr = tslm(log(passengers) ~ t + month + ar(1),
 #'   data = airpass.df,
 #'   time = t
@@ -318,7 +316,7 @@ residuals.tslm = function(object, type = c("response", "pearson", "normalized"),
 #'
 #' @examples
 #' data(beer.df)
-#' fit = tslm(beer ~ t, data = beer.df)
+#' fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
 #' anova(fit)
 #'
 #' @method anova tslm
