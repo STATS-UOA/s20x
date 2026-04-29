@@ -31,7 +31,7 @@
 #' @export
 #' @importFrom stats AIC BIC lm as.formula formula terms coef residuals fitted predict
 #' @importFrom stats logLik model.frame nobs vcov
-#' @importFrom graphics abline plot
+#' @importFrom graphics abline par plot
 #' @importFrom stats acf printCoefmat qqline qqnorm
 #' @importFrom utils packageVersion
 #' @importFrom methods is
@@ -99,6 +99,7 @@ tslm = function(formula, data, time, method = "REML", ...) {
       meanFormula = parsedFormula$meanFormula,
       errorSpec = parsedFormula$errorSpec,
       time = timeName,
+      modelData = data,
       fit = fit
     ),
     class = "tslm"
@@ -217,54 +218,27 @@ print.summary.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...
 #' @export
 plot.tslm = function(x, which = c("all", "residuals", "time", "acf", "qq"), ...) {
   which = match.arg(which)
+  diagnosticData = getTslmDiagnosticData(x)
 
   if (which == "all") {
     oldPar = graphics::par(no.readonly = TRUE)
     on.exit(graphics::par(oldPar), add = TRUE)
     graphics::par(mfrow = c(2, 2))
 
-    plot(x, which = "residuals", ...)
-    plot(x, which = "time", ...)
-    plot(x, which = "acf", ...)
-    plot(x, which = "qq", ...)
-
-    return(invisible(x))
-  }
-
-  residualValues = stats::residuals(x)
-
-  if (which == "residuals") {
-    graphics::plot(
-      stats::fitted(x),
-      residualValues,
-      xlab = "Fitted values",
-      ylab = "Residuals",
-      main = "Residuals versus fitted values",
-      ...
-    )
-    graphics::abline(h = 0, lty = 2)
+    plotTslmResiduals(diagnosticData, ...)
+    plotTslmTimeResiduals(diagnosticData, x, ...)
+    stats::acf(diagnosticData$residuals, main = "ACF of residuals", ...)
+    stats::qqnorm(diagnosticData$residuals, main = "Normal Q-Q plot of residuals", ...)
+    stats::qqline(diagnosticData$residuals)
+  } else if (which == "residuals") {
+    plotTslmResiduals(diagnosticData, ...)
   } else if (which == "time") {
-    timeValues = if (!is.null(x$time)) {
-      stats::model.frame(x)[[x$time]]
-    } else {
-      seq_along(residualValues)
-    }
-
-    graphics::plot(
-      timeValues,
-      residualValues,
-      type = "b",
-      xlab = if (is.null(x$time)) "Observation order" else x$time,
-      ylab = "Residuals",
-      main = "Residuals over time",
-      ...
-    )
-    graphics::abline(h = 0, lty = 2)
+    plotTslmTimeResiduals(diagnosticData, x, ...)
   } else if (which == "acf") {
-    stats::acf(residualValues, main = "ACF of residuals", ...)
+    stats::acf(diagnosticData$residuals, main = "ACF of residuals", ...)
   } else {
-    stats::qqnorm(residualValues, main = "Normal Q-Q plot of residuals", ...)
-    stats::qqline(residualValues)
+    stats::qqnorm(diagnosticData$residuals, main = "Normal Q-Q plot of residuals", ...)
+    stats::qqline(diagnosticData$residuals)
   }
 
   invisible(x)
@@ -275,13 +249,13 @@ coef.tslm = function(object, ...) {
 }
 
 #' @export
-residuals.tslm = function(object, ...) {
-  as.numeric(stats::residuals(object$fit, ...))
+residuals.tslm = function(object, type = "response", ...) {
+  as.numeric(stats::residuals(object$fit, type = type, ...))
 }
 
 #' @export
 fitted.tslm = function(object, ...) {
-  stats::fitted(object$fit, ...)
+  as.numeric(stats::fitted(object$fit, ...))
 }
 
 #' @export
@@ -495,6 +469,84 @@ getTslmArParameters = function(object) {
   }
 
   out
+}
+
+getTslmDiagnosticData = function(object) {
+  residualValues = stats::residuals(object)
+  fittedValues = stats::fitted(object)
+
+  if (length(residualValues) != length(fittedValues)) {
+    stop(
+      "Could not align residuals and fitted values for this tslm object. ",
+      "This is an internal plotting error; please report it with the fitted model.",
+      call. = FALSE
+    )
+  }
+
+  timeValues = getTslmTimeValues(object, length(residualValues))
+
+  if (length(timeValues) != length(residualValues)) {
+    stop(
+      "Could not align the time variable with the model residuals. ",
+      "Check that the time variable was supplied from the same data frame used to fit the model.",
+      call. = FALSE
+    )
+  }
+
+  list(
+    fitted = fittedValues,
+    residuals = residualValues,
+    time = timeValues
+  )
+}
+
+getTslmTimeValues = function(object, nResiduals) {
+  if (is.null(object$time)) {
+    return(seq_len(nResiduals))
+  }
+
+  if (!is.null(object$modelData) && object$time %in% names(object$modelData)) {
+    return(object$modelData[[object$time]])
+  }
+
+  modelFrame = tryCatch(
+    stats::model.frame(object$fit),
+    error = function(e) NULL
+  )
+
+  if (!is.null(modelFrame) && object$time %in% names(modelFrame)) {
+    return(modelFrame[[object$time]])
+  }
+
+  stop(
+    "Could not find the time variable stored with this tslm object.",
+    call. = FALSE
+  )
+}
+
+plotTslmResiduals = function(diagnosticData, ...) {
+  graphics::plot(
+    diagnosticData$fitted,
+    diagnosticData$residuals,
+    xlab = "Fitted values",
+    ylab = "Residuals",
+    main = "Residuals versus fitted values",
+    ...
+  )
+  graphics::abline(h = 0, lty = 2)
+}
+
+plotTslmTimeResiduals = function(diagnosticData, object, ...) {
+  graphics::plot(
+    diagnosticData$time,
+    diagnosticData$residuals,
+    type = "b",
+    xlab = if (is.null(object$time)) "Observation order" else object$time,
+    ylab = "Residuals",
+    main = "Residuals over time",
+    ...
+  )
+  graphics::abline(h = 0, lty = 2)
 }
 
 requireSuggestedPackage = function(package) {

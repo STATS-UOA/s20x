@@ -114,7 +114,7 @@ will be extracted from \code{x}.
 
 \item \code{normcheck(lm)}: Testing for normality plot
 
-\item \code{normcheck(tslm)}: Testing for normality plot for tslm residuals
+\item \code{normcheck(tslm)}: Testing for normality plot
 
 }}
 \examples{
