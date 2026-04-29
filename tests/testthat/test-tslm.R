@@ -262,3 +262,48 @@ test_that("anova.tslm can return verbose underlying anova output", {
   expect_false(inherits(out, "anova.tslm"))
   expect_true("numDF" %in% names(as.data.frame(out)))
 })
+
+
+test_that("documented airpass.df teaching workflow is stable", {
+  skip_if_not_installed("nlme")
+
+  data(airpass.df)
+  airpass.df$month = factor(as.character(airpass.df$month), levels = month.abb)
+
+  fit = tslm(log(passengers) ~ t + month + ar(1),
+    data = airpass.df,
+    time = t
+  )
+
+  expect_s3_class(fit, "tslm")
+  expect_s3_class(fit$fit, "gls")
+  expect_equal(fit$errorSpec$p, 1L)
+  expect_equal(fit$time, "t")
+  expect_equal(levels(airpass.df$month), month.abb)
+
+  summaryOutput = capture.output(summary(fit))
+  anovaOutput = capture.output(anova(fit))
+
+  expect_true(any(grepl("Time series linear model with AR\\(1\\) errors", summaryOutput)))
+  expect_true(any(grepl("Analysis of Variance Table", anovaOutput)))
+  expect_true(any(grepl("Response: log\\(passengers\\)", anovaOutput)))
+})
+
+test_that("documented tslm diagnostic residual choices run", {
+  skip_if_not_installed("nlme")
+
+  data(airpass.df)
+  airpass.df$month = factor(as.character(airpass.df$month), levels = month.abb)
+
+  fit = tslm(log(passengers) ~ t + month + ar(1),
+    data = airpass.df,
+    time = t
+  )
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(plot(fit))
+  expect_silent(plot(fit, residualType = "response"))
+  expect_silent(normcheck(fit))
+})
