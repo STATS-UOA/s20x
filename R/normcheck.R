@@ -36,6 +36,10 @@
 #' @param usePar if \code{TRUE}, then this function will set \code{\link{par}} for the user. If \code{FALSE},
 #' then this function assumes \code{\link{par}} has been set by the user and therefore should not be
 #' be over-ridden.
+#' @param residualType for \code{tslm} objects, the residual scale to use in the normality plots.
+#' The default is \code{"normalized"}, which checks the residuals after accounting for
+#' the fitted error correlation structure. Other choices are \code{"response"} and
+#' \code{"pearson"}.
 #' @param \dots additional arguments which are passed to both \code{qqnorm} and \code{hist}
 #' @seealso \code{\link{shapiro.test}}.
 #' @keywords hplot
@@ -245,13 +249,16 @@ normcheck.tslm = function(x, xlab = c("Theoretical Quantiles", ""),
                           bootstrap = FALSE, B = 5, bpch = 3, bcol = "lightgrey",
                           shapiro.wilk = FALSE,
                           whichPlot = 1:2,
-                          usePar = TRUE, ...) {
+                          usePar = TRUE,
+                          residualType = "normalized", ...) {
   if (missing(x) || !methods::is(x, "tslm")) {
     stop("missing or incorrect tslm object")
   }
 
+  residualType = match.arg(residualType, c("response", "pearson", "normalized"))
+
   normcheck(
-    residuals(x),
+    residuals(x, type = residualType),
     xlab = xlab,
     ylab = ylab,
     main = main,

@@ -176,3 +176,50 @@ test_that("normcheck works with tslm objects", {
 
   expect_silent(normcheck(fit))
 })
+
+test_that("tslm residuals support normalized residuals", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  responseResiduals = residuals(fit, type = "response")
+  normalizedResiduals = residuals(fit, type = "normalized")
+
+  expect_type(normalizedResiduals, "double")
+  expect_length(normalizedResiduals, length(responseResiduals))
+  expect_equal(normalizedResiduals, responseResiduals / stats::sigma(fit$fit))
+})
+
+test_that("plot.tslm can use response and normalized residuals", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(plot(fit, residualType = "normalized"))
+  expect_silent(plot(fit, residualType = "response"))
+  expect_error(plot(fit, residualType = "bad"), "should be one of")
+})
+
+test_that("anova works with tslm objects", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  out = anova(fit)
+  expect_true(is.data.frame(out) || is.matrix(out) || inherits(out, "anova"))
+})
+
+test_that("anova compares compatible tslm models", {
+  fitSmall = tslm(dist ~ 1, data = cars)
+  fitLarge = tslm(dist ~ speed, data = cars)
+
+  out = anova(fitSmall, fitLarge)
+  expect_true(is.data.frame(out) || is.matrix(out) || inherits(out, "anova"))
+})
+
+test_that("normcheck.tslm can use normalized residuals", {
+  fit = tslm(dist ~ speed, data = cars)
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(normcheck(fit, residualType = "normalized"))
+  expect_silent(normcheck(fit, residualType = "response"))
+})

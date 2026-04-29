@@ -54,6 +54,7 @@ normcheck(x, ...)
   shapiro.wilk = FALSE,
   whichPlot = 1:2,
   usePar = TRUE,
+  residualType = "normalized",
   ...
 )
 }
@@ -95,6 +96,11 @@ reordered automatically if the order is anything other than \code{1:2}.}
 \item{usePar}{if \code{TRUE}, then this function will set \code{\link{par}} for the user. If \code{FALSE},
 then this function assumes \code{\link{par}} has been set by the user and therefore should not be
 be over-ridden.}
+
+\item{residualType}{for \code{tslm} objects, the residual scale to use in the normality plots.
+The default is \code{"normalized"}, which checks the residuals after accounting for
+the fitted error correlation structure. Other choices are \code{"response"} and
+\code{"pearson"}.}
 }
 \description{
 Plots two plots side by side. Firstly it draws a Normal QQ-plot of the

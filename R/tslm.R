@@ -29,7 +29,7 @@
 #' summary(fitAr)
 #'
 #' @export
-#' @importFrom stats AIC BIC lm as.formula formula terms coef residuals fitted predict
+#' @importFrom stats AIC BIC anova lm as.formula formula terms coef residuals fitted predict
 #' @importFrom stats logLik model.frame nobs vcov
 #' @importFrom graphics abline par plot
 #' @importFrom stats acf printCoefmat qqline qqnorm
@@ -216,28 +216,30 @@ print.summary.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...
 }
 
 #' @export
-plot.tslm = function(x, which = c("all", "residuals", "time", "acf", "qq"), ...) {
+plot.tslm = function(x, which = c("all", "residuals", "time", "acf", "qq"),
+                      residualType = "normalized", ...) {
   which = match.arg(which)
-  diagnosticData = getTslmDiagnosticData(x)
+  residualType = matchTslmResidualType(residualType)
+  diagnosticData = getTslmDiagnosticData(x, residualType = residualType)
 
   if (which == "all") {
     oldPar = graphics::par(no.readonly = TRUE)
     on.exit(graphics::par(oldPar), add = TRUE)
     graphics::par(mfrow = c(2, 2))
 
-    plotTslmResiduals(diagnosticData, ...)
-    plotTslmTimeResiduals(diagnosticData, x, ...)
-    stats::acf(diagnosticData$residuals, main = "ACF of residuals", ...)
-    stats::qqnorm(diagnosticData$residuals, main = "Normal Q-Q plot of residuals", ...)
+    plotTslmResiduals(diagnosticData, residualType = residualType, ...)
+    plotTslmTimeResiduals(diagnosticData, x, residualType = residualType, ...)
+    stats::acf(diagnosticData$residuals, main = paste("ACF of", residualType, "residuals"), ...)
+    stats::qqnorm(diagnosticData$residuals, main = paste("Normal Q-Q plot of", residualType, "residuals"), ...)
     stats::qqline(diagnosticData$residuals)
   } else if (which == "residuals") {
-    plotTslmResiduals(diagnosticData, ...)
+    plotTslmResiduals(diagnosticData, residualType = residualType, ...)
   } else if (which == "time") {
-    plotTslmTimeResiduals(diagnosticData, x, ...)
+    plotTslmTimeResiduals(diagnosticData, x, residualType = residualType, ...)
   } else if (which == "acf") {
-    stats::acf(diagnosticData$residuals, main = "ACF of residuals", ...)
+    stats::acf(diagnosticData$residuals, main = paste("ACF of", residualType, "residuals"), ...)
   } else {
-    stats::qqnorm(diagnosticData$residuals, main = "Normal Q-Q plot of residuals", ...)
+    stats::qqnorm(diagnosticData$residuals, main = paste("Normal Q-Q plot of", residualType, "residuals"), ...)
     stats::qqline(diagnosticData$residuals)
   }
 
@@ -249,8 +251,33 @@ coef.tslm = function(object, ...) {
 }
 
 #' @export
-residuals.tslm = function(object, type = "response", ...) {
+residuals.tslm = function(object, type = c("response", "pearson", "normalized"), ...) {
+  type = matchTslmResidualType(type)
+
+  if (identical(type, "normalized") && is.null(object$errorSpec)) {
+    responseResiduals = as.numeric(stats::residuals(object$fit, ...))
+    return(responseResiduals / stats::sigma(object$fit))
+  }
+
+  if (is.null(object$errorSpec)) {
+    return(as.numeric(stats::residuals(object$fit, type = type, ...)))
+  }
+
   as.numeric(stats::residuals(object$fit, type = type, ...))
+}
+
+#' @export
+anova.tslm = function(object, ...) {
+  modelList = list(object, ...)
+  fitList = lapply(modelList, function(model) {
+    if (methods::is(model, "tslm")) {
+      model$fit
+    } else {
+      model
+    }
+  })
+
+  do.call(stats::anova, fitList)
 }
 
 #' @export
@@ -471,8 +498,9 @@ getTslmArParameters = function(object) {
   out
 }
 
-getTslmDiagnosticData = function(object) {
-  residualValues = stats::residuals(object)
+getTslmDiagnosticData = function(object, residualType = "normalized") {
+  residualType = matchTslmResidualType(residualType)
+  residualValues = stats::residuals(object, type = residualType)
   fittedValues = stats::fitted(object)
 
   if (length(residualValues) != length(fittedValues)) {
@@ -524,29 +552,38 @@ getTslmTimeValues = function(object, nResiduals) {
   )
 }
 
-plotTslmResiduals = function(diagnosticData, ...) {
+plotTslmResiduals = function(diagnosticData, residualType = "normalized", ...) {
   graphics::plot(
     diagnosticData$fitted,
     diagnosticData$residuals,
     xlab = "Fitted values",
-    ylab = "Residuals",
-    main = "Residuals versus fitted values",
+    ylab = paste0(sentenceCase(residualType), " residuals"),
+    main = paste0(sentenceCase(residualType), " residuals versus fitted values"),
     ...
   )
   graphics::abline(h = 0, lty = 2)
 }
 
-plotTslmTimeResiduals = function(diagnosticData, object, ...) {
+plotTslmTimeResiduals = function(diagnosticData, object, residualType = "normalized", ...) {
   graphics::plot(
     diagnosticData$time,
     diagnosticData$residuals,
     type = "b",
     xlab = if (is.null(object$time)) "Observation order" else object$time,
-    ylab = "Residuals",
-    main = "Residuals over time",
+    ylab = paste0(sentenceCase(residualType), " residuals"),
+    main = paste0(sentenceCase(residualType), " residuals over time"),
     ...
   )
   graphics::abline(h = 0, lty = 2)
+}
+
+
+matchTslmResidualType = function(type) {
+  match.arg(type, c("response", "pearson", "normalized"))
+}
+
+sentenceCase = function(x) {
+  paste0(toupper(substr(x, 1, 1)), substr(x, 2, nchar(x)))
 }
 
 requireSuggestedPackage = function(package) {
