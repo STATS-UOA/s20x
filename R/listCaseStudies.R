@@ -24,92 +24,94 @@
 #'
 #' @export
 listCaseStudies = function() {
-  cs_dir = system.file("case_studies", package = "s20x")
-  if (cs_dir == "") {
+  csDir = system.file("case_studies", package = "s20x")
+  if (csDir == "") {
     stop("No case_studies directory found in package.", call. = FALSE)
   }
-  
-  files = list.files(cs_dir, pattern = "\\.Rmd$", full.names = TRUE)
+
+  files = list.files(csDir, pattern = "\\.Rmd$", full.names = TRUE)
   if (length(files) == 0) {
     return(invisible(character()))
   }
-  
-  extract_title = function(file) {
+
+  extractTitle = function(file) {
     lines = readLines(file, warn = FALSE)
-    
+
     start = which(trimws(lines) == "---")[1]
-    end   = which(trimws(lines) == "---")[2]
+    end = which(trimws(lines) == "---")[2]
     if (is.na(start) || is.na(end) || end <= start) {
       return(NA_character_)
     }
-    
+
     yaml = lines[(start + 1):(end - 1)]
-    idx = grep("^title\\s*:", yaml)
-    if (length(idx) == 0) {
+    titleIndex = grep("^title\\s*:", yaml)
+    if (length(titleIndex) == 0) {
       return(NA_character_)
     }
-    
-    title = sub("^title\\s*:\\s*", "", yaml[idx[1]])
+
+    title = sub("^title\\s*:\\s*", "", yaml[titleIndex[1]])
     title = trimws(title)
     title = sub('^"(.*)"$', "\\1", title)
     title = sub("^'(.*)'$", "\\1", title)
     trimws(title)
   }
-  
-  parse_number = function(fname) {
-    base = tools::file_path_sans_ext(basename(fname))
-    m = regexec("^CS(\\d+)_([0-9]+)$", base)
-    g = regmatches(base, m)[[1]]
-    if (length(g) == 0) return(c(NA, NA))
-    c(as.integer(g[2]), as.integer(g[3]))
+
+  parseNumber = function(fileName) {
+    base = tools::file_path_sans_ext(basename(fileName))
+    match = regexec("^CS(\\d+)_([0-9]+)$", base)
+    groups = regmatches(base, match)[[1]]
+    if (length(groups) == 0) {
+      return(c(NA, NA))
+    }
+    c(as.integer(groups[2]), as.integer(groups[3]))
   }
-  
-  info = lapply(files, function(f) {
-    num = parse_number(f)
+
+  info = lapply(files, function(file) {
+    number = parseNumber(file)
     list(
-      id = tools::file_path_sans_ext(basename(f)),
-      major = num[1],
-      minor = num[2],
-      title = extract_title(f)
+      id = tools::file_path_sans_ext(basename(file)),
+      major = number[1],
+      minor = number[2],
+      title = extractTitle(file)
     )
   })
-  
-  info = Filter(function(x) !is.na(x$major), info)
-  
-  ord = order(
+
+  info = Filter(function(item) {
+    !is.na(item$major)
+  }, info)
+
+  orderIndex = order(
     vapply(info, `[[`, integer(1), "major"),
     vapply(info, `[[`, integer(1), "minor")
   )
-  info = info[ord]
-  
+  info = info[orderIndex]
+
   ids = vapply(info, `[[`, character(1), "id")
   titles = vapply(info, `[[`, character(1), "title")
-  
-  # Column widths
-  file_width  = max(nchar(c("File", ids)))
-  title_width = max(nchar(c("Title", titles)), na.rm = TRUE)
-  
-  # Header
+
+  fileWidth = max(nchar(c("File", ids)))
+  titleWidth = max(nchar(c("Title", titles)), na.rm = TRUE)
+
   header = sprintf(
     "%-*s | %-*s",
-    file_width, "File",
-    title_width, "Title"
+    fileWidth, "File",
+    titleWidth, "Title"
   )
-  
+
   separator = sprintf(
     "%s-+-%s",
-    paste(rep("-", file_width), collapse = ""),
-    paste(rep("-", title_width), collapse = "")
+    paste(rep("-", fileWidth), collapse = ""),
+    paste(rep("-", titleWidth), collapse = "")
   )
-  
+
   rows = sprintf(
     "%-*s | %-*s",
-    file_width, ids,
-    title_width, ifelse(is.na(titles) | titles == "", "(no title)", titles)
+    fileWidth, ids,
+    titleWidth, ifelse(is.na(titles) | titles == "", "(no title)", titles)
   )
-  
+
   cat(header, "\n", separator, "\n", paste(rows, collapse = "\n"), "\n", sep = "")
-  
+
   invisible(ids)
 }
 

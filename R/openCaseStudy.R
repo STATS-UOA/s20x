@@ -21,53 +21,54 @@ openCaseStudy = function(id, dest_dir = getwd(), overwrite = FALSE) {
   if (!is.character(id) || length(id) != 1 || !nzchar(id)) {
     stop("`id` must be a single, non-empty character string.", call. = FALSE)
   }
-  
-  id_clean = toupper(id)
-  id_clean = gsub("^CS", "", id_clean)
-  id_clean = gsub("\\.", "_", id_clean)
-  
-  m = regexec("^(\\d+)_([0-9]+)$", id_clean)
-  g = regmatches(id_clean, m)[[1]]
-  if (length(g) == 0) {
+
+  idClean = toupper(id)
+  idClean = gsub("^CS", "", idClean)
+  idClean = gsub("\\.", "_", idClean)
+
+  match = regexec("^(\\d+)_([0-9]+)$", idClean)
+  groups = regmatches(idClean, match)[[1]]
+  if (length(groups) == 0) {
     stop(
       "Could not interpret case study identifier '", id,
       "'. Expected formats include CS9_2, CS9.2, 9_2, or 9.2.",
       call. = FALSE
     )
   }
-  
-  cs_id = paste0("CS", g[2], "_", g[3])
-  src = system.file("case_studies", paste0(cs_id, ".Rmd"), package = "s20x")
-  if (src == "") {
+
+  csId = paste0("CS", groups[2], "_", groups[3])
+  sourcePath = system.file("case_studies", paste0(csId, ".Rmd"), package = "s20x")
+  if (sourcePath == "") {
     stop(
-      "Case study '", cs_id, "' was not found in this package.\n",
+      "Case study '", csId, "' was not found in this package.\n",
       "Use listCaseStudies() to see available case studies.",
       call. = FALSE
     )
   }
-  
+
   dir.create(dest_dir, recursive = TRUE, showWarnings = FALSE)
-  dst = file.path(dest_dir, basename(src))
-  
-  if (file.exists(dst) && !overwrite) {
+  destinationPath = file.path(dest_dir, basename(sourcePath))
+
+  if (file.exists(destinationPath) && !overwrite) {
     stop(
-      "File already exists: ", dst, "\n",
+      "File already exists: ", destinationPath, "\n",
       "Set overwrite = TRUE or choose a different dest_dir.",
       call. = FALSE
     )
   }
-  
-  ok = file.copy(src, dst, overwrite = overwrite)
-  if (!ok) stop("Failed to copy case study to: ", dst, call. = FALSE)
-  
-  # Open in RStudio if available; otherwise use system editor
-  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-    rstudioapi::navigateToFile(dst)
-  } else {
-    utils::file.edit(dst)
+
+  copied = file.copy(sourcePath, destinationPath, overwrite = overwrite)
+  if (!copied) {
+    stop("Failed to copy case study to: ", destinationPath, call. = FALSE)
   }
-  
-  invisible(dst)
+
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    rstudioapi::navigateToFile(destinationPath)
+  } else {
+    utils::file.edit(destinationPath)
+  }
+
+  invisible(destinationPath)
 }
 
 #' @rdname openCaseStudy
