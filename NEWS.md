@@ -1,7 +1,8 @@
-# s20x 3.2.221
+# s20x 3.2.222
 
 ## Modernisation
 
+- Normalised style in the one-way ANOVA summary helper without changing its public interface.
 - Normalised style in package version and skewness utility helpers without changing their public interface.
 - Normalised style in regression confidence interval helpers without changing their public interface.
 - Normalised style in generalised linear model prediction helpers without changing their public interface.
