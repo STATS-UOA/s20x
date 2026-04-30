@@ -30,7 +30,7 @@ This function is deprecated. It will be removed in future versions of the packag
 
 # Peruvian Indians data
 data(peru.df)
-fit=lm(BP~age+years+weight+height, data = peru.df)
+fit = lm(BP ~ age + years + weight + height, data = peru.df)
 residPlot(fit)
 
 }

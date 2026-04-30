@@ -1,6 +1,7 @@
-# s20x 3.2.227
+# s20x 3.2.228
 
 ## Modernisation
+- Normalised style in residual diagnostic plotting helpers without changing their public interface.
 - Normalised style in autocorrelation plotting helpers without changing their public interface.
 - Normalised style in trend scatter plotting helpers without changing their public interface.
 - Normalised style in two-way ANOVA summary helpers without changing their public interface.
