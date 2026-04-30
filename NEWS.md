@@ -1,7 +1,8 @@
-# s20x 3.2.219
+# s20x 3.2.220
 
 ## Modernisation
 
+- Normalised style in regression confidence interval helpers without changing their public interface.
 - Normalised style in generalised linear model prediction helpers without changing their public interface.
 - Normalised style in one-way comparison helper functions without changing their public interface.
 - Normalised style in case study helper functions without changing their public interface.
