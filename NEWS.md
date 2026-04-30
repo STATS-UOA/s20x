@@ -1,7 +1,8 @@
-# s20x 3.2.224
+# s20x 3.2.225
 
 ## Modernisation
 
+- Normalised style in two-way ANOVA summary helpers without changing their public interface.
 - Normalised style in summary statistics helpers without changing their public interface.
 - Normalised style in the deprecated one-way frequency table helper without changing its public interface.
 - Normalised style in the one-way ANOVA summary helper without changing its public interface.

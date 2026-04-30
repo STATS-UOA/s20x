@@ -85,7 +85,7 @@ summary2way(arousal.fit)
 
 ## Butterfat data:
 data("butterfat.df")
-fit <- lm(log(Butterfat)~Breed+Age, data=butterfat.df)
+fit = lm(log(Butterfat)~Breed+Age, data=butterfat.df)
 summary2way(fit, page="nointeraction", FUN = exp)
 
 }
