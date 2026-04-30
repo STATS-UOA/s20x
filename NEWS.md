@@ -1,7 +1,8 @@
-# s20x 0.0.0.9000
+# s20x 3.2.219
 
 ## Modernisation
 
+- Normalised style in generalised linear model prediction helpers without changing their public interface.
 - Normalised style in one-way comparison helper functions without changing their public interface.
 - Normalised style in case study helper functions without changing their public interface.
 - Normalised style in deprecated grouped QQ plotting helpers.

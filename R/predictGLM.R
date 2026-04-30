@@ -26,58 +26,69 @@ predictGLM = function(object,
                       cilevel = 0.95,
                       quasit = FALSE,
                       ...) {
-  if (!inherits(object, "glm"))
+  if (!inherits(object, "glm")) {
     stop("First input is not a \"glm\" object")
-  
-  if (!is.data.frame(newdata))
+  }
+
+  if (!is.data.frame(newdata)) {
     stop("Argument \"newdata\" is not a data frame!")
-  
-  if (family(object)$link != "log" & family(object)$link != "logit")
+  }
+
+  if (family(object)$link != "log" & family(object)$link != "logit") {
     stop("Must be a poisson or binomial model")
-  
-  name.row = paste("pred", 1:nrow(newdata), sep = ".")
-  name.row = 1:nrow(newdata)
-  
-  if (!inherits(object, "glm"))
+  }
+
+  nameRow = paste("pred", 1:nrow(newdata), sep = ".")
+  nameRow = 1:nrow(newdata)
+
+  if (!inherits(object, "glm")) {
     stop("First input is not a \"glm\" object")
-  
-  if (!is.data.frame(newdata))
+  }
+
+  if (!is.data.frame(newdata)) {
     stop("Argument \"newdata\" is not a data frame!")
-  
-  if (family(object)$link != "log" & family(object)$link != "logit")
+  }
+
+  if (family(object)$link != "log" & family(object)$link != "logit") {
     stop("Must be a poisson or binomial model")
-  
-  tt <- terms(object)
-  Terms <- delete.response(tt)
-  if (!all(match(attr(Terms, "term.labels")[attr(Terms, "order") == 1],
-                 colnames(newdata), nomatch = FALSE)))
+  }
+
+  modelTerms = terms(object)
+  termsNoResponse = delete.response(modelTerms)
+  termLabels = attr(termsNoResponse, "term.labels")
+  firstOrderTerms = termLabels[attr(termsNoResponse, "order") == 1]
+
+  if (!all(match(firstOrderTerms, colnames(newdata), nomatch = FALSE))) {
     stop("newdata must be provided for all first-order terms")
-  
+  }
+
   pred = predict.glm(object, newdata, se.fit = TRUE, ...)
-  
-  Expected = pred$fit
+
+  expected = pred$fit
   percent = 1 - (1 - cilevel) / 2
-  CIquantile = qnorm(percent)
-  
-  if (quasit & substr(family(object)$family, 1, 5) == "quasi")
-    CIquantile = qt(percent, object$df.res)
-  
-  Conf.lower = pred$fit - CIquantile * pred$se.fit
-  Conf.upper = pred$fit + CIquantile * pred$se.fit
-  predictions = cbind(fit = Expected, lwr = Conf.lower, upr = Conf.upper)
-  
-  if (type == "response")
+  ciQuantile = qnorm(percent)
+
+  if (quasit & substr(family(object)$family, 1, 5) == "quasi") {
+    ciQuantile = qt(percent, object$df.res)
+  }
+
+  confLower = pred$fit - ciQuantile * pred$se.fit
+  confUpper = pred$fit + ciQuantile * pred$se.fit
+  predictions = cbind(fit = expected, lwr = confLower, upr = confUpper)
+
+  if (type == "response") {
     predictions = family(object)$linkinv(predictions)
-  
-  rownames <- seq_len(nrow(predictions))
-  
-  type = if(type == "response"){
-    "response"}
-  else{
+  }
+
+  rownames = seq_len(nrow(predictions))
+
+  type = if (type == "response") {
+    "response"
+  } else {
     "link"
   }
-  
+
   message("***Estimates and CIs are on the ", type, " scale***")
-  
+
   predictions
 }
