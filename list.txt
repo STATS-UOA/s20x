@@ -1,0 +1,366 @@
+ 22G	.
+ 13M	./.git/objects
+ 13M	./.git
+9.0M	./.git/objects/pack
+900K	./.Rproj.user
+544K	./inst
+352K	./inst/case_studies
+316K	./man
+280K	./R
+268K	./.Rproj.user/68C33D37
+216K	./.Rproj.user/68C33D37/sources/prop
+216K	./.Rproj.user/68C33D37/sources
+200K	./.Rproj.user/A91795A1
+192K	./.Rproj.user/5223D853
+184K	./inst/extdata
+176K	./demo
+164K	./data
+164K	./.Rproj.user/A91795A1/sources
+132K	./.Rproj.user/DA7DF04D
+124K	./.git/objects/d2
+124K	./.git/objects/31
+120K	./.git/objects/e2
+116K	./.Rproj.user/A91795A1/sources/per/t
+116K	./.Rproj.user/A91795A1/sources/per
+104K	./.Rproj.user/FD265322
+ 92K	./.Rproj.user/DA7DF04D/sources
+ 84K	./chatgpt-bundles
+ 84K	./.Rproj.user/5223D853/ctx/ctx-30641
+ 84K	./.Rproj.user/5223D853/ctx
+ 72K	./.Rproj.user/5223D853/sources
+ 64K	./.Rproj.user/FD265322/sources
+ 60K	./.git/logs
+ 60K	./.git/hooks
+ 56K	./.Rproj.user/DA7DF04D/sources/session-e93f5278
+ 48K	./.Rproj.user/A91795A1/sources/prop
+ 48K	./.git/refs
+ 48K	./.git/objects/f4
+ 44K	./.git/logs/refs
+ 40K	./.git/objects/4e
+ 36K	./.Rproj.user/DA7DF04D/sources/prop
+ 36K	./.Rproj.user/5223D853/sources/prop
+ 36K	./.Rproj.user/5223D853/sources/per
+ 36K	./.git/objects/fa
+ 36K	./.git/objects/cb
+ 32K	./.Rproj.user/FD265322/sources/session-52c44c7c
+ 32K	./.Rproj.user/FD265322/sources/prop
+ 32K	./.git/objects/ed
+ 32K	./.git/objects/eb
+ 32K	./.git/objects/c1
+ 32K	./.git/objects/ab
+ 32K	./.git/objects/a2
+ 32K	./.git/objects/9b
+ 32K	./.git/objects/88
+ 32K	./.git/objects/1e
+ 28K	./.git/objects/c2
+ 28K	./.git/objects/bc
+ 28K	./.git/objects/a5
+ 28K	./.git/objects/84
+ 28K	./.git/objects/78
+ 28K	./.git/objects/62
+ 28K	./.git/objects/0b
+ 24K	./scripts
+ 24K	./dev
+ 24K	./.Rproj.user/FD265322/pcs
+ 24K	./.Rproj.user/DA7DF04D/pcs
+ 24K	./.Rproj.user/A91795A1/pcs
+ 24K	./.Rproj.user/68C33D37/pcs
+ 24K	./.git/objects/f3
+ 24K	./.git/objects/ea
+ 24K	./.git/objects/d1
+ 24K	./.git/objects/c7
+ 24K	./.git/objects/c3
+ 24K	./.git/objects/a9
+ 24K	./.git/objects/93
+ 24K	./.git/objects/92
+ 24K	./.git/objects/89
+ 24K	./.git/objects/63
+ 24K	./.git/objects/60
+ 24K	./.git/objects/56
+ 24K	./.git/objects/3b
+ 24K	./.git/objects/26
+ 24K	./.git/objects/19
+ 24K	./.git/objects/08
+ 24K	./.git/logs/refs/remotes/origin
+ 24K	./.git/logs/refs/remotes
+ 20K	./tests
+ 20K	./.Rproj.user/5223D853/sources/per/t
+ 20K	./.Rproj.user/5223D853/pcs
+ 20K	./.git/refs/remotes/origin
+ 20K	./.git/refs/remotes
+ 20K	./.git/objects/ff
+ 20K	./.git/objects/fd
+ 20K	./.git/objects/e9
+ 20K	./.git/objects/df
+ 20K	./.git/objects/de
+ 20K	./.git/objects/d9
+ 20K	./.git/objects/d5
+ 20K	./.git/objects/d3
+ 20K	./.git/objects/cf
+ 20K	./.git/objects/c5
+ 20K	./.git/objects/ba
+ 20K	./.git/objects/b7
+ 20K	./.git/objects/b4
+ 20K	./.git/objects/ac
+ 20K	./.git/objects/99
+ 20K	./.git/objects/7d
+ 20K	./.git/objects/79
+ 20K	./.git/objects/6d
+ 20K	./.git/objects/6c
+ 20K	./.git/objects/58
+ 20K	./.git/objects/54
+ 20K	./.git/objects/51
+ 20K	./.git/objects/4f
+ 20K	./.git/objects/3d
+ 20K	./.git/objects/33
+ 20K	./.git/objects/24
+ 20K	./.git/objects/21
+ 20K	./.git/objects/15
+ 20K	./.git/objects/11
+ 20K	./.git/objects/0e
+ 20K	./.git/objects/0c
+ 20K	./.git/logs/refs/heads
+ 16K	./tests/testthat
+ 16K	./.Rproj.user/5223D853/sources/per/u
+ 16K	./.git/refs/heads
+ 16K	./.git/objects/fe
+ 16K	./.git/objects/f9
+ 16K	./.git/objects/f8
+ 16K	./.git/objects/f5
+ 16K	./.git/objects/ee
+ 16K	./.git/objects/e8
+ 16K	./.git/objects/e5
+ 16K	./.git/objects/e3
+ 16K	./.git/objects/e1
+ 16K	./.git/objects/dd
+ 16K	./.git/objects/c9
+ 16K	./.git/objects/c8
+ 16K	./.git/objects/c6
+ 16K	./.git/objects/b0
+ 16K	./.git/objects/ae
+ 16K	./.git/objects/ad
+ 16K	./.git/objects/9f
+ 16K	./.git/objects/9e
+ 16K	./.git/objects/9c
+ 16K	./.git/objects/9a
+ 16K	./.git/objects/95
+ 16K	./.git/objects/8e
+ 16K	./.git/objects/85
+ 16K	./.git/objects/7e
+ 16K	./.git/objects/7b
+ 16K	./.git/objects/77
+ 16K	./.git/objects/6f
+ 16K	./.git/objects/69
+ 16K	./.git/objects/61
+ 16K	./.git/objects/5e
+ 16K	./.git/objects/5a
+ 16K	./.git/objects/4a
+ 16K	./.git/objects/47
+ 16K	./.git/objects/43
+ 16K	./.git/objects/3a
+ 16K	./.git/objects/37
+ 16K	./.git/objects/30
+ 16K	./.git/objects/2f
+ 16K	./.git/objects/2e
+ 16K	./.git/objects/23
+ 16K	./.git/objects/17
+ 16K	./.git/objects/16
+ 16K	./.git/objects/0f
+ 16K	./.git/objects/05
+ 16K	./.git/objects/04
+ 16K	./.git/objects/00
+ 12K	./.git/refs/tags
+ 12K	./.git/objects/fc
+ 12K	./.git/objects/f7
+ 12K	./.git/objects/f6
+ 12K	./.git/objects/f0
+ 12K	./.git/objects/ec
+ 12K	./.git/objects/e7
+ 12K	./.git/objects/d6
+ 12K	./.git/objects/d4
+ 12K	./.git/objects/ce
+ 12K	./.git/objects/ca
+ 12K	./.git/objects/be
+ 12K	./.git/objects/b9
+ 12K	./.git/objects/b6
+ 12K	./.git/objects/af
+ 12K	./.git/objects/aa
+ 12K	./.git/objects/a8
+ 12K	./.git/objects/a7
+ 12K	./.git/objects/a6
+ 12K	./.git/objects/a4
+ 12K	./.git/objects/a0
+ 12K	./.git/objects/9d
+ 12K	./.git/objects/98
+ 12K	./.git/objects/96
+ 12K	./.git/objects/91
+ 12K	./.git/objects/90
+ 12K	./.git/objects/8f
+ 12K	./.git/objects/8b
+ 12K	./.git/objects/83
+ 12K	./.git/objects/81
+ 12K	./.git/objects/74
+ 12K	./.git/objects/6e
+ 12K	./.git/objects/66
+ 12K	./.git/objects/5b
+ 12K	./.git/objects/59
+ 12K	./.git/objects/57
+ 12K	./.git/objects/53
+ 12K	./.git/objects/52
+ 12K	./.git/objects/50
+ 12K	./.git/objects/4b
+ 12K	./.git/objects/46
+ 12K	./.git/objects/3e
+ 12K	./.git/objects/3c
+ 12K	./.git/objects/39
+ 12K	./.git/objects/32
+ 12K	./.git/objects/2c
+ 12K	./.git/objects/28
+ 12K	./.git/objects/22
+ 12K	./.git/objects/20
+ 12K	./.git/objects/1a
+ 12K	./.git/objects/06
+ 12K	./.git/objects/01
+8.0K	./inst/rmarkdown/templates/STATS20x_Assignment
+8.0K	./inst/rmarkdown/templates
+8.0K	./inst/rmarkdown
+8.0K	./dev/Completed
+8.0K	./.git/objects/f2
+8.0K	./.git/objects/ef
+8.0K	./.git/objects/e6
+8.0K	./.git/objects/e4
+8.0K	./.git/objects/e0
+8.0K	./.git/objects/dc
+8.0K	./.git/objects/da
+8.0K	./.git/objects/d8
+8.0K	./.git/objects/cc
+8.0K	./.git/objects/c0
+8.0K	./.git/objects/bf
+8.0K	./.git/objects/bb
+8.0K	./.git/objects/a1
+8.0K	./.git/objects/97
+8.0K	./.git/objects/94
+8.0K	./.git/objects/8d
+8.0K	./.git/objects/87
+8.0K	./.git/objects/82
+8.0K	./.git/objects/80
+8.0K	./.git/objects/7f
+8.0K	./.git/objects/7c
+8.0K	./.git/objects/76
+8.0K	./.git/objects/75
+8.0K	./.git/objects/71
+8.0K	./.git/objects/6a
+8.0K	./.git/objects/5d
+8.0K	./.git/objects/5c
+8.0K	./.git/objects/4d
+8.0K	./.git/objects/4c
+8.0K	./.git/objects/48
+8.0K	./.git/objects/42
+8.0K	./.git/objects/41
+8.0K	./.git/objects/38
+8.0K	./.git/objects/36
+8.0K	./.git/objects/34
+8.0K	./.git/objects/2d
+8.0K	./.git/objects/2b
+8.0K	./.git/objects/2a
+8.0K	./.git/objects/29
+8.0K	./.git/objects/1f
+8.0K	./.git/objects/1c
+8.0K	./.git/objects/1b
+8.0K	./.git/objects/18
+8.0K	./.git/objects/12
+8.0K	./.git/objects/10
+8.0K	./.git/objects/0d
+8.0K	./.git/objects/0a
+8.0K	./.git/objects/09
+8.0K	./.git/objects/03
+8.0K	./.git/objects/02
+4.0K	./Meta
+4.0K	./inst/rmarkdown/templates/STATS20x_Assignment/skeleton
+4.0K	./.Rproj.user/shared/notebooks
+4.0K	./.Rproj.user/shared
+4.0K	./.github/workflows
+4.0K	./.github
+4.0K	./.git/objects/fb
+4.0K	./.git/objects/f1
+4.0K	./.git/objects/db
+4.0K	./.git/objects/d7
+4.0K	./.git/objects/d0
+4.0K	./.git/objects/cd
+4.0K	./.git/objects/c4
+4.0K	./.git/objects/bd
+4.0K	./.git/objects/b8
+4.0K	./.git/objects/b5
+4.0K	./.git/objects/b2
+4.0K	./.git/objects/b1
+4.0K	./.git/objects/a3
+4.0K	./.git/objects/8c
+4.0K	./.git/objects/86
+4.0K	./.git/objects/7a
+4.0K	./.git/objects/73
+4.0K	./.git/objects/72
+4.0K	./.git/objects/70
+4.0K	./.git/objects/68
+4.0K	./.git/objects/67
+4.0K	./.git/objects/65
+4.0K	./.git/objects/64
+4.0K	./.git/objects/5f
+4.0K	./.git/objects/55
+4.0K	./.git/objects/49
+4.0K	./.git/objects/45
+4.0K	./.git/objects/40
+4.0K	./.git/objects/3f
+4.0K	./.git/objects/35
+4.0K	./.git/objects/27
+4.0K	./.git/objects/1d
+4.0K	./.git/objects/14
+4.0K	./.git/objects/13
+4.0K	./.git/info
+  0B	./.Rproj.user/FD265322/viewer-cache
+  0B	./.Rproj.user/FD265322/viewer_history
+  0B	./.Rproj.user/FD265322/tutorial
+  0B	./.Rproj.user/FD265322/sources/per/u
+  0B	./.Rproj.user/FD265322/sources/per/t
+  0B	./.Rproj.user/FD265322/sources/per
+  0B	./.Rproj.user/FD265322/profiles-cache
+  0B	./.Rproj.user/FD265322/presentation
+  0B	./.Rproj.user/FD265322/explorer-cache
+  0B	./.Rproj.user/FD265322/ctx
+  0B	./.Rproj.user/FD265322/bibliography-index
+  0B	./.Rproj.user/DA7DF04D/viewer-cache
+  0B	./.Rproj.user/DA7DF04D/viewer_history
+  0B	./.Rproj.user/DA7DF04D/tutorial
+  0B	./.Rproj.user/DA7DF04D/profiles-cache
+  0B	./.Rproj.user/DA7DF04D/presentation
+  0B	./.Rproj.user/DA7DF04D/explorer-cache
+  0B	./.Rproj.user/DA7DF04D/ctx
+  0B	./.Rproj.user/DA7DF04D/bibliography-index
+  0B	./.Rproj.user/A91795A1/viewer-cache
+  0B	./.Rproj.user/A91795A1/tutorial
+  0B	./.Rproj.user/A91795A1/sources/per/u
+  0B	./.Rproj.user/A91795A1/profiles-cache
+  0B	./.Rproj.user/A91795A1/presentation
+  0B	./.Rproj.user/A91795A1/explorer-cache
+  0B	./.Rproj.user/A91795A1/ctx
+  0B	./.Rproj.user/A91795A1/bibliography-index
+  0B	./.Rproj.user/68C33D37/viewer-cache
+  0B	./.Rproj.user/68C33D37/viewer_history
+  0B	./.Rproj.user/68C33D37/tutorial
+  0B	./.Rproj.user/68C33D37/sources/per/u
+  0B	./.Rproj.user/68C33D37/sources/per/t
+  0B	./.Rproj.user/68C33D37/sources/per
+  0B	./.Rproj.user/68C33D37/profiles-cache
+  0B	./.Rproj.user/68C33D37/presentation
+  0B	./.Rproj.user/68C33D37/explorer-cache
+  0B	./.Rproj.user/68C33D37/ctx
+  0B	./.Rproj.user/68C33D37/bibliography-index
+  0B	./.Rproj.user/5223D853/viewer-cache
+  0B	./.Rproj.user/5223D853/viewer_history
+  0B	./.Rproj.user/5223D853/unsaved-notebooks/A06876EE
+  0B	./.Rproj.user/5223D853/unsaved-notebooks
+  0B	./.Rproj.user/5223D853/tutorial
+  0B	./.Rproj.user/5223D853/profiles-cache
+  0B	./.Rproj.user/5223D853/presentation
+  0B	./.Rproj.user/5223D853/explorer-cache
+  0B	./.Rproj.user/5223D853/bibliography-index
+  0B	./.git/objects/info
