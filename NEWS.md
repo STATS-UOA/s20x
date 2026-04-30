@@ -1,6 +1,7 @@
-# s20x 3.2.231
+# s20x 3.2.232
 
 ## Modernisation
+- Completed the Stage 10 style-normalisation sweep for remaining legacy helpers without changing public interfaces.
 - Normalised style in Cook's distance plotting helpers without changing their public interface.
 - Normalised style in count prediction helpers without changing their public interface.
 - Normalised style in row distribution helpers without changing their public interface.
