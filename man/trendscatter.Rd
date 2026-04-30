@@ -73,7 +73,7 @@ data(peru.df)
 trendscatter(BP ~ weight, data = peru.df)
 
 # Note: this usage is deprecated
-with(peru.df,trendscatter(weight,BP))
+with(peru.df, trendscatter(weight, BP))
 
 }
 \seealso{

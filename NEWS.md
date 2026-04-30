@@ -1,6 +1,7 @@
-# s20x 3.2.225
+# s20x 3.2.226
 
 ## Modernisation
+- Normalised style in trend scatter plotting helpers without changing their public interface.
 
 - Normalised style in two-way ANOVA summary helpers without changing their public interface.
 - Normalised style in summary statistics helpers without changing their public interface.
