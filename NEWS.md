@@ -1,7 +1,8 @@
-# s20x 3.2.220
+# s20x 3.2.221
 
 ## Modernisation
 
+- Normalised style in package version and skewness utility helpers without changing their public interface.
 - Normalised style in regression confidence interval helpers without changing their public interface.
 - Normalised style in generalised linear model prediction helpers without changing their public interface.
 - Normalised style in one-way comparison helper functions without changing their public interface.

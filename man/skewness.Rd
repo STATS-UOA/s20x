@@ -7,20 +7,22 @@
 skewness(x, ...)
 }
 \arguments{
-\item{x}{Vector containing the data.}
+\item{x}{vector containing the data.}
 
-\item{\dots}{Additional arguments passed to [mean()] and [sd()], such as
-`na.rm = TRUE`.}
+\item{\dots}{any other variables to be passed to \code{mean} and \code{sd}, e.g.
+\code{na.rm = TRUE}.}
 }
 \value{
-The value of the skewness statistic.
+Returns the value of the skewness.
 }
 \description{
-Calculates the skewness statistic of the data in `x`. Values close to zero
-correspond to reasonably symmetric data. Positive values indicate right-skewed
-data, whereas negative values indicate left-skewed data.
+Calculates the skewness statistic of the data in 'x'. Values close to zero
+correspond to reasonably symmetric data, positive values of this measure
+indicate right-skewed data whereas negative values indicate left-skewness.
 }
 \examples{
+
+## Merger data:
 data(mergers.df)
 skewness(mergers.df$mergerdays)
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/getVersion.R
 \name{getVersion}
 \alias{getVersion}
-\title{s20x Package Version Number}
+\title{s20x package version number}
 \usage{
 getVersion()
 }
@@ -12,6 +12,7 @@ has problems running commands and the maintainer needs to check the version
 number.
 }
 \examples{
+
 getVersion()
 
 }
