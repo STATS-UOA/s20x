@@ -1,4 +1,8 @@
-# s20x 3.2.235
+# s20x 3.2.238
+
+## Modernisation
+- Added a deeper Stage 11 legacy API audit focused on outdated teaching wrappers, deprecation candidates, and future modernisation priorities.
+
 
 ## Modernisation
 - Added a camelCase `outputDir` alias for rendered case-study helpers while preserving `output_dir` compatibility.
