@@ -1,25 +1,31 @@
-#' Predictions for Generalized Linear Models
+#' Prediction Intervals for Log-Link and Logit-Link Generalized Linear Models
 #'
-#' An alternative to \code{\link{predictCount}} to handle Binomial as well as
-#' Poisson models
+#' Teaching helper for predictions from log-link and logit-link generalized
+#' linear models. It wraps \code{\link{predict.glm}} with standard errors and
+#' returns fitted values with confidence limits on either the link scale or the
+#' response scale.
 #'
-#' Note: The data frame, newdata, must have the same column order and data
-#' types (e.g. numeric or factor) as those used in fitting the model.
+#' This is not an S3 \code{predict()} method and is not intended to be a
+#' drop-in replacement for base R prediction methods. It is the more general GLM
+#' teaching helper in this package; \code{\link{predictCount}} remains a
+#' specialised count-focused wrapper with rounded response-scale output.
 #'
+#' Note: \code{newdata} must include all first-order terms used in the fitted
+#' model.
 #'
 #' @param object a \code{glm} object, i.e. the output from \code{\link{glm}}.
 #' @param newdata prediction data frame.
+#' @param type \code{"link"} (default) or \code{"response"} for estimates and
+#'   confidence intervals on the linear predictor or response scale.
 #' @param cilevel confidence level of the interval.
-#' @param type \code{"link"} (default) or \code{"response"} for CI on linear predictor or response scale.
-#' @param quasit if \code{TRUE}, t multiplier for CI rather than normal multiplier in the case of a quasi model.
-#' @param \dots optional arguments that are passed to the generic \code{predict}.
-#' @return A data frame with three columns: \describe{ \item{Predicted}{the
-#' predicted count.} \item{Conf.lower}{the lower bound of the predicted count.}
-#' \item{Conf.upper}{the upper bound of the predicted count.} }
-#' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{as.data.frame}}.
+#' @param quasit if \code{TRUE}, use a t multiplier rather than a normal
+#'   multiplier for confidence intervals when \code{object} is a quasi model.
+#' @param \dots optional arguments that are passed to \code{\link{predict.glm}}.
+#' @return A matrix with columns \code{fit}, \code{lwr}, and \code{upr} containing
+#'   fitted values and confidence limits on the requested scale.
+#' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.
 #' @keywords htest
 #' @export predictGLM
-
 predictGLM = function(object,
                       newdata,
                       type = "link",

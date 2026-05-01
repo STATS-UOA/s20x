@@ -1,25 +1,35 @@
-#' Model Predictions for a Linear Model
+#' Deprecated Teaching Predictions for a Linear Model
 #'
-#' Uses the main output and some error messages from R function 'predict' but
-#' gives you more output. (Error messages are not reliable when used in Splus.)
+#' Teaching helper for linear-model predictions. It wraps
+#' \code{\link{predict.lm}} and prints a compact table containing fitted values,
+#' confidence intervals, and prediction intervals for new observations.
 #'
-#' Note: The data frame, newdata, must have the same column order and data
-#' types (e.g. numeric or factor) as those used in fitting the model.
+#' This is not an S3 \code{predict()} method and is not intended to be a
+#' drop-in replacement for base R prediction methods. The function is retained
+#' for compatibility with older teaching material, but the standard
+#' \code{\link{predict}} interface is preferred for new work.
 #'
+#' Note: \code{newdata} must be a data frame with the same column order and
+#' data types as those used in fitting the model.
 #'
 #' @param object an \code{lm} object, i.e. the output from \code{lm}.
 #' @param newdata prediction data frame.
 #' @param cilevel confidence level of the interval.
 #' @param digit decimal numbers after the point.
 #' @param print.out if \code{TRUE}, print out the prediction matrix.
-#' @param \dots optional arguments that are passed to the generic 'predict'
-#' @return \item{frame}{vector or matrix including predicted values, confidence
-#' intervals and predicted intervals.} \item{fit}{prediction values.}
-#' \item{se.fit}{standard error of predictions.} \item{residual.scale}{residual
-#' standard deviations.} \item{df}{degrees of freedom for residual.}
-#' \item{cilevel}{confidence level of the interval.}
+#' @param \dots optional arguments that are passed to \code{\link{predict.lm}}.
+#' @return Invisibly returns a list with components \describe{
+#'   \item{frame}{printed data frame containing predictions, confidence intervals,
+#'   and prediction intervals.}
+#'   \item{fit}{prediction values.}
+#'   \item{se.fit}{standard errors of predictions.}
+#'   \item{residual.scale}{residual standard deviation.}
+#'   \item{df}{residual degrees of freedom.}
+#'   \item{cilevel}{confidence level of the interval.}
+#' }
 #' @seealso \code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
-#' @note This function is deprecated. It will be removed in future versions of the package.
+#' @note This function is deprecated as it is no longer used in class. Prefer
+#'   the standard \code{\link{predict}} method for new work.
 #' @keywords htest
 #' @examples
 #'
@@ -39,7 +49,6 @@
 #' predict20x(peru.fit, pred.peru)
 #'
 #' @export predict20x
-#' @note this function is deprecated as it is never used in class any more. We prefer the standard \code{\link{predict}} method.
 predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...) {
   if (!inherits(object, "lm")) {
     stop("First input is not an \"lm\" object")

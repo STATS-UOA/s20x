@@ -2,7 +2,7 @@
 % Please edit documentation in R/predictCount.R
 \name{predictCount}
 \alias{predictCount}
-\title{Predicted Counts for a Generalized Linear Model}
+\title{Predicted Counts for a Log-Link Generalized Linear Model}
 \usage{
 predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
 }
@@ -15,24 +15,33 @@ predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
 
 \item{digit}{decimal numbers after the point.}
 
-\item{print.out}{if \code{TRUE}, print out the prediction matrix.}
+\item{print.out}{if \code{TRUE}, print out the prediction table.}
 
-\item{\dots}{optional arguments that are passed to the generic \code{predict}.}
+\item{\dots}{optional arguments that are passed to \code{\link{predict.glm}}.}
 }
 \value{
-A data frame with three columns: \describe{ \item{Predicted}{the
-predicted count.} \item{Conf.lower}{the lower bound of the predicted count.}
-\item{Conf.upper}{the upper bound of the predicted count.} }
+Invisibly returns a data frame with three columns: \describe{
+  \item{Predicted}{the predicted count on the response scale.}
+  \item{Conf.lower}{the lower confidence limit on the response scale.}
+  \item{Conf.upper}{the upper confidence limit on the response scale.}
+}
 }
 \description{
-Uses the main output and some error messages from R function 'predict' but
-gives you more output. (Error messages are not reliable when used in Splus.)
+Teaching helper for count predictions from a log-link generalized linear
+model. It wraps \code{\link{predict.glm}}, constructs confidence intervals on
+the link scale, exponentiates the fitted values and limits, rounds the result,
+and optionally prints the returned table.
 }
 \details{
-Note: The data frame, newdata, must have the same column order and data
-types (e.g. numeric or factor) as those used in fitting the model.
+This is not an S3 \code{predict()} method and is not intended to be a
+drop-in replacement for base R prediction methods. It is a specialised
+count-focused teaching wrapper. For a more general log-link or logit-link GLM
+helper, see \code{\link{predictGLM}}.
+
+Note: \code{newdata} must be a data frame with the same column order and
+data types as those used in fitting the model.
 }
 \seealso{
-\code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{as.data.frame}}.
+\code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictGLM}}, \code{\link{as.data.frame}}.
 }
 \keyword{htest}

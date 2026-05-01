@@ -77,3 +77,13 @@ Do not immediately add new public aliases or reshape return objects. Instead:
 - Review whether `predictCount()` should eventually delegate to a shared internal helper used by `predictGLM()`.
 - Review documentation wording so users understand these are teaching helpers, not drop-in replacements for base `predict()` methods.
 - Avoid introducing S3 methods unless there is a clear benefit, because these helpers currently have explicit teaching-oriented names.
+
+## Stage 11.2 documentation decision
+
+Stage 11.2 keeps the prediction helper interfaces unchanged and clarifies the documentation instead. The three exported helpers remain explicit teaching wrappers rather than S3 `predict()` methods:
+
+- `predict20x()` remains a deprecated `lm` teaching helper that prints both confidence and prediction intervals.
+- `predictCount()` remains a count-focused `glm` teaching helper that returns rounded response-scale counts from a log-link model.
+- `predictGLM()` remains the more general log-link/logit-link helper that returns a fit/lower/upper matrix on either the link or response scale.
+
+This avoids implying that the helpers are drop-in replacements for base `predict()` methods. Later implementation stages can still extract shared internal interval helpers, but they should do so behind the existing exported interfaces and after current behaviour remains locked down by tests.

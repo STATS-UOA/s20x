@@ -1,22 +1,30 @@
-#' Predicted Counts for a Generalized Linear Model
+#' Predicted Counts for a Log-Link Generalized Linear Model
 #'
-#' Uses the main output and some error messages from R function 'predict' but
-#' gives you more output. (Error messages are not reliable when used in Splus.)
+#' Teaching helper for count predictions from a log-link generalized linear
+#' model. It wraps \code{\link{predict.glm}}, constructs confidence intervals on
+#' the link scale, exponentiates the fitted values and limits, rounds the result,
+#' and optionally prints the returned table.
 #'
-#' Note: The data frame, newdata, must have the same column order and data
-#' types (e.g. numeric or factor) as those used in fitting the model.
+#' This is not an S3 \code{predict()} method and is not intended to be a
+#' drop-in replacement for base R prediction methods. It is a specialised
+#' count-focused teaching wrapper. For a more general log-link or logit-link GLM
+#' helper, see \code{\link{predictGLM}}.
 #'
+#' Note: \code{newdata} must be a data frame with the same column order and
+#' data types as those used in fitting the model.
 #'
 #' @param object a \code{glm} object, i.e. the output from \code{\link{glm}}.
 #' @param newdata prediction data frame.
 #' @param cilevel confidence level of the interval.
 #' @param digit decimal numbers after the point.
-#' @param print.out if \code{TRUE}, print out the prediction matrix.
-#' @param \dots optional arguments that are passed to the generic \code{predict}.
-#' @return A data frame with three columns: \describe{ \item{Predicted}{the
-#' predicted count.} \item{Conf.lower}{the lower bound of the predicted count.}
-#' \item{Conf.upper}{the upper bound of the predicted count.} }
-#' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{as.data.frame}}.
+#' @param print.out if \code{TRUE}, print out the prediction table.
+#' @param \dots optional arguments that are passed to \code{\link{predict.glm}}.
+#' @return Invisibly returns a data frame with three columns: \describe{
+#'   \item{Predicted}{the predicted count on the response scale.}
+#'   \item{Conf.lower}{the lower confidence limit on the response scale.}
+#'   \item{Conf.upper}{the upper confidence limit on the response scale.}
+#' }
+#' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictGLM}}, \code{\link{as.data.frame}}.
 #' @keywords htest
 #' @export predictCount
 predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...) {
