@@ -1,6 +1,7 @@
 # s20x 3.2.235
 
 ## Modernisation
+- Added a camelCase `outputDir` alias for rendered case-study helpers while preserving `output_dir` compatibility.
 - Clarified prediction helper documentation so their teaching-wrapper roles and return values are explicit.
 - Added a Stage 11 API consistency audit for prediction helpers before changing public interfaces.
 - Completed the Stage 10 style-normalisation sweep for remaining legacy helpers without changing public interfaces.

@@ -93,3 +93,9 @@ This avoids implying that the helpers are drop-in replacements for base `predict
 Stage 11.3 adds a camelCase `destDir` compatibility alias for the case-study opener family while retaining the legacy `dest_dir` argument. This keeps existing teaching material working and gives new code a package-style-consistent argument name.
 
 The alias is accepted through `...` so existing positional calls to `openCaseStudy(id, dest_dir, overwrite)`, `opencs()`, and `ocs()` keep their current meaning. Ambiguous calls that supply both `dest_dir` and `destDir` with different destinations are rejected explicitly. Unsupported extra arguments are also rejected so misspelled argument names do not get silently ignored.
+
+## Stage 11.4 rendered case-study output argument decision
+
+Stage 11.4 adds a camelCase `outputDir` compatibility alias for `casestudy()` and `cs()` while retaining the legacy `output_dir` argument. This mirrors the Stage 11.3 destination-directory decision for `openCaseStudy()` and keeps the case-study helper family moving toward consistent camelCase names without breaking existing teaching material.
+
+The alias is accepted through `...` so existing positional calls to `casestudy(id, output_dir, open, quiet)` keep their current meaning. Any remaining `...` arguments are still passed to `rmarkdown::render()`. Ambiguous calls that supply both `output_dir` and `outputDir` are rejected explicitly.

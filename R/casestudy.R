@@ -10,11 +10,14 @@
 #' @param id A case study identifier. Flexible formats are accepted, including
 #'   \code{"CS9_2"}, \code{"CS9.2"}, \code{"9_2"}, or \code{"9.2"}.
 #' @param output_dir Directory where the rendered HTML file should be written.
-#'   Defaults to a temporary directory.
+#'   Defaults to a temporary directory. This legacy argument is retained for
+#'   compatibility; new code may use the camelCase \code{outputDir} alias
+#'   through \code{...}.
 #' @param open Logical; if \code{TRUE} (default), open the rendered HTML file in
 #'   the default web browser.
 #' @param quiet Logical; passed to \code{rmarkdown::render()} to suppress output.
-#' @param ... Additional arguments passed to \code{rmarkdown::render()}.
+#' @param ... Additional arguments passed to \code{rmarkdown::render()}. Also
+#'   supports \code{outputDir}, a camelCase alias for \code{output_dir}.
 #'
 #' @details
 #' The case study is rendered on demand using \code{rmarkdown::render()}.
@@ -30,6 +33,7 @@
 #' \dontrun{
 #' casestudy("CS9_2")
 #' casestudy("9.2")
+#' casestudy("9_2", outputDir = tempdir())
 #' cs("9_2")
 #' }
 #'
@@ -44,57 +48,97 @@ casestudy = function(
   if (!is.character(id) || length(id) != 1 || !nzchar(id)) {
     stop("`id` must be a single, non-empty character string.", call. = FALSE)
   }
-  
-  # Normalise input to chapter + number
-  id_clean = toupper(id)
-  id_clean = gsub("^CS", "", id_clean)
-  id_clean = gsub("\\.", "_", id_clean)
-  
-  m = regexec("^(\\d+)_([0-9]+)$", id_clean)
-  g = regmatches(id_clean, m)[[1]]
-  
-  if (length(g) == 0) {
+
+  outputArgs = resolveCaseStudyOutputArgs(
+    output_dir = if (missing(output_dir)) {
+      tempfile("s20x_case_study_")
+    } else {
+      output_dir
+    },
+    outputDirWasSupplied = !missing(output_dir),
+    ...
+  )
+  outputDir = outputArgs$outputDir
+  renderArgs = outputArgs$renderArgs
+
+  idClean = toupper(id)
+  idClean = gsub("^CS", "", idClean)
+  idClean = gsub("\\.", "_", idClean)
+
+  match = regexec("^(\\d+)_([0-9]+)$", idClean)
+  groups = regmatches(idClean, match)[[1]]
+
+  if (length(groups) == 0) {
     stop(
       "Could not interpret case study identifier '", id,
       "'. Expected formats include CS9_2, CS9.2, 9_2, or 9.2.",
       call. = FALSE
     )
   }
-  
-  cs_id = paste0("CS", g[2], "_", g[3])
-  rmd = system.file("case_studies", paste0(cs_id, ".Rmd"), package = "s20x")
-  
+
+  csId = paste0("CS", groups[2], "_", groups[3])
+  rmd = system.file("case_studies", paste0(csId, ".Rmd"), package = "s20x")
+
   if (rmd == "") {
     stop(
-      "Case study '", cs_id, "' was not found in this package.\n",
+      "Case study '", csId, "' was not found in this package.\n",
       "Use listCaseStudies() to see available case studies.",
       call. = FALSE
     )
   }
-  
-  dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-  
-  # Work in a temporary directory so relative paths behave sensibly
-  workdir = tempfile(paste0("s20x_", cs_id, "_"))
-  dir.create(workdir, recursive = TRUE, showWarnings = FALSE)
-  
-  local_rmd = file.path(workdir, basename(rmd))
-  file.copy(rmd, local_rmd, overwrite = TRUE)
-  
-  # Render
-  out = rmarkdown::render(
-    input = local_rmd,
-    output_dir = output_dir,
-    quiet = quiet,
-    envir = .GlobalEnv,
-    ...
+
+  dir.create(outputDir, recursive = TRUE, showWarnings = FALSE)
+
+  workDir = tempfile(paste0("s20x_", csId, "_"))
+  dir.create(workDir, recursive = TRUE, showWarnings = FALSE)
+
+  localRmd = file.path(workDir, basename(rmd))
+  file.copy(rmd, localRmd, overwrite = TRUE)
+
+  out = do.call(
+    rmarkdown::render,
+    c(
+      list(
+        input = localRmd,
+        output_dir = outputDir,
+        quiet = quiet,
+        envir = .GlobalEnv
+      ),
+      renderArgs
+    )
   )
-  
+
   if (open) {
     utils::browseURL(out)
   }
-  
+
   invisible(out)
+}
+
+resolveCaseStudyOutputArgs = function(output_dir, outputDirWasSupplied, ...) {
+  renderArgs = list(...)
+  argNames = names(renderArgs)
+
+  if (!is.null(argNames) && sum(argNames == "outputDir") > 1) {
+    stop("Use only one outputDir argument.", call. = FALSE)
+  }
+
+  if (!is.null(argNames) && "outputDir" %in% argNames) {
+    if (outputDirWasSupplied) {
+      stop("Use only one of output_dir or outputDir.", call. = FALSE)
+    }
+    output_dir = renderArgs$outputDir
+    renderArgs$outputDir = NULL
+  }
+
+  if (!is.character(output_dir) || length(output_dir) != 1 || !nzchar(output_dir)) {
+    stop("`outputDir` must be a single, non-empty character string.", call. = FALSE)
+  }
+
+  list(
+    outputDir = output_dir,
+    renderArgs = renderArgs
+  )
 }
 
 #' @rdname casestudy
