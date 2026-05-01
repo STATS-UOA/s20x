@@ -1,6 +1,7 @@
-# s20x 3.2.232
+# s20x 3.2.233
 
 ## Modernisation
+- Added a Stage 11 API consistency audit for prediction helpers before changing public interfaces.
 - Completed the Stage 10 style-normalisation sweep for remaining legacy helpers without changing public interfaces.
 - Normalised style in Cook's distance plotting helpers without changing their public interface.
 - Normalised style in count prediction helpers without changing their public interface.
