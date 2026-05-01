@@ -87,3 +87,9 @@ Stage 11.2 keeps the prediction helper interfaces unchanged and clarifies the do
 - `predictGLM()` remains the more general log-link/logit-link helper that returns a fit/lower/upper matrix on either the link or response scale.
 
 This avoids implying that the helpers are drop-in replacements for base `predict()` methods. Later implementation stages can still extract shared internal interval helpers, but they should do so behind the existing exported interfaces and after current behaviour remains locked down by tests.
+
+## Stage 11.3 case-study destination argument decision
+
+Stage 11.3 adds a camelCase `destDir` compatibility alias for the case-study opener family while retaining the legacy `dest_dir` argument. This keeps existing teaching material working and gives new code a package-style-consistent argument name.
+
+The alias is accepted through `...` so existing positional calls to `openCaseStudy(id, dest_dir, overwrite)`, `opencs()`, and `ocs()` keep their current meaning. Ambiguous calls that supply both `dest_dir` and `destDir` with different destinations are rejected explicitly. Unsupported extra arguments are also rejected so misspelled argument names do not get silently ignored.
