@@ -68,7 +68,7 @@ predictGLM = function(object,
     stop("newdata must be provided for all first-order terms")
   }
 
-  pred = predict.glm(object, newdata, se.fit = TRUE, ...)
+  pred = predictGlmWithSe(object, newdata, ...)
 
   expected = pred$fit
   percent = 1 - (1 - cilevel) / 2

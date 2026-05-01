@@ -156,3 +156,7 @@ Recommended direction:
 ## Stage 11.5 decision
 
 Stage 11.5 makes no public API changes. It records this audit so that later Stage 11 changes are driven by teaching value, compatibility, and maintainability rather than by surface-level argument naming.
+
+## Stage 11.6 decision
+
+Stage 11.6 extracts the duplicated base prediction calls used by `predict20x()`, `predictCount()`, and `predictGLM()` into small internal helpers. The public wrappers keep their existing names, arguments, return shapes, printed output, and scale-specific behaviour. This is intended as a maintenance step only: later stages can now review interval handling or return conventions with a smaller duplicated-code surface.

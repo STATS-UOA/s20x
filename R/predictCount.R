@@ -48,7 +48,7 @@ predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = 
   }
 
   dimnames(newdata) = list(rowNames, columnNames)
-  predictions = predict.glm(object, newdata, se.fit = TRUE, ...)
+  predictions = predictGlmWithSe(object, newdata, ...)
   predicted = predictions$fit
   percent = 1 - (1 - cilevel) / 2
   confLower = predictions$fit - qnorm(percent) * predictions$se.fit

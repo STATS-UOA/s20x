@@ -1,4 +1,7 @@
-# s20x 3.2.238
+# s20x 3.2.239
+
+## Modernisation
+- Extracted shared internal prediction helpers for linear-model and GLM teaching wrappers without changing public prediction behaviour.
 
 ## Modernisation
 - Added a deeper Stage 11 legacy API audit focused on outdated teaching wrappers, deprecation candidates, and future modernisation priorities.
