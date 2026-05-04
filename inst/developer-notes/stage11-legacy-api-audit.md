@@ -160,3 +160,8 @@ Stage 11.5 makes no public API changes. It records this audit so that later Stag
 ## Stage 11.6 decision
 
 Stage 11.6 extracts the duplicated base prediction calls used by `predict20x()`, `predictCount()`, and `predictGLM()` into small internal helpers. The public wrappers keep their existing names, arguments, return shapes, printed output, and scale-specific behaviour. This is intended as a maintenance step only: later stages can now review interval handling or return conventions with a smaller duplicated-code surface.
+
+
+## Stage 11.7 decision
+
+Stage 11.7 consolidates duplicated confidence-interval and prediction-interval arithmetic used by `predict20x()`, `predictCount()`, and `predictGLM()` into internal helpers. The public wrappers keep their existing names, arguments, return shapes, printed output, and scale-specific behaviour. This keeps the prediction-family modernisation focused on maintainability before any later discussion of interface changes.

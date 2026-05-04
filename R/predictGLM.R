@@ -71,16 +71,22 @@ predictGLM = function(object,
   pred = predictGlmWithSe(object, newdata, ...)
 
   expected = pred$fit
-  percent = 1 - (1 - cilevel) / 2
-  ciQuantile = qnorm(percent)
-
-  if (quasit & substr(family(object)$family, 1, 5) == "quasi") {
-    ciQuantile = qt(percent, object$df.res)
-  }
-
-  confLower = pred$fit - ciQuantile * pred$se.fit
-  confUpper = pred$fit + ciQuantile * pred$se.fit
-  predictions = cbind(fit = expected, lwr = confLower, upr = confUpper)
+  ciQuantile = glmTeachingIntervalQuantile(
+    cilevel = cilevel,
+    object = object,
+    quasit = quasit
+  )
+  intervals = glmTeachingConfidenceIntervals(
+    fit = pred$fit,
+    seFit = pred$se.fit,
+    cilevel = cilevel,
+    quantile = ciQuantile
+  )
+  predictions = cbind(
+    fit = expected,
+    lwr = intervals$confLower,
+    upr = intervals$confUpper
+  )
 
   if (type == "response") {
     predictions = family(object)$linkinv(predictions)

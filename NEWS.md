@@ -1,4 +1,7 @@
-# s20x 3.2.239
+# s20x 3.2.240
+
+## Modernisation
+- Consolidated shared confidence-interval arithmetic for prediction teaching wrappers without changing public prediction behaviour.
 
 ## Modernisation
 - Extracted shared internal prediction helpers for linear-model and GLM teaching wrappers without changing public prediction behaviour.

@@ -49,10 +49,16 @@ predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = 
 
   dimnames(newdata) = list(rowNames, columnNames)
   predictions = predictGlmWithSe(object, newdata, ...)
+  intervalQuantile = glmTeachingIntervalQuantile(cilevel)
+  intervals = glmTeachingConfidenceIntervals(
+    fit = predictions$fit,
+    seFit = predictions$se.fit,
+    cilevel = cilevel,
+    quantile = intervalQuantile
+  )
   predicted = predictions$fit
-  percent = 1 - (1 - cilevel) / 2
-  confLower = predictions$fit - qnorm(percent) * predictions$se.fit
-  confUpper = predictions$fit + qnorm(percent) * predictions$se.fit
+  confLower = intervals$confLower
+  confUpper = intervals$confUpper
   predictionMatrix = exp(cbind(predicted, confLower, confUpper))
   predictionMatrix = round(predictionMatrix, digit)
   predictionDf = as.data.frame(predictionMatrix)

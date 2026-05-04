@@ -73,13 +73,18 @@ predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TR
   dimnames(newdata) = list(name.row, name.col)
 
   pred = predictLmWithSe(object, newdata, ...)
+  intervals = lmTeachingPredictionIntervals(
+    fit = pred$fit,
+    seFit = pred$se.fit,
+    residualScale = pred$residual.scale,
+    df = pred$df,
+    cilevel = cilevel
+  )
   Predicted = pred$fit
-  percent = 1 - (1 - cilevel) / 2
-  Conf.lower = pred$fit - qt(percent, pred$df) * pred$se.fit
-  Conf.upper = pred$fit + qt(percent, pred$df) * pred$se.fit
-  pred.se = sqrt(pred$residual.scale^2 + pred$se.fit^2)
-  Pred.lower = pred$fit - qt(percent, pred$df) * pred.se
-  Pred.upper = pred$fit + qt(percent, pred$df) * pred.se
+  Conf.lower = intervals$confLower
+  Conf.upper = intervals$confUpper
+  Pred.lower = intervals$predLower
+  Pred.upper = intervals$predUpper
   mat = cbind(Predicted, Conf.lower, Conf.upper, Pred.lower, Pred.upper)
   mat = round(mat, digit)
   mat.df = as.data.frame(mat)
