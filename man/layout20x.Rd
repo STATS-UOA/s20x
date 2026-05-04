@@ -20,8 +20,9 @@ plot. If the function is called with no arguments, then the plotting device
 layout will be reset to a single plot.
 }
 \note{
-This function is deprecated. It will be removed in a future version of
-  the package.
+This is a legacy convenience wrapper retained for compatibility with
+  older teaching material. New code can use \code{par(mfrow = ...)}
+  directly.
 }
 \examples{
 data(course.df)

@@ -175,3 +175,10 @@ Stage 11.8 adds regression tests that describe the current interval semantics of
 - `predictGLM()` reports link-scale estimates by default and applies the fitted model inverse link to the full fit/lower/upper matrix when `type = "response"`.
 
 No public API or calculation changes are made in this stage.
+
+## Stage 11.9 decision
+
+Stage 11.9 standardises deprecation and legacy-helper documentation wording for older teaching wrappers. The change avoids promising abrupt removal where no replacement or deprecation schedule has been agreed. Instead, the documentation now distinguishes between legacy aliases, retained teaching helpers, and internal helpers.
+
+No functions are removed and no public behaviour is changed in this stage.
+

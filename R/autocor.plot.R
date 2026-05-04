@@ -19,7 +19,8 @@
 #'
 #' @export autocorPlot
 #' @aliases autocor.plot
-#' @note \code{autocor.plot} is deprecated inline with our new policy of removing periods from function names.
+#' @note \code{autocor.plot} is a legacy alias retained for older teaching material.
+#'   Use \code{autocorPlot()} in new code.
 autocorPlot = autocor.plot = function(fit, main = "Current vs Lagged residuals", ...) {
     currentRes = fit$residuals[-1]
     residualCount = length(fit$residuals)

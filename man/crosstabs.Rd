@@ -25,7 +25,9 @@ Produces a 2-way table of counts and the corresponding chi-square test of
 independence or homogeneity.
 }
 \note{
-This function is deprecated and will be removed in future versions of the package.
+This is a legacy teaching helper retained for compatibility with
+  older course material. New code should usually prefer \code{table()} and
+  \code{chisq.test()} directly, or a purpose-built teaching wrapper.
 }
 \examples{
 

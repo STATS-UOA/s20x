@@ -1,3 +1,8 @@
+# s20x 3.2.242
+
+## Modernisation
+- Standardised legacy-helper documentation wording without changing public behaviour.
+
 # s20x 3.2.241
 
 ## Modernisation

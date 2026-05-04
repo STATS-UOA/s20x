@@ -18,7 +18,8 @@ propslsd.new(crosstablist, conf.level = 0.95, arrowlength = 0.1)
 This function is called by \code{\link{rowdistr}}.
 }
 \note{
-This function is no longer exported as it should never be called by the user. It is also deprecated and will be removed from future versions of the package.
+This is an internal legacy helper used by \code{rowdistr()}. It is
+  not exported and should not be called directly by users.
 }
 \seealso{
 \code{\link{crosstabs}}, \code{\link{rowdistr}}

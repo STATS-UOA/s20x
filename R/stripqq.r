@@ -10,7 +10,9 @@
 #' @param data An optional data frame in which to evaluate the formula
 #' @param \ldots Optional arguments that are passed to the \code{stripchart} function.
 #' @keywords hplot
-#' @note This function is deprecated and will be removed in later versions of the pacakge.
+#' @note This is a legacy teaching helper retained for compatibility with
+#'   older course material. New teaching material should prefer current
+#'   diagnostic plotting workflows.
 #' @examples
 #'
 #' ## Zoo data

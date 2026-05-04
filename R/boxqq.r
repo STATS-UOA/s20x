@@ -12,7 +12,9 @@
 #' (see \code{\link{par}}).
 #' @return Returns the plot.
 #' @keywords hplot
-#' @note This function is deprecated and will be removed in later versions of the package.
+#' @note This is a legacy teaching helper retained for compatibility with
+#'   older course material. New teaching material should prefer current
+#'   diagnostic plotting workflows.
 #' @examples
 #'
 #' ## Zoo data

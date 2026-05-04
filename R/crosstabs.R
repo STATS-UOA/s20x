@@ -13,7 +13,9 @@
 #' row marginals.} \item{col.props}{a matrix of column proportions, i.e. cell
 #' counts divided by column marginals.} \item{Totals}{a matrix containing the
 #' cell counts and the marginal totals.}
-#' @note This function is deprecated and will be removed in future versions of the package.
+#' @note This is a legacy teaching helper retained for compatibility with
+#'   older course material. New code should usually prefer \code{table()} and
+#'   \code{chisq.test()} directly, or a purpose-built teaching wrapper.
 #' @keywords htest
 #' @examples
 #'

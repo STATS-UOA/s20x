@@ -14,7 +14,9 @@
 #' @return Returns the plot.
 #' @seealso \code{\link{trendscatter}}
 #' @keywords hplot
-#' @note This function is deprecated. It will be removed in future versions of the package.
+#' @note This is a legacy diagnostic plotting helper retained for compatibility
+#'   with older teaching material. New code should usually prefer the current
+#'   diagnostic workflow used by \code{modelcheck()}.
 #' @examples
 #'
 #' # Peruvian Indians data

@@ -50,7 +50,9 @@ the sample proportions (with atached confidence limits) alongside the
 corresponding hypothesized probabilities. )
 }
 \note{
-These confidence intervals have been Bonferroni adjusted for multiple comparisons. This function has been deprecated and will be removed from future versions of the package
+These confidence intervals have been Bonferroni adjusted for multiple
+  comparisons. This is a legacy teaching helper retained for compatibility
+  with older course material.
 }
 \examples{
 

@@ -25,7 +25,9 @@
 #' matrix containing the confidence intervals.} \item{exp}{a vector of the
 #' expected counts.} \item{chi}{a vector of the components of Chi-square.}
 #' @keywords htest
-#' @note These confidence intervals have been Bonferroni adjusted for multiple comparisons. This function has been deprecated and will be removed from future versions of the package
+#' @note These confidence intervals have been Bonferroni adjusted for multiple
+#'   comparisons. This is a legacy teaching helper retained for compatibility
+#'   with older course material.
 #' @examples
 #'
 #' ##Body image data:
