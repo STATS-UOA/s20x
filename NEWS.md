@@ -1,3 +1,8 @@
+# s20x 3.2.241
+
+## Modernisation
+- Added regression tests documenting current prediction interval semantics before further API changes.
+
 # s20x 3.2.240
 
 ## Modernisation

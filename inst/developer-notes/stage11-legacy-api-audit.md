@@ -165,3 +165,13 @@ Stage 11.6 extracts the duplicated base prediction calls used by `predict20x()`,
 ## Stage 11.7 decision
 
 Stage 11.7 consolidates duplicated confidence-interval and prediction-interval arithmetic used by `predict20x()`, `predictCount()`, and `predictGLM()` into internal helpers. The public wrappers keep their existing names, arguments, return shapes, printed output, and scale-specific behaviour. This keeps the prediction-family modernisation focused on maintainability before any later discussion of interface changes.
+
+## Stage 11.8 decision
+
+Stage 11.8 adds regression tests that describe the current interval semantics of the prediction teaching wrappers. These tests intentionally document the existing behaviour before any later API or return-object changes are considered:
+
+- `predict20x()` reports confidence and prediction intervals using a t multiplier on the linear-model scale.
+- `predictCount()` reports rounded response-scale counts by exponentiating link-scale fitted values and confidence limits.
+- `predictGLM()` reports link-scale estimates by default and applies the fitted model inverse link to the full fit/lower/upper matrix when `type = "response"`.
+
+No public API or calculation changes are made in this stage.
