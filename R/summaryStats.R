@@ -16,8 +16,12 @@
 #' @param \dots Optional arguments which are passed to the summary statistic functions.
 #' For example \code{na.rm = TRUE} will help if there are missing values in the
 #' (response) variable.
-#' @return If \code{x} is a single variable, i.e. there are no groups, then a
-#' single list is invisibly returned with the following named items:
+#' @return A teaching summary is printed as a side effect. The returned value is
+#' invisible so that classroom use can focus on the printed summary while
+#' programmatic use can still save the result.
+#'
+#' If \code{x} is a single variable and no grouping is supplied, an invisible
+#' list is returned with the following named items:
 #' \item{min}{Minimum value.}
 #' \item{max}{Maximum value.}
 #' \item{mean}{Mean value.}
@@ -25,19 +29,20 @@
 #' of the data values from the sample mean.}
 #' \item{sd}{Standard deviation -- the square root of the variance.}
 #' \item{n}{Number of data values -- size of the data set.}
-#' \item{nMissing}{If there are missing values, and \code{na.rm} has been set to \code{TRUE}
-#' then this item will contain the number of missing values.}
+#' \item{nMissing}{If there are missing values, and \code{na.rm} has been set to \code{TRUE},
+#' the number of missing values.}
 #' \item{iqr}{Midspread (IQR) -- the range spanned by central half of data; the
 #' interquartile range.}
 #' \item{skewness}{Skewness statistic -- indicates how skewed the data set is.
 #' Positive values indicate right-skew data. Negative values indicate left-skew data.}
-#' \item{lq}{Lower quartile}
+#' \item{lq}{Lower quartile.}
 #' \item{median}{Median -- the middle value when the batch is ordered.}
-#' \item{uq}{Upper quartile} If grouping is provided, either by using the
-#' \code{group} argument, or providing a factor in a formula, or by passing a
-#' matrix where the different columns represent the groups, then the function
-#' will return a \code{data.frame} a row containing all the statistics above
-#' for each group.
+#' \item{uq}{Upper quartile.}
+#'
+#' If grouping is provided, either by using the \code{group} argument, by using
+#' a formula, or by passing a matrix whose columns represent groups, the
+#' function invisibly returns a \code{data.frame} with one row for each group
+#' and columns containing the summary statistics.
 #' @keywords multivariate
 #' @examples
 #'
