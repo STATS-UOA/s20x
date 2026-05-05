@@ -75,3 +75,6 @@ Stage 11.12 applies the return-convention plan to `summaryStats()` as a low-risk
 
 Stage 11.13 applies the return-convention plan to `summary1way()` as the next low-risk teaching-summary helper. The function remains a teaching wrapper that prints an ANOVA table, numeric summary, and effects table, optionally draws the interval plot, and invisibly returns the same list components as before. The stage improves return-value documentation and adds regression tests for the printed-output/invisible-return contract without changing calculations, plot behaviour, or return shape.
 
+## Stage 11.14 decision
+
+Stage 11.14 applies the return-convention plan to `summary2way()` as the next teaching-summary helper. The function remains a teaching wrapper that prints the requested two-way ANOVA page and invisibly returns the same list components as before. The stage improves return-value documentation and adds regression tests for the current printed-output/invisible-return contract without changing calculations, comparison output, plotting behaviour, or return shape.

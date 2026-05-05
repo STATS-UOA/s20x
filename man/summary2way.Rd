@@ -48,7 +48,9 @@ Typically for backtransformation operations.}
 \item{\dots}{other arguments like inttype, pooled etc.}
 }
 \value{
-A list with the following components: \item{Df}{degrees of
+`summary2way()` prints the requested teaching summary page and
+    invisibly returns the current summary components. The returned list has
+    the following components: \item{Df}{degrees of
     freedom for regression, residual and total.} \item{Sum of
     Sq}{sum squares for regression, residual and total.} \item{Mean
     Sq}{mean squares for regression and residual.} \item{F
