@@ -1,3 +1,8 @@
+# s20x 3.2.244
+
+## Modernisation
+- Added a Stage 11 return-convention modernisation plan to guide future low-risk API updates without changing public behaviour.
+
 # s20x 3.2.243
 
 ## Modernisation
