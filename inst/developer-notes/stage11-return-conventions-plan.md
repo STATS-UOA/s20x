@@ -71,3 +71,7 @@ Stage 11.11 should be treated as a planning and guardrail stage. It does not cha
 
 Stage 11.12 applies the return-convention plan to `summaryStats()` as a low-risk first implementation step. The function remains a teaching helper that prints a summary for classroom use and invisibly returns the same list or data-frame objects as before. The stage improves return-value documentation and adds regression tests for the printed-output/invisible-return contract without changing calculations or output shapes.
 
+## Stage 11.13 decision
+
+Stage 11.13 applies the return-convention plan to `summary1way()` as the next low-risk teaching-summary helper. The function remains a teaching wrapper that prints an ANOVA table, numeric summary, and effects table, optionally draws the interval plot, and invisibly returns the same list components as before. The stage improves return-value documentation and adds regression tests for the printed-output/invisible-return contract without changing calculations, plot behaviour, or return shape.
+

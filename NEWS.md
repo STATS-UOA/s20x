@@ -1,3 +1,8 @@
+# s20x 3.2.246
+
+## Modernisation
+- Documented and tested `summary1way()` printed-output and invisible-return conventions without changing behaviour.
+
 # s20x 3.2.245
 
 ## Modernisation
