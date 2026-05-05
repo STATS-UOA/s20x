@@ -8,6 +8,9 @@
 #' (\code{which = 2}).
 #' @param mar Margins applied to each selected plot.
 #' @param \ldots any other arguments to pass to \code{\link{plot}}
+#' @return Draws diagnostic plots for teaching model checking. The function is
+#' called for its plotting side effects and does not provide a stable data return
+#' object.
 #' @examples
 #' x = 1:30
 #' y = rnorm(30)

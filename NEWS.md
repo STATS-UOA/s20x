@@ -1,3 +1,8 @@
+# s20x 3.2.249
+
+## Modernisation
+- Documented diagnostic plotting helper return conventions and added regression tests for current validation behaviour without changing plotting behaviour.
+
 # s20x 3.2.248
 
 ## Modernisation

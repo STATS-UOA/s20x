@@ -102,6 +102,11 @@ The default is \code{"normalized"}, which checks the residuals after accounting 
 the fitted error correlation structure. Other choices are \code{"response"} and
 \code{"pearson"}.}
 }
+\value{
+Draws the selected normality diagnostic plots. The function is called
+for its plotting side effects and does not provide a stable data return
+object.
+}
 \description{
 Plots two plots side by side. Firstly it draws a Normal QQ-plot of the
 residuals, along with a line which has an intercept at the mean of the

@@ -26,6 +26,9 @@
 #' @param levene if \code{TRUE} then the P-value from Levene's test for equality of
 #' variance is displayed
 #' @param \dots Optional arguments
+#' @return Draws the residual-versus-fitted diagnostic plot. The function is
+#' called for its plotting side effects and does not provide a stable data return
+#' object.
 #' @seealso \code{\link{levene.test}}
 #' @keywords hplot
 #' @examples

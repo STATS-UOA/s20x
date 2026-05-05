@@ -15,6 +15,9 @@
 #' \code{\link{normcheck}} and \code{\link{cooks20x}}, and are explained in more detail in those functions.
 #' Most users will never use these arguments, but they provide super-flexibility in terms of what is 
 #' displayed.
+#' @return Draws the selected model-checking plots for teaching diagnostics. The
+#' function is called for its plotting side effects and does not provide a stable
+#' data return object.
 #' @param parVals the values that are set via \code{\link{par}} for this plot. These are \code{mfrow}, 
 #' \code{xaxs}, \code{yaxs}, \code{pty}, and \code{mai}. Most users will never use these arguments, but 
 #' they provide super-flexibility in terms of what is displayed.

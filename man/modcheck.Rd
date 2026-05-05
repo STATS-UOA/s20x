@@ -43,6 +43,11 @@ they provide super-flexibility in terms of what is displayed.}
 \item{\ldots}{additional paramaters. Included for future flexibility, but unsure how this might be 
 used currently.}
 }
+\value{
+Draws the selected model-checking plots for teaching diagnostics. The
+function is called for its plotting side effects and does not provide a stable
+data return object.
+}
 \description{
 Plots four model checking plots: an pred-res plot (residuals against predicted values), a Normal
 Quantile-Quantile (Q-Q) plot, a histogram of the residuals with a normal distribution super-imposed

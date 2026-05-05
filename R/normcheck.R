@@ -41,6 +41,9 @@
 #' the fitted error correlation structure. Other choices are \code{"response"} and
 #' \code{"pearson"}.
 #' @param \dots additional arguments which are passed to both \code{qqnorm} and \code{hist}
+#' @return Draws the selected normality diagnostic plots. The function is called
+#' for its plotting side effects and does not provide a stable data return
+#' object.
 #' @seealso \code{\link{shapiro.test}}.
 #' @keywords hplot
 #' @examples

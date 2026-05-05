@@ -44,6 +44,11 @@ plot}
 \item{levene}{if \code{TRUE} then the P-value from Levene's test for equality of
 variance is displayed}
 }
+\value{
+Draws the residual-versus-fitted diagnostic plot. The function is
+called for its plotting side effects and does not provide a stable data return
+object.
+}
 \description{
 Plots the residuals versus the fitted (or predicted) values from a linear
 model. A horizontal line is drawn at y = 0, reflecting the fact that we

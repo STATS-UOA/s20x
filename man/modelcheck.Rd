@@ -22,6 +22,11 @@ histogram and QQ plot of residuals (\code{which = 2}), Cook's distance plot
 
 \item{\ldots}{any other arguments to pass to \code{\link{plot}}}
 }
+\value{
+Draws diagnostic plots for teaching model checking. The function is
+called for its plotting side effects and does not provide a stable data return
+object.
+}
 \description{
 Model checking plots
 Compact layout for model checking plots.

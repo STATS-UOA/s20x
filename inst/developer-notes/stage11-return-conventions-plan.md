@@ -87,3 +87,13 @@ print contingency-table summaries and optionally draw row-distribution plots.
 The stage improves return-value documentation and adds regression tests for the
 current invisible-return contract without changing calculations, printed output,
 plot behaviour, or return shape.
+
+## Stage 11.16 decision
+
+Stage 11.16 applies the return-convention plan to the model-checking and
+diagnostic plotting helpers `modelcheck()`, `modcheck()`, `normcheck()`, and
+`eovcheck()`. These functions remain teaching helpers that are called primarily
+for their plotting side effects. The stage documents that they do not provide a
+stable data return object and adds regression tests for existing argument
+validation behaviour without changing plots, calculations, or public interfaces.
+
