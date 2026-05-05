@@ -61,7 +61,7 @@ single response vector}
 \item{fac1}{if 'y' is a vector, then fac1 contains the levels of factor 1
 which correspond to the y value}
 
-\item{fac2}{if 'y' is a vector, then fac1 contains the levels of factor 2
+\item{fac2}{if 'y' is a vector, then fac2 contains the levels of factor 2
 which correspond to the y value}
 
 \item{xlab}{an optional label for the x-axis. If not specified the name of
@@ -121,12 +121,11 @@ for each combination of factors.
 }}
 \examples{
 
-data(mtcars)
-interactionPlots(wt ~ vs + gear, mtcars)
+data(arousal.df)
+interactionPlots(arousal ~ gender + picture, data = arousal.df)
 
-## note this usage is deprecated
-data(mtcars)
-with(mtcars, interactionPlots(wt, vs, gear))
+## This usage is deprecated.
+with(arousal.df, interactionPlots(arousal, gender, picture))
 
 }
 \seealso{

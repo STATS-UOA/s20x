@@ -1,3 +1,8 @@
+# s20x 3.2.252
+
+## Modernisation
+- Replaced the `interactionPlots()` help examples with the `arousal.df` teaching dataset and clarified the deprecated vector-form example wording without changing plotting behaviour.
+
 # s20x 3.2.251
 
 ## Modernisation

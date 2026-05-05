@@ -97,3 +97,7 @@ Replace artificial `summary1way()` example data with a package dataset and check
 - Do not change diagnostic plotting behaviour unless a documentation problem exposes a small, obvious bug.
 - Do not rename legacy files solely for spelling consistency.
 - Do not remove deprecated examples unless a later stage creates a formal deprecation plan.
+
+## Stage 12.2 follow-up
+
+Stage 12.2 addressed the first recommended sub-stage by replacing the `interactionPlots()` examples that used `mtcars` with the package teaching dataset `arousal.df`. It also corrected the `fac2` argument description and standardised the deprecated vector-form example note. No plotting behaviour or public API was changed.

@@ -11,7 +11,7 @@
 #' single response vector
 #' @param fac1 if 'y' is a vector, then fac1 contains the levels of factor 1
 #' which correspond to the y value
-#' @param fac2 if 'y' is a vector, then fac1 contains the levels of factor 2
+#' @param fac2 if 'y' is a vector, then fac2 contains the levels of factor 2
 #' which correspond to the y value
 #' @param data an optional data frame containing the variables in the model.
 #' @param xlab an optional label for the x-axis. If not specified the name of
@@ -45,12 +45,11 @@
 #' @keywords hplot
 #' @examples
 #' 
-#' data(mtcars)
-#' interactionPlots(wt ~ vs + gear, mtcars)
+#' data(arousal.df)
+#' interactionPlots(arousal ~ gender + picture, data = arousal.df)
 #' 
-#' ## note this usage is deprecated
-#' data(mtcars)
-#' with(mtcars, interactionPlots(wt, vs, gear))
+#' ## This usage is deprecated.
+#' with(arousal.df, interactionPlots(arousal, gender, picture))
 #' 
 #' @export interactionPlots
 interactionPlots = function(y, ...) {
