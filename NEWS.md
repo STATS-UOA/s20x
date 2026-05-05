@@ -1,3 +1,8 @@
+# s20x 3.2.243
+
+## Modernisation
+- Added a Stage 11 audit of printed-output and invisible-return conventions without changing public behaviour.
+
 # s20x 3.2.242
 
 ## Modernisation

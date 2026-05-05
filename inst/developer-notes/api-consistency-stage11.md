@@ -99,3 +99,41 @@ The alias is accepted through `...` so existing positional calls to `openCaseStu
 Stage 11.4 adds a camelCase `outputDir` compatibility alias for `casestudy()` and `cs()` while retaining the legacy `output_dir` argument. This mirrors the Stage 11.3 destination-directory decision for `openCaseStudy()` and keeps the case-study helper family moving toward consistent camelCase names without breaking existing teaching material.
 
 The alias is accepted through `...` so existing positional calls to `casestudy(id, output_dir, open, quiet)` keep their current meaning. Any remaining `...` arguments are still passed to `rmarkdown::render()`. Ambiguous calls that supply both `output_dir` and `outputDir` are rejected explicitly.
+
+## Stage 11.5 exported-argument inventory decision
+
+Stage 11.5 makes no public API changes. It records an exported-argument inventory so later API consistency work can be chosen deliberately rather than adding aliases opportunistically.
+
+The current exported interfaces fall into four broad groups:
+
+1. Base-style modelling interfaces that should remain close to their generic equivalents, including `tslm()` methods and functions that already use names such as `formula`, `data`, `object`, `newdata`, `conf.level`, and `...`.
+2. Teaching wrappers with long-standing legacy names that should be preserved unless a compatibility layer is added, including `predict20x()`, `predictCount()`, `predictGLM()`, `modcheck()`, `modelcheck()`, `normcheck()`, and `eovcheck()`.
+3. Case-study helpers where camelCase aliases have already been added for path-like arguments while retaining the historical snake_case names.
+4. Older teaching helpers with non-standard but familiar arguments, such as `print.out`, `show.table`, `data.order`, `interval.type`, `plotOrder`, and `asDF`.
+
+Recommended next steps:
+
+- Do not rename arguments in place.
+- Add aliases only when the public benefit is clear and existing positional calls are protected.
+- Prefer documentation clarification for deprecated or legacy helpers before adding new compatibility names.
+- Treat return-value consistency as a separate sub-stage from argument-name consistency.
+- Consider small resolver helpers only when multiple exported functions share the same compatibility pattern.
+
+Candidate follow-up stages:
+
+- Review printed-output switches such as `print.out`, `show.table`, and `verbose` for documentation consistency before changing interfaces.
+- Review return-value conventions for prediction helpers and summary helpers separately.
+- Review plot-check helper argument names such as `plotOrder`, `twosd`, and `smoother` only if there is a teaching benefit to aliases.
+
+## Stage 11.10 printed-output and invisible-return audit decision
+
+Stage 11.10 makes no public API changes. It records the current printed-output and invisible-return conventions as a separate API consistency concern from argument naming. This keeps Stage 11 focused on teaching behaviour rather than cosmetic interface changes.
+
+The next implementation stages should treat printed output as part of the public teaching interface. Helpers that print tables, messages, or plots while returning objects invisibly should not be changed until tests or notes describe the existing behaviour.
+
+Recommended follow-up actions:
+
+- Preserve printed labels and column names unless there is a clear teaching reason to update them.
+- Add tests around invisible return values before changing helpers that primarily print output.
+- Prefer documentation clarification over return-shape changes for legacy helpers.
+- Review one helper family at a time, especially summary helpers and model-check plotting helpers.
