@@ -1,3 +1,8 @@
+# s20x 3.2.251
+
+## Modernisation
+- Added a Stage 12 documentation audit covering help examples, teaching datasets, time-series examples, `R CMD check` suitability, and NZ English spelling and grammar notes without changing package behaviour.
+
 # s20x 3.2.250
 
 ## Modernisation
