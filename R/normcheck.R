@@ -6,8 +6,8 @@
 #' \code{shapiro.wilk = TRUE} then, in the top left hand corner of the Q-Q
 #' plot, the P-value from the Shapiro-Wilk test for normality is given.
 #' Secondly, it draws a histogram of the residuals. A normal distribution is
-#' fitted and superimposed over the histogram. NOTE: if you want to leave the 
-#' x-axis blank in the histogram then, use \code{xlab = c("Theoretical Quantiles", " ")}
+#' fitted and superimposed over the histogram. Note: if you want to leave the 
+#' x-axis blank in the histogram then use \code{xlab = c("Theoretical Quantiles", " ")}
 #' , i.e. leave a space between the quotes. If you don't leave a space, then information 
 #' will be extracted from \code{x}. 
 #' 
@@ -16,7 +16,7 @@
 #' @param xlab a title for the x-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.
 #' @param ylab a title for the y-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.
 #' @param main a title for both the Q-Q plot and the histogram: see \code{\link{title}}.
-#' @param col a color for the bars of the histogram.
+#' @param col a colour for the bars of the histogram.
 #' @param bootstrap if \code{TRUE} then \code{B} samples will be taken from a Normal distribution 
 #' with the same mean and standard deviation as \code{x}. These will be plotted in a lighter colour behind the
 #' empirical quantiles so that we can see how much variation we would expect in the Q-Q plot for a
@@ -30,7 +30,7 @@
 #' Q-Q plot, the P-value from the Shapiro-Wilk test for normality is displayed.
 #' @param whichPlot legal values are  \code{1}, \code{2}, and any pair of the two, i.e. \code{1:2}, \code{2:1},
 #' \code{c(1,2)}, \code{c(2,1)}, or even variants of \code{c(1,1)} (although I do not know why you would)
-#' want to do this. \code{1:2} is used by default and returns a normal Q-Q plot and a historgram of the residuals
+#' want to do this. \code{1:2} is used by default and returns a normal Q-Q plot and a histogram of the residuals
 #' in that order. The order of the labels in \code{xlab} and \code{ylab} assume this order, and will be 
 #' reordered automatically if the order is anything other than \code{1:2}.
 #' @param usePar if \code{TRUE}, then this function will set \code{\link{par}} for the user. If \code{FALSE},
@@ -48,7 +48,8 @@
 #' @keywords hplot
 #' @examples
 #' 
-#' # An exponential growth curve
+#' # Synthetic teaching example: an exponential growth curve
+#' set.seed(123)
 #' e = rnorm(100, 0, 0.1)
 #' x = rnorm(100)
 #' y = exp(5 + 3 * x + e)

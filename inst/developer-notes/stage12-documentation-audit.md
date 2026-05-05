@@ -101,3 +101,8 @@ Replace artificial `summary1way()` example data with a package dataset and check
 ## Stage 12.2 follow-up
 
 Stage 12.2 addressed the first recommended sub-stage by replacing the `interactionPlots()` examples that used `mtcars` with the package teaching dataset `arousal.df`. It also corrected the `fac2` argument description and standardised the deprecated vector-form example note. No plotting behaviour or public API was changed.
+
+
+## Stage 12.3 follow-up
+
+Stage 12.3 addressed deterministic diagnostic examples. The synthetic teaching examples in `modcheck()`, `normcheck()`, and `trendscatter()` now set a seed before generating random values, while `modelcheck()` now uses the `peru.df` teaching dataset instead of unrelated random data. This stage also corrected small spelling and grammar issues in the touched diagnostic documentation, including Q-Q wording, Cook's distance wording, and NZ English prose where argument names were unaffected. No diagnostic plotting behaviour or public API was changed.
