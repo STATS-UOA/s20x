@@ -1,3 +1,8 @@
+# s20x 3.2.250
+
+## Modernisation
+- Added a Stage 11 completion plan summarising completed API-consistency work and deferring larger documentation and internal refactor items to later stages.
+
 # s20x 3.2.249
 
 ## Modernisation
