@@ -8,11 +8,14 @@
 #' where fac1 and fac2 are vectors to be crosstabulated and treated internally
 #' as factors.
 #' @param data an optional data frame containing the variables in the model.
-#' @return An invisible list containing the following components:
-#' \item{row.props}{a matrix of row proportions, i.e. cell counts divided by
-#' row marginals.} \item{col.props}{a matrix of column proportions, i.e. cell
-#' counts divided by column marginals.} \item{Totals}{a matrix containing the
-#' cell counts and the marginal totals.}
+#' @return Invisibly returns an object of class \code{ct.20x}, which is a
+#' list containing the following components: \item{row.props}{a matrix of row
+#' proportions, i.e. cell counts divided by row marginals.}
+#' \item{col.props}{a matrix of column proportions, i.e. cell counts divided by
+#' column marginals.} \item{whole.props}{a matrix of whole-table proportions.}
+#' \item{Totals}{a matrix containing the cell counts and the marginal totals.}
+#' \item{exp}{a matrix of expected counts from the chi-square calculation.}
+#' \item{chi}{a matrix of cell contributions to the chi-square statistic.}
 #' @note This is a legacy teaching helper retained for compatibility with
 #'   older course material. New code should usually prefer \code{table()} and
 #'   \code{chisq.test()} directly, or a purpose-built teaching wrapper.

@@ -25,8 +25,11 @@ rowdistr(
 \item{suppressText}{if \code{TRUE} then text results are not displayed}
 }
 \value{
-A matrix of row proportions, i.e cell counts divided by row
-marginals.
+Invisibly returns the matrix of row proportions printed by the
+teaching summary when \code{suppressText = FALSE}. When
+\code{suppressText = TRUE}, the function invisibly returns \code{NULL}
+because no text summary is constructed. Plotting remains a side effect
+controlled by \code{plot}.
 }
 \description{
 Produces summaries and plots from a cross-tabulation.  The output produced

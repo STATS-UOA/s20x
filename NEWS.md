@@ -1,3 +1,8 @@
+# s20x 3.2.248
+
+## Modernisation
+- Documented and tested `crosstabs()` and `rowdistr()` printed-output and invisible-return conventions without changing behaviour.
+
 # s20x 3.2.247
 
 ## Modernisation

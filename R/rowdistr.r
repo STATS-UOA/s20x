@@ -347,8 +347,11 @@ printOutput = function(crosstablist, comp = c("basic", "within", "between"),
 #' @param conf.level confidence level of the intervals.
 #' @param plot if \code{FALSE} then the row distribution plots are not displayed
 #' @param suppressText if \code{TRUE} then text results are not displayed
-#' @return A matrix of row proportions, i.e cell counts divided by row
-#' marginals.
+#' @return Invisibly returns the matrix of row proportions printed by the
+#' teaching summary when \code{suppressText = FALSE}. When
+#' \code{suppressText = TRUE}, the function invisibly returns \code{NULL}
+#' because no text summary is constructed. Plotting remains a side effect
+#' controlled by \code{plot}.
 #' @seealso \code{\link{crosstabs}}
 #' @keywords htest
 #' @examples

@@ -78,3 +78,12 @@ Stage 11.13 applies the return-convention plan to `summary1way()` as the next lo
 ## Stage 11.14 decision
 
 Stage 11.14 applies the return-convention plan to `summary2way()` as the next teaching-summary helper. The function remains a teaching wrapper that prints the requested two-way ANOVA page and invisibly returns the same list components as before. The stage improves return-value documentation and adds regression tests for the current printed-output/invisible-return contract without changing calculations, comparison output, plotting behaviour, or return shape.
+
+## Stage 11.15 decision
+
+Stage 11.15 applies the return-convention plan to the cross-tabulation helpers
+`crosstabs()` and `rowdistr()`. These functions remain teaching helpers that
+print contingency-table summaries and optionally draw row-distribution plots.
+The stage improves return-value documentation and adds regression tests for the
+current invisible-return contract without changing calculations, printed output,
+plot behaviour, or return shape.
