@@ -40,14 +40,14 @@ expected counts.} \item{chi}{a vector of the components of Chi-square.}
 \description{
 If hypothprob is absent: prints confidence intervals for the true
 proportions, a Chi-square test for uniformity, confidence intervals for
-differences in proportions (no corrections for multiple comparisons and
-plots the proportions.
+differences in proportions (with no corrections for multiple comparisons),
+and plots the proportions.
 }
 \details{
 If hypothprob is present: prints confidence intervals for the true
-proportions, a Chi-square test for the hypothesized probabilities, and plots
-the sample proportions (with atached confidence limits) alongside the
-corresponding hypothesized probabilities. )
+proportions, a Chi-square test for the hypothesised probabilities, and plots
+the sample proportions (with attached confidence limits) alongside the
+corresponding hypothesised probabilities.
 }
 \note{
 These confidence intervals have been Bonferroni adjusted for multiple

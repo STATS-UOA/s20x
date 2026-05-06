@@ -1,3 +1,8 @@
+# s20x 3.2.259
+
+## Modernisation
+- Audited exported help examples for strict-check suitability, confirmed remaining synthetic examples are deterministic or guarded, and tightened `freq1way()` documentation wording without changing behaviour.
+
 # s20x 3.2.258
 
 ## Modernisation

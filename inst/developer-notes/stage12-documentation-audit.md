@@ -155,3 +155,18 @@ fitted values, normal Q-Q plots, model checking plots, and plotting side effects
 This is a wording-only pass for public help pages and README text; diagnostic
 calculations, plotting behaviour, and public APIs are unchanged.
 
+
+## Stage 12.9 example runtime audit
+
+Stage 12.9 performs a final audit of exported help examples for runtime safety
+before the Stage 12 wrap-up. The remaining synthetic examples in `modcheck()`,
+`normcheck()`, and `trendscatter()` already use `set.seed()`, preserving their
+teaching role while making generated values deterministic. The `displayPairs()`
+example remains guarded by `requireNamespace("emmeans", quietly = TRUE)`, and
+the case-study helpers remain inside `\dontrun{}` because they can open or copy
+local resources. No additional examples were moved to `\donttest{}` or
+`\dontrun{}`.
+
+This pass also tightened the `freq1way()` help wording around hypothesised
+probabilities and attached confidence limits. That change is documentation-only
+and does not alter calculations or output structure.
