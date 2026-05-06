@@ -69,15 +69,17 @@ predictGLM = function(object,
     cilevel = cilevel,
     quantile = ciQuantile
   )
-  predictions = cbind(
-    fit = expected,
-    lwr = intervals$confLower,
-    upr = intervals$confUpper
-  )
-
-  if (type == "response") {
-    predictions = family(object)$linkinv(predictions)
+  scaleFunction = if (type == "response") {
+    family(object)$linkinv
+  } else {
+    identity
   }
+  predictions = formatGlmPredictionMatrix(
+    fit = expected,
+    confLower = intervals$confLower,
+    confUpper = intervals$confUpper,
+    scaleFunction = scaleFunction
+  )
 
   rownames = seq_len(nrow(predictions))
 

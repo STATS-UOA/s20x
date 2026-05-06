@@ -82,23 +82,26 @@ predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TR
     df = pred$df,
     cilevel = cilevel
   )
-  Predicted = pred$fit
-  Conf.lower = intervals$confLower
-  Conf.upper = intervals$confUpper
-  Pred.lower = intervals$predLower
-  Pred.upper = intervals$predUpper
-  mat = cbind(Predicted, Conf.lower, Conf.upper, Pred.lower, Pred.upper)
-  mat = round(mat, digit)
-  mat.df = as.data.frame(mat)
-  dimnames(mat.df)[[1]] = dimnames(newdata)[[1]]
-  dimnames(mat.df)[[2]] = c("Predicted", " Conf.lower", "Conf.upper", " Pred.lower", " Pred.upper")
+  predictionValues = cbind(
+    Predicted = pred$fit,
+    Conf.lower = intervals$confLower,
+    Conf.upper = intervals$confUpper,
+    Pred.lower = intervals$predLower,
+    Pred.upper = intervals$predUpper
+  )
+  predictionFrame = formatTeachingPredictionFrame(
+    values = predictionValues,
+    rowNames = dimnames(newdata)[[1]],
+    columnNames = c("Predicted", " Conf.lower", "Conf.upper", " Pred.lower", " Pred.upper"),
+    digit = digit
+  )
 
   if (print.out) {
-    print(mat.df)
+    print(predictionFrame)
   }
 
   invisible(list(
-    frame = mat.df,
+    frame = predictionFrame,
     fit = pred$fit,
     se.fit = pred$se.fit,
     residual.scale = pred$residual.scale,

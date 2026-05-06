@@ -79,8 +79,16 @@ The following are not suitable as incidental Stage 13 changes:
 - Broadly changing `predictGLM()` link support.
 - Changing printed messages or teaching output without an explicit user-visible decision.
 
+
+## Stage 13 progress
+
+Completed implementation sub-stages:
+
+- Stage 13.2 consolidated shared `newdata` data-frame validation without changing wrapper output or error text.
+- Stage 13.3 consolidated internal prediction-output formatting for teaching prediction frames and GLM prediction matrices while preserving legacy column names, rounding, return classes, and scale handling.
+
 ## Recommended next sub-stage
 
-Stage 13.2 should choose one narrow internal improvement. The safest first implementation target is likely common `newdata` data-frame validation, because it can remove repeated checks while preserving all current output and error text.
+Stage 13.4 should choose another narrow prediction-wrapper maintenance target. A reasonable next step is consolidating the legacy prediction-row naming logic across `predict20x()` and `predictCount()`, with multi-row regression tests that preserve current row names and printed table structure.
 
-A slightly larger but still reasonable target is consolidating the legacy prediction-row naming logic across `predict20x()` and `predictCount()`. That should include multi-row regression tests before changing internals.
+Further diagnostic-helper internals should remain deferred until the prediction-wrapper stream is stable.

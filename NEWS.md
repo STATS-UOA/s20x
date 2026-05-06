@@ -1,3 +1,8 @@
+# s20x 3.2.263
+
+## Modernisation
+- Consolidated internal prediction interval output formatting for linear-model and GLM teaching wrappers while preserving legacy return shapes, column names, rounding, and scale handling.
+
 # s20x 3.2.262
 
 ## Modernisation

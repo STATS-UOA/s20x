@@ -49,6 +49,24 @@ glmTeachingConfidenceIntervals = function(fit, seFit, cilevel, quantile) {
   )
 }
 
+formatTeachingPredictionFrame = function(values, rowNames, columnNames, digit) {
+  values = round(values, digit)
+  predictionFrame = as.data.frame(values)
+  dimnames(predictionFrame) = list(rowNames, columnNames)
+
+  predictionFrame
+}
+
+formatGlmPredictionMatrix = function(fit, confLower, confUpper, scaleFunction = identity) {
+  predictions = cbind(
+    fit = fit,
+    lwr = confLower,
+    upr = confUpper
+  )
+
+  scaleFunction(predictions)
+}
+
 glmTeachingIntervalQuantile = function(cilevel, object = NULL, quasit = FALSE) {
   percent = predictionIntervalPercent(cilevel)
 

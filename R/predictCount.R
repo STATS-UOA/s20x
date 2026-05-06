@@ -55,18 +55,21 @@ predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = 
     cilevel = cilevel,
     quantile = intervalQuantile
   )
-  predicted = predictions$fit
-  confLower = intervals$confLower
-  confUpper = intervals$confUpper
-  predictionMatrix = exp(cbind(predicted, confLower, confUpper))
-  predictionMatrix = round(predictionMatrix, digit)
-  predictionDf = as.data.frame(predictionMatrix)
-  dimnames(predictionDf)[[1]] = dimnames(newdata)[[1]]
-  dimnames(predictionDf)[[2]] = c("Predicted", " Conf.lower", "Conf.upper")
+  predictionValues = exp(cbind(
+    predicted = predictions$fit,
+    confLower = intervals$confLower,
+    confUpper = intervals$confUpper
+  ))
+  predictionFrame = formatTeachingPredictionFrame(
+    values = predictionValues,
+    rowNames = dimnames(newdata)[[1]],
+    columnNames = c("Predicted", " Conf.lower", "Conf.upper"),
+    digit = digit
+  )
 
   if (print.out) {
-    print(predictionDf)
+    print(predictionFrame)
   }
 
-  invisible(predictionDf)
+  invisible(predictionFrame)
 }
