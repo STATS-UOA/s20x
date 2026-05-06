@@ -1,3 +1,8 @@
+# s20x 3.2.257
+
+## Modernisation
+- Guarded the `displayPairs()` help example so it only runs the optional `emmeans` workflow when `emmeans` is available, keeping examples suitable for strict checks without changing package behaviour.
+
 # s20x 3.2.256
 
 ## Modernisation

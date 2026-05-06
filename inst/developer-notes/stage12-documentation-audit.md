@@ -138,3 +138,11 @@ The `tslm()` and `anova.tslm()` documentation now further clarifies that `ar(p)`
 specifies an error-correlation structure, not an additional mean-model term, and
 that AR-error ANOVA output should not be read as an ordinary independent-error
 ANOVA decomposition. No prediction, fitting, or ANOVA behaviour is changed.
+
+## Stage 12.7 optional example dependency guard
+
+Stage 12.7 addresses the optional-package example noted in the original audit.
+The `displayPairs()` help example now uses `requireNamespace("emmeans",
+quietly = TRUE)` and qualifies the `emmeans::emmeans()` call, so the example
+remains useful when `emmeans` is installed but is safe in environments where
+the suggested package is unavailable. No displayPairs behaviour is changed.
