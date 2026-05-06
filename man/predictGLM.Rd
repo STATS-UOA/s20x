@@ -2,7 +2,7 @@
 % Please edit documentation in R/predictGLM.R
 \name{predictGLM}
 \alias{predictGLM}
-\title{Prediction Intervals for Log-Link and Logit-Link Generalized Linear Models}
+\title{Prediction Intervals for Log-Link and Logit-Link Generalised Linear Models}
 \usage{
 predictGLM(object, newdata, type = "link", cilevel = 0.95, quasit = FALSE, ...)
 }
@@ -14,7 +14,7 @@ predictGLM(object, newdata, type = "link", cilevel = 0.95, quasit = FALSE, ...)
 \item{type}{\code{"link"} (default) or \code{"response"} for estimates and
 confidence intervals on the linear predictor or response scale.}
 
-\item{cilevel}{confidence level of the interval.}
+\item{cilevel}{confidence level for the intervals.}
 
 \item{quasit}{if \code{TRUE}, use a t multiplier rather than a normal
 multiplier for confidence intervals when \code{object} is a quasi model.}
@@ -26,7 +26,7 @@ A matrix with columns \code{fit}, \code{lwr}, and \code{upr} containing
   fitted values and confidence limits on the requested scale.
 }
 \description{
-Teaching helper for predictions from log-link and logit-link generalized
+Teaching helper for predictions from log-link and logit-link generalised
 linear models. It wraps \code{\link{predict.glm}} with standard errors and
 returns fitted values with confidence limits on either the link scale or the
 response scale.
@@ -38,7 +38,8 @@ teaching helper in this package; \code{\link{predictCount}} remains a
 specialised count-focused wrapper with rounded response-scale output.
 
 Note: \code{newdata} must include all first-order terms used in the fitted
-model.
+model. This simplified requirement reflects the teaching-wrapper interface
+and is not a complete reproduction of \code{predict.glm()}.
 }
 \seealso{
 \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.

@@ -1,6 +1,6 @@
-#' Prediction Intervals for Log-Link and Logit-Link Generalized Linear Models
+#' Prediction Intervals for Log-Link and Logit-Link Generalised Linear Models
 #'
-#' Teaching helper for predictions from log-link and logit-link generalized
+#' Teaching helper for predictions from log-link and logit-link generalised
 #' linear models. It wraps \code{\link{predict.glm}} with standard errors and
 #' returns fitted values with confidence limits on either the link scale or the
 #' response scale.
@@ -11,13 +11,14 @@
 #' specialised count-focused wrapper with rounded response-scale output.
 #'
 #' Note: \code{newdata} must include all first-order terms used in the fitted
-#' model.
+#' model. This simplified requirement reflects the teaching-wrapper interface
+#' and is not a complete reproduction of \code{predict.glm()}.
 #'
 #' @param object a \code{glm} object, i.e. the output from \code{\link{glm}}.
 #' @param newdata prediction data frame.
 #' @param type \code{"link"} (default) or \code{"response"} for estimates and
 #'   confidence intervals on the linear predictor or response scale.
-#' @param cilevel confidence level of the interval.
+#' @param cilevel confidence level for the intervals.
 #' @param quasit if \code{TRUE}, use a t multiplier rather than a normal
 #'   multiplier for confidence intervals when \code{object} is a quasi model.
 #' @param \dots optional arguments that are passed to \code{\link{predict.glm}}.

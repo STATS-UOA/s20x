@@ -2,7 +2,7 @@
 % Please edit documentation in R/predictCount.R
 \name{predictCount}
 \alias{predictCount}
-\title{Predicted Counts for a Log-Link Generalized Linear Model}
+\title{Predicted Counts for a Log-Link Generalised Linear Model}
 \usage{
 predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
 }
@@ -11,11 +11,11 @@ predictCount(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
 
 \item{newdata}{prediction data frame.}
 
-\item{cilevel}{confidence level of the interval.}
+\item{cilevel}{confidence level for the intervals.}
 
-\item{digit}{decimal numbers after the point.}
+\item{digit}{number of decimal places to print.}
 
-\item{print.out}{if \code{TRUE}, print out the prediction table.}
+\item{print.out}{if \code{TRUE}, print the prediction table.}
 
 \item{\dots}{optional arguments that are passed to \code{\link{predict.glm}}.}
 }
@@ -27,7 +27,7 @@ Invisibly returns a data frame with three columns: \describe{
 }
 }
 \description{
-Teaching helper for count predictions from a log-link generalized linear
+Teaching helper for count predictions from a log-link generalised linear
 model. It wraps \code{\link{predict.glm}}, constructs confidence intervals on
 the link scale, exponentiates the fitted values and limits, rounds the result,
 and optionally prints the returned table.
@@ -39,7 +39,8 @@ count-focused teaching wrapper. For a more general log-link or logit-link GLM
 helper, see \code{\link{predictGLM}}.
 
 Note: \code{newdata} must be a data frame with the same column order and
-data types as those used in fitting the model.
+data types as those used in fitting the model. This stricter interface is kept
+for compatibility with the original teaching wrapper.
 }
 \seealso{
 \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictGLM}}, \code{\link{as.data.frame}}.

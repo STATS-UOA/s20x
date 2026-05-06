@@ -1,3 +1,8 @@
+# s20x 3.2.256
+
+## Modernisation
+- Clarified prediction helper and AR-error model documentation so teaching wrappers are distinguished from ordinary `predict()` and independent-error ANOVA behaviour without changing package behaviour.
+
 # s20x 3.2.255
 
 ## Modernisation

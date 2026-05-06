@@ -2,21 +2,25 @@
 #'
 #' Teaching helper for linear-model predictions. It wraps
 #' \code{\link{predict.lm}} and prints a compact table containing fitted values,
-#' confidence intervals, and prediction intervals for new observations.
+#' confidence intervals for the mean response, and prediction intervals for new
+#' observations.
 #'
 #' This is not an S3 \code{predict()} method and is not intended to be a
-#' drop-in replacement for base R prediction methods. The function is retained
-#' for compatibility with older teaching material, but the standard
-#' \code{\link{predict}} interface is preferred for new work.
+#' drop-in replacement for base R prediction methods. It is a compatibility
+#' helper for older teaching material that expects confidence and prediction
+#' intervals to be printed together. The standard \code{\link{predict}}
+#' interface is preferred for new work.
 #'
 #' Note: \code{newdata} must be a data frame with the same column order and
-#' data types as those used in fitting the model.
+#' data types as those used in fitting the model. This is stricter than the usual
+#' \code{predict.lm()} interface and is kept for compatibility with the original
+#' teaching wrapper.
 #'
 #' @param object an \code{lm} object, i.e. the output from \code{lm}.
 #' @param newdata prediction data frame.
-#' @param cilevel confidence level of the interval.
-#' @param digit decimal numbers after the point.
-#' @param print.out if \code{TRUE}, print out the prediction matrix.
+#' @param cilevel confidence level for the intervals.
+#' @param digit number of decimal places to print.
+#' @param print.out if \code{TRUE}, print the prediction table.
 #' @param \dots optional arguments that are passed to \code{\link{predict.lm}}.
 #' @return Invisibly returns a list with components \describe{
 #'   \item{frame}{printed data frame containing predictions, confidence intervals,
@@ -28,8 +32,8 @@
 #'   \item{cilevel}{confidence level of the interval.}
 #' }
 #' @seealso \code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
-#' @note This function is deprecated as it is no longer used in class. Prefer
-#'   the standard \code{\link{predict}} method for new work.
+#' @note This function is deprecated because it is no longer used in class.
+#'   Prefer the standard \code{\link{predict}} method for new work.
 #' @keywords htest
 #' @examples
 #'

@@ -11,11 +11,11 @@ predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
 
 \item{newdata}{prediction data frame.}
 
-\item{cilevel}{confidence level of the interval.}
+\item{cilevel}{confidence level for the intervals.}
 
-\item{digit}{decimal numbers after the point.}
+\item{digit}{number of decimal places to print.}
 
-\item{print.out}{if \code{TRUE}, print out the prediction matrix.}
+\item{print.out}{if \code{TRUE}, print the prediction table.}
 
 \item{\dots}{optional arguments that are passed to \code{\link{predict.lm}}.}
 }
@@ -33,20 +33,24 @@ Invisibly returns a list with components \describe{
 \description{
 Teaching helper for linear-model predictions. It wraps
 \code{\link{predict.lm}} and prints a compact table containing fitted values,
-confidence intervals, and prediction intervals for new observations.
+confidence intervals for the mean response, and prediction intervals for new
+observations.
 }
 \details{
 This is not an S3 \code{predict()} method and is not intended to be a
-drop-in replacement for base R prediction methods. The function is retained
-for compatibility with older teaching material, but the standard
-\code{\link{predict}} interface is preferred for new work.
+drop-in replacement for base R prediction methods. It is a compatibility
+helper for older teaching material that expects confidence and prediction
+intervals to be printed together. The standard \code{\link{predict}}
+interface is preferred for new work.
 
 Note: \code{newdata} must be a data frame with the same column order and
-data types as those used in fitting the model.
+data types as those used in fitting the model. This is stricter than the usual
+\code{predict.lm()} interface and is kept for compatibility with the original
+teaching wrapper.
 }
 \note{
-This function is deprecated as it is no longer used in class. Prefer
-  the standard \code{\link{predict}} method for new work.
+This function is deprecated because it is no longer used in class.
+  Prefer the standard \code{\link{predict}} method for new work.
 }
 \examples{
 

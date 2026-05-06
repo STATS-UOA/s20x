@@ -127,3 +127,14 @@ dataset instead of artificial grouped vectors, and the `summaryStats()` matrix
 example now uses columns from `course.df` instead of random values. Related
 summary-helper wording was tightened for grammar, clarity, and consistency with
 NZ English, without changing function behaviour.
+
+## Stage 12.6 prediction and AR-error teaching narrative
+
+Stage 12.6 returns to the prediction and AR-error narrative item identified in
+the original audit. The prediction helper documentation now more clearly states
+that `predict20x()`, `predictGLM()`, and `predictCount()` are compatibility
+teaching wrappers rather than drop-in replacements for base `predict()` methods.
+The `tslm()` and `anova.tslm()` documentation now further clarifies that `ar(p)`
+specifies an error-correlation structure, not an additional mean-model term, and
+that AR-error ANOVA output should not be read as an ordinary independent-error
+ANOVA decomposition. No prediction, fitting, or ANOVA behaviour is changed.

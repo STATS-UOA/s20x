@@ -1,6 +1,6 @@
-#' Predicted Counts for a Log-Link Generalized Linear Model
+#' Predicted Counts for a Log-Link Generalised Linear Model
 #'
-#' Teaching helper for count predictions from a log-link generalized linear
+#' Teaching helper for count predictions from a log-link generalised linear
 #' model. It wraps \code{\link{predict.glm}}, constructs confidence intervals on
 #' the link scale, exponentiates the fitted values and limits, rounds the result,
 #' and optionally prints the returned table.
@@ -11,13 +11,14 @@
 #' helper, see \code{\link{predictGLM}}.
 #'
 #' Note: \code{newdata} must be a data frame with the same column order and
-#' data types as those used in fitting the model.
+#' data types as those used in fitting the model. This stricter interface is kept
+#' for compatibility with the original teaching wrapper.
 #'
 #' @param object a \code{glm} object, i.e. the output from \code{\link{glm}}.
 #' @param newdata prediction data frame.
-#' @param cilevel confidence level of the interval.
-#' @param digit decimal numbers after the point.
-#' @param print.out if \code{TRUE}, print out the prediction table.
+#' @param cilevel confidence level for the intervals.
+#' @param digit number of decimal places to print.
+#' @param print.out if \code{TRUE}, print the prediction table.
 #' @param \dots optional arguments that are passed to \code{\link{predict.glm}}.
 #' @return Invisibly returns a data frame with three columns: \describe{
 #'   \item{Predicted}{the predicted count on the response scale.}
