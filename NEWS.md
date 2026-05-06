@@ -1,3 +1,8 @@
+# s20x 3.2.261
+
+## Modernisation
+- Added the Stage 13 prediction-wrapper internal audit note, identifying narrow maintenance targets for prediction internals while deferring public API and behaviour changes.
+
 # s20x 3.2.260
 
 ## Modernisation
