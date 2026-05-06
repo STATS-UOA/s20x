@@ -10,12 +10,24 @@ fi
 
 scriptDir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+fileMtime() {
+  local file="$1"
+  if stat -f "%m" "$file" >/dev/null 2>&1; then
+    stat -f "%m" "$file"
+  elif stat -c "%Y" "$file" >/dev/null 2>&1; then
+    stat -c "%Y" "$file"
+  else
+    echo "Could not read modification time for: $file" >&2
+    exit 1
+  fi
+}
+
 find "$scriptDir" -maxdepth 1 -type f -name "*_completed.zip" -print |
   while IFS= read -r file; do
-    stat -f "%m %N" "$file"
+    printf '%s\t%s\n' "$(fileMtime "$file")" "$file"
   done |
   sort -rn |
-  awk -v keepCount="$keepCount" 'NR > keepCount {sub(/^[0-9]+ /, ""); print}' |
+  awk -F '\t' -v keepCount="$keepCount" 'NR > keepCount {print $2}' |
   while IFS= read -r file; do
     rm -f "$file"
     echo "Removed $file"

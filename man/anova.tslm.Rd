@@ -29,7 +29,9 @@ Wald-style tests of model terms. These test whether each term contributes to
 the fitted mean model after allowing for the estimated autocorrelation
 structure. Because these models do not use the ordinary independent-error
 sum-of-squares decomposition, the compact table reports `Df`, `F value`, and
-`Pr(>F)`, but does not report `Sum Sq` or `Mean Sq`.
+`Pr(>F)`, but does not report `Sum Sq` or `Mean Sq`. Compare nested AR-error
+models with care: `verbose = TRUE` exposes the underlying `nlme` comparison
+output rather than recreating an ordinary `lm` ANOVA table.
 
 Use `verbose = TRUE` to see the underlying [nlme::anova.gls()] output.
 }
