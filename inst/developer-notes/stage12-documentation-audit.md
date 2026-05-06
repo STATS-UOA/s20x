@@ -170,3 +170,26 @@ local resources. No additional examples were moved to `\donttest{}` or
 This pass also tightened the `freq1way()` help wording around hypothesised
 probabilities and attached confidence limits. That change is documentation-only
 and does not alter calculations or output structure.
+
+## Stage 12.10 wrap-up
+
+Stage 12.10 closes the documentation-coherence stream. Across Stage 12, the
+package documentation was audited and then updated in small, reviewable steps:
+
+- examples were moved toward package teaching datasets where appropriate;
+- retained synthetic examples were made deterministic;
+- optional-package examples were guarded;
+- prediction helpers were documented as teaching wrappers rather than complete
+  replacements for base `predict()` methods;
+- AR-error model documentation was clarified so error-correlation structures
+  are not confused with mean-model terms;
+- strict NZ English and grammar fixes were applied to touched documentation;
+- package-owned residual diagnostics now accept both `"normalised"` and the
+  legacy `"normalized"` spelling; and
+- diagnostic terminology was made more consistent across related help pages.
+
+The main Stage 12 documentation goals are now complete. Further work should be
+handled as a later stage rather than continuing broad documentation edits here.
+Reasonable deferrals include deeper return-object redesign, formal deprecation
+plans for legacy example forms, and any behavioural refactors suggested by the
+teaching-wrapper documentation.

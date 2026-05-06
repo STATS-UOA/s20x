@@ -1,3 +1,8 @@
+# s20x 3.2.260
+
+## Modernisation
+- Finalised the Stage 12 documentation-coherence developer note, summarising completed documentation improvements and deferring deeper API or behavioural refactors to later stages.
+
 # s20x 3.2.259
 
 ## Modernisation
