@@ -33,9 +33,7 @@ predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = 
     stop("First input is not a \"glm\" object")
   }
 
-  if (!is.data.frame(newdata)) {
-    stop("Argument \"newdata\" is not a data frame!")
-  }
+  validatePredictionNewdata(newdata)
 
   rowNames = paste("pred", 1:nrow(newdata), sep = ".")
   rowNames = 1:nrow(newdata)

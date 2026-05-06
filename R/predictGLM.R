@@ -37,9 +37,7 @@ predictGLM = function(object,
     stop("First input is not a \"glm\" object")
   }
 
-  if (!is.data.frame(newdata)) {
-    stop("Argument \"newdata\" is not a data frame!")
-  }
+  validatePredictionNewdata(newdata)
 
   if (family(object)$link != "log" & family(object)$link != "logit") {
     stop("Must be a poisson or binomial model")
@@ -47,18 +45,6 @@ predictGLM = function(object,
 
   nameRow = paste("pred", 1:nrow(newdata), sep = ".")
   nameRow = 1:nrow(newdata)
-
-  if (!inherits(object, "glm")) {
-    stop("First input is not a \"glm\" object")
-  }
-
-  if (!is.data.frame(newdata)) {
-    stop("Argument \"newdata\" is not a data frame!")
-  }
-
-  if (family(object)$link != "log" & family(object)$link != "logit") {
-    stop("Must be a poisson or binomial model")
-  }
 
   modelTerms = terms(object)
   termsNoResponse = delete.response(modelTerms)

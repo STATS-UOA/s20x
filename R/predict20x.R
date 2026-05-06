@@ -58,9 +58,7 @@ predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TR
     stop("First input is not an \"lm\" object")
   }
 
-  if (!is.data.frame(newdata)) {
-    stop("Argument \"newdata\" is not a data frame!")
-  }
+  validatePredictionNewdata(newdata)
 
   name.row = paste("pred", 1:nrow(newdata), sep = ".")
   name.row = 1:nrow(newdata)

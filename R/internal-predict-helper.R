@@ -6,6 +6,14 @@ predictGlmWithSe = function(object, newdata, ...) {
   predict.glm(object, newdata, se.fit = TRUE, ...)
 }
 
+validatePredictionNewdata = function(newdata) {
+  if (!is.data.frame(newdata)) {
+    stop("Argument \"newdata\" is not a data frame!")
+  }
+
+  invisible(newdata)
+}
+
 predictionIntervalPercent = function(cilevel) {
   1 - (1 - cilevel) / 2
 }

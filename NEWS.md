@@ -1,3 +1,8 @@
+# s20x 3.2.262
+
+## Modernisation
+- Consolidated prediction-wrapper `newdata` data-frame validation into a shared internal helper and removed duplicated validation from `predictGLM()` without changing prediction output or error text.
+
 # s20x 3.2.261
 
 ## Modernisation

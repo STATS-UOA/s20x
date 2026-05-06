@@ -91,3 +91,14 @@ test_that("internal GLM interval helpers preserve existing normal and quasi arit
     qt(percent, quasiFit$df.res)
   )
 })
+
+test_that("internal prediction newdata validation preserves wrapper error text", {
+  expect_error(
+    s20x:::validatePredictionNewdata(list(x = 1)),
+    "Argument \"newdata\" is not a data frame!",
+    fixed = TRUE
+  )
+
+  newdata = data.frame(x = 1)
+  expect_invisible(s20x:::validatePredictionNewdata(newdata))
+})
