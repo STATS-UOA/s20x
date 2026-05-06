@@ -22,17 +22,18 @@ summaryStats(x, ...)
 \method{summaryStats}{matrix}(x, data.order = TRUE, digits = 2, ...)
 }
 \arguments{
-\item{x}{either a single vector of values, or a formula of the form
-data~group, or a matrix.}
+\item{x}{either a single vector of values, a formula of the form
+\code{data ~ group}, or a matrix.}
 
-\item{\dots}{Optional arguments which are passed to the summary statistic functions.
+\item{\dots}{Optional arguments that are passed to the summary statistic functions.
 For example \code{na.rm = TRUE} will help if there are missing values in the
 (response) variable.}
 
 \item{group}{a vector of group labels.}
 
-\item{data.order}{if \code{TRUE}, the group order is the order which the groups are
-first encountered in the vector 'group'. If \code{FALSE}, the order is alphabetical.}
+\item{data.order}{if \code{TRUE}, the group order is the order in which the
+groups are first encountered in \code{group}. If \code{FALSE}, the order is
+alphabetical.}
 
 \item{digits}{the number of decimal places to display.}
 
@@ -51,10 +52,10 @@ list is returned with the following named items:
 \item{var}{Variance -- the average of the squares of the deviations
 of the data values from the sample mean.}
 \item{sd}{Standard deviation -- the square root of the variance.}
-\item{n}{Number of data values -- size of the data set.}
+\item{n}{Number of data values -- size of the dataset.}
 \item{nMissing}{If there are missing values, and \code{na.rm} has been set to \code{TRUE},
 the number of missing values.}
-\item{iqr}{Midspread (IQR) -- the range spanned by central half of data; the
+\item{iqr}{Midspread (IQR) -- the range spanned by the central half of the data; the
 interquartile range.}
 \item{skewness}{Skewness statistic -- indicates how skewed the data set is.
 Positive values indicate right-skew data. Negative values indicate left-skew data.}
@@ -95,8 +96,8 @@ with(course.df, summaryStats(Exam))
 summaryStats(Exam ~ Stage1, course.df)
 
 ## Using a matrix
-X = cbind(rnorm(50), rnorm(50))
-summaryStats(X)
+courseMatrix = cbind(course.df$Exam, course.df$Assign, course.df$Test)
+summaryStats(courseMatrix)
 
 ## Saving and extracting the information
 sumStats = summaryStats(Exam ~ Degree, course.df)

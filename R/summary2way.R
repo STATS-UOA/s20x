@@ -1,26 +1,30 @@
 #' Two-way Analysis of Variance Summary
-#' 
+#'
 #' Displays summary information for a two-way anova analysis. The lm object
 #' must come from a numerical response variable and factors. The output depends
-#' on the value of page:
-#' 
-#' page = 'table' anova table page = 'means' cell means matrix, numeric summary
-#' page = 'effects' table of effects page = 'interaction' tables of contrasts
-#' page = 'nointeraction' tables of contrasts
-#' 
-#' 
-#' @param fit an lm object, i.e. the output from 'lm()'.
-#' @param page options for output: 'table', 'means', 'effects',
-#'     'interaction', 'nointeraction'
+#' on the value of \code{page}:
+#'
+#' \itemize{
+#' \item \code{page = "table"}: ANOVA table.
+#' \item \code{page = "means"}: cell means matrix and numeric summary.
+#' \item \code{page = "effects"}: table of effects.
+#' \item \code{page = "interaction"}: interaction contrast tables.
+#' \item \code{page = "nointeraction"}: main-effect contrast tables.
+#' }
+#'
+#' @param fit an lm object, i.e. the output from \code{lm()}.
+#' @param page options for output: \code{"table"}, \code{"means"},
+#'     \code{"effects"}, \code{"interaction"}, or
+#'     \code{"nointeraction"}.
 #' @param digit the number of decimal places in the display.
 #' @param conf.level confidence level of the intervals.
-#' @param print.out if TRUE, print out the output on the screen.
+#' @param print.out if \code{TRUE}, print the output on the screen.
 #' @param new if \code{TRUE} then this will run the new version of
 #'     \code{summary2way} which should be more robust than the old
-#'     version. It does not work in the same way however. In
+#'     version. However, it does not work in the same way. In
 #'     particular, when \code{page = 'means'} it does not return
-#'     summary statistics for each grouping of the data (pooled/by row
-#'     factor/by column factor/by interaction factor).  Instead it
+#'     summary statistics for each grouping of the data (pooled, by row
+#'     factor, by column factor, and by interaction factor). Instead, it
 #'     simply returns the means for each grouping.
 #' @param all Only applicable to \code{page = "interaction"}. If
 #'     \code{TRUE}, pairwise comparisons for all combinations of
@@ -29,14 +33,14 @@
 #'     factors.
 #' @param FUN optional function to be applied to estimates and confidence intervals.
 #'     Typically for backtransformation operations.
-#' @param \dots other arguments like inttype, pooled etc.
+#' @param \dots other arguments such as \code{inttype} and \code{pooled}.
 #' @return `summary2way()` prints the requested teaching summary page and
 #'     invisibly returns the current summary components. The returned list has
 #'     the following components: \item{Df}{degrees of
 #'     freedom for regression, residual and total.} \item{Sum of
 #'     Sq}{sum squares for regression, residual and total.} \item{Mean
 #'     Sq}{mean squares for regression and residual.} \item{F
-#'     value}{F-statistic value.} \item{Pr(F)}{The P-value assoicated
+#'     value}{F-statistic value.} \item{Pr(F)}{The P-value associated
 #'     with each F-test.} \item{Grand Mean}{The overall mean of the
 #'     response variable.} \item{Row Effects}{The main effects for the
 #'     first (row) factor.} \item{Col Effects}{The main effects for
@@ -53,16 +57,16 @@
 #'     \code{\link{TukeyHSD}}
 #' @keywords models
 #' @examples
-#' 
-#' ##Arousal data:
+#'
+#' ## Arousal data:
 #' data(arousal.df)
 #' arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
 #' summary2way(arousal.fit)
 #' 
 #' ## Butterfat data:
 #' data("butterfat.df")
-#' fit = lm(log(Butterfat)~Breed+Age, data=butterfat.df)
-#' summary2way(fit, page="nointeraction", FUN = exp)
+#' fit = lm(log(Butterfat) ~ Breed + Age, data = butterfat.df)
+#' summary2way(fit, page = "nointeraction", FUN = exp)
 #'
 #' @export summary2way
 summary2way = function(fit, page = c("table", "means", "effects", "interaction", "nointeraction"), 

@@ -118,3 +118,12 @@ Code-facing identifiers, argument names, external API values, dataset column
 names, and generated Rd files are intentionally excluded from direct prose
 normalisation. Generated Rd files should continue to be produced by
 `devtools::document()`.
+
+## Stage 12.5 summary helper examples
+
+Stage 12.5 addresses the summary-helper example candidates identified in the
+audit. The `summary1way()` help example now uses the `computer.df` teaching
+dataset instead of artificial grouped vectors, and the `summaryStats()` matrix
+example now uses columns from `course.df` instead of random values. Related
+summary-helper wording was tightened for grammar, clarity, and consistency with
+NZ English, without changing function behaviour.

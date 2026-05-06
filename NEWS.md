@@ -1,3 +1,8 @@
+# s20x 3.2.255
+
+## Modernisation
+- Replaced the artificial `summary1way()` help example with `computer.df`, made the `summaryStats()` matrix example dataset-based, and tightened summary-helper documentation wording without changing behaviour.
+
 # s20x 3.2.254
 
 ## Modernisation
