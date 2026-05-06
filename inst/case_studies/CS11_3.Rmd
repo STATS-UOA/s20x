@@ -22,7 +22,7 @@ library(emmeans)
 
 A musical college wished to study the effectiveness of various practice methods for its trombonists. To this end 30 trombonists were randomly assigned to one of 5 practice methods. Each student’s ability with the trombone was initially assessed. To assess improvement, after a set period of time using the assigned practice method only, they reassessed each student and recorded the difference between the student’s final and initial scores. 
 
-The resulting data is in the file *trombone.csv*, which contains the variables:
+The resulting data are in the file *trombone.csv*, which contains the variables:
 
 Variable  | Description
 ----------|--------------------------------------------------------
@@ -69,7 +69,7 @@ summaryStats(diff~method,data=trombone.df)
 
 ## Comment on the plots and summary statistics. 
 
-The no practice group has the lowest average change in score, with half of the students' scores dropping in value. The physical practice and combined mental and physical practice groups appeared to have the highest average increases in scores. The variabilities of the scores were similar for 3 groups, but are lower for the mental practice only and combined groups.
+The no practice group has the lowest average change in score, with half of the students' scores dropping in value. The physical practice and combined mental and physical practice groups appeared to have the highest average increases in scores. The variability of the scores was similar for 3 groups, but lower for the mental practice only and combined groups.
 
 
 ## Fit appropriate model and check assumptions
@@ -101,7 +101,7 @@ resultStr1 = paste0(sprintf("%.1f", abs(conf1$upper.CL)), " and ", sprintf("%.0f
 
 As we have one explanatory variable which is a factor with five levels we have fitted a oneway ANOVA model to the data.
 
-One student's performance should not affect the performance of another, and the students are assigned randomly. There are differences in the within-group variabilities, but we have very small individual sample sizes. As we have equal sample sizes and there is not a consistent pattern in the residuals (the variability does not increase with the average), the EOV assumptions should be valid. The residuals look approximately normal. There do not appear to be any influential points. We can therefore rely on the results from fitting this linear model.
+One student's performance should not affect the performance of another, and the students are assigned randomly. There are differences in the within-group variability, but we have very small individual sample sizes. As we have equal sample sizes and there is no consistent pattern in the residuals (the variability does not increase with the average), the EOV assumptions should be valid. The residuals look approximately normal. There are no obvious influential points. We can therefore rely on the results from fitting this linear model.
 
 Our model is:
 

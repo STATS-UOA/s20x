@@ -46,9 +46,10 @@ For AR models, `time` should usually name the variable giving the time order
 of the observations. If `time` is omitted, `tslm()` fits the model using the
 row order of `data` and gives a warning so that this assumption is visible.
 
-Diagnostic methods for AR-error models use normalized residuals by default,
+Diagnostic methods for AR-error models use normalised residuals by default,
 because these residuals account for the fitted correlation structure. Use
 `residualType = "response"` when the raw response residuals are required.
+`"normalised"` and `"normalized"` are both accepted for compatibility.
 }
 \examples{
 data(beer.df)

@@ -39,7 +39,7 @@ It is of interest to learn about the survival probability of discarded snapper. 
 
 **Instructions:**
 
-*	Comment on the plot of the data.(Some of the data is listed to help clarify the plot.)
+*	Comment on the plot of the data. (Some of the data is listed to help clarify the plot.)
 * Fit a logistic regression model. Determine whether the model can be simplified and determine an appropriate final model. 
 * Estimate the survival probability of a 25 cm snapper for with handling times of both "Less" and "More". (You do not need interval estimates.)
 * Write appropriate **Methods and Assumption Checks**.
@@ -70,7 +70,7 @@ plot(Survive~Length,data=Snapper.df,ylab='Snapper Survival: 1= survived, 0 = die
      col = ifelse(Handled == 'Less', 'blue', 'Red'))
 legend('center',c('Less','More'),col=c("blue","red"),pch=c(1,4))
 
-# Second plot where points in data set have had a jitter effect added (a small amount of 
+# Second plot where points in the dataset have had a jitter effect added (a small amount of 
 # random noise to shift them so you can see replications in a plot).
 plot(jitter(Survive,0.25)~jitter(Length,1),data=Snapper.df,
      ylab='Snapper Survival: 1= survived, 0 = died)',

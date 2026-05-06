@@ -19,7 +19,7 @@
 #' @param data A data frame in which to evaluate the formula.
 #' @param xlab a title for the x axis: see \code{\link{title}}.
 #' @param ylab a title for the y axis: see \code{\link{title}}.
-#' @param col a color for the lowess smoother line.
+#' @param col a colour for the lowess smoother line.
 #' @param smoother if TRUE then a smoothed lowess line will be added to the
 #' plot
 #' @param twosd if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd

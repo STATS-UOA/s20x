@@ -1,3 +1,8 @@
+# s20x 3.2.254
+
+## Modernisation
+- Applied a strict NZ English and grammar documentation pass and accepted `"normalised"` as a package-owned alias for `"normalized"` residual diagnostics while preserving compatibility.
+
 # s20x 3.2.253
 
 ## Modernisation

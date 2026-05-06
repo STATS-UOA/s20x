@@ -34,7 +34,7 @@ a linear model.}
 
 \item{ylab}{a title for the y axis: see \code{\link{title}}.}
 
-\item{col}{a color for the lowess smoother line.}
+\item{col}{a colour for the lowess smoother line.}
 
 \item{smoother}{if TRUE then a smoothed lowess line will be added to the
 plot}

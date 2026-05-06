@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 ```
 
 # Problem
-The data in this question come from an experiment to see whether cloud-seeding works. Cloud-seeding is the process of firing silver nitrate (AgNO$_3$) into the clouds. Water coalesces around the silver nitrate particles, hopefully getting large enough to precipitate (rain). The measurements in this study are in acre-feet. One acre-foot is the amount of water it takes to fill one acre uniformly to the depth of one foot. One acre-foot is about 1.2 million litres of water (1233481.85532 litres to be exact). This data set is included in the `s20x` library.
+The data in this question come from an experiment to see whether cloud-seeding works. Cloud-seeding is the process of firing silver nitrate (AgNO$_3$) into the clouds. Water coalesces around the silver nitrate particles, hopefully getting large enough to precipitate (rain). The measurements in this study are in acre-feet. One acre-foot is the amount of water it takes to fill one acre uniformly to the depth of one foot. One acre-foot is about 1.2 million litres of water (1233481.85532 litres to be exact). This dataset is included in the `s20x` library.
 
 The variables of interest are:
 

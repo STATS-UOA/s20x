@@ -37,8 +37,9 @@
 #' then this function assumes \code{\link{par}} has been set by the user and therefore should not be
 #' be over-ridden.
 #' @param residualType for \code{tslm} objects, the residual scale to use in the normality plots.
-#' The default is \code{"normalized"}, which checks the residuals after accounting for
-#' the fitted error correlation structure. Other choices are \code{"response"} and
+#' The default is \code{"normalised"}, which checks the residuals after accounting for
+#' the fitted error correlation structure. \code{"normalised"} and \code{"normalized"}
+#' are both accepted for compatibility. Other choices are \code{"response"} and
 #' \code{"pearson"}.
 #' @param \dots additional arguments which are passed to both \code{qqnorm} and \code{hist}
 #' @return Draws the selected normality diagnostic plots. The function is called
@@ -254,12 +255,12 @@ normcheck.tslm = function(x, xlab = c("Theoretical Quantiles", ""),
                           shapiro.wilk = FALSE,
                           whichPlot = 1:2,
                           usePar = TRUE,
-                          residualType = "normalized", ...) {
+                          residualType = "normalised", ...) {
   if (missing(x) || !methods::is(x, "tslm")) {
     stop("missing or incorrect tslm object")
   }
 
-  residualType = match.arg(residualType, c("response", "pearson", "normalized"))
+  residualType = matchTslmResidualType(residualType)
 
   normcheck(
     residuals(x, type = residualType),

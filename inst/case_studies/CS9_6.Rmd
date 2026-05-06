@@ -23,7 +23,7 @@ Researchers were interested in trying to find factors linked to cholesterol leve
 * Did any age effect differ between the genotypes? If so, how? 
 *	If not, were there differences in average cholesterol levels between the different genotypes? If so, quantify this. Also quantify any age effect.
 
-The resulting data is in the file *Dallas.csv*, which contains the variables:
+The resulting data are in the file *Dallas.csv*, which contains the variables:
 
 Variable    | Description
 ------------|--------------------------------------------------------

@@ -54,7 +54,7 @@ normcheck(x, ...)
   shapiro.wilk = FALSE,
   whichPlot = 1:2,
   usePar = TRUE,
-  residualType = "normalized",
+  residualType = "normalised",
   ...
 )
 }
@@ -98,8 +98,9 @@ then this function assumes \code{\link{par}} has been set by the user and theref
 be over-ridden.}
 
 \item{residualType}{for \code{tslm} objects, the residual scale to use in the normality plots.
-The default is \code{"normalized"}, which checks the residuals after accounting for
-the fitted error correlation structure. Other choices are \code{"response"} and
+The default is \code{"normalised"}, which checks the residuals after accounting for
+the fitted error correlation structure. \code{"normalised"} and \code{"normalized"}
+are both accepted for compatibility. Other choices are \code{"response"} and
 \code{"pearson"}.}
 }
 \value{

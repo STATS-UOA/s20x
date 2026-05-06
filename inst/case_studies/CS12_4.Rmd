@@ -24,9 +24,9 @@ Researchers were interested in which of three types of material for producing ba
 
 Note: The researchers were NOT interested in the differences in performance of the batteries made of the same material between the three different temperatures at this time.
 
-36 batteries were made, 12 each from the three different materials available. They were then randomly allocated to one of three temperatures. The batteries were then tested using a standardised testing procedures under their allocated temperature to measure the effective life of the battery.
+36 batteries were made, 12 each from the three different materials available. They were then randomly allocated to one of three temperatures. The batteries were then tested using a standardised testing procedure under their allocated temperature to measure the effective life of the battery.
 
-The resulting data is in the file *Batteries.csv*, which contains the variables:
+The resulting data are in the file *Batteries.csv*, which contains the variables:
 
 Variable  | Description
 ----------|--------------------------------------------------------
