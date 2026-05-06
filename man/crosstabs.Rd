@@ -14,18 +14,23 @@ as factors.}
 \item{data}{an optional data frame containing the variables in the model.}
 }
 \value{
-An invisible list containing the following components:
-\item{row.props}{a matrix of row proportions, i.e. cell counts divided by
-row marginals.} \item{col.props}{a matrix of column proportions, i.e. cell
-counts divided by column marginals.} \item{Totals}{a matrix containing the
-cell counts and the marginal totals.}
+Invisibly returns an object of class \code{ct.20x}, which is a
+list containing the following components: \item{row.props}{a matrix of row
+proportions, i.e. cell counts divided by row marginals.}
+\item{col.props}{a matrix of column proportions, i.e. cell counts divided by
+column marginals.} \item{whole.props}{a matrix of whole-table proportions.}
+\item{Totals}{a matrix containing the cell counts and the marginal totals.}
+\item{exp}{a matrix of expected counts from the chi-square calculation.}
+\item{chi}{a matrix of cell contributions to the chi-square statistic.}
 }
 \description{
 Produces a 2-way table of counts and the corresponding chi-square test of
 independence or homogeneity.
 }
 \note{
-This function is deprecated and will be removed in future versions of the package.
+This is a legacy teaching helper retained for compatibility with
+  older course material. New code should usually prefer \code{table()} and
+  \code{chisq.test()} directly, or a purpose-built teaching wrapper.
 }
 \examples{
 

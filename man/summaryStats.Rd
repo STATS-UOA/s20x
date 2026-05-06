@@ -22,45 +22,51 @@ summaryStats(x, ...)
 \method{summaryStats}{matrix}(x, data.order = TRUE, digits = 2, ...)
 }
 \arguments{
-\item{x}{either a single vector of values, or a formula of the form
-data~group, or a matrix.}
+\item{x}{either a single vector of values, a formula of the form
+\code{data ~ group}, or a matrix.}
 
-\item{\dots}{Optional arguments which are passed to the summary statistic functions. 
-For example \code{na.rm = TRUE} will help if there are missing values in the 
+\item{\dots}{Optional arguments that are passed to the summary statistic functions.
+For example \code{na.rm = TRUE} will help if there are missing values in the
 (response) variable.}
 
 \item{group}{a vector of group labels.}
 
-\item{data.order}{if \code{TRUE}, the group order is the order which the groups are
-first encountered in the vector 'group'. If \code{FALSE}, the order is alphabetical.}
+\item{data.order}{if \code{TRUE}, the group order is the order in which the
+groups are first encountered in \code{group}. If \code{FALSE}, the order is
+alphabetical.}
 
 \item{digits}{the number of decimal places to display.}
 
 \item{data}{an optional data frame containing the variables in the model.}
 }
 \value{
-If \code{x} is a single variable, i.e. there are no groups, then a
-single list is invisibly returned with the following named items:
-\item{min}{Minimum value.} 
-\item{max}{Maximum value.} 
+A teaching summary is printed as a side effect. The returned value is
+invisible so that classroom use can focus on the printed summary while
+programmatic use can still save the result.
+
+If \code{x} is a single variable and no grouping is supplied, an invisible
+list is returned with the following named items:
+\item{min}{Minimum value.}
+\item{max}{Maximum value.}
 \item{mean}{Mean value.}
 \item{var}{Variance -- the average of the squares of the deviations
-of the data values from the sample mean.} 
-\item{sd}{Standard deviation -- the square root of the variance.} 
-\item{n}{Number of data values -- size of the data set.}
-\item{nMissing}{If there are missing values, and \code{na.rm} has been set to \code{TRUE}
-then this item will contain the number of missing values.}
-\item{iqr}{Midspread (IQR) -- the range spanned by central half of data; the 
-interquartile range.} 
-\item{skewness}{Skewness statistic -- indicates how skewed the data set is. 
-Positive values indicate right-skew data. Negative values indicate left-skew data.} 
-\item{lq}{Lower quartile}
+of the data values from the sample mean.}
+\item{sd}{Standard deviation -- the square root of the variance.}
+\item{n}{Number of data values -- size of the dataset.}
+\item{nMissing}{If there are missing values, and \code{na.rm} has been set to \code{TRUE},
+the number of missing values.}
+\item{iqr}{Midspread (IQR) -- the range spanned by the central half of the data; the
+interquartile range.}
+\item{skewness}{Skewness statistic -- indicates how skewed the data set is.
+Positive values indicate right-skew data. Negative values indicate left-skew data.}
+\item{lq}{Lower quartile.}
 \item{median}{Median -- the middle value when the batch is ordered.}
-\item{uq}{Upper quartile} If grouping is provided, either by using the
-\code{group} argument, or providing a factor in a formula, or by passing a
-matrix where the different columns represent the groups, then the function
-will return a \code{data.frame} a row containing all the statistics above
-for each group.
+\item{uq}{Upper quartile.}
+
+If grouping is provided, either by using the \code{group} argument, by using
+a formula, or by passing a matrix whose columns represent groups, the
+function invisibly returns a \code{data.frame} with one row for each group
+and columns containing the summary statistics.
 }
 \description{
 Produces a table of summary statistics for the data. If the argument
@@ -90,8 +96,8 @@ with(course.df, summaryStats(Exam))
 summaryStats(Exam ~ Stage1, course.df)
 
 ## Using a matrix
-X = cbind(rnorm(50), rnorm(50))
-summaryStats(X)
+courseMatrix = cbind(course.df$Exam, course.df$Assign, course.df$Test)
+summaryStats(courseMatrix)
 
 ## Saving and extracting the information
 sumStats = summaryStats(Exam ~ Degree, course.df)

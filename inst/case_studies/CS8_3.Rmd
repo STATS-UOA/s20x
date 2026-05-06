@@ -20,7 +20,7 @@ library(s20x)
 
 In a two year randomised controlled trial into the effectiveness of various forms of fluoride on dental health, female children were randomly allocated to one of two groups: using a distilled water mouth rinse along with brushing their teeth (the placebo group) or using a mouth rinse where the distilled water had added acid-phosphate fluoride (which is tasteless). The children’s age at the start of the experiment was recorded, along with the change in the number of decayed, missing or filled teeth. 47 children completed the study.
 
-The resulting data is in the file *Dental.csv*, which contains the variables:
+The resulting data are in the file *Dental.csv*, which contains the variables:
 
 Variable  | Description
 ----------|--------------------------------------------------------

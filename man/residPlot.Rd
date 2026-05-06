@@ -24,13 +24,15 @@ trend, are added to this scatter plot. A test for a quadratic relationship
 between the residuals and the fitted values is also computed.
 }
 \note{
-This function is deprecated. It will be removed in future versions of the package.
+This is a legacy diagnostic plotting helper retained for compatibility
+  with older teaching material. New code should usually prefer the current
+  diagnostic workflow used by \code{modelcheck()}.
 }
 \examples{
 
 # Peruvian Indians data
 data(peru.df)
-fit=lm(BP~age+years+weight+height, data = peru.df)
+fit = lm(BP ~ age + years + weight + height, data = peru.df)
 residPlot(fit)
 
 }

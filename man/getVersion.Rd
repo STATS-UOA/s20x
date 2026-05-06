@@ -2,14 +2,14 @@
 % Please edit documentation in R/getVersion.R
 \name{getVersion}
 \alias{getVersion}
-\title{s20x pacakge version number}
+\title{s20x package version number}
 \usage{
 getVersion()
 }
 \description{
 Returns the version number of the s20x package. This is useful if a student
-is has problems runnning commands and the maintainer needs to check the
-version number.
+has problems running commands and the maintainer needs to check the version
+number.
 }
 \examples{
 

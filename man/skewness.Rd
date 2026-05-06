@@ -9,7 +9,7 @@ skewness(x, ...)
 \arguments{
 \item{x}{vector containing the data.}
 
-\item{\dots}{any other variables to be passed to \code{mean} and \code{sd}, e.g. 
+\item{\dots}{any other variables to be passed to \code{mean} and \code{sd}, e.g.
 \code{na.rm = TRUE}.}
 }
 \value{
@@ -22,7 +22,7 @@ indicate right-skewed data whereas negative values indicate left-skewness.
 }
 \examples{
 
-##Merger data:
+## Merger data:
 data(mergers.df)
 skewness(mergers.df$mergerdays)
 

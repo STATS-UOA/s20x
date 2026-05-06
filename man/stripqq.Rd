@@ -28,7 +28,9 @@ the grouping variable g
 
 }}
 \note{
-This function is deprecated and will be removed in later versions of the pacakge.
+This is a legacy teaching helper retained for compatibility with
+  older course material. New teaching material should prefer current
+  diagnostic plotting workflows.
 }
 \examples{
 

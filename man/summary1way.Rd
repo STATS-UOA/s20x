@@ -35,10 +35,20 @@ plotted intervals.}
 \item{\dots}{more options.}
 }
 \value{
-\item{Df}{degrees of freedom for regression, residual and total.}
-\item{Sum of Sq}{sum squares for regression, residual and total.} \item{Mean
-Sq}{mean squares for regression and residual.} \item{F value}{F-statistic
-value.} \item{Pr(F)}{} \item{Main Effect}{} \item{Group Effects}{}
+Invisibly returns a list containing the one-way ANOVA summary
+components used in the printed teaching output. The list contains:
+\item{Df}{degrees of freedom for between groups, within groups, and total.}
+\item{Sum of Sq}{sum of squares for between groups, within groups, and total.}
+\item{Mean Sq}{mean squares for between groups and within groups.}
+\item{F value}{the one-way ANOVA F statistic.}
+\item{Pr(F)}{the P-value associated with the F test.}
+\item{Main Effect}{the grand mean of the response.}
+\item{Group Effects}{group deviations from the grand mean.}
+
+The printed ANOVA table, numeric summary, effects table, and optional plot are
+the primary teaching interface. The returned list is invisible so classroom
+use can focus on the printed output while programmatic callers can still
+inspect the computed values.
 }
 \description{
 Displays summary information for a one-way anova analysis. The lm object
@@ -48,12 +58,13 @@ includes: (i) anova table; (ii) numeric summary; (iii) table of effects;
 }
 \examples{
 
-attitudes = c(5.2,5.2,6.1,6,5.75,5.6,6.25,6.8,6.87,7.1,
-               6.3,6.35,5.5,5.75,4.6,5.36,5.85,5.9)
-l = rep(c('Gp1','Gp2','Gp3'),rep(6,3))
-l = factor(l)
-f = lm(attitudes ~ l)
-result = summary1way(f)
+## Computer questionnaire data:
+data(computer.df)
+computer.df = within(computer.df, {
+    selfassess = factor(selfassess)
+})
+computer.fit = lm(score ~ selfassess, data = computer.df)
+result = summary1way(computer.fit)
 result
 
 }

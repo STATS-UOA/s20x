@@ -22,7 +22,7 @@ library(emmeans)
 
 A researcher was interested in comparing e-mail habits of adults, depending on their marital status.  They collected a random sample of data from the U.S. General Social Surveys. 
 
-The data is stored is *email.csv* and contains the following variables:
+The data are stored in *email.csv* and contain the following variables:
 
 Variable   | Description
 -----------|--------------------------------------------------------------------------

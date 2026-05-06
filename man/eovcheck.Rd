@@ -34,7 +34,7 @@ a linear model.}
 
 \item{ylab}{a title for the y axis: see \code{\link{title}}.}
 
-\item{col}{a color for the lowess smoother line.}
+\item{col}{a colour for the lowess smoother line.}
 
 \item{smoother}{if TRUE then a smoothed lowess line will be added to the
 plot}
@@ -43,6 +43,11 @@ plot}
 
 \item{levene}{if \code{TRUE} then the P-value from Levene's test for equality of
 variance is displayed}
+}
+\value{
+Draws the residual-versus-fitted diagnostic plot. The function is
+called for its plotting side effects and does not provide a stable data return
+object.
 }
 \description{
 Plots the residuals versus the fitted (or predicted) values from a linear

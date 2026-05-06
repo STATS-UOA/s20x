@@ -24,13 +24,13 @@ cooks20x(
 
 \item{ylab}{the y-axis title.}
 
-\item{line}{a vector of length 3 controlling the distances of the plot title, the x-axis title and the y-axis title 
+\item{line}{a vector of length 3 controlling the distances of the plot title, the x-axis title and the y-axis title
 from the axis in line units.}
 
 \item{cex.labels}{a factor controlling the font size of the labels on suspected high influence points.}
 
 \item{axisOpts}{a list of additional arguments that can be used to control the axes. At this point
-this list only contains one element \code{xAxis} which is logical. If \code{xAxis == TRUE} then the 
+this list only contains one element \code{xAxis} which is logical. If \code{xAxis == TRUE} then the
 x-axis will be displayed, and clearly, if it is \code{FALSE}, then it will not.}
 
 \item{\dots}{additional arguments are passed to \code{plot} and may provide some extra flexibility.}

@@ -45,7 +45,7 @@ clothes.df = with(survey.df, data.frame(clothes = clothes))
 hist(clothes.df$clothes)
 ```
 
-We can see the data is quite right-skewed. With data this skewed the median looks to be a better measure of centre. Logging the data should help. It also looks like there is one really "silly"" value. Maybe we should omit it?
+We can see the data is quite right-skewed. With data this skewed the median looks to be a better measure of centre. Logging the data should help. It also looks like there is one really "silly" value. Maybe we should omit it?
 
 ```{r}
 subset(clothes.df, clothes > 800)

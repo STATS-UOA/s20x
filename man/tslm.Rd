@@ -33,7 +33,9 @@ ordinary formula and add an `ar(p)` term to request autoregressive errors.
 \details{
 When no `ar(p)` term is present, `tslm()` fits an ordinary [stats::lm()]
 model. When an `ar(p)` term is present, `tslm()` fits a [nlme::gls()] model
-with an AR(p) correlation structure using [nlme::corARMA()].
+with an AR(p) correlation structure using [nlme::corARMA()]. The `ar(p)`
+term changes the error model, not the mean-model terms printed in the
+formula.
 
 
 The formula describes the mean model, just as it does for [stats::lm()]. The
@@ -42,13 +44,15 @@ only to specify the correlation structure for the errors. For example,
 `log(passengers) ~ t + month + ar(1)` fits a trend and seasonal mean model
 with AR(1) errors.
 
-For AR models, `time` should usually name the variable giving the time order
-of the observations. If `time` is omitted, `tslm()` fits the model using the
-row order of `data` and gives a warning so that this assumption is visible.
+For AR-error models, `time` should usually name the variable giving the time
+order of the observations. If `time` is omitted, `tslm()` fits the model using
+the row order of `data` and gives a warning so that this assumption is
+visible.
 
-Diagnostic methods for AR-error models use normalized residuals by default,
+Diagnostic methods for AR-error models use normalised residuals by default,
 because these residuals account for the fitted correlation structure. Use
 `residualType = "response"` when the raw response residuals are required.
+`"normalised"` and `"normalized"` are both accepted for compatibility.
 }
 \examples{
 data(beer.df)

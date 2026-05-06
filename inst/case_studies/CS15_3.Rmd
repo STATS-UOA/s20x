@@ -36,7 +36,7 @@ It was of interest to see how increasing APACHE II scores related to the mortali
 
 **Instructions:**
 
-*	Comment on the plot of the data.(Some of the data is listed to help clarify the plot.)
+*	Comment on the plot of the data. (Some of the data is listed to help clarify the plot.)
 * Fit an appropriate GLM model to the data. Generate appropriate confidence interval output for this model.
 * Get intervals to predict the probability of a patient admitted to ICU dying with 30 days with APACHE II scores of 10, 20, 30 or 40.
 * Write appropriate **Methods and Assumption Checks**.

@@ -29,7 +29,7 @@ library(s20x)
 
 A leading car distributor invited visitors to its website to complete a survey to learn about how much they were willing to spend on a new car. It was of interest to see how this depended on the participant’s annual income, marital status, dependents, gender and age.
 	
-The resulting data is in the file *Carspend.csv*, which contains the variables:
+The resulting data are in the file *Carspend.csv*, which contains the variables:
 
 Variable    | Description
 ------------|--------------------------------------------------------
@@ -40,7 +40,7 @@ Dependents	| Yes if the participant had financial dependents, No if they had non
 Sex	        | M if the participant was Male or F if they were female. (Nobody that participated in the survey selected any other option.)
 Age	        | The age of the participant (in years).
 
-**Notes:**  It is better to work with both MaxSpend and Income logged. We have already logged these in the data set so you do not need to do this. You do not need to comment on the need to log these in the Method and Assumptions section.
+**Notes:**  It is better to work with both MaxSpend and Income logged. We have already logged these in the dataset so you do not need to do this. You do not need to comment on the need to log these in the Method and Assumptions section.
 
 
 **Instructions:**

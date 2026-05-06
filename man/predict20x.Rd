@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict20x.R
 \name{predict20x}
 \alias{predict20x}
-\title{Model Predictions for a Linear Model}
+\title{Deprecated Teaching Predictions for a Linear Model}
 \usage{
 predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
 }
@@ -11,33 +11,46 @@ predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
 
 \item{newdata}{prediction data frame.}
 
-\item{cilevel}{confidence level of the interval.}
+\item{cilevel}{confidence level for the intervals.}
 
-\item{digit}{decimal numbers after the point.}
+\item{digit}{number of decimal places to print.}
 
-\item{print.out}{if \code{TRUE}, print out the prediction matrix.}
+\item{print.out}{if \code{TRUE}, print the prediction table.}
 
-\item{\dots}{optional arguments that are passed to the generic 'predict'}
+\item{\dots}{optional arguments that are passed to \code{\link{predict.lm}}.}
 }
 \value{
-\item{frame}{vector or matrix including predicted values, confidence
-intervals and predicted intervals.} \item{fit}{prediction values.}
-\item{se.fit}{standard error of predictions.} \item{residual.scale}{residual
-standard deviations.} \item{df}{degrees of freedom for residual.}
-\item{cilevel}{confidence level of the interval.}
+Invisibly returns a list with components \describe{
+  \item{frame}{printed data frame containing predictions, confidence intervals,
+  and prediction intervals.}
+  \item{fit}{prediction values.}
+  \item{se.fit}{standard errors of predictions.}
+  \item{residual.scale}{residual standard deviation.}
+  \item{df}{residual degrees of freedom.}
+  \item{cilevel}{confidence level of the interval.}
+}
 }
 \description{
-Uses the main output and some error messages from R function 'predict' but
-gives you more output. (Error messages are not reliable when used in Splus.)
+Teaching helper for linear-model predictions. It wraps
+\code{\link{predict.lm}} and prints a compact table containing fitted values,
+confidence intervals for the mean response, and prediction intervals for new
+observations.
 }
 \details{
-Note: The data frame, newdata, must have the same column order and data
-types (e.g. numeric or factor) as those used in fitting the model.
+This is not an S3 \code{predict()} method and is not intended to be a
+drop-in replacement for base R prediction methods. It is a compatibility
+helper for older teaching material that expects confidence and prediction
+intervals to be printed together. The standard \code{\link{predict}}
+interface is preferred for new work.
+
+Note: \code{newdata} must be a data frame with the same column order and
+data types as those used in fitting the model. This is stricter than the usual
+\code{predict.lm()} interface and is kept for compatibility with the original
+teaching wrapper.
 }
 \note{
-This function is deprecated. It will be removed in future versions of the package.
-
-this function is deprecated as it is never used in class any more. We prefer the standard \code{\link{predict}} method.
+This function is deprecated because it is no longer used in class.
+  Prefer the standard \code{\link{predict}} method for new work.
 }
 \examples{
 

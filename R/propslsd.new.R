@@ -9,7 +9,8 @@
 #' @param arrowlength Length of the arrows.
 #' @seealso \code{\link{crosstabs}}, \code{\link{rowdistr}}
 #' @keywords htest
-#' @note This function is no longer exported as it should never be called by the user. It is also deprecated and will be removed from future versions of the package.
+#' @note This is an internal legacy helper used by \code{rowdistr()}. It is
+#'   not exported and should not be called directly by users.
 propslsd.new = function(crosstablist, conf.level = 0.95, arrowlength = 0.1) {
   x = crosstablist$Totals[1:nrow(crosstablist$whole.props), 1:ncol(crosstablist$whole.props)]
   nrows = nrow(x)

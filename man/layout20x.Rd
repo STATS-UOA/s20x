@@ -7,25 +7,26 @@
 layout20x(numRows = 1, numCols = 1)
 }
 \arguments{
-\item{numRows}{number of rows in plot array}
+\item{numRows}{Number of rows in the plot array.}
 
-\item{numCols}{number of columns in plot array}
+\item{numCols}{Number of columns in the plot array.}
 }
 \value{
-Function returns no value
+No return value.
 }
 \description{
-Allows an \code{numRows} by \code{numCols} matrix of plots to be displayed
-in a single plot. If the function is called with no arguments, then the
-plotting device layout will be reset to a single plot.
+Allows a `numRows` by `numCols` matrix of plots to be displayed in a single
+plot. If the function is called with no arguments, then the plotting device
+layout will be reset to a single plot.
 }
 \note{
-This function is deprecated. It will be removed in future versions of the package.
+This is a legacy convenience wrapper retained for compatibility with
+  older teaching material. New code can use \code{par(mfrow = ...)}
+  directly.
 }
 \examples{
-
 data(course.df)
-layout20x(1,2)
+layout20x(1, 2)
 stripchart(course.df$Exam)
 boxplot(course.df$Exam)
 

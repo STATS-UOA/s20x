@@ -25,8 +25,11 @@ rowdistr(
 \item{suppressText}{if \code{TRUE} then text results are not displayed}
 }
 \value{
-A matrix of row proportions, i.e cell counts divided by row
-marginals.
+Invisibly returns the matrix of row proportions printed by the
+teaching summary when \code{suppressText = FALSE}. When
+\code{suppressText = TRUE}, the function invisibly returns \code{NULL}
+because no text summary is constructed. Plotting remains a side effect
+controlled by \code{plot}.
 }
 \description{
 Produces summaries and plots from a cross-tabulation.  The output produced
@@ -57,12 +60,11 @@ can be displayed in the document.
 data(body.df)
 z = crosstabs(~ ethnicity + married, data = body.df)
 rowdistr(z)
-rowdistr(z, comp='between')
-rowdistr(z, comp='within')
+rowdistr(z, comp = "between")
+rowdistr(z, comp = "within")
 
-
-##from matrix of counts
-z = matrix(c(4,3,2,6,47,20,40,62,11,8,7,22,3,0,1,10), 4, 4)
+## from matrix of counts
+z = matrix(c(4, 3, 2, 6, 47, 20, 40, 62, 11, 8, 7, 22, 3, 0, 1, 10), 4, 4)
 rowdistr(z)
 }
 \seealso{

@@ -57,13 +57,20 @@ format.
 data(arousal.df)
 arousal.fit = lm(arousal ~ gender *  picture, data = arousal.df)
 
-## Create a data-frame with all pairwise comparisons using \code{emmeans}:
-require(emmeans)
-arousal.allpairs = pairs(emmeans(arousal.fit,  ~gender *  picture), infer = TRUE)
+## Create all pairwise comparisons using emmeans, if available.
+if (requireNamespace("emmeans", quietly = TRUE)) {
+    arousal.allpairs = pairs(
+        emmeans::emmeans(arousal.fit, ~ gender * picture),
+        infer = TRUE
+    )
 
-## Display only the within-level comparisons:
-displayPairs(arousal.allpairs, levels1 = c('female', 'male'),
-                               levels2 = c('infant', 'landscape', 'nude.f', 'nude.m'))
+    ## Display only the within-level comparisons:
+    displayPairs(
+        arousal.allpairs,
+        levels1 = c("female", "male"),
+        levels2 = c("infant", "landscape", "nude.f", "nude.m")
+    )
+}
 
 }
 \author{

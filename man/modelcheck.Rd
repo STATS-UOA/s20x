@@ -13,14 +13,18 @@ modelcheck(x, ...)
 \arguments{
 \item{x}{The fitted model.}
 
-\item{which}{The plot(s) to be drawn. Residuals vs fitted values (
-\code{which = v1}), 
-histogram and QQ plot of residuals (\code{which = 2}), Cook's distance plot 
-(\code{which = 2}).}
+\item{which}{The plot(s) to be drawn. Residuals versus fitted values
+(\code{which = 1}), histogram and Q-Q plot of residuals
+(\code{which = 2}), and Cook's distance plot (\code{which = 3}).}
 
 \item{mar}{Margins applied to each selected plot.}
 
 \item{\ldots}{any other arguments to pass to \code{\link{plot}}}
+}
+\value{
+Draws diagnostic plots for teaching model checking. The function is
+called for its plotting side effects and does not provide a stable data return
+object.
 }
 \description{
 Model checking plots
@@ -32,15 +36,15 @@ Compact layout for model checking plots.
 
 }}
 \examples{
-x = 1:30
-y = rnorm(30)
-lm.fit = lm(y~x)
-# Plot resids vs fitted only
-modelcheck(lm.fit, 1)
+data(peru.df)
+lmFit = lm(BP ~ weight, data = peru.df)
 
-# Plot resids vs fitted, and histogram and QQ plot
-modelcheck(lm.fit, 1:2)
+# Plot residuals versus fitted values only
+modelcheck(lmFit, 1)
 
-# Plot all
-modelcheck(lm.fit)
+# Plot residuals versus fitted values, histogram, and Q-Q plot
+modelcheck(lmFit, 1:2)
+
+# Plot all diagnostics
+modelcheck(lmFit)
 }

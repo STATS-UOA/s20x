@@ -1,26 +1,30 @@
 #' Two-way Analysis of Variance Summary
-#' 
+#'
 #' Displays summary information for a two-way anova analysis. The lm object
 #' must come from a numerical response variable and factors. The output depends
-#' on the value of page:
-#' 
-#' page = 'table' anova table page = 'means' cell means matrix, numeric summary
-#' page = 'effects' table of effects page = 'interaction' tables of contrasts
-#' page = 'nointeraction' tables of contrasts
-#' 
-#' 
-#' @param fit an lm object, i.e. the output from 'lm()'.
-#' @param page options for output: 'table', 'means', 'effects',
-#'     'interaction', 'nointeraction'
+#' on the value of \code{page}:
+#'
+#' \itemize{
+#' \item \code{page = "table"}: ANOVA table.
+#' \item \code{page = "means"}: cell means matrix and numeric summary.
+#' \item \code{page = "effects"}: table of effects.
+#' \item \code{page = "interaction"}: interaction contrast tables.
+#' \item \code{page = "nointeraction"}: main-effect contrast tables.
+#' }
+#'
+#' @param fit an lm object, i.e. the output from \code{lm()}.
+#' @param page options for output: \code{"table"}, \code{"means"},
+#'     \code{"effects"}, \code{"interaction"}, or
+#'     \code{"nointeraction"}.
 #' @param digit the number of decimal places in the display.
 #' @param conf.level confidence level of the intervals.
-#' @param print.out if TRUE, print out the output on the screen.
+#' @param print.out if \code{TRUE}, print the output on the screen.
 #' @param new if \code{TRUE} then this will run the new version of
 #'     \code{summary2way} which should be more robust than the old
-#'     version. It does not work in the same way however. In
+#'     version. However, it does not work in the same way. In
 #'     particular, when \code{page = 'means'} it does not return
-#'     summary statistics for each grouping of the data (pooled/by row
-#'     factor/by column factor/by interaction factor).  Instead it
+#'     summary statistics for each grouping of the data (pooled, by row
+#'     factor, by column factor, and by interaction factor). Instead, it
 #'     simply returns the means for each grouping.
 #' @param all Only applicable to \code{page = "interaction"}. If
 #'     \code{TRUE}, pairwise comparisons for all combinations of
@@ -29,12 +33,14 @@
 #'     factors.
 #' @param FUN optional function to be applied to estimates and confidence intervals.
 #'     Typically for backtransformation operations.
-#' @param \dots other arguments like inttype, pooled etc.
-#' @return A list with the following components: \item{Df}{degrees of
+#' @param \dots other arguments such as \code{inttype} and \code{pooled}.
+#' @return `summary2way()` prints the requested teaching summary page and
+#'     invisibly returns the current summary components. The returned list has
+#'     the following components: \item{Df}{degrees of
 #'     freedom for regression, residual and total.} \item{Sum of
 #'     Sq}{sum squares for regression, residual and total.} \item{Mean
 #'     Sq}{mean squares for regression and residual.} \item{F
-#'     value}{F-statistic value.} \item{Pr(F)}{The P-value assoicated
+#'     value}{F-statistic value.} \item{Pr(F)}{The P-value associated
 #'     with each F-test.} \item{Grand Mean}{The overall mean of the
 #'     response variable.} \item{Row Effects}{The main effects for the
 #'     first (row) factor.} \item{Col Effects}{The main effects for
@@ -51,119 +57,119 @@
 #'     \code{\link{TukeyHSD}}
 #' @keywords models
 #' @examples
-#' 
-#' ##Arousal data:
+#'
+#' ## Arousal data:
 #' data(arousal.df)
 #' arousal.fit = lm(arousal ~ gender * picture, data = arousal.df)
 #' summary2way(arousal.fit)
 #' 
 #' ## Butterfat data:
 #' data("butterfat.df")
-#' fit <- lm(log(Butterfat)~Breed+Age, data=butterfat.df)
-#' summary2way(fit, page="nointeraction", FUN = exp)
+#' fit = lm(log(Butterfat) ~ Breed + Age, data = butterfat.df)
+#' summary2way(fit, page = "nointeraction", FUN = exp)
 #'
 #' @export summary2way
 summary2way = function(fit, page = c("table", "means", "effects", "interaction", "nointeraction"), 
                        digit = 5, conf.level = 0.95, print.out = TRUE, 
-                       new = TRUE, all = FALSE, FUN = "identity",  ...) {
-  backtransform = if(is.character(FUN) && FUN == "identity") {
+                       new = TRUE, all = FALSE, FUN = "identity", ...) {
+  backtransform = if (is.character(FUN) && FUN == "identity") {
     FALSE
   } else {
     TRUE
   }
   page = match.arg(page)
-  FUN <- match.fun(FUN)
+  FUN = match.fun(FUN)
   
   if (!inherits(fit, "lm")) {
     stop("Input is not an \"lm\" object")
   }
   
-  if(new){
+  if (new) {
     
     ## We need some tests of whether this is a two-way model and whether interaction is present
     
-    fit.aov = aov(fit)
+    fitAov = aov(fit)
     
-    responseIndex = attr(fit.aov$terms, "response")
-    numFactors = sum(attr(fit.aov$terms, "dataClasses")[-responseIndex] == "factor")
+    responseIndex = attr(fitAov$terms, "response")
+    numFactors = sum(attr(fitAov$terms, "dataClasses")[-responseIndex] == "factor")
     
-    if(numFactors != 2){
+    if (numFactors != 2) {
       stop("This is not a two-way ANOVA model")
     }
     
     ## test for interaction
-    inter = if(any(attr(fit.aov$terms, "order") == 2)){
+    inter = if (any(attr(fitAov$terms, "order") == 2)) {
       TRUE
-    }else{
+    } else {
       FALSE
     }
     
-    results.identity = list(table = anova(fit.aov),
-                            means = model.tables(fit.aov, "means"),
-                            effects = model.tables(fit.aov, "effects"),
-                            comparisons = TukeyHSD(fit.aov, conf.level = conf.level))
+    resultsIdentity = list(table = anova(fitAov),
+                            means = model.tables(fitAov, "means"),
+                            effects = model.tables(fitAov, "effects"),
+                            comparisons = TukeyHSD(fitAov, conf.level = conf.level))
     
     ## setup the ANOVA table so that it mimics the output from summary2way
     ## It isn't worth replicating the precision (digits) behaviour
     ## because this be done other ways
-    attr(results.identity$table, "heading") = "ANOVA Table:"
-    names(results.identity$table) = c("Df", "Sum Squares", "Mean Square", "F-statistic", "p-value")
+    attr(resultsIdentity$table, "heading") = "ANOVA Table:"
+    names(resultsIdentity$table) = c("Df", "Sum Squares", "Mean Square", "F-statistic", "p-value")
 
     ## If FUN = identity, these will come out the same...
-    results = results.identity
+    results = resultsIdentity
     if (backtransform) {
-      results$means$tables = lapply(results.identity$means$tables, FUN)
-      results$effects$tables = lapply(results.identity$effects$tables, FUN)
-      results$comparisons = lapply(results.identity$comparisons,
+      results$means$tables = lapply(resultsIdentity$means$tables, FUN)
+      results$effects$tables = lapply(resultsIdentity$effects$tables, FUN)
+      results$comparisons = lapply(resultsIdentity$comparisons,
                                    function(x) {
-                                     cbind(FUN(x[,-4, drop=FALSE]), x[,4, drop=FALSE])
+                                     cbind(FUN(x[, -4, drop = FALSE]), x[, 4, drop = FALSE])
                                    })
     }
     
     
-    if(page == "table"){
+    if (page == "table") {
       print(results$table) ## note this doesn't print the totals - do we care?
-    }else if(page == "means"){
+    } else if (page == "means"){
       cat("Table of means:\n")
       print(results$means$tables)
-    }else if(page == "effects"){
+    } else if (page == "effects"){
       cat("Table of effects:\n")
       print(results$effects$tables)
-    }else if(page == "nointeraction"){
+    } else if (page == "nointeraction"){
       factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
-      out <- lapply(results$comparisons[factorLabels],
-                    function(x) cbind(FUN(x[,1:3,drop=FALSE]),x[,4,drop=FALSE]))
+      out = lapply(results$comparisons[factorLabels],
+                    function(x) cbind(FUN(x[, 1:3, drop = FALSE]), x[, 4, drop = FALSE]))
       mostattributes(out) = attributes(results$comparisons)
       names(out) = factorLabels
       print(out)
-    }else{# page == "interaction")
+    } else {# page == "interaction")
       if (!inter) {
         stop("No interaction term in model")
       }
       interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
       out = results$comparisons[interactionLabel]
-      if (all){
+      if (all) {
           mostattributes(out) = attributes(results$comparisons)
           names(out) = interactionLabel
           print(out)
       } else {
-          out <- out[[1]]
+          out = out[[1]]
           ## Extracting levels from each group being compared.
-          group.names = matrix(c(strsplit(rownames(out), "-", fixed = TRUE),
+          groupNames = matrix(c(strsplit(rownames(out), "-", fixed = TRUE),
                                  recursive = TRUE), ncol = 2, byrow = TRUE)
           ## Getting level of first variable in the first group.
-          group1.var1 <- sapply(strsplit(group.names[, 1], ":"), function(x) x[1])
+          group1Var1 = sapply(strsplit(groupNames[, 1], ":"), function(x) x[1])
           ## Getting level of first variable in the second group.
-          group2.var1 <- sapply(strsplit(group.names[, 2], ":"), function(x) x[1])
+          group2Var1 = sapply(strsplit(groupNames[, 2], ":"), function(x) x[1])
           ## Getting level of second variable in the first group.
-          group1.var2 <- sapply(strsplit(group.names[, 1], ":"), function(x) x[2])
+          group1Var2 = sapply(strsplit(groupNames[, 1], ":"), function(x) x[2])
           ## Getting level of second variable in the second group.
-          group2.var2 <- sapply(strsplit(group.names[, 2], ":"), function(x) x[2])
+          group2Var2 = sapply(strsplit(groupNames[, 2], ":"), function(x) x[2])
           ## Matrix of 'within' comparisons.
-          out.within = out[group1.var1 == group2.var1, ]
+          outWithin = out[group1Var1 == group2Var1, ]
           ## Matrix of 'between' comparisons.
-          out.between = out[group1.var2 == group2.var2, ]
-          out <- list(out.within, out.between)
+          outBetween = out[group1Var2 == group2Var2, ]
+          out = list(outWithin, outBetween)
           mostattributes(out) = attributes(results$comparisons)
           factor1 = strsplit(interactionLabel, ":")[1]
           names(out) = c(paste("Comparisons within", factor1),
@@ -180,15 +186,15 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
                    `Grand Mean` = results$means$tables[[1]], 
                    `Row Effects` = results$effects$tables[[1]], 
                    `Col Effects` = results$effects$tables[[2]], 
-                   `Interaction Effects` = if(inter){
+                   `Interaction Effects` = if (inter){
                      results$effects$tables[[3]]
-                   }else{
+                   } else {
                      NULL
                    },
                    results = results,
-                   results.identity = results.identity))
+                   results.identity = resultsIdentity))
     
-  }else{
+  } else {
     alist = anova(fit)
     
     if (nrow(alist) < 3 | nrow(alist) > 4) {
@@ -224,9 +230,9 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     y = fit$model[, 1]
     f1 = factor(fit$model[, 2])
     f2 = factor(fit$model[, 3])
-    f1f2 = as.factor(crossFactors(f1, f2))
-    nlevf1 = length(unique(f1))
-    nlevf2 = length(unique(f2))
+    f1F2 = as.factor(crossFactors(f1, f2))
+    nlevF1 = length(unique(f1))
+    nlevF2 = length(unique(f2))
     
     if (inter) {
       m = 3
@@ -234,17 +240,17 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       m = 2
     }
     
-    a.df = c(alist$Df, sum(alist$Df))
-    a.ss = round(c(alist$"Sum Sq", sum(alist$"Sum Sq")), digit)
-    a.ms = round(alist$"Mean Sq", digit)
+    aDf = c(alist$Df, sum(alist$Df))
+    aSs = round(c(alist$"Sum Sq", sum(alist$"Sum Sq")), digit)
+    aMs = round(alist$"Mean Sq", digit)
     fvalue = round(alist$"F value"[1:m], digit)
     pvalue = round(alist$"Pr(>F)"[1:m], digit)
-    a.table = cbind(a.df, a.ss, c(paste(a.ms), ""), c(paste(fvalue), "", ""), c(paste(pvalue), "", ""))
+    aTable = cbind(aDf, aSs, c(paste(aMs), ""), c(paste(fvalue), "", ""), c(paste(pvalue), "", ""))
     
     if (inter) {
-      dimnames(a.table) = list(c(row.names(alist), "Total        "), c("Df ", "Sum Squares ", "Mean Square ", "F-statistic ", "p-value   "))
+      dimnames(aTable) = list(c(row.names(alist), "Total        "), c("Df ", "Sum Squares ", "Mean Square ", "F-statistic ", "p-value   "))
     } else {
-      dimnames(a.table) = list(c(row.names(alist), "Total    "), c("Df ", "Sum Squares ", "Mean Square ", "F-statistic ", "p-value   "))
+      dimnames(aTable) = list(c(row.names(alist), "Total    "), c("Df ", "Sum Squares ", "Mean Square ", "F-statistic ", "p-value   "))
     }
     
     group1 = split(y, f1)
@@ -284,17 +290,17 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     mid = round(mid, digit)
     
     if (inter) {
-      numeric.summary = cbind(c(size[1], "", size[2:(n1 + 1)], "", size[(2 + n1):(n1 + n2 + 1)], "", size[(2 + n1 + n2):(n + 1)]), c(mea[1], "", mea[2:(n1 + 1)], "", mea[(2 + n1):(n1 + n2 + 1)], "", mea[(2 + 
+      numericSummary = cbind(c(size[1], "", size[2:(n1 + 1)], "", size[(2 + n1):(n1 + n2 + 1)], "", size[(2 + n1 + n2):(n + 1)]), c(mea[1], "", mea[2:(n1 + 1)], "", mea[(2 + n1):(n1 + n2 + 1)], "", mea[(2 + 
                                                                                                                                                                                                               n1 + n2):(n + 1)]), c(med[1], "", med[2:(n1 + 1)], "", med[(2 + n1):(n1 + n2 + 1)], "", med[(2 + n1 + n2):(n + 1)]), c(std[1], "", std[2:(n1 + 1)], "", std[(2 + n1):(n1 + n2 + 1)], "", std[(2 + n1 + 
                                                                                                                                                                                                                                                                                                                                                                                                               n2):(n + 1)]), c(mid[1], "", mid[2:(n1 + 1)], "", mid[(2 + n1):(n1 + n2 + 1)], "", mid[(2 + n1 + n2):(n + 1)]))
       
-      dimnames(numeric.summary) = list(c("All Data  ", paste("By ", attributes(fit$terms)$variables[[3]], ":  "), paste(names(group1), "  "), paste("By ", attributes(fit$terms)$variables[[4]], ":  "), paste(names(group2), 
+      dimnames(numericSummary) = list(c("All Data  ", paste("By ", attributes(fit$terms)$variables[[3]], ":  "), paste(names(group1), "  "), paste("By ", attributes(fit$terms)$variables[[4]], ":  "), paste(names(group2), 
                                                                                                                                                                                                                "  "), "Combinations:  ", paste(names(group3), "  ")), c("Size  ", "Mean  ", "Median  ", "Std Dev  ", "Midspread  "))
     } else {
-      numeric.summary = cbind(c(size[1], "", size[2:(n1 + 1)], "", size[(2 + n1):(n1 + n2 + 1)]), c(mea[1], "", mea[2:(n1 + 1)], "", mea[(2 + n1):(n1 + n2 + 1)]), c(med[1], "", med[2:(n1 + 1)], "", med[(2 + 
+      numericSummary = cbind(c(size[1], "", size[2:(n1 + 1)], "", size[(2 + n1):(n1 + n2 + 1)]), c(mea[1], "", mea[2:(n1 + 1)], "", mea[(2 + n1):(n1 + n2 + 1)]), c(med[1], "", med[2:(n1 + 1)], "", med[(2 + 
                                                                                                                                                                                                              n1):(n1 + n2 + 1)]), c(std[1], "", std[2:(n1 + 1)], "", std[(2 + n1):(n1 + n2 + 1)]), c(mid[1], "", mid[2:(n1 + 1)], "", mid[(2 + n1):(n1 + n2 + 1)]))
       
-      dimnames(numeric.summary) = list(c("All Data  ", paste("By ", attributes(fit$terms)$variables[[3]], ":  "), paste(names(group1), "  "), paste("By ", attributes(fit$terms)$variables[[4]], ":  "), paste(names(group2), 
+      dimnames(numericSummary) = list(c("All Data  ", paste("By ", attributes(fit$terms)$variables[[3]], ":  "), paste(names(group1), "  "), paste("By ", attributes(fit$terms)$variables[[4]], ":  "), paste(names(group2), 
                                                                                                                                                                                                                "  ")), c("Size  ", "Mean  ", "Median  ", "Std Dev  ", "Midspread  "))
     }
     
@@ -305,18 +311,18 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     }
     
     effmat = (matrix(dc[[4]], n1, n2) + outer(dc[[2]], rep(1, n2)) + outer(rep(1, n1), dc[[3]])) + dc[[1]]
-    mmean = mean(effmat)
-    cellmns = matrix(NA, length(levels(f1)), length(levels(f2)))
+    modelMean = mean(effmat)
+    cellMeans = matrix(NA, length(levels(f1)), length(levels(f2)))
     levf1 = levels(f1)
     levf2 = levels(f2)
     for (i in 1:length(levf1)) {
       for (j in 1:length(levf2)) {
-        cellmns[i, j] = mean(y[f1 == levf1[i] & f2 == levf2[j]])
+        cellMeans[i, j] = mean(y[f1 == levf1[i] & f2 == levf2[j]])
       }
     }
-    cellmns = cbind(cellmns, apply(effmat, 1, mean))
-    cellmns = rbind(cellmns, c(apply(effmat, 2, mean), mmean))
-    dimnames(cellmns) = list(c(rep(" ", length(levels(f1)) + 1)), c(rep(" ", length(levels(f2)) + 1)))
+    cellMeans = cbind(cellMeans, apply(effmat, 1, mean))
+    cellMeans = rbind(cellMeans, c(apply(effmat, 2, mean), modelMean))
+    dimnames(cellMeans) = list(c(rep(" ", length(levels(f1)) + 1)), c(rep(" ", length(levels(f2)) + 1)))
     matr = rbind(rep("", ncol(effmat)))
     matr[1, as.integer((length(levels(f2)) + 1)/2)] = as.character(attributes(fit$terms)$variables[[4]])
     matr = c("", "", matr, "")
@@ -325,13 +331,13 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     matc = c(matc, "")
     C = c(levels(f1), as.character(attributes(fit$terms)$variables[[4]]))
     R = c("", "", levels(f2), as.character(attributes(fit$terms)$variables[[3]]))
-    M1 = cbind(matc, C, format(round(cellmns, digit), digit = 5))
+    M1 = cbind(matc, C, format(round(cellMeans, digit), digit = 5))
     M2 = rbind(matr, R, M1)
-    roweff = apply(effmat, 1, mean) - mean(apply(effmat, 1, mean))
-    coleff = apply(effmat, 2, mean) - mean(apply(effmat, 2, mean))
+    rowEffect = apply(effmat, 1, mean) - mean(apply(effmat, 1, mean))
+    colEffect = apply(effmat, 2, mean) - mean(apply(effmat, 2, mean))
     interact = (effmat - outer(apply(effmat, 1, mean), rep(1, n2)) - outer(rep(1, n1), apply(effmat, 2, mean))) + mean(effmat)
-    effmat1 = cbind(interact, roweff)
-    effmat2 = rbind(effmat1, c(coleff, mmean))
+    effmat1 = cbind(interact, rowEffect)
+    effmat2 = rbind(effmat1, c(colEffect, modelMean))
     dimnames(effmat2) = list(c(rep(" ", length(levels(f1)) + 1)), c(rep(" ", length(levels(f2)) + 1)))
     matr = rbind(rep("", ncol(effmat)))
     matr[1, as.integer((length(levels(f2)) + 1)/2)] = as.character(attributes(fit$terms)$variables[[4]])
@@ -343,114 +349,114 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     R = c("", "", levels(f2), paste(as.character(attributes(fit$terms)$variables[[3]]), "effect"))
     M3 = cbind(matc, C, format(round(effmat2, digit), digit = 5))
     M4 = rbind(matr, R, M3)
-    f1.name = row.names(alist)[1]
-    f2.name = row.names(alist)[2]
+    f1Name = row.names(alist)[1]
+    f2Name = row.names(alist)[2]
     
     comparisons = NULL
     
     if (page == "table") {
       cat("ANOVA Table:\n")
-      print(a.table, quote = FALSE)
+      print(aTable, quote = FALSE)
     } else if (page == "means") {
       cat("\n\nCell-means Matrix:\n")
       print(M2, quote = FALSE)
       cat("\nNumeric Summary:\n")
-      print(numeric.summary, quote = FALSE)
+      print(numericSummary, quote = FALSE)
     } else if (page == "effects") {
       cat("\n\nTable of Effects:\n")
       print(M4, quote = FALSE)
     } else if (page == "interaction") {
-      cat(paste("\n\nComparisons within ", f1.name, ":\n\n", sep = ""))
-      contrast.matrix1 = names = NULL
+      cat(paste("\n\nComparisons within ", f1Name, ":\n\n", sep = ""))
+      contrastMatrix1 = names = NULL
       offset = 1
-      for (levs in 1:nlevf1) {
-        temp = matrix(0, nrow = (nlevf2 * (nlevf2 - 1)/2), ncol = nlevf1 * nlevf2)
+      for (levs in 1:nlevF1) {
+        temp = matrix(0, nrow = (nlevF2 * (nlevF2 - 1)/2), ncol = nlevF1 * nlevF2)
         row = 1
-        for (i in offset:(levs * nlevf2 - 1)) {
-          for (j in (i + 1):(levs * nlevf2)) {
+        for (i in offset:(levs * nlevF2 - 1)) {
+          for (j in (i + 1):(levs * nlevF2)) {
             temp[row, i] = 1
             temp[row, j] = -1
-            names = c(names, paste(levels(f1f2)[i], " - ", levels(f1f2)[j]))
+            names = c(names, paste(levels(f1F2)[i], " - ", levels(f1F2)[j]))
             row = row + 1
           }
         }
-        contrast.matrix1 = as.matrix(rbind(contrast.matrix1, temp))
-        offset = offset + nlevf2
+        contrastMatrix1 = as.matrix(rbind(contrastMatrix1, temp))
+        offset = offset + nlevF2
       }
-      row.names(contrast.matrix1) = names
-      fit.1way = lm(y ~ f1f2)
-      L = (nlevf1 * nlevf2/2) * (1 + nlevf1)
-      contrasts1 = estimateContrasts(as.matrix(contrast.matrix1), fit.1way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
+      row.names(contrastMatrix1) = names
+      fit1Way = lm(y ~ f1F2)
+      L = (nlevF1 * nlevF2/2) * (1 + nlevF1)
+      contrasts1 = estimateContrasts(as.matrix(contrastMatrix1), fit1Way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
       print(contrasts1, quote = FALSE)
       comparisons$within = contrasts1
       
-      cat(paste("\n\nComparisons between ", f1.name, ":\n\n", sep = ""))
-      contrast.matrix2 = names = NULL
-      temp = matrix(0, nrow = nlevf2, ncol = nlevf1 * nlevf2)
-      nrows = nlevf1 * (nlevf1 - 1)/2
-      for (i in seq(1, nlevf1 * nlevf2 - nlevf2, nlevf2)) {
-        for (j in seq(i + nlevf2, nlevf1 * nlevf2, nlevf2)) {
-          for (row in 1:nlevf2) {
+      cat(paste("\n\nComparisons between ", f1Name, ":\n\n", sep = ""))
+      contrastMatrix2 = names = NULL
+      temp = matrix(0, nrow = nlevF2, ncol = nlevF1 * nlevF2)
+      nrows = nlevF1 * (nlevF1 - 1)/2
+      for (i in seq(1, nlevF1 * nlevF2 - nlevF2, nlevF2)) {
+        for (j in seq(i + nlevF2, nlevF1 * nlevF2, nlevF2)) {
+          for (row in 1:nlevF2) {
             temp[row, i + row - 1] = 1
             temp[row, j + row - 1] = -1
-            names = c(names, paste(levels(f1f2)[i + row - 1], " - ", levels(f1f2)[j + row - 1]))
+            names = c(names, paste(levels(f1F2)[i + row - 1], " - ", levels(f1F2)[j + row - 1]))
           }
-          contrast.matrix2 = as.matrix(rbind(contrast.matrix2, temp))
-          temp = matrix(0, nrow = nlevf2, ncol = nlevf1 * nlevf2)
+          contrastMatrix2 = as.matrix(rbind(contrastMatrix2, temp))
+          temp = matrix(0, nrow = nlevF2, ncol = nlevF1 * nlevF2)
         }
       }
-      row.names(contrast.matrix2) = names
-      contrasts2 = estimateContrasts(as.matrix(contrast.matrix2), fit.1way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
+      row.names(contrastMatrix2) = names
+      contrasts2 = estimateContrasts(as.matrix(contrastMatrix2), fit1Way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
       print(contrasts2, quote = FALSE)
       comparisons$between = contrasts2
       
     } else if (page == "nointeraction") {
-      cat(paste("\n\n", f1.name, " comparisons:\n\n", sep = ""))
-      contrast.matrix1 = matrix(0, nrow = nlevf1 * (nlevf1 - 1)/2, ncol = nlevf1)
+      cat(paste("\n\n", f1Name, " comparisons:\n\n", sep = ""))
+      contrastMatrix1 = matrix(0, nrow = nlevF1 * (nlevF1 - 1)/2, ncol = nlevF1)
       row = 1
       names = NULL
-      for (i in 1:(nlevf1 - 1)) {
-        for (j in (i + 1):nlevf1) {
-          contrast.matrix1[row, i] = 1
-          contrast.matrix1[row, j] = -1
+      for (i in 1:(nlevF1 - 1)) {
+        for (j in (i + 1):nlevF1) {
+          contrastMatrix1[row, i] = 1
+          contrastMatrix1[row, j] = -1
           names = c(names, paste(levels(f1)[i], " - ", levels(f1)[j]))
           row = row + 1
         }
       }
       
-      row.names(contrast.matrix1) = names
-      contrast.matrix1 = as.matrix(contrast.matrix1)
-      contrasts1 = estimateContrasts(contrast.matrix1, fit, alpha = 1 - conf.level, row = TRUE, FUN = FUN)
+      row.names(contrastMatrix1) = names
+      contrastMatrix1 = as.matrix(contrastMatrix1)
+      contrasts1 = estimateContrasts(contrastMatrix1, fit, alpha = 1 - conf.level, row = TRUE, FUN = FUN)
       print(contrasts1, quote = FALSE)
-      eval(parse(text = paste0("comparisons$", f1.name, "= contrasts1")))
+      eval(parse(text = paste0("comparisons$", f1Name, "= contrasts1")))
       
-      cat(paste("\n\n", f2.name, " comparisons:\n\n", sep = ""))
-      contrast.matrix2 = matrix(0, nrow = nlevf2 * (nlevf2 - 1)/2, ncol = nlevf2)
+      cat(paste("\n\n", f2Name, " comparisons:\n\n", sep = ""))
+      contrastMatrix2 = matrix(0, nrow = nlevF2 * (nlevF2 - 1)/2, ncol = nlevF2)
       row = 1
       names = NULL
-      for (i in 1:(nlevf2 - 1)) {
-        for (j in (i + 1):nlevf2) {
-          contrast.matrix2[row, i] = 1
-          contrast.matrix2[row, j] = -1
+      for (i in 1:(nlevF2 - 1)) {
+        for (j in (i + 1):nlevF2) {
+          contrastMatrix2[row, i] = 1
+          contrastMatrix2[row, j] = -1
           names = c(names, paste(levels(f2)[i], " - ", levels(f2)[j]))
           row = row + 1
         }
       }
       
-      row.names(contrast.matrix2) = names
-      contrast.matrix2 = as.matrix(contrast.matrix2)
-      contrasts2 = estimateContrasts(contrast.matrix2, fit, alpha = 1 - conf.level, row = FALSE, FUN = FUN)
+      row.names(contrastMatrix2) = names
+      contrastMatrix2 = as.matrix(contrastMatrix2)
+      contrasts2 = estimateContrasts(contrastMatrix2, fit, alpha = 1 - conf.level, row = FALSE, FUN = FUN)
       
       
       print(contrasts2, quote = FALSE)
-      eval(parse(text = paste0("comparisons$", f2.name, "= contrasts2")))
+      eval(parse(text = paste0("comparisons$", f2Name, "= contrasts2")))
     }
     
     if (!inter) {
       interact = NULL
     }
     
-    invisible(list(Df = a.df, `Sum of Sq` = a.ss, `Mean Sq` = a.ms, `F value` = alist$"F value"[1:m], `Pr(F)` = alist$"Pr(>F)"[1:m], `Grand Mean` = mmean, `Row Effects` = roweff, `Col Effects` = coleff, `Interaction Effects` = interact, 
+    invisible(list(Df = aDf, `Sum of Sq` = aSs, `Mean Sq` = aMs, `F value` = alist$"F value"[1:m], `Pr(F)` = alist$"Pr(>F)"[1:m], `Grand Mean` = modelMean, `Row Effects` = rowEffect, `Col Effects` = colEffect, `Interaction Effects` = interact, 
                    Comparisons = comparisons))
   }
 }

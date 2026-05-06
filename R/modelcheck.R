@@ -2,24 +2,26 @@
 #' Compact layout for model checking plots.
 #'
 #' @param x The fitted model.
-#' @param which The plot(s) to be drawn. Residuals vs fitted values (
-#' \code{which = v1}), 
-#' histogram and QQ plot of residuals (\code{which = 2}), Cook's distance plot 
-#' (\code{which = 2}).
+#' @param which The plot(s) to be drawn. Residuals versus fitted values
+#' (\code{which = 1}), histogram and Q-Q plot of residuals
+#' (\code{which = 2}), and Cook's distance plot (\code{which = 3}).
 #' @param mar Margins applied to each selected plot.
 #' @param \ldots any other arguments to pass to \code{\link{plot}}
+#' @return Draws diagnostic plots for teaching model checking. The function is
+#' called for its plotting side effects and does not provide a stable data return
+#' object.
 #' @examples
-#' x = 1:30
-#' y = rnorm(30)
-#' lm.fit = lm(y~x)
-#' # Plot resids vs fitted only
-#' modelcheck(lm.fit, 1)
-#' 
-#' # Plot resids vs fitted, and histogram and QQ plot
-#' modelcheck(lm.fit, 1:2)
-#' 
-#' # Plot all
-#' modelcheck(lm.fit)
+#' data(peru.df)
+#' lmFit = lm(BP ~ weight, data = peru.df)
+#'
+#' # Plot residuals versus fitted values only
+#' modelcheck(lmFit, 1)
+#'
+#' # Plot residuals versus fitted values, histogram, and Q-Q plot
+#' modelcheck(lmFit, 1:2)
+#'
+#' # Plot all diagnostics
+#' modelcheck(lmFit)
 #' @export
 modelcheck = function(x, ...) {
   UseMethod("modelcheck")

@@ -6,7 +6,9 @@
 #'
 #' When no `ar(p)` term is present, `tslm()` fits an ordinary [stats::lm()]
 #' model. When an `ar(p)` term is present, `tslm()` fits a [nlme::gls()] model
-#' with an AR(p) correlation structure using [nlme::corARMA()].
+#' with an AR(p) correlation structure using [nlme::corARMA()]. The `ar(p)`
+#' term changes the error model, not the mean-model terms printed in the
+#' formula.
 #'
 #' @details
 #' The formula describes the mean model, just as it does for [stats::lm()]. The
@@ -15,13 +17,15 @@
 #' `log(passengers) ~ t + month + ar(1)` fits a trend and seasonal mean model
 #' with AR(1) errors.
 #'
-#' For AR models, `time` should usually name the variable giving the time order
-#' of the observations. If `time` is omitted, `tslm()` fits the model using the
-#' row order of `data` and gives a warning so that this assumption is visible.
+#' For AR-error models, `time` should usually name the variable giving the time
+#' order of the observations. If `time` is omitted, `tslm()` fits the model using
+#' the row order of `data` and gives a warning so that this assumption is
+#' visible.
 #'
-#' Diagnostic methods for AR-error models use normalized residuals by default,
+#' Diagnostic methods for AR-error models use normalised residuals by default,
 #' because these residuals account for the fitted correlation structure. Use
 #' `residualType = "response"` when the raw response residuals are required.
+#' `"normalised"` and `"normalized"` are both accepted for compatibility.
 #'
 #' @param formula a model formula. Use `ar(p)` in the right hand side to specify
 #'   AR(p) errors, for example `y ~ x + ar(1)`.
@@ -241,7 +245,7 @@ print.summary.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...
 
 #' @export
 plot.tslm = function(x, which = c("all", "residuals", "time", "acf", "qq"),
-                      residualType = "normalized", ...) {
+                      residualType = "normalised", ...) {
   which = match.arg(which)
   residualType = matchTslmResidualType(residualType)
   diagnosticData = getTslmDiagnosticData(x, residualType = residualType)
@@ -275,7 +279,7 @@ coef.tslm = function(object, ...) {
 }
 
 #' @export
-residuals.tslm = function(object, type = c("response", "pearson", "normalized"), ...) {
+residuals.tslm = function(object, type = c("response", "pearson", "normalised", "normalized"), ...) {
   type = matchTslmResidualType(type)
 
   if (identical(type, "normalized") && is.null(object$errorSpec)) {
@@ -308,7 +312,9 @@ residuals.tslm = function(object, type = c("response", "pearson", "normalized"),
 #' the fitted mean model after allowing for the estimated autocorrelation
 #' structure. Because these models do not use the ordinary independent-error
 #' sum-of-squares decomposition, the compact table reports `Df`, `F value`, and
-#' `Pr(>F)`, but does not report `Sum Sq` or `Mean Sq`.
+#' `Pr(>F)`, but does not report `Sum Sq` or `Mean Sq`. Compare nested AR-error
+#' models with care: `verbose = TRUE` exposes the underlying `nlme` comparison
+#' output rather than recreating an ordinary `lm` ANOVA table.
 #'
 #' Use `verbose = TRUE` to see the underlying [nlme::anova.gls()] output.
 #'
@@ -620,7 +626,7 @@ formatTslmAnovaTable = function(rawTable) {
   out
 }
 
-getTslmDiagnosticData = function(object, residualType = "normalized") {
+getTslmDiagnosticData = function(object, residualType = "normalised") {
   residualType = matchTslmResidualType(residualType)
   residualValues = stats::residuals(object, type = residualType)
   fittedValues = stats::fitted(object)
@@ -674,26 +680,26 @@ getTslmTimeValues = function(object, nResiduals) {
   )
 }
 
-plotTslmResiduals = function(diagnosticData, residualType = "normalized", ...) {
+plotTslmResiduals = function(diagnosticData, residualType = "normalised", ...) {
   graphics::plot(
     diagnosticData$fitted,
     diagnosticData$residuals,
     xlab = "Fitted values",
-    ylab = paste0(sentenceCase(residualType), " residuals"),
-    main = paste0(sentenceCase(residualType), " residuals versus fitted values"),
+    ylab = paste0(formatTslmResidualTypeLabel(residualType), " residuals"),
+    main = paste0(formatTslmResidualTypeLabel(residualType), " residuals versus fitted values"),
     ...
   )
   graphics::abline(h = 0, lty = 2)
 }
 
-plotTslmTimeResiduals = function(diagnosticData, object, residualType = "normalized", ...) {
+plotTslmTimeResiduals = function(diagnosticData, object, residualType = "normalised", ...) {
   graphics::plot(
     diagnosticData$time,
     diagnosticData$residuals,
     type = "b",
     xlab = if (is.null(object$time)) "Observation order" else object$time,
-    ylab = paste0(sentenceCase(residualType), " residuals"),
-    main = paste0(sentenceCase(residualType), " residuals over time"),
+    ylab = paste0(formatTslmResidualTypeLabel(residualType), " residuals"),
+    main = paste0(formatTslmResidualTypeLabel(residualType), " residuals over time"),
     ...
   )
   graphics::abline(h = 0, lty = 2)
@@ -701,7 +707,21 @@ plotTslmTimeResiduals = function(diagnosticData, object, residualType = "normali
 
 
 matchTslmResidualType = function(type) {
-  match.arg(type, c("response", "pearson", "normalized"))
+  type = match.arg(type, c("response", "pearson", "normalised", "normalized"))
+
+  if (identical(type, "normalised")) {
+    return("normalized")
+  }
+
+  type
+}
+
+formatTslmResidualTypeLabel = function(type) {
+  if (identical(type, "normalized")) {
+    type = "normalised"
+  }
+
+  sentenceCase(type)
 }
 
 sentenceCase = function(x) {

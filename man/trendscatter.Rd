@@ -57,13 +57,14 @@ about this trend are also plotted.
 }}
 \examples{
 
-# A simple polynomial
+# Synthetic teaching example: a simple polynomial
+set.seed(123)
 x = rnorm(100)
 e = rnorm(100)
 y = 2 + 3 * x - 2 * x^2 + 4 * x^3 + e
 trendscatter(y ~ x)
 
-# An exponential growth curve
+# Synthetic teaching example: an exponential growth curve
 e = rnorm(100, 0, 0.1)
 y = exp(5 + 3 * x + e)
 trendscatter(log(y) ~ x)
@@ -73,7 +74,7 @@ data(peru.df)
 trendscatter(BP ~ weight, data = peru.df)
 
 # Note: this usage is deprecated
-with(peru.df,trendscatter(weight,BP))
+with(peru.df, trendscatter(weight, BP))
 
 }
 \seealso{

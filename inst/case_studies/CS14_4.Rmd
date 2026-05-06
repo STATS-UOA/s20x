@@ -31,7 +31,7 @@ Here, we’ll be using a modified version of this model since there was as extre
 
 where $Count_i$ is the geoduck count at age i and $Storm_i$ is an indicator variable that takes the value 0 if age is less than 10, or 1 if age is at least 10.
 
-The data is stored is *Geoduck.csv* which contains the following variables:
+The data are stored in *Geoduck.csv*, which contains the following variables:
 
 Variable   | Description
 -----------|--------------------------------------------------------------------------

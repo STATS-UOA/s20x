@@ -179,23 +179,26 @@ test_that("normcheck works with tslm objects", {
   expect_silent(normcheck(fit))
 })
 
-test_that("tslm residuals support normalized residuals", {
+test_that("tslm residuals support normalised residuals", {
   fit = tslm(beer ~ t, data = beer.df)
 
   responseResiduals = residuals(fit, type = "response")
   normalizedResiduals = residuals(fit, type = "normalized")
+  normalisedResiduals = residuals(fit, type = "normalised")
 
-  expect_type(normalizedResiduals, "double")
-  expect_length(normalizedResiduals, length(responseResiduals))
-  expect_equal(normalizedResiduals, responseResiduals / stats::sigma(fit$fit))
+  expect_type(normalisedResiduals, "double")
+  expect_length(normalisedResiduals, length(responseResiduals))
+  expect_equal(normalisedResiduals, normalizedResiduals)
+  expect_equal(normalisedResiduals, responseResiduals / stats::sigma(fit$fit))
 })
 
-test_that("plot.tslm can use response and normalized residuals", {
+test_that("plot.tslm can use response and normalised residuals", {
   fit = tslm(beer ~ t, data = beer.df)
 
   pdf(NULL)
   on.exit(dev.off(), add = TRUE)
 
+  expect_silent(plot(fit, residualType = "normalised"))
   expect_silent(plot(fit, residualType = "normalized"))
   expect_silent(plot(fit, residualType = "response"))
   expect_error(plot(fit, residualType = "bad"), "should be one of")
@@ -216,12 +219,13 @@ test_that("anova compares compatible tslm models", {
   expect_true(is.data.frame(out) || is.matrix(out) || inherits(out, "anova"))
 })
 
-test_that("normcheck.tslm can use normalized residuals", {
+test_that("normcheck.tslm can use normalised residuals", {
   fit = tslm(beer ~ t, data = beer.df)
 
   pdf(NULL)
   on.exit(dev.off(), add = TRUE)
 
+  expect_silent(normcheck(fit, residualType = "normalised"))
   expect_silent(normcheck(fit, residualType = "normalized"))
   expect_silent(normcheck(fit, residualType = "response"))
 })
