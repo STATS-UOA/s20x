@@ -28,7 +28,7 @@ test_that("predictCount keeps its current response-scale count output", {
   expect_equal(result$Predicted, unname(expectedFit))
 })
 
-test_that("predictGLM keeps its current link and response scale behaviour", {
+test_that("predictGLM keeps its link and response scale behaviour with data-frame output", {
   data = data.frame(y = c(1, 2, 3, 4, 6), x = c(1, 2, 3, 4, 5))
   fit = glm(y ~ x, data = data, family = poisson(link = "log"))
   newdata = data.frame(x = 6)
@@ -37,10 +37,28 @@ test_that("predictGLM keeps its current link and response scale behaviour", {
   responseResult = suppressMessages(predictGLM(fit, newdata, type = "response"))
   baseLink = predict.glm(fit, newdata, se.fit = TRUE)
 
-  expect_true(is.matrix(linkResult))
-  expect_true(is.matrix(responseResult))
-  expect_named(as.data.frame(linkResult), c("fit", "lwr", "upr"))
-  expect_named(as.data.frame(responseResult), c("fit", "lwr", "upr"))
-  expect_equal(linkResult[, "fit"], unname(baseLink$fit))
-  expect_equal(responseResult[, "fit"], unname(fit$family$linkinv(baseLink$fit)))
+  expect_s3_class(linkResult, "data.frame")
+  expect_s3_class(responseResult, "data.frame")
+  expect_named(linkResult, c("fit", "lwr", "upr"))
+  expect_named(responseResult, c("fit", "lwr", "upr"))
+  expect_false(is.matrix(linkResult))
+  expect_false(is.matrix(responseResult))
+  expect_equal(linkResult$fit, unname(baseLink$fit))
+  expect_equal(responseResult$fit, unname(fit$family$linkinv(baseLink$fit)))
+})
+
+test_that("predictGLM keeps legacy fallback to link scale for unsupported type values", {
+  data = data.frame(y = c(1, 2, 3, 4, 6), x = c(1, 2, 3, 4, 5))
+  fit = glm(y ~ x, data = data, family = poisson(link = "log"))
+  newdata = data.frame(x = 6)
+
+  linkResult = suppressMessages(predictGLM(fit, newdata, type = "link"))
+  expect_message(
+    predictGLM(fit, newdata, type = "unsupported"),
+    "link scale",
+    fixed = TRUE
+  )
+  fallbackResult = suppressMessages(predictGLM(fit, newdata, type = "unsupported"))
+
+  expect_equal(fallbackResult, linkResult)
 })

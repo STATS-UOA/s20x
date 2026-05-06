@@ -22,7 +22,7 @@
 #' @param quasit if \code{TRUE}, use a t multiplier rather than a normal
 #'   multiplier for confidence intervals when \code{object} is a quasi model.
 #' @param \dots optional arguments that are passed to \code{\link{predict.glm}}.
-#' @return A matrix with columns \code{fit}, \code{lwr}, and \code{upr} containing
+#' @return A data frame with columns \code{fit}, \code{lwr}, and \code{upr} containing
 #'   fitted values and confidence limits on the requested scale.
 #' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.
 #' @keywords htest
@@ -55,6 +55,7 @@ predictGLM = function(object,
     stop("newdata must be provided for all first-order terms")
   }
 
+  type = normaliseGlmPredictionType(type)
   pred = predictGlmWithSe(object, newdata, ...)
 
   expected = pred$fit
@@ -74,20 +75,14 @@ predictGLM = function(object,
   } else {
     identity
   }
-  predictions = formatGlmPredictionMatrix(
+  predictions = formatGlmPredictionFrame(
     fit = expected,
     confLower = intervals$confLower,
     confUpper = intervals$confUpper,
     scaleFunction = scaleFunction
   )
 
-  rownames = seq_len(nrow(predictions))
-
-  type = if (type == "response") {
-    "response"
-  } else {
-    "link"
-  }
+  rownames(predictions) = seq_len(nrow(predictions))
 
   message("***Estimates and CIs are on the ", type, " scale***")
 

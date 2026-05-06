@@ -129,25 +129,32 @@ test_that("internal prediction output format helpers preserve legacy shape", {
   expect_equal(result, expected)
 })
 
-test_that("internal GLM output format helper preserves matrix scale handling", {
+test_that("internal GLM output format helper returns a stable data-frame shape", {
   fit = c(1, 2)
   confLower = c(0.8, 1.7)
   confUpper = c(1.2, 2.3)
 
-  linkResult = s20x:::formatGlmPredictionMatrix(
+  linkResult = s20x:::formatGlmPredictionFrame(
     fit = fit,
     confLower = confLower,
     confUpper = confUpper
   )
-  responseResult = s20x:::formatGlmPredictionMatrix(
+  responseResult = s20x:::formatGlmPredictionFrame(
     fit = fit,
     confLower = confLower,
     confUpper = confUpper,
     scaleFunction = exp
   )
 
-  expect_true(is.matrix(linkResult))
-  expect_named(as.data.frame(linkResult), c("fit", "lwr", "upr"))
-  expect_equal(linkResult[, "fit"], fit)
-  expect_equal(responseResult, exp(linkResult))
+  expect_s3_class(linkResult, "data.frame")
+  expect_named(linkResult, c("fit", "lwr", "upr"))
+  expect_equal(linkResult$fit, fit)
+  expect_equal(responseResult, as.data.frame(exp(as.matrix(linkResult))))
+})
+
+test_that("internal GLM type normalisation preserves legacy fallback", {
+  expect_equal(s20x:::normaliseGlmPredictionType("response"), "response")
+  expect_equal(s20x:::normaliseGlmPredictionType("link"), "link")
+  expect_equal(s20x:::normaliseGlmPredictionType("bad-type"), "link")
+  expect_equal(s20x:::normaliseGlmPredictionType(NULL), "link")
 })

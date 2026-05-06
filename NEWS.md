@@ -1,3 +1,8 @@
+# s20x 3.2.264
+
+## Modernisation
+- Standardised `predictGLM()` return shape to a data frame with stable `fit`, `lwr`, and `upr` columns, while preserving link/response scale calculations and legacy fallback to link-scale output for unsupported `type` values.
+
 # s20x 3.2.263
 
 ## Modernisation

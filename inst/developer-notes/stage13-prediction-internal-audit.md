@@ -32,7 +32,7 @@ These behaviours should remain stable unless a later sub-stage makes a small, de
 
 - `predict20x()` invisibly returns a list with `frame`, `fit`, `se.fit`, `residual.scale`, `df`, and `cilevel`.
 - `predictCount()` invisibly returns the rounded response-scale data frame.
-- `predictGLM()` returns a matrix with `fit`, `lwr`, and `upr` columns.
+- `predictGLM()` returned a matrix with `fit`, `lwr`, and `upr` columns before Stage 13.4; Stage 13.4 intentionally standardised this wrapper to return a data frame with the same columns.
 - Existing column names with leading spaces are compatibility-sensitive and should not be renamed casually.
 - Existing teaching-wrapper messages and printed output should not be changed incidentally.
 - `predict20x()` and `predictCount()` currently impose stricter `newdata` shape expectations than base prediction methods. This is documented as compatibility behaviour.
@@ -74,7 +74,7 @@ Potential tests for later sub-stages:
 The following are not suitable as incidental Stage 13 changes:
 
 - Replacing these teaching wrappers with ordinary `predict()` interfaces.
-- Changing return classes, visibility, column names, or rounding rules.
+- Changing return classes, visibility, column names, or rounding rules without an explicit stage decision and regression tests.
 - Removing support for legacy `newdata` order and naming assumptions.
 - Broadly changing `predictGLM()` link support.
 - Changing printed messages or teaching output without an explicit user-visible decision.
@@ -86,9 +86,10 @@ Completed implementation sub-stages:
 
 - Stage 13.2 consolidated shared `newdata` data-frame validation without changing wrapper output or error text.
 - Stage 13.3 consolidated internal prediction-output formatting for teaching prediction frames and GLM prediction matrices while preserving legacy column names, rounding, return classes, and scale handling.
+- Stage 13.4 standardised `predictGLM()` to return a data frame rather than a matrix, while preserving `fit`, `lwr`, and `upr` column names, link/response scale calculations, and legacy fallback of unsupported `type` values to the link scale.
 
 ## Recommended next sub-stage
 
-Stage 13.4 should choose another narrow prediction-wrapper maintenance target. A reasonable next step is consolidating the legacy prediction-row naming logic across `predict20x()` and `predictCount()`, with multi-row regression tests that preserve current row names and printed table structure.
+Stage 13.5 should choose another narrow prediction-wrapper maintenance target. A reasonable next step is consolidating the legacy prediction-row naming logic across `predict20x()` and `predictCount()`, with multi-row regression tests that preserve current row names and printed table structure.
 
 Further diagnostic-helper internals should remain deferred until the prediction-wrapper stream is stable.

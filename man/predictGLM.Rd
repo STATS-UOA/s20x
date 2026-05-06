@@ -22,7 +22,7 @@ multiplier for confidence intervals when \code{object} is a quasi model.}
 \item{\dots}{optional arguments that are passed to \code{\link{predict.glm}}.}
 }
 \value{
-A matrix with columns \code{fit}, \code{lwr}, and \code{upr} containing
+A data frame with columns \code{fit}, \code{lwr}, and \code{upr} containing
   fitted values and confidence limits on the requested scale.
 }
 \description{

@@ -57,14 +57,25 @@ formatTeachingPredictionFrame = function(values, rowNames, columnNames, digit) {
   predictionFrame
 }
 
-formatGlmPredictionMatrix = function(fit, confLower, confUpper, scaleFunction = identity) {
-  predictions = cbind(
+normaliseGlmPredictionType = function(type) {
+  if (identical(type, "response")) {
+    return("response")
+  }
+
+  "link"
+}
+
+formatGlmPredictionFrame = function(fit, confLower, confUpper, scaleFunction = identity) {
+  predictionMatrix = cbind(
     fit = fit,
     lwr = confLower,
     upr = confUpper
   )
+  scaledPredictions = scaleFunction(predictionMatrix)
+  predictionFrame = as.data.frame(scaledPredictions)
+  names(predictionFrame) = c("fit", "lwr", "upr")
 
-  scaleFunction(predictions)
+  predictionFrame
 }
 
 glmTeachingIntervalQuantile = function(cilevel, object = NULL, quasit = FALSE) {
