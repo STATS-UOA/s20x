@@ -13,7 +13,7 @@ modelcheck(x, ...)
 \arguments{
 \item{x}{The fitted model.}
 
-\item{which}{The plot(s) to be drawn. Residuals vs fitted values
+\item{which}{The plot(s) to be drawn. Residuals versus fitted values
 (\code{which = 1}), histogram and Q-Q plot of residuals
 (\code{which = 2}), and Cook's distance plot (\code{which = 3}).}
 
@@ -39,10 +39,10 @@ Compact layout for model checking plots.
 data(peru.df)
 lmFit = lm(BP ~ weight, data = peru.df)
 
-# Plot residuals vs fitted values only
+# Plot residuals versus fitted values only
 modelcheck(lmFit, 1)
 
-# Plot residuals vs fitted values, histogram, and Q-Q plot
+# Plot residuals versus fitted values, histogram, and Q-Q plot
 modelcheck(lmFit, 1:2)
 
 # Plot all diagnostics

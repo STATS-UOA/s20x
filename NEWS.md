@@ -1,3 +1,8 @@
+# s20x 3.2.258
+
+## Modernisation
+- Standardised diagnostic help wording for model checking, residuals versus fitted values, Q-Q plots, and plotting side effects without changing package behaviour.
+
 # s20x 3.2.257
 
 ## Modernisation

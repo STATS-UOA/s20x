@@ -2,7 +2,7 @@
 #' Compact layout for model checking plots.
 #'
 #' @param x The fitted model.
-#' @param which The plot(s) to be drawn. Residuals vs fitted values
+#' @param which The plot(s) to be drawn. Residuals versus fitted values
 #' (\code{which = 1}), histogram and Q-Q plot of residuals
 #' (\code{which = 2}), and Cook's distance plot (\code{which = 3}).
 #' @param mar Margins applied to each selected plot.
@@ -14,10 +14,10 @@
 #' data(peru.df)
 #' lmFit = lm(BP ~ weight, data = peru.df)
 #'
-#' # Plot residuals vs fitted values only
+#' # Plot residuals versus fitted values only
 #' modelcheck(lmFit, 1)
 #'
-#' # Plot residuals vs fitted values, histogram, and Q-Q plot
+#' # Plot residuals versus fitted values, histogram, and Q-Q plot
 #' modelcheck(lmFit, 1:2)
 #'
 #' # Plot all diagnostics

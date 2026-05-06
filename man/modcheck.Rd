@@ -27,30 +27,31 @@ modcheck(x, ...)
 If \code{x} is a single vector, then the implicit assumption is that the mean (or null) model is being 
 fitted, i.e. \code{lm(x ~ 1)} and that the data are best summarised by the sample mean.}
 
-\item{plotOrder}{the order of the plots. 1: pred-res plot, 2: normal Q-Q plot, 3: histogram, 4: Cook's
+\item{plotOrder}{the order of the plots: 1 for residuals versus fitted
+values, 2 for the normal Q-Q plot, 3 for the histogram, and 4 for Cook's
 distance plot.}
 
 \item{args}{a list containing three additional lists \code{eovcheckArgs}, \code{normcheckArgs} and
 \code{cooksArgs}. The elements of these lists are the optional arguments of \code{\link{eovcheck}},
 \code{\link{normcheck}} and \code{\link{cooks20x}}, and are explained in more detail in those functions.
-Most users will never use these arguments, but they provide super-flexibility in terms of what is 
-displayed.}
+Most users will never use these arguments, but they provide extra flexibility
+in terms of what is displayed.}
 
 \item{parVals}{the values that are set via \code{\link{par}} for this plot. These are \code{mfrow}, 
 \code{xaxs}, \code{yaxs}, \code{pty}, and \code{mai}. Most users will never use these arguments, but 
-they provide super-flexibility in terms of what is displayed.}
+they provide extra flexibility in terms of what is displayed.}
 
 \item{\ldots}{additional parameters. Included for future flexibility, but unsure how this might be 
 used currently.}
 }
 \value{
-Draws the selected model-checking plots for teaching diagnostics. The
+Draws the selected model checking plots for teaching diagnostics. The
 function is called for its plotting side effects and does not provide a stable
 data return object.
 }
 \description{
-Plots four model checking plots: a pred-res plot (residuals against predicted values), a Normal
-Quantile-Quantile (Q-Q) plot, a histogram of the residuals with a normal distribution superimposed
+Plots four model checking plots: residuals versus fitted values, a normal
+Q-Q plot, a histogram of residuals with a normal distribution superimposed,
 and a Cook's distance plot.
 }
 \section{Methods (by class)}{

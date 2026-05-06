@@ -146,3 +146,12 @@ The `displayPairs()` help example now uses `requireNamespace("emmeans",
 quietly = TRUE)` and qualifies the `emmeans::emmeans()` call, so the example
 remains useful when `emmeans` is installed but is safe in environments where
 the suggested package is unavailable. No displayPairs behaviour is changed.
+
+## Stage 12.8 cross-help terminology consistency
+
+Stage 12.8 standardises terminology across closely related diagnostic help
+pages. The affected documentation now consistently refers to residuals versus
+fitted values, normal Q-Q plots, model checking plots, and plotting side effects.
+This is a wording-only pass for public help pages and README text; diagnostic
+calculations, plotting behaviour, and public APIs are unchanged.
+
