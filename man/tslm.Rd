@@ -2,9 +2,63 @@
 % Please edit documentation in R/tslm.R
 \name{tslm}
 \alias{tslm}
+\alias{print.tslm}
+\alias{summary.tslm}
+\alias{print.summary.tslm}
+\alias{plot.tslm}
+\alias{coef.tslm}
+\alias{residuals.tslm}
+\alias{fitted.tslm}
+\alias{predict.tslm}
+\alias{formula.tslm}
+\alias{model.frame.tslm}
+\alias{vcov.tslm}
+\alias{nobs.tslm}
+\alias{logLik.tslm}
+\alias{AIC.tslm}
+\alias{BIC.tslm}
 \title{Fit a linear model with optional autoregressive errors}
 \usage{
 tslm(formula, data, time, method = "REML", ...)
+
+\method{print}{tslm}(x, ...)
+
+\method{summary}{tslm}(object, verbose = FALSE, ...)
+
+\method{print}{summary.tslm}(x, digits = max(3L, getOption("digits") - 3L), ...)
+
+\method{plot}{tslm}(
+  x,
+  which = c("all", "residuals", "time", "acf", "qq"),
+  residualType = "normalised",
+  ...
+)
+
+\method{coef}{tslm}(object, ...)
+
+\method{residuals}{tslm}(
+  object,
+  type = c("response", "pearson", "normalised", "normalized"),
+  ...
+)
+
+\method{fitted}{tslm}(object, ...)
+
+\method{predict}{tslm}(object, ...)
+
+\method{formula}{tslm}(x, ...)
+
+\method{model.frame}{tslm}(formula, ...)
+
+\method{vcov}{tslm}(object, ...)
+
+\method{nobs}{tslm}(object, ...)
+
+\method{logLik}{tslm}(object, ...)
+
+\method{AIC}{tslm}(object, ..., k = 2)
+
+\method{BIC}{tslm}(object, ...)
 }
 \arguments{
 \item{formula}{a model formula. Use `ar(p)` in the right hand side to specify
@@ -15,10 +69,32 @@ AR(p) errors, for example `y ~ x + ar(1)`.}
 \item{time}{optional unquoted or quoted name of the time variable in `data`.
 If omitted for an AR model, the row order of `data` is used.}
 
-\item{method}{fitting method passed to [nlme::gls()] for AR models. Defaults
+\item{method}{fitting method passed to [gls()] for AR models. Defaults
 to `"REML"`.}
 
-\item{...}{additional arguments passed to [stats::lm()] or [nlme::gls()].}
+\item{...}{additional arguments passed to [lm()], [gls()], or underlying
+model methods.}
+
+\item{x}{a `tslm`, `summary.tslm`, or formula object, depending on the
+method being called.}
+
+\item{object}{a fitted `tslm` object.}
+
+\item{verbose}{logical. For `summary()` and `anova()`, use `TRUE` to expose
+additional underlying model output where available.}
+
+\item{digits}{number of significant digits used when printing summary and
+ANOVA output.}
+
+\item{which}{character string selecting the diagnostic plot to draw. Use
+`"all"` for the full diagnostic set.}
+
+\item{residualType}{residual type used by `plot.tslm()` diagnostics.
+`"normalised"` and `"normalized"` are accepted for AR-error models.}
+
+\item{type}{residual type used by `residuals.tslm()`.}
+
+\item{k}{penalty used by `AIC.tslm()`.}
 }
 \value{
 An object of class `tslm`, containing the original formula, the mean
@@ -31,14 +107,14 @@ optional AR(p) error structures. Students specify the mean model using an
 ordinary formula and add an `ar(p)` term to request autoregressive errors.
 }
 \details{
-When no `ar(p)` term is present, `tslm()` fits an ordinary [stats::lm()]
-model. When an `ar(p)` term is present, `tslm()` fits a [nlme::gls()] model
-with an AR(p) correlation structure using [nlme::corARMA()]. The `ar(p)`
+When no `ar(p)` term is present, `tslm()` fits an ordinary [lm()]
+model. When an `ar(p)` term is present, `tslm()` fits a [gls()] model
+with an AR(p) correlation structure using [corARMA()]. The `ar(p)`
 term changes the error model, not the mean-model terms printed in the
 formula.
 
 
-The formula describes the mean model, just as it does for [stats::lm()]. The
+The formula describes the mean model, just as it does for [lm()]. The
 special term `ar(p)` is removed from the mean model before fitting and is used
 only to specify the correlation structure for the errors. For example,
 `log(passengers) ~ t + month + ar(1)` fits a trend and seasonal mean model
@@ -54,6 +130,42 @@ because these residuals account for the fitted correlation structure. Use
 `residualType = "response"` when the raw response residuals are required.
 `"normalised"` and `"normalized"` are both accepted for compatibility.
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print(tslm)}: Print a time series linear model.
+
+\item \code{summary(tslm)}: Summarise a time series linear model.
+
+\item \code{plot(tslm)}: Plot diagnostics for a time series linear model.
+
+\item \code{coef(tslm)}: Extract coefficients from a time series linear model.
+
+\item \code{residuals(tslm)}: Extract residuals from a time series linear model.
+
+\item \code{fitted(tslm)}: Extract fitted values from a time series linear model.
+
+\item \code{predict(tslm)}: Predict from a time series linear model.
+
+\item \code{formula(tslm)}: Extract the original formula from a time series linear model.
+
+\item \code{model.frame(tslm)}: Extract the underlying model frame from a time series linear model.
+
+\item \code{vcov(tslm)}: Extract the variance-covariance matrix from a time series linear model.
+
+\item \code{nobs(tslm)}: Extract the number of observations from a time series linear model.
+
+\item \code{logLik(tslm)}: Extract the log-likelihood from a time series linear model.
+
+\item \code{AIC(tslm)}: Calculate AIC for a time series linear model.
+
+\item \code{BIC(tslm)}: Calculate BIC for a time series linear model.
+
+}}
+\section{Functions}{
+\itemize{
+\item \code{print(summary.tslm)}: Print a time series linear-model summary.
+
+}}
 \examples{
 data(beer.df)
 fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
@@ -72,5 +184,5 @@ plot(fitAr, residualType = "response")
 
 }
 \seealso{
-[stats::lm()], [nlme::gls()], [nlme::corARMA()]
+[lm()], [gls()], [corARMA()]
 }

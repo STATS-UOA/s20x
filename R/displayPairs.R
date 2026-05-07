@@ -48,8 +48,9 @@
 #'
 #' ## Create all pairwise comparisons using emmeans, if available.
 #' if (requireNamespace("emmeans", quietly = TRUE)) {
+#'     emmeansFun = getExportedValue("emmeans", "emmeans")
 #'     arousal.allpairs = pairs(
-#'         emmeans::emmeans(arousal.fit, ~ gender * picture),
+#'         emmeansFun(arousal.fit, ~ gender * picture),
 #'         infer = TRUE
 #'     )
 #'

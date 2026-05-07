@@ -68,15 +68,15 @@ e = rnorm(100, 0, 0.1)
 x = rnorm(100)
 y = exp(5 + 3 * x + e)
 fit = lm(y ~ x, data = data.frame(x, y))
-s20x:::modcheck(fit)
+modcheck(fit)
 
 # An exponential growth curve with the correct transformation
 fit = lm(log(y) ~ x, data = data.frame(x, y))
-s20x:::modcheck(fit)
+modcheck(fit)
 
 # Peruvian Indians data
 data(peru.df)
-s20x:::modcheck(lm(BP ~ weight, data = peru.df))
+modcheck(lm(BP ~ weight, data = peru.df))
 \dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

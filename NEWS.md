@@ -1,3 +1,8 @@
+# s20x 3.2.271
+
+## Modernisation
+- Removed qualified namespace calls from R source files by adding roxygen imports, broadened internal helper documentation, and hardened the Stage 14 style-compliance regression test.
+
 # s20x 3.2.270
 
 ## Modernisation

@@ -27,9 +27,9 @@ through \code{...}.}
 \item{open}{Logical; if \code{TRUE} (default), open the rendered HTML file in
 the default web browser.}
 
-\item{quiet}{Logical; passed to \code{rmarkdown::render()} to suppress output.}
+\item{quiet}{Logical; passed to \code{render()} to suppress output.}
 
-\item{...}{Additional arguments passed to \code{rmarkdown::render()}. Also
+\item{...}{Additional arguments passed to \code{render()}. Also
 supports \code{outputDir}, a camelCase alias for \code{output_dir}.}
 }
 \value{
@@ -45,7 +45,7 @@ using the pattern \code{CS<chapter>_<number>.Rmd} (for example,
 \code{CS9_2.Rmd}).
 
 
-The case study is rendered on demand using \code{rmarkdown::render()}.
+The case study is rendered on demand using \code{render()}.
 Figures and other outputs are generated at render time; users therefore need
 any required packages installed for the selected case study.
 

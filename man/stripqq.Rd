@@ -37,7 +37,7 @@ This is a legacy teaching helper retained for compatibility with
 
 ## Zoo data
 data(zoo.df)
-s20x:::stripqq(attendance~day.type, data = zoo.df)
+stripqq(attendance~day.type, data = zoo.df)
 \dontshow{\}) # examplesIf}
 }
 \keyword{hplot}
