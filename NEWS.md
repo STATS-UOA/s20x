@@ -1,3 +1,8 @@
+# s20x 3.2.268
+
+## Modernisation
+- Deprecated legacy diagnostic plotting helpers `modelcheck()`, `modcheck()`, `boxqq()`, `stripqq()`, and the `autocor.plot()` alias, and removed them from the exported API while keeping their internal compatibility definitions.
+
 # s20x 3.2.267
 
 ## Modernisation

@@ -1,6 +1,6 @@
-#' Strip charts and normal quantile-quantile plots
+#' Deprecated strip charts and normal quantile-quantile plots
 #'
-#' Draws strip charts and normal quantile quantile plots of x for each value of
+#' `stripqq()` is deprecated and is no longer exported. It draws strip charts and normal quantile quantile plots of x for each value of
 #' the grouping variable g
 #'
 #'
@@ -13,19 +13,20 @@
 #' @note This is a legacy teaching helper retained for compatibility with
 #'   older course material. New teaching material should prefer current
 #'   diagnostic plotting workflows.
-#' @examples
+#' @examplesIf FALSE
 #'
 #' ## Zoo data
 #' data(zoo.df)
-#' stripqq(attendance~day.type, data = zoo.df)
+#' s20x:::stripqq(attendance~day.type, data = zoo.df)
 #'
-#' @export stripqq
 stripqq = function(formula, ...) {
+  .Deprecated(
+    msg = "stripqq() is deprecated and is no longer exported."
+  )
   UseMethod("stripqq")
 }
 
 #' @describeIn stripqq Strip charts and normal quantile-quantile plots
-#' @export
 stripqq.formula = function(formula, data = NULL, ...) {
   if (missing(formula) || length(formula) != 3) {
     stop("'formula' missing or incorrect")

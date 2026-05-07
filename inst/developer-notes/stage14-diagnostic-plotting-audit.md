@@ -6,7 +6,7 @@ Stage 14.1 reviewed diagnostic and plotting internals after the Stage 13 predict
 
 Reviewed areas:
 
-- `modelcheck()` and `modcheck()` diagnostic wrappers
+- `modelcheck()` and `modcheck()` diagnostic wrappers (now identified for deprecation/export removal)
 - `eovcheck()`, `normcheck()`, and `cooks20x()` helper plots
 - legacy residual, autocorrelation, layout, boxplot, stripchart, and Q-Q plotting helpers
 - current diagnostic test coverage in `tests/testthat/test-diagnostic-plot-api.R`
@@ -35,8 +35,8 @@ Current tests cover a small set of diagnostic argument-validation behaviours, bu
 
 These behaviours should remain stable unless a later sub-stage makes a small, deliberate, tested change:
 
-- Exported function names and compatibility aliases, including `autocor.plot`.
-- Current teaching plot ordering and panel content for `modelcheck()` and `modcheck()`.
+- Exported function names that remain current after Stage 14.2 deprecates and unexports legacy helpers.
+- Current teaching plot ordering and panel content for non-deprecated diagnostic helpers.
 - Current argument validation messages for `which`, `plotOrder`, and `whichPlot`.
 - The `usePar = FALSE` path in `normcheck()`, which is used by `modcheck()` to preserve externally managed panel layout.
 - Existing public arguments such as `args`, `parVals`, `axisOpts`, `smoother`, `twosd`, `levene`, and `residualType`.
@@ -50,7 +50,7 @@ Possible narrow improvements for later stages:
 - Add a small internal helper for graphical-parameter save/restore where functions currently repeat `oldPar = par(...)` and `on.exit(par(oldPar))` patterns.
 - Add a small internal helper for resetting `layout(1)` safely in `modelcheck.lm()`, because `layout()` is not restored by the existing `par()` restoration.
 - Consider a common residual/fitted extraction helper for diagnostic code paths that currently use `resid()`, `residuals()`, `fitted()`, `$residuals`, and call reconstruction in different ways.
-- Consider a common helper for grouped Q-Q data used by `boxqq.formula()` and `stripqq.formula()`, which currently duplicate most of their grouped normal Q-Q plotting logic.
+- Do not consolidate grouped Q-Q data for `boxqq.formula()` and `stripqq.formula()` unless these deprecated internals become necessary for compatibility fixes.
 - Consider a narrow helper for plotting the normal curve over residual histograms only if it preserves existing defaults, labels, and axes.
 
 Any consolidation should be internal-only and should be covered by regression tests that compare current side effects or returned values before and after the change.
@@ -71,7 +71,7 @@ Potential tests for later sub-stages:
 - `modelcheck()` should restore `par("mar")` and `par("mgp")` and should leave the layout in a predictable single-panel state after plotting.
 - `modcheck()` should restore the graphical parameters it changes through `parVals`.
 - `normcheck(..., usePar = TRUE)` should restore graphical parameters, while `usePar = FALSE` should not override externally managed layout.
-- `boxqq()` and `stripqq()` should restore graphical parameters after plotting.
+- Because `boxqq()` and `stripqq()` are deprecated in Stage 14.2, do not invest further in their graphical-state behaviour unless a compatibility failure is reported.
 - Diagnostic plotting helpers should consistently return invisibly, or current visible/implicit return behaviour should be documented as compatibility-sensitive before any change.
 - `eovcheck.lm()` should be tested with model fits whose data were supplied through a standard data-frame call, because it reconstructs `formula` and `data` from the model call.
 - `cooks20x()` should be tested for small model sizes before any change to the labelled-observation logic, because it currently assumes the three largest Cook's distances can be labelled.
@@ -92,4 +92,4 @@ The following are not suitable as incidental Stage 14 changes:
 
 ## Recommended next sub-stage
 
-Stage 14.2 should make one small internal improvement with tests. The safest first implementation target is graphical-state handling for `modelcheck.lm()`, because it currently combines `layout()` with partial `par()` restoration. A narrow follow-up could add a side-effect regression test that confirms the selected graphical parameters are restored and the layout is reset after `modelcheck()` completes.
+Stage 14.2 should first remove obsolete diagnostic helpers from the exported API and mark them as deprecated: `modelcheck()`, `modcheck()`, `boxqq()`, `stripqq()`, and the legacy `autocor.plot()` alias. After that, later Stage 14 work should focus only on currently exported diagnostic helpers, especially `normcheck()`, `eovcheck()`, `cooks20x()`, `residPlot()`, `autocorPlot()`, and related plotting side effects.

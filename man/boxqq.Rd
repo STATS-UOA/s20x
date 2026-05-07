@@ -3,7 +3,7 @@
 \name{boxqq}
 \alias{boxqq}
 \alias{boxqq.formula}
-\title{Box plots and normal quantile-quantile plots}
+\title{Deprecated box plots and normal quantile-quantile plots}
 \usage{
 boxqq(formula, ...)
 
@@ -23,7 +23,7 @@ the levels of the factor \code{g}. \code{NA}'s are allowed in the data.}
 Returns the plot.
 }
 \description{
-Draws boxplots and normal quantile-quantile plots of x for each value of the
+`boxqq()` is deprecated and is no longer exported. It draws boxplots and normal quantile-quantile plots of x for each value of the
 grouping variable g
 }
 \section{Methods (by class)}{
@@ -37,10 +37,11 @@ This is a legacy teaching helper retained for compatibility with
   diagnostic plotting workflows.
 }
 \examples{
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 
 ## Zoo data
 data(zoo.df)
-boxqq(attendance ~ day.type, data = zoo.df)
-
+s20x:::boxqq(attendance ~ day.type, data = zoo.df)
+\dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

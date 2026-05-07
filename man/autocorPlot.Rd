@@ -2,7 +2,6 @@
 % Please edit documentation in R/autocor.plot.R
 \name{autocorPlot}
 \alias{autocorPlot}
-\alias{autocor.plot}
 \title{Autocorrelation Plot}
 \usage{
 autocorPlot(fit, main = "Current vs Lagged residuals", ...)
@@ -23,7 +22,7 @@ Plots current vs lagged residuals along with quadrants dividing these
 residuals about the value zero.
 }
 \note{
-\code{autocor.plot} is a legacy alias retained for older teaching material.
+\code{autocor.plot} is deprecated and no longer exported.
   Use \code{autocorPlot()} in new code.
 }
 \examples{

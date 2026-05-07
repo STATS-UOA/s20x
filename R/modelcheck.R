@@ -1,5 +1,8 @@
-#' Model checking plots
-#' Compact layout for model checking plots.
+#' Deprecated model checking plots
+#'
+#' `modelcheck()` is deprecated and is no longer exported. Use focused
+#' diagnostic helpers such as [eovcheck()], [normcheck()], and [cooks20x()]
+#' directly in new teaching material.
 #'
 #' @param x The fitted model.
 #' @param which The plot(s) to be drawn. Residuals versus fitted values
@@ -10,25 +13,27 @@
 #' @return Draws diagnostic plots for teaching model checking. The function is
 #' called for its plotting side effects and does not provide a stable data return
 #' object.
-#' @examples
+#' @examplesIf FALSE
 #' data(peru.df)
 #' lmFit = lm(BP ~ weight, data = peru.df)
 #'
 #' # Plot residuals versus fitted values only
-#' modelcheck(lmFit, 1)
+#' # Deprecated compatibility helper, no longer exported
+#' s20x:::modelcheck(lmFit, 1)
 #'
 #' # Plot residuals versus fitted values, histogram, and Q-Q plot
-#' modelcheck(lmFit, 1:2)
+#' s20x:::modelcheck(lmFit, 1:2)
 #'
 #' # Plot all diagnostics
-#' modelcheck(lmFit)
-#' @export
+#' s20x:::modelcheck(lmFit)
 modelcheck = function(x, ...) {
+  .Deprecated(
+    msg = "modelcheck() is deprecated and is no longer exported; use eovcheck(), normcheck(), and cooks20x() directly."
+  )
   UseMethod("modelcheck")
 }
 
 #' @describeIn modelcheck Model checking plots
-#' @export
 modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
   
   if(!all(which %in% 1:3)){

@@ -3,8 +3,7 @@
 \name{modelcheck}
 \alias{modelcheck}
 \alias{modelcheck.lm}
-\title{Model checking plots
-Compact layout for model checking plots.}
+\title{Deprecated model checking plots}
 \usage{
 modelcheck(x, ...)
 
@@ -27,8 +26,9 @@ called for its plotting side effects and does not provide a stable data return
 object.
 }
 \description{
-Model checking plots
-Compact layout for model checking plots.
+`modelcheck()` is deprecated and is no longer exported. Use focused
+diagnostic helpers such as [eovcheck()], [normcheck()], and [cooks20x()]
+directly in new teaching material.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -36,15 +36,18 @@ Compact layout for model checking plots.
 
 }}
 \examples{
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 data(peru.df)
 lmFit = lm(BP ~ weight, data = peru.df)
 
 # Plot residuals versus fitted values only
-modelcheck(lmFit, 1)
+# Deprecated compatibility helper, no longer exported
+s20x:::modelcheck(lmFit, 1)
 
 # Plot residuals versus fitted values, histogram, and Q-Q plot
-modelcheck(lmFit, 1:2)
+s20x:::modelcheck(lmFit, 1:2)
 
 # Plot all diagnostics
-modelcheck(lmFit)
+s20x:::modelcheck(lmFit)
+\dontshow{\}) # examplesIf}
 }
