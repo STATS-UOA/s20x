@@ -26,8 +26,9 @@
 #'
 #' @export residPlot
 residPlot = function(lmfit, f = 0.5) {
-    yhat = fitted(lmfit)
-    res = resid(lmfit)
+    diagnosticData = getModelResidualFittedData(lmfit, context = "linear model")
+    yhat = diagnosticData$fitted
+    res = diagnosticData$residuals
     y = yhat + res
     qq = qr.Q(lmfit$qr)
     rr = qr.R(lmfit$qr)

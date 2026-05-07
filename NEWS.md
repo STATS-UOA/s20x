@@ -1,3 +1,8 @@
+# s20x 3.2.270
+
+## Modernisation
+- Consolidated residual and fitted-value extraction for targeted diagnostic plotting internals without changing plotting output or public APIs.
+
 # s20x 3.2.269
 
 ## Modernisation

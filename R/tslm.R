@@ -628,20 +628,15 @@ formatTslmAnovaTable = function(rawTable) {
 
 getTslmDiagnosticData = function(object, residualType = "normalised") {
   residualType = matchTslmResidualType(residualType)
-  residualValues = stats::residuals(object, type = residualType)
-  fittedValues = stats::fitted(object)
+  diagnosticData = getModelResidualFittedData(
+    object,
+    residualType = residualType,
+    context = "tslm object"
+  )
 
-  if (length(residualValues) != length(fittedValues)) {
-    stop(
-      "Could not align residuals and fitted values for this tslm object. ",
-      "This is an internal plotting error; please report it with the fitted model.",
-      call. = FALSE
-    )
-  }
+  timeValues = getTslmTimeValues(object, length(diagnosticData$residuals))
 
-  timeValues = getTslmTimeValues(object, length(residualValues))
-
-  if (length(timeValues) != length(residualValues)) {
+  if (length(timeValues) != length(diagnosticData$residuals)) {
     stop(
       "Could not align the time variable with the model residuals. ",
       "Check that the time variable was supplied from the same data frame used to fit the model.",
@@ -650,8 +645,8 @@ getTslmDiagnosticData = function(object, residualType = "normalised") {
   }
 
   list(
-    fitted = fittedValues,
-    residuals = residualValues,
+    fitted = diagnosticData$fitted,
+    residuals = diagnosticData$residuals,
     time = timeValues
   )
 }

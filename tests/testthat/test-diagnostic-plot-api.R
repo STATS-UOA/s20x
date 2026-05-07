@@ -57,3 +57,17 @@ test_that("internal graphics parameter helper restores plotting state", {
 
   expect_equal(par("mar"), oldMar)
 })
+
+
+test_that("internal residual and fitted helper returns aligned diagnostic data", {
+  values = c(1, 2, 3, 4, 5)
+  group = factor(c("A", "A", "B", "B", "B"))
+  fit = lm(values ~ group)
+
+  diagnosticData = s20x:::getModelResidualFittedData(fit, context = "linear model")
+
+  expect_named(diagnosticData, c("fitted", "residuals"))
+  expect_equal(diagnosticData$fitted, fitted(fit))
+  expect_equal(diagnosticData$residuals, residuals(fit))
+  expect_equal(length(diagnosticData$fitted), length(diagnosticData$residuals))
+})
