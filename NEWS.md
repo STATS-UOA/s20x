@@ -1,3 +1,7 @@
+# s20x 3.2.272
+
+- Document internal prediction helper functions with roxygen2 comments.
+
 # s20x 3.2.271
 
 ## Modernisation
