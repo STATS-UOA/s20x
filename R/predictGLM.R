@@ -22,7 +22,7 @@
 #' @param quasit if \code{TRUE}, use a t multiplier rather than a normal
 #'   multiplier for confidence intervals when \code{object} is a quasi model.
 #' @param \dots optional arguments that are passed to \code{\link{predict.glm}}.
-#' @return A matrix with columns \code{fit}, \code{lwr}, and \code{upr} containing
+#' @return A data frame with columns \code{fit}, \code{lwr}, and \code{upr} containing
 #'   fitted values and confidence limits on the requested scale.
 #' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.
 #' @keywords htest
@@ -37,9 +37,7 @@ predictGLM = function(object,
     stop("First input is not a \"glm\" object")
   }
 
-  if (!is.data.frame(newdata)) {
-    stop("Argument \"newdata\" is not a data frame!")
-  }
+  validatePredictionNewdata(newdata)
 
   if (family(object)$link != "log" & family(object)$link != "logit") {
     stop("Must be a poisson or binomial model")
@@ -47,18 +45,6 @@ predictGLM = function(object,
 
   nameRow = paste("pred", 1:nrow(newdata), sep = ".")
   nameRow = 1:nrow(newdata)
-
-  if (!inherits(object, "glm")) {
-    stop("First input is not a \"glm\" object")
-  }
-
-  if (!is.data.frame(newdata)) {
-    stop("Argument \"newdata\" is not a data frame!")
-  }
-
-  if (family(object)$link != "log" & family(object)$link != "logit") {
-    stop("Must be a poisson or binomial model")
-  }
 
   modelTerms = terms(object)
   termsNoResponse = delete.response(modelTerms)
@@ -69,6 +55,7 @@ predictGLM = function(object,
     stop("newdata must be provided for all first-order terms")
   }
 
+  type = normaliseGlmPredictionType(type)
   pred = predictGlmWithSe(object, newdata, ...)
 
   expected = pred$fit
@@ -83,23 +70,19 @@ predictGLM = function(object,
     cilevel = cilevel,
     quantile = ciQuantile
   )
-  predictions = cbind(
+  scaleFunction = if (type == "response") {
+    family(object)$linkinv
+  } else {
+    identity
+  }
+  predictions = formatGlmPredictionFrame(
     fit = expected,
-    lwr = intervals$confLower,
-    upr = intervals$confUpper
+    confLower = intervals$confLower,
+    confUpper = intervals$confUpper,
+    scaleFunction = scaleFunction
   )
 
-  if (type == "response") {
-    predictions = family(object)$linkinv(predictions)
-  }
-
-  rownames = seq_len(nrow(predictions))
-
-  type = if (type == "response") {
-    "response"
-  } else {
-    "link"
-  }
+  rownames(predictions) = seq_len(nrow(predictions))
 
   message("***Estimates and CIs are on the ", type, " scale***")
 

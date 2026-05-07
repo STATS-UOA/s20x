@@ -6,6 +6,14 @@ predictGlmWithSe = function(object, newdata, ...) {
   predict.glm(object, newdata, se.fit = TRUE, ...)
 }
 
+validatePredictionNewdata = function(newdata) {
+  if (!is.data.frame(newdata)) {
+    stop("Argument \"newdata\" is not a data frame!")
+  }
+
+  invisible(newdata)
+}
+
 predictionIntervalPercent = function(cilevel) {
   1 - (1 - cilevel) / 2
 }
@@ -39,6 +47,35 @@ glmTeachingConfidenceIntervals = function(fit, seFit, cilevel, quantile) {
     confLower = confidenceLimits$lower,
     confUpper = confidenceLimits$upper
   )
+}
+
+formatTeachingPredictionFrame = function(values, rowNames, columnNames, digit) {
+  values = round(values, digit)
+  predictionFrame = as.data.frame(values)
+  dimnames(predictionFrame) = list(rowNames, columnNames)
+
+  predictionFrame
+}
+
+normaliseGlmPredictionType = function(type) {
+  if (identical(type, "response")) {
+    return("response")
+  }
+
+  "link"
+}
+
+formatGlmPredictionFrame = function(fit, confLower, confUpper, scaleFunction = identity) {
+  predictionMatrix = cbind(
+    fit = fit,
+    lwr = confLower,
+    upr = confUpper
+  )
+  scaledPredictions = scaleFunction(predictionMatrix)
+  predictionFrame = as.data.frame(scaledPredictions)
+  names(predictionFrame) = c("fit", "lwr", "upr")
+
+  predictionFrame
 }
 
 glmTeachingIntervalQuantile = function(cilevel, object = NULL, quasit = FALSE) {

@@ -56,7 +56,8 @@ test_that("predictGLM response scale applies the inverse link to fit and confide
 
   linkResult = suppressMessages(predictGLM(fit, newdata, type = "link", cilevel = cilevel))
   responseResult = suppressMessages(predictGLM(fit, newdata, type = "response", cilevel = cilevel))
-  expectedResponse = fit$family$linkinv(linkResult)
+  expectedResponse = as.data.frame(fit$family$linkinv(as.matrix(linkResult)))
+  names(expectedResponse) = c("fit", "lwr", "upr")
 
-  expect_equal(responseResult, expectedResponse)
+  expect_equal(unname(as.matrix(responseResult)), unname(as.matrix(expectedResponse)))
 })

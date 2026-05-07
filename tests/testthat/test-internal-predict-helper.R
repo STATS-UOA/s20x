@@ -91,3 +91,70 @@ test_that("internal GLM interval helpers preserve existing normal and quasi arit
     qt(percent, quasiFit$df.res)
   )
 })
+
+test_that("internal prediction newdata validation preserves wrapper error text", {
+  expect_error(
+    s20x:::validatePredictionNewdata(list(x = 1)),
+    'Argument \"newdata\" is not a data frame!',
+    fixed = TRUE
+  )
+
+  newdata = data.frame(x = 1)
+  expect_invisible(s20x:::validatePredictionNewdata(newdata))
+})
+
+test_that("internal prediction output format helpers preserve legacy shape", {
+  values = cbind(
+    fit = c(1.2345, 2.3456),
+    lwr = c(0.1234, 1.2345),
+    upr = c(2.3456, 3.4567)
+  )
+
+  result = s20x:::formatTeachingPredictionFrame(
+    values = values,
+    rowNames = c("1", "2"),
+    columnNames = c("Predicted", " Conf.lower", "Conf.upper"),
+    digit = 2
+  )
+
+  expected = data.frame(
+    Predicted = c(1.23, 2.35),
+    ` Conf.lower` = c(0.12, 1.23),
+    Conf.upper = c(2.35, 3.46),
+    check.names = FALSE
+  )
+  rownames(expected) = c("1", "2")
+
+  expect_s3_class(result, "data.frame")
+  expect_equal(result, expected)
+})
+
+test_that("internal GLM output format helper returns a stable data-frame shape", {
+  fit = c(1, 2)
+  confLower = c(0.8, 1.7)
+  confUpper = c(1.2, 2.3)
+
+  linkResult = s20x:::formatGlmPredictionFrame(
+    fit = fit,
+    confLower = confLower,
+    confUpper = confUpper
+  )
+  responseResult = s20x:::formatGlmPredictionFrame(
+    fit = fit,
+    confLower = confLower,
+    confUpper = confUpper,
+    scaleFunction = exp
+  )
+
+  expect_s3_class(linkResult, "data.frame")
+  expect_named(linkResult, c("fit", "lwr", "upr"))
+  expect_equal(linkResult$fit, fit)
+  expect_equal(responseResult, as.data.frame(exp(as.matrix(linkResult))))
+})
+
+test_that("internal GLM type normalisation preserves legacy fallback", {
+  expect_equal(s20x:::normaliseGlmPredictionType("response"), "response")
+  expect_equal(s20x:::normaliseGlmPredictionType("link"), "link")
+  expect_equal(s20x:::normaliseGlmPredictionType("bad-type"), "link")
+  expect_equal(s20x:::normaliseGlmPredictionType(NULL), "link")
+})

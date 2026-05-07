@@ -1,3 +1,28 @@
+# s20x 3.2.267
+
+## Modernisation
+- Added prediction-wrapper regression coverage for multi-row return shapes, binomial-logit `predictGLM()` output, and wrapper-level quasi interval multiplier behaviour without changing prediction internals.
+
+# s20x 3.2.264
+
+## Modernisation
+- Standardised `predictGLM()` return shape to a data frame with stable `fit`, `lwr`, and `upr` columns, while preserving link/response scale calculations and legacy fallback to link-scale output for unsupported `type` values.
+
+# s20x 3.2.263
+
+## Modernisation
+- Consolidated internal prediction interval output formatting for linear-model and GLM teaching wrappers while preserving legacy return shapes, column names, rounding, and scale handling.
+
+# s20x 3.2.262
+
+## Modernisation
+- Consolidated prediction-wrapper `newdata` data-frame validation into a shared internal helper and removed duplicated validation from `predictGLM()` without changing prediction output or error text.
+
+# s20x 3.2.261
+
+## Modernisation
+- Added the Stage 13 prediction-wrapper internal audit note, identifying narrow maintenance targets for prediction internals while deferring public API and behaviour changes.
+
 # s20x 3.2.260
 
 ## Modernisation
