@@ -1,3 +1,8 @@
+# s20x 3.2.267
+
+## Modernisation
+- Added prediction-wrapper regression coverage for multi-row return shapes, binomial-logit `predictGLM()` output, and wrapper-level quasi interval multiplier behaviour without changing prediction internals.
+
 # s20x 3.2.264
 
 ## Modernisation

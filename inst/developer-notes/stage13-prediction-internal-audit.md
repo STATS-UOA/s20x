@@ -87,9 +87,10 @@ Completed implementation sub-stages:
 - Stage 13.2 consolidated shared `newdata` data-frame validation without changing wrapper output or error text.
 - Stage 13.3 consolidated internal prediction-output formatting for teaching prediction frames and GLM prediction matrices while preserving legacy column names, rounding, return classes, and scale handling.
 - Stage 13.4 standardised `predictGLM()` to return a data frame rather than a matrix, while preserving `fit`, `lwr`, and `upr` column names, link/response scale calculations, and legacy fallback of unsupported `type` values to the link scale.
+- Stage 13.5 added regression coverage for multi-row prediction outputs, binomial-logit `predictGLM()` return shapes, and wrapper-level quasi interval multiplier behaviour without changing prediction internals.
 
 ## Recommended next sub-stage
 
-Stage 13.5 should choose another narrow prediction-wrapper maintenance target. A reasonable next step is consolidating the legacy prediction-row naming logic across `predict20x()` and `predictCount()`, with multi-row regression tests that preserve current row names and printed table structure.
+Stage 13.6 should pause broader prediction-wrapper refactoring and either close the prediction-internals stream with a short wrap-up note or choose one final narrow cleanup from this audit. A reasonable final cleanup would be consolidating the legacy prediction-row naming logic across `predict20x()` and `predictCount()`, but only if the compatibility tests remain focused on preserving current row names and printed table structure.
 
-Further diagnostic-helper internals should remain deferred until the prediction-wrapper stream is stable.
+Further diagnostic-helper internals should remain deferred until the prediction-wrapper stream is closed or explicitly extended.
