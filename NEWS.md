@@ -1,3 +1,8 @@
+# s20x 3.2.269
+
+## Modernisation
+- Added a small internal graphics-parameter save/restore helper and used it in targeted diagnostic plotting code paths without changing plotting output.
+
 # s20x 3.2.268
 
 ## Modernisation

@@ -41,8 +41,11 @@ stripqq.formula = function(formula, data = NULL, ...) {
   modelFrame = eval(modelCall, parent.frame())
   data = modelFrame
 
-  oldPar = par(mfrow = c(1, 2), mar = c(5.1, 4.1, 4.1, 0))
-  on.exit(par(oldPar))
+  restoreGraphicsParameters = saveGraphicsParameters(
+    mfrow = c(1, 2),
+    mar = c(5.1, 4.1, 4.1, 0)
+  )
+  on.exit(restoreGraphicsParameters())
 
   stripchart(
     formula,

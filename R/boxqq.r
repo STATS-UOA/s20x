@@ -30,8 +30,8 @@ boxqq = function(formula, ...) {
 
 #' @describeIn boxqq Box plots and normal quantile-quantile plots
 boxqq.formula = function(formula, data = NULL, ...) {
-  oldPar = par(no.readonly = TRUE)
-  on.exit(par(oldPar, no.readonly = TRUE))
+  restoreGraphicsParameters = saveGraphicsParameters(noReadonly = TRUE)
+  on.exit(restoreGraphicsParameters())
 
   if (missing(formula) || length(formula) != 3) {
     stop("'formula' missing or incorrect")

@@ -42,3 +42,18 @@ test_that("deprecated diagnostic helpers are not exported", {
   expect_false("autocor.plot" %in% exports)
   expect_true("autocorPlot" %in% exports)
 })
+
+
+test_that("internal graphics parameter helper restores plotting state", {
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  oldMar = par("mar")
+  restoreGraphicsParameters = saveGraphicsParameters(mar = c(1, 1, 1, 1))
+
+  expect_equal(par("mar"), c(1, 1, 1, 1))
+
+  restoreGraphicsParameters()
+
+  expect_equal(par("mar"), oldMar)
+})

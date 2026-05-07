@@ -251,8 +251,8 @@ plot.tslm = function(x, which = c("all", "residuals", "time", "acf", "qq"),
   diagnosticData = getTslmDiagnosticData(x, residualType = residualType)
 
   if (which == "all") {
-    oldPar = graphics::par(no.readonly = TRUE)
-    on.exit(graphics::par(oldPar), add = TRUE)
+    restoreGraphicsParameters = saveGraphicsParameters(noReadonly = TRUE)
+    on.exit(restoreGraphicsParameters(), add = TRUE)
     graphics::par(mfrow = c(2, 2))
 
     plotTslmResiduals(diagnosticData, residualType = residualType, ...)

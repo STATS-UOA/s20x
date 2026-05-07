@@ -81,8 +81,8 @@ modcheck.lm = function(x, plotOrder = 1:4,
     stop("plotOrder must be in 1:4")
   }
   
-  oldPar = par(parVals)
-  on.exit(par(oldPar))
+  restoreGraphicsParameters = saveGraphicsParameters(parVals)
+  on.exit(restoreGraphicsParameters())
   
   Plots = c(eovcheck, normcheck, normcheck, cooks20x)[plotOrder]
   

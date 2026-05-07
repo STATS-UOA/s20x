@@ -63,8 +63,8 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
   
   M = createLayoutMatrix()
   layout(M)
-  oldPar = par("mar","mgp")
-  on.exit(par(oldPar))
+  restoreGraphicsParameters = saveGraphicsParameters("mar", "mgp")
+  on.exit(restoreGraphicsParameters())
   
   par(mar = mar, mgp = c(2, 1, 0))
   
