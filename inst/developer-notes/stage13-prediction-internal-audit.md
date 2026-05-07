@@ -2,7 +2,7 @@
 
 ## Scope
 
-Stage 13.1 reviewed the internal structure of the current prediction teaching wrappers:
+Stage 13 reviewed and then narrowly maintained the internal structure of the current prediction teaching wrappers:
 
 - `predict20x()`
 - `predictGLM()`
@@ -10,87 +10,76 @@ Stage 13.1 reviewed the internal structure of the current prediction teaching wr
 - shared helpers in `R/internal-predict-helper.R`
 - prediction-wrapper tests in `tests/testthat/`
 
-This stage is audit-only. It records focused maintenance targets for later Stage 13 sub-stages and does not redesign public APIs, rename exported functions, remove compatibility aliases, or intentionally alter user-visible teaching output.
+The stream deliberately avoided a broad public API redesign. It did not rename exported functions, remove compatibility aliases, or replace the teaching wrappers with ordinary base-R prediction interfaces.
 
 ## Current structure
 
-The Stage 11 groundwork is present. The wrappers already call shared internal helpers for base prediction calls and interval arithmetic:
+The Stage 11 groundwork is present and Stage 13 has extended it. The wrappers now use shared internal helpers for base prediction calls, interval arithmetic, `newdata` validation, and interval-output assembly:
 
 - `predictLmWithSe()` wraps `predict.lm(..., se.fit = TRUE)`.
 - `predictGlmWithSe()` wraps `predict.glm(..., se.fit = TRUE)`.
+- `validatePredictionNewdata()` centralises first-order `newdata` data-frame validation.
 - `predictionIntervalPercent()` centralises the upper-tail interval probability.
 - `predictionConfidenceLimits()` centralises symmetric lower and upper interval arithmetic.
+- `formatPredictionIntervalFrame()` centralises interval data-frame assembly where wrappers return teaching output frames.
+- `formatPredictionIntervalMatrix()` centralises interval matrix assembly where legacy internals still need matrix-shaped output.
 - `lmTeachingPredictionIntervals()` centralises linear-model confidence and prediction interval calculations.
 - `glmTeachingConfidenceIntervals()` centralises GLM confidence interval calculations.
 - `glmTeachingIntervalQuantile()` centralises normal versus quasi-model t quantile selection.
 
-The current tests document return shapes, interval semantics, response-scale transformation, and compatibility with the shared helper path.
+The tests now document return shapes, interval semantics, response-scale transformation, unsupported-type compatibility, multi-row output shape, and quasi-model interval multiplier behaviour.
 
-## Keep unchanged
+## Completed Stage 13 outcomes
 
-These behaviours should remain stable unless a later sub-stage makes a small, deliberate, tested change:
+### Stage 13.1
+
+Added this tracked audit note and identified a narrow prediction-wrapper maintenance stream.
+
+### Stage 13.2
+
+Consolidated `newdata` data-frame validation into `validatePredictionNewdata()` and routed `predict20x()`, `predictCount()`, and `predictGLM()` through the shared helper. This removed duplicated validation while preserving output and error text.
+
+### Stage 13.3
+
+Consolidated internal prediction-output formatting for teaching prediction frames and GLM interval matrices. This preserved legacy column names, rounding, return classes, and scale handling for the wrappers touched at that point.
+
+### Stage 13.4
+
+Standardised `predictGLM()` to return a data frame rather than a matrix, with an explicit compatibility decision and regression coverage. The change preserved `fit`, `lwr`, and `upr` column names, link-scale and response-scale calculations, and fallback of unsupported `type` values to link-scale output.
+
+### Stage 13.5
+
+Added regression coverage for multi-row prediction outputs, binomial-logit `predictGLM()` return shapes, and wrapper-level quasi interval multiplier behaviour. This stage was coverage-focused and did not introduce further prediction-internal refactoring.
+
+### Stage 13.6
+
+Closed the prediction-wrapper internal-maintenance stream with this wrap-up note. No package code, tests, documentation generated from roxygen, or package version metadata needed to change for this notes-only close-out.
+
+## Compatibility points now locked down
+
+The following behaviours are covered by the Stage 13 audit or tests and should not be changed incidentally:
 
 - `predict20x()` invisibly returns a list with `frame`, `fit`, `se.fit`, `residual.scale`, `df`, and `cilevel`.
 - `predictCount()` invisibly returns the rounded response-scale data frame.
-- `predictGLM()` returned a matrix with `fit`, `lwr`, and `upr` columns before Stage 13.4; Stage 13.4 intentionally standardised this wrapper to return a data frame with the same columns.
-- Existing column names with leading spaces are compatibility-sensitive and should not be renamed casually.
+- `predictGLM()` returns a data frame with `fit`, `lwr`, and `upr` columns.
+- Unsupported `predictGLM(type = ...)` values keep the legacy fallback to link-scale output.
+- `predictGLM()` applies the inverse link to `fit`, `lwr`, and `upr` for response-scale output.
+- Quasi-model interval multiplier behaviour remains explicit at the wrapper level.
+- Existing compatibility-sensitive column names, including leading spaces, should not be renamed casually.
 - Existing teaching-wrapper messages and printed output should not be changed incidentally.
-- `predict20x()` and `predictCount()` currently impose stricter `newdata` shape expectations than base prediction methods. This is documented as compatibility behaviour.
-- `predictGLM()` currently accepts log and logit links and treats all other links as unsupported.
+- The prediction wrappers keep their first-order `newdata` data-frame validation semantics.
 
-## Consolidate duplicated helper logic
+## Deferred items
 
-Possible narrow improvements for later stages:
+The following items remain deferred because they carry higher behaviour or API risk, or because they are better handled in a separate stream:
 
-- Extract common `newdata` data-frame validation to a small internal helper.
-- Extract row-name construction for prediction rows.
-- Consider a helper for legacy column-name derivation used by `predict20x()` and `predictCount()`.
-- Consider a helper that assembles rounded teaching-output data frames while preserving legacy column names.
-
-Any consolidation should be covered by regression tests that compare current outputs before and after the internal change.
-
-## Clarify internal naming
-
-Possible internal-only naming improvements:
-
-- Normalise mixed local names such as `name.row`, `nameRow`, and `rowNames` when the surrounding code is touched.
-- Prefer names that distinguish link-scale quantities from response-scale quantities in GLM wrappers.
-- Remove or fix unused local assignments only when doing so is covered by tests and does not affect output.
-
-These should remain internal naming changes only and should not rename exported functions or documented arguments.
-
-## Add targeted regression tests
-
-Potential tests for later sub-stages:
-
-- `predictGLM()` should keep legacy handling of unsupported `type` values unless a deliberate compatibility decision is made.
-- `predictGLM()` should keep current first-order `newdata` validation semantics for interaction or transformed-term models.
-- `predict20x()` and `predictCount()` should preserve legacy column names and row names for multi-row `newdata`.
-- Factor-predictor examples should preserve current data-frame column coercion and naming behaviour.
-- Quasi-model interval quantile behaviour should remain covered for `quasit = TRUE` and should also document `quasit = FALSE`.
-
-## Defer because behaviour/API risk is too high
-
-The following are not suitable as incidental Stage 13 changes:
-
-- Replacing these teaching wrappers with ordinary `predict()` interfaces.
-- Changing return classes, visibility, column names, or rounding rules without an explicit stage decision and regression tests.
-- Removing support for legacy `newdata` order and naming assumptions.
+- Replacing the teaching wrappers with ordinary `predict()` interfaces.
+- Further changing return classes, visibility, column names, or rounding rules.
+- Removing legacy `newdata` order and naming assumptions.
 - Broadly changing `predictGLM()` link support.
 - Changing printed messages or teaching output without an explicit user-visible decision.
+- Refactoring diagnostic or plotting internals before starting a separate diagnostic/plotting audit stage.
 
+## Recommended next stream
 
-## Stage 13 progress
-
-Completed implementation sub-stages:
-
-- Stage 13.2 consolidated shared `newdata` data-frame validation without changing wrapper output or error text.
-- Stage 13.3 consolidated internal prediction-output formatting for teaching prediction frames and GLM prediction matrices while preserving legacy column names, rounding, return classes, and scale handling.
-- Stage 13.4 standardised `predictGLM()` to return a data frame rather than a matrix, while preserving `fit`, `lwr`, and `upr` column names, link/response scale calculations, and legacy fallback of unsupported `type` values to the link scale.
-- Stage 13.5 added regression coverage for multi-row prediction outputs, binomial-logit `predictGLM()` return shapes, and wrapper-level quasi interval multiplier behaviour without changing prediction internals.
-
-## Recommended next sub-stage
-
-Stage 13.6 should pause broader prediction-wrapper refactoring and either close the prediction-internals stream with a short wrap-up note or choose one final narrow cleanup from this audit. A reasonable final cleanup would be consolidating the legacy prediction-row naming logic across `predict20x()` and `predictCount()`, but only if the compatibility tests remain focused on preserving current row names and printed table structure.
-
-Further diagnostic-helper internals should remain deferred until the prediction-wrapper stream is closed or explicitly extended.
+Stage 13 can now be treated as complete. The next modernisation stream should start with a fresh audit stage, for example Stage 14, focused on diagnostic and plotting internals. That stage should begin audit-only before any implementation work, following the same pattern used successfully for prediction wrappers.
