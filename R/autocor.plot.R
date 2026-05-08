@@ -18,16 +18,34 @@
 #' autocorPlot(airpass.fit)
 #'
 #' @export autocorPlot
-#' @aliases autocor.plot
-#' @note \code{autocor.plot} is a legacy alias retained for older teaching material.
+#' @note \code{autocor.plot} is deprecated and no longer exported.
 #'   Use \code{autocorPlot()} in new code.
-autocorPlot = autocor.plot = function(fit, main = "Current vs Lagged residuals", ...) {
-    currentRes = fit$residuals[-1]
-    residualCount = length(fit$residuals)
-    laggedRes = fit$residuals[-residualCount]
-    plot(currentRes ~ laggedRes, main = main, ...)
-    ab = lm(currentRes ~ laggedRes)$coeff
-    ## abline(ab[1],ab[2],lty=2)
-    abline(v = 0, lty = 3)
-    abline(h = 0, lty = 3)
+autocorPlot = function(fit, main = "Current vs Lagged residuals", ...) {
+  currentRes = fit$residuals[-1]
+  residualCount = length(fit$residuals)
+  laggedRes = fit$residuals[-residualCount]
+  plot(currentRes ~ laggedRes, main = main, ...)
+  ab = lm(currentRes ~ laggedRes)$coeff
+  ## abline(ab[1],ab[2],lty=2)
+  abline(v = 0, lty = 3)
+  abline(h = 0, lty = 3)
+}
+
+
+#' Deprecated autocorrelation plot alias
+#'
+#' Provides a deprecated compatibility alias for `autocorPlot()`.
+#'
+#' @param fit output from the function `lm()`.
+#' @param main the plot title.
+#' @param ... extra parameters passed to `autocorPlot()`.
+#' @return Invisibly returns the result of `autocorPlot()`, called for its
+#' plotting side effect.
+#' @keywords internal
+autocor.plot = function(fit, main = "Current vs Lagged residuals", ...) {
+  .Deprecated(
+    new = "autocorPlot",
+    msg = "autocor.plot() is deprecated and is no longer exported; use autocorPlot() instead."
+  )
+  autocorPlot(fit = fit, main = main, ...)
 }

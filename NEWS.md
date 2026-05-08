@@ -1,3 +1,41 @@
+# s20x 3.2.276
+
+## Data
+- Store `nzarrivals.df$month` as a factor with levels ordered by `month.abb` and update the dataset documentation accordingly.
+
+# s20x 3.2.274
+
+## Data
+- Add `nzarrivals.df`, a monthly Stats NZ Infoshare arrivals data set, and fix the Stage 14 `colors()` import so note-level checks remain strict.
+
+# s20x 3.2.273
+
+- Document remaining Stage 14 internal helper functions with roxygen2 comments.
+
+# s20x 3.2.272
+
+- Document internal prediction helper functions with roxygen2 comments.
+
+# s20x 3.2.271
+
+## Modernisation
+- Removed qualified namespace calls from R source files by adding roxygen imports, broadened internal helper documentation, and hardened the Stage 14 style-compliance regression test.
+
+# s20x 3.2.270
+
+## Modernisation
+- Consolidated residual and fitted-value extraction for targeted diagnostic plotting internals without changing plotting output or public APIs.
+
+# s20x 3.2.269
+
+## Modernisation
+- Added a small internal graphics-parameter save/restore helper and used it in targeted diagnostic plotting code paths without changing plotting output.
+
+# s20x 3.2.268
+
+## Modernisation
+- Deprecated legacy diagnostic plotting helpers `modelcheck()`, `modcheck()`, `boxqq()`, `stripqq()`, and the `autocor.plot()` alias, and removed them from the exported API while keeping their internal compatibility definitions.
+
 # s20x 3.2.267
 
 ## Modernisation

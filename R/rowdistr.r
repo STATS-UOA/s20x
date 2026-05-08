@@ -1,3 +1,12 @@
+#' Prepare row-distribution table summaries
+#'
+#' Converts a two-way count table into the row, column, whole-table, and total
+#' summaries used by `rowdistr()`.
+#'
+#' @param crosstablist matrix containing a two-way table of counts.
+#' @return A list containing row proportions, column proportions, whole-table
+#' proportions, and totals.
+#' @keywords internal
 prepCrosstabList = function(crosstablist) {
     rowTotals = apply(crosstablist, 1, sum)
     colTotals = apply(crosstablist, 2, sum)
@@ -57,6 +66,16 @@ prepCrosstabList = function(crosstablist) {
     crosstablist
 }
 
+#' Draw row-distribution comparison plots
+#'
+#' Draws the plotting side effects used by `rowdistr()` for the selected
+#' comparison mode.
+#'
+#' @param crosstablist prepared row-distribution summaries.
+#' @param comp comparison mode, one of `"basic"`, `"within"`, or `"between"`.
+#' @param conf.level confidence level used for between-row intervals.
+#' @return Called for its plotting side effects.
+#' @keywords internal
 drawPlot = function(crosstablist, comp = c("basic", "within", "between"),
                      conf.level = 0.95) {
     comp = match.arg(comp)
@@ -183,6 +202,16 @@ drawPlot = function(crosstablist, comp = c("basic", "within", "between"),
     }
 }
 
+#' Print row-distribution summaries
+#'
+#' Prints the teaching summaries used by `rowdistr()` for the selected
+#' comparison mode.
+#'
+#' @param crosstablist prepared row-distribution summaries.
+#' @param comp comparison mode, one of `"basic"`, `"within"`, or `"between"`.
+#' @param conf.level confidence level used for interval summaries.
+#' @return Invisibly returns the row-proportion matrix printed in the summary.
+#' @keywords internal
 printOutput = function(crosstablist, comp = c("basic", "within", "between"),
                         conf.level = 0.95) {
     comp = match.arg(comp)
@@ -371,7 +400,7 @@ rowdistr = function(crosstablist, comp = c("basic", "within", "between"),
                     conf.level = 0.95, plot = TRUE, suppressText = FALSE) {
     comp = match.arg(comp)
 
-    if (!is.matrix(crosstablist) && !methods::is(crosstablist, "ct.20x")) {
+    if (!is.matrix(crosstablist) && !is(crosstablist, "ct.20x")) {
         stop("check form of crosstablist: input list must be output from crosstabs or a list of similar form")
     }
 

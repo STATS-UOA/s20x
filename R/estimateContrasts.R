@@ -21,8 +21,7 @@
 #'   contrast, the Tukey lower and upper limits of the confidence interval, the
 #'   unadjusted p-value, and the Tukey and Bonferroni p-values.
 #' @seealso [summary1way()], [summary2way()], [multipleComp()]
-#' @note This function is no longer exported as it should never be called by the
-#'   user. It will ultimately be removed.
+#' @export
 #' @keywords models
 #'
 #' @examples
@@ -32,7 +31,7 @@
 #' computer.fit = lm(score ~ selfassess, data = computer.df)
 #' contrast.matrix = matrix(c(-1 / 2, -1 / 2, 1), byrow = TRUE, nrow = 1, ncol = 3)
 #' contrast.matrix
-#' s20x:::estimateContrasts(contrast.matrix, computer.fit)
+#' estimateContrasts(contrast.matrix, computer.fit)
 estimateContrasts = function(contrast.matrix, fit, row = TRUE, alpha = 0.05, L = NULL, FUN = identity) {
   FUN = match.fun(FUN)
 

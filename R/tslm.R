@@ -61,6 +61,7 @@
 #' @importFrom stats logLik model.frame nobs vcov
 #' @importFrom graphics abline par plot
 #' @importFrom stats acf printCoefmat qqline qqnorm
+#' @importFrom nlme corARMA gls
 #' @importFrom utils packageVersion
 #' @importFrom methods is
 #' @seealso [stats::lm()], [nlme::gls()], [nlme::corARMA()]
@@ -86,7 +87,7 @@ tslm = function(formula, data, time, method = "REML", ...) {
   }
 
   if (is.null(parsedFormula$errorSpec)) {
-    fit = stats::lm(parsedFormula$meanFormula, data = data, ...)
+    fit = lm(parsedFormula$meanFormula, data = data, ...)
     fit$call$formula = parsedFormula$meanFormula
     fit$call$data = dataCall
   } else {
@@ -97,18 +98,18 @@ tslm = function(formula, data, time, method = "REML", ...) {
         "No time variable supplied; assuming observations are already in time order.",
         call. = FALSE
       )
-      correlationForm = stats::as.formula("~ 1")
+      correlationForm = as.formula("~ 1")
     } else {
       if (!timeName %in% names(data)) {
         stop("The time variable '", timeName, "' was not found in 'data'", call. = FALSE)
       }
-      correlationForm = stats::as.formula(paste("~", timeName))
+      correlationForm = as.formula(paste("~", timeName))
     }
 
-    fit = nlme::gls(
+    fit = gls(
       parsedFormula$meanFormula,
       data = data,
-      correlation = nlme::corARMA(
+      correlation = corARMA(
         p = parsedFormula$errorSpec$p,
         q = 0,
         form = correlationForm
@@ -175,10 +176,10 @@ summary.tslm = function(object, verbose = FALSE, ...) {
     coefficients = getTslmCoefficientTable(fitSummary),
     sigma = fitSummary$sigma,
     df = getTslmResidualDf(object$fit, fitSummary),
-    n = stats::nobs(object$fit),
-    aic = tryCatch(stats::AIC(object$fit), error = function(e) NA_real_),
-    bic = tryCatch(stats::BIC(object$fit), error = function(e) NA_real_),
-    logLik = tryCatch(stats::logLik(object$fit), error = function(e) NA),
+    n = nobs(object$fit),
+    aic = tryCatch(AIC(object$fit), error = function(e) NA_real_),
+    bic = tryCatch(BIC(object$fit), error = function(e) NA_real_),
+    logLik = tryCatch(logLik(object$fit), error = function(e) NA),
     arParameters = getTslmArParameters(object)
   )
 
@@ -224,7 +225,7 @@ print.summary.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...
   }
 
   cat("Coefficients:\n")
-  stats::printCoefmat(x$coefficients, digits = digits, signif.stars = FALSE, ...)
+  printCoefmat(x$coefficients, digits = digits, signif.stars = FALSE, ...)
 
   cat("\nResidual standard error:", format(signif(x$sigma, digits = digits)))
   if (!is.na(x$df)) {
@@ -251,31 +252,31 @@ plot.tslm = function(x, which = c("all", "residuals", "time", "acf", "qq"),
   diagnosticData = getTslmDiagnosticData(x, residualType = residualType)
 
   if (which == "all") {
-    oldPar = graphics::par(no.readonly = TRUE)
-    on.exit(graphics::par(oldPar), add = TRUE)
-    graphics::par(mfrow = c(2, 2))
+    restoreGraphicsParameters = saveGraphicsParameters(noReadonly = TRUE)
+    on.exit(restoreGraphicsParameters(), add = TRUE)
+    par(mfrow = c(2, 2))
 
     plotTslmResiduals(diagnosticData, residualType = residualType, ...)
     plotTslmTimeResiduals(diagnosticData, x, residualType = residualType, ...)
-    stats::acf(diagnosticData$residuals, main = paste("ACF of", residualType, "residuals"), ...)
-    stats::qqnorm(diagnosticData$residuals, main = paste("Normal Q-Q plot of", residualType, "residuals"), ...)
-    stats::qqline(diagnosticData$residuals)
+    acf(diagnosticData$residuals, main = paste("ACF of", residualType, "residuals"), ...)
+    qqnorm(diagnosticData$residuals, main = paste("Normal Q-Q plot of", residualType, "residuals"), ...)
+    qqline(diagnosticData$residuals)
   } else if (which == "residuals") {
     plotTslmResiduals(diagnosticData, residualType = residualType, ...)
   } else if (which == "time") {
     plotTslmTimeResiduals(diagnosticData, x, residualType = residualType, ...)
   } else if (which == "acf") {
-    stats::acf(diagnosticData$residuals, main = paste("ACF of", residualType, "residuals"), ...)
+    acf(diagnosticData$residuals, main = paste("ACF of", residualType, "residuals"), ...)
   } else {
-    stats::qqnorm(diagnosticData$residuals, main = paste("Normal Q-Q plot of", residualType, "residuals"), ...)
-    stats::qqline(diagnosticData$residuals)
+    qqnorm(diagnosticData$residuals, main = paste("Normal Q-Q plot of", residualType, "residuals"), ...)
+    qqline(diagnosticData$residuals)
   }
 
   invisible(x)
 }
 #' @export
 coef.tslm = function(object, ...) {
-  stats::coef(object$fit, ...)
+  coef(object$fit, ...)
 }
 
 #' @export
@@ -283,15 +284,15 @@ residuals.tslm = function(object, type = c("response", "pearson", "normalised", 
   type = matchTslmResidualType(type)
 
   if (identical(type, "normalized") && is.null(object$errorSpec)) {
-    responseResiduals = as.numeric(stats::residuals(object$fit, ...))
-    return(responseResiduals / stats::sigma(object$fit))
+    responseResiduals = as.numeric(residuals(object$fit, ...))
+    return(responseResiduals / sigma(object$fit))
   }
 
   if (is.null(object$errorSpec)) {
-    return(as.numeric(stats::residuals(object$fit, type = type, ...)))
+    return(as.numeric(residuals(object$fit, type = type, ...)))
   }
 
-  as.numeric(stats::residuals(object$fit, type = type, ...))
+  as.numeric(residuals(object$fit, type = type, ...))
 }
 
 #' ANOVA tables for time series linear models
@@ -332,14 +333,14 @@ anova.tslm = function(object, ..., verbose = FALSE) {
 
   if (length(modelList) > 1 || isTRUE(verbose)) {
     fitList = lapply(modelList, extractTslmFit)
-    return(do.call(stats::anova, fitList))
+    return(do.call(anova, fitList))
   }
 
   if (is.null(object$errorSpec)) {
-    return(stats::anova(object$fit))
+    return(anova(object$fit))
   }
 
-  rawTable = stats::anova(object$fit)
+  rawTable = anova(object$fit)
   out = formatTslmAnovaTable(rawTable)
 
   structure(
@@ -369,12 +370,12 @@ print.anova.tslm = function(x, digits = max(3L, getOption("digits") - 3L), ...) 
 
 #' @export
 fitted.tslm = function(object, ...) {
-  as.numeric(stats::fitted(object$fit, ...))
+  as.numeric(fitted(object$fit, ...))
 }
 
 #' @export
 predict.tslm = function(object, ...) {
-  stats::predict(object$fit, ...)
+  predict(object$fit, ...)
 }
 
 #' @export
@@ -384,40 +385,47 @@ formula.tslm = function(x, ...) {
 
 #' @export
 model.frame.tslm = function(formula, ...) {
-  stats::model.frame(formula$fit, ...)
+  model.frame(formula$fit, ...)
 }
 
 #' @export
 vcov.tslm = function(object, ...) {
-  stats::vcov(object$fit, ...)
+  vcov(object$fit, ...)
 }
 
 #' @export
 nobs.tslm = function(object, ...) {
-  stats::nobs(object$fit, ...)
+  nobs(object$fit, ...)
 }
 
 #' @export
 logLik.tslm = function(object, ...) {
-  stats::logLik(object$fit, ...)
+  logLik(object$fit, ...)
 }
 
 #' @export
 AIC.tslm = function(object, ..., k = 2) {
-  stats::AIC(object$fit, ..., k = k)
+  AIC(object$fit, ..., k = k)
 }
 
 #' @export
 BIC.tslm = function(object, ...) {
-  stats::BIC(object$fit, ...)
+  BIC(object$fit, ...)
 }
 
+#' Parse a tslm formula
+#'
+#' Separate the mean-model formula from a supported `tslm()` error structure.
+#'
+#' @param formula a model formula supplied to [tslm()].
+#' @return A list containing `meanFormula` and `errorSpec`.
+#' @keywords internal
 parseTslmFormula = function(formula) {
   if (!inherits(formula, "formula")) {
     stop("'formula' must be a formula", call. = FALSE)
   }
 
-  termsObject = stats::terms(
+  termsObject = terms(
     formula,
     specials = c("ar", "ma", "arma", "arima", "sarima"),
     keep.order = TRUE
@@ -432,6 +440,13 @@ parseTslmFormula = function(formula) {
   )
 }
 
+#' Extract a tslm error specification
+#'
+#' Extract and validate the supported autoregressive error term from parsed formula terms.
+#'
+#' @param termsObject a terms object created from a `tslm()` formula.
+#' @return `NULL` for independent errors, or a list describing the AR error structure.
+#' @keywords internal
 extractTslmErrorSpec = function(termsObject) {
   errorTerms = getTslmErrorTerms(termsObject)
 
@@ -472,6 +487,14 @@ extractTslmErrorSpec = function(termsObject) {
   )
 }
 
+#' Remove tslm error terms
+#'
+#' Remove supported error-structure terms from the formula used for the fitted mean model.
+#'
+#' @param formula a model formula supplied to [tslm()].
+#' @param termsObject a terms object created from `formula`.
+#' @return A formula containing only the mean-model terms.
+#' @keywords internal
 removeTslmErrorTerms = function(formula, termsObject) {
   termLabels = attr(termsObject, "term.labels")
   errorTerms = getTslmErrorTerms(termsObject)
@@ -497,14 +520,28 @@ removeTslmErrorTerms = function(formula, termsObject) {
     }
   }
 
-  stats::as.formula(paste(responseText, "~", rhsText), env = environment(formula))
+  as.formula(paste(responseText, "~", rhsText), env = environment(formula))
 }
 
+#' Get tslm error terms
+#'
+#' Identify formula term labels that use a supported `tslm()` error-structure form.
+#'
+#' @param termsObject a terms object created from a `tslm()` formula.
+#' @return A character vector of error-structure term labels.
+#' @keywords internal
 getTslmErrorTerms = function(termsObject) {
   termLabels = attr(termsObject, "term.labels")
   termLabels[vapply(termLabels, isTslmErrorTerm, logical(1))]
 }
 
+#' Check a tslm error term
+#'
+#' Check whether a formula term label is a supported `tslm()` error-structure term.
+#'
+#' @param termLabel a formula term label.
+#' @return `TRUE` when the term label is an error-structure term; otherwise `FALSE`.
+#' @keywords internal
 isTslmErrorTerm = function(termLabel) {
   specialNames = c("ar", "ma", "arma", "arima", "sarima")
   parsedTerm = try(parse(text = termLabel)[[1]], silent = TRUE)
@@ -517,6 +554,13 @@ isTslmErrorTerm = function(termLabel) {
   termName %in% specialNames
 }
 
+#' Capture an optional column name
+#'
+#' Convert a supplied symbol or character value into a column name for `tslm()` internals.
+#'
+#' @param argumentExpression the unevaluated argument expression.
+#' @return A character name or `NULL` when no name was supplied.
+#' @keywords internal
 captureOptionalName = function(argumentExpression) {
   if (identical(argumentExpression, quote(expr = ))) {
     return(NULL)
@@ -533,6 +577,13 @@ captureOptionalName = function(argumentExpression) {
   stop("'time' must be supplied as a column name", call. = FALSE)
 }
 
+#' Get a tslm coefficient table
+#'
+#' Extract a coefficient table from either an `lm` or `gls` summary object.
+#'
+#' @param fitSummary summary output from the underlying fitted model.
+#' @return A coefficient matrix.
+#' @keywords internal
 getTslmCoefficientTable = function(fitSummary) {
   if (!is.null(fitSummary$tTable)) {
     out = fitSummary$tTable
@@ -551,6 +602,14 @@ getTslmCoefficientTable = function(fitSummary) {
   stop("Could not extract coefficient table from the fitted model", call. = FALSE)
 }
 
+#' Get tslm residual degrees of freedom
+#'
+#' Extract residual degrees of freedom from a fitted model and its summary.
+#'
+#' @param fit the underlying fitted model.
+#' @param fitSummary summary output from the fitted model.
+#' @return The residual degrees of freedom, or `NA_integer_` if unavailable.
+#' @keywords internal
 getTslmResidualDf = function(fit, fitSummary) {
   if (!is.null(fitSummary$df) && length(fitSummary$df) >= 2) {
     return(unname(fitSummary$df[[2]]))
@@ -563,6 +622,13 @@ getTslmResidualDf = function(fit, fitSummary) {
   NA_integer_
 }
 
+#' Get tslm autoregressive parameters
+#'
+#' Extract fitted autoregressive parameters from a `tslm` object when present.
+#'
+#' @param object a fitted `tslm` object.
+#' @return A named numeric vector of AR parameters.
+#' @keywords internal
 getTslmArParameters = function(object) {
   if (is.null(object$errorSpec)) {
     return(numeric())
@@ -574,7 +640,7 @@ getTslmArParameters = function(object) {
   }
 
   out = tryCatch(
-    stats::coef(corStruct, unconstrained = FALSE),
+    coef(corStruct, unconstrained = FALSE),
     error = function(e) numeric()
   )
 
@@ -585,14 +651,28 @@ getTslmArParameters = function(object) {
   out
 }
 
+#' Extract the underlying tslm fit
+#'
+#' Return the underlying fitted model from a `tslm` object, or the input model unchanged.
+#'
+#' @param model a model object.
+#' @return A fitted model object.
+#' @keywords internal
 extractTslmFit = function(model) {
-  if (methods::is(model, "tslm")) {
+  if (is(model, "tslm")) {
     return(model$fit)
   }
 
   model
 }
 
+#' Format a tslm ANOVA table
+#'
+#' Convert the raw AR-error ANOVA table into the compact teaching table.
+#'
+#' @param rawTable the ANOVA table returned by the underlying fitted model.
+#' @return A data frame with compact ANOVA columns.
+#' @keywords internal
 formatTslmAnovaTable = function(rawTable) {
   out = as.data.frame(rawTable)
 
@@ -626,22 +706,25 @@ formatTslmAnovaTable = function(rawTable) {
   out
 }
 
+#' Get tslm diagnostic data
+#'
+#' Collect fitted values, residuals, and time values for `tslm` diagnostic plots.
+#'
+#' @param object a fitted `tslm` object.
+#' @param residualType residual type requested for diagnostic plots.
+#' @return A list with `fitted`, `residuals`, and `time` components.
+#' @keywords internal
 getTslmDiagnosticData = function(object, residualType = "normalised") {
   residualType = matchTslmResidualType(residualType)
-  residualValues = stats::residuals(object, type = residualType)
-  fittedValues = stats::fitted(object)
+  diagnosticData = getModelResidualFittedData(
+    object,
+    residualType = residualType,
+    context = "tslm object"
+  )
 
-  if (length(residualValues) != length(fittedValues)) {
-    stop(
-      "Could not align residuals and fitted values for this tslm object. ",
-      "This is an internal plotting error; please report it with the fitted model.",
-      call. = FALSE
-    )
-  }
+  timeValues = getTslmTimeValues(object, length(diagnosticData$residuals))
 
-  timeValues = getTslmTimeValues(object, length(residualValues))
-
-  if (length(timeValues) != length(residualValues)) {
+  if (length(timeValues) != length(diagnosticData$residuals)) {
     stop(
       "Could not align the time variable with the model residuals. ",
       "Check that the time variable was supplied from the same data frame used to fit the model.",
@@ -650,12 +733,20 @@ getTslmDiagnosticData = function(object, residualType = "normalised") {
   }
 
   list(
-    fitted = fittedValues,
-    residuals = residualValues,
+    fitted = diagnosticData$fitted,
+    residuals = diagnosticData$residuals,
     time = timeValues
   )
 }
 
+#' Get tslm time values
+#'
+#' Extract or reconstruct the time values used by `tslm` diagnostic plots.
+#'
+#' @param object a fitted `tslm` object.
+#' @param nResiduals expected number of residuals.
+#' @return A vector of time or observation-order values.
+#' @keywords internal
 getTslmTimeValues = function(object, nResiduals) {
   if (is.null(object$time)) {
     return(seq_len(nResiduals))
@@ -666,7 +757,7 @@ getTslmTimeValues = function(object, nResiduals) {
   }
 
   modelFrame = tryCatch(
-    stats::model.frame(object$fit),
+    model.frame(object$fit),
     error = function(e) NULL
   )
 
@@ -680,8 +771,17 @@ getTslmTimeValues = function(object, nResiduals) {
   )
 }
 
+#' Plot tslm residuals against fitted values
+#'
+#' Draw the residuals-versus-fitted diagnostic panel for `tslm` objects.
+#'
+#' @param diagnosticData diagnostic data returned by `getTslmDiagnosticData()`.
+#' @param residualType residual type label used for plot text.
+#' @param ... additional graphical arguments passed to [graphics::plot()].
+#' @return Called for its plotting side effect.
+#' @keywords internal
 plotTslmResiduals = function(diagnosticData, residualType = "normalised", ...) {
-  graphics::plot(
+  plot(
     diagnosticData$fitted,
     diagnosticData$residuals,
     xlab = "Fitted values",
@@ -689,11 +789,21 @@ plotTslmResiduals = function(diagnosticData, residualType = "normalised", ...) {
     main = paste0(formatTslmResidualTypeLabel(residualType), " residuals versus fitted values"),
     ...
   )
-  graphics::abline(h = 0, lty = 2)
+  abline(h = 0, lty = 2)
 }
 
+#' Plot tslm residuals over time
+#'
+#' Draw the residuals-over-time diagnostic panel for `tslm` objects.
+#'
+#' @param diagnosticData diagnostic data returned by `getTslmDiagnosticData()`.
+#' @param object a fitted `tslm` object.
+#' @param residualType residual type label used for plot text.
+#' @param ... additional graphical arguments passed to [graphics::plot()].
+#' @return Called for its plotting side effect.
+#' @keywords internal
 plotTslmTimeResiduals = function(diagnosticData, object, residualType = "normalised", ...) {
-  graphics::plot(
+  plot(
     diagnosticData$time,
     diagnosticData$residuals,
     type = "b",
@@ -702,10 +812,17 @@ plotTslmTimeResiduals = function(diagnosticData, object, residualType = "normali
     main = paste0(formatTslmResidualTypeLabel(residualType), " residuals over time"),
     ...
   )
-  graphics::abline(h = 0, lty = 2)
+  abline(h = 0, lty = 2)
 }
 
 
+#' Match a tslm residual type
+#'
+#' Match and normalise residual type aliases used by `tslm` diagnostics.
+#'
+#' @param type requested residual type.
+#' @return The matched residual type used internally.
+#' @keywords internal
 matchTslmResidualType = function(type) {
   type = match.arg(type, c("response", "pearson", "normalised", "normalized"))
 
@@ -716,6 +833,13 @@ matchTslmResidualType = function(type) {
   type
 }
 
+#' Format a tslm residual type label
+#'
+#' Convert an internal residual type into plot-label text.
+#'
+#' @param type internal residual type.
+#' @return A sentence-case residual type label.
+#' @keywords internal
 formatTslmResidualTypeLabel = function(type) {
   if (identical(type, "normalized")) {
     type = "normalised"
@@ -724,10 +848,24 @@ formatTslmResidualTypeLabel = function(type) {
   sentenceCase(type)
 }
 
+#' Convert text to sentence case
+#'
+#' Capitalise the first character of a string used in diagnostic labels.
+#'
+#' @param x a character vector.
+#' @return `x` with the first character capitalised.
+#' @keywords internal
 sentenceCase = function(x) {
   paste0(toupper(substr(x, 1, 1)), substr(x, 2, nchar(x)))
 }
 
+#' Require a suggested package
+#'
+#' Check that a suggested package is installed before optional functionality uses it.
+#'
+#' @param package package name.
+#' @return Invisibly returns `TRUE`, or errors if the package is unavailable.
+#' @keywords internal
 requireSuggestedPackage = function(package) {
   if (!requireNamespace(package, quietly = TRUE)) {
     stop(

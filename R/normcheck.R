@@ -76,6 +76,7 @@ normcheck = function(x, ...) {
 
 #' @export
 #' @describeIn normcheck Testing for normality plot
+#' @importFrom grDevices colors
 normcheck.default = function(x,
                              xlab = c("Theoretical Quantiles", ""), 
                              ylab = c("Sample Quantiles", ""),
@@ -116,8 +117,8 @@ normcheck.default = function(x,
     }
   }
   
-  col = match.arg(col, c("light blue", grDevices::colors()))
-  bcol = match.arg(bcol, grDevices::colors())
+  col = match.arg(col, c("light blue", colors()))
+  bcol = match.arg(bcol, colors())
   
   ## only grab the parameters that are going to be set
   oldPar = par(no.readonly = TRUE)
@@ -221,7 +222,7 @@ normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""),
                         shapiro.wilk = FALSE, 
                         whichPlot = 1:2, 
                         usePar = TRUE, ...){
-  if (missing(x) || !methods::is(x, "lm")){ 
+  if (missing(x) || !is(x, "lm")){ 
     stop("missing or incorrect lm object")
   }
   
@@ -257,7 +258,7 @@ normcheck.tslm = function(x, xlab = c("Theoretical Quantiles", ""),
                           whichPlot = 1:2,
                           usePar = TRUE,
                           residualType = "normalised", ...) {
-  if (missing(x) || !methods::is(x, "tslm")) {
+  if (missing(x) || !is(x, "tslm")) {
     stop("missing or incorrect tslm object")
   }
 

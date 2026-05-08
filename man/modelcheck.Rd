@@ -3,8 +3,7 @@
 \name{modelcheck}
 \alias{modelcheck}
 \alias{modelcheck.lm}
-\title{Model checking plots
-Compact layout for model checking plots.}
+\title{Model checking plots}
 \usage{
 modelcheck(x, ...)
 
@@ -27,12 +26,14 @@ called for its plotting side effects and does not provide a stable data return
 object.
 }
 \description{
-Model checking plots
-Compact layout for model checking plots.
+Draw the teaching diagnostic plots used by older `s20x` workflows.
+`modelcheck()` is retained as an exported compatibility helper for model
+checking, while newer teaching material may use focused diagnostic helpers
+such as [eovcheck()], [normcheck()], and [cooks20x()] directly.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{modelcheck(lm)}: Model checking plots
+\item \code{modelcheck(lm)}: Model checking plots for linear models.
 
 }}
 \examples{

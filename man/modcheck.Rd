@@ -3,7 +3,7 @@
 \name{modcheck}
 \alias{modcheck}
 \alias{modcheck.lm}
-\title{Model checking plots}
+\title{Deprecated model checking plots}
 \usage{
 modcheck(x, ...)
 
@@ -50,7 +50,7 @@ function is called for its plotting side effects and does not provide a stable
 data return object.
 }
 \description{
-Plots four model checking plots: residuals versus fitted values, a normal
+`modcheck()` is deprecated and is no longer exported. It plots four model checking plots: residuals versus fitted values, a normal
 Q-Q plot, a histogram of residuals with a normal distribution superimposed,
 and a Cook's distance plot.
 }
@@ -60,6 +60,7 @@ and a Cook's distance plot.
 
 }}
 \examples{
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 
 # Synthetic teaching example: an exponential growth curve
 set.seed(123)
@@ -67,15 +68,15 @@ e = rnorm(100, 0, 0.1)
 x = rnorm(100)
 y = exp(5 + 3 * x + e)
 fit = lm(y ~ x, data = data.frame(x, y))
-modcheck(fit)
+s20x:::modcheck(fit)
 
 # An exponential growth curve with the correct transformation
 fit = lm(log(y) ~ x, data = data.frame(x, y))
-modcheck(fit)
+s20x:::modcheck(fit)
 
 # Peruvian Indians data
 data(peru.df)
-modcheck(lm(BP ~ weight, data = peru.df))
-
+s20x:::modcheck(lm(BP ~ weight, data = peru.df))
+\dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

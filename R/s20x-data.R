@@ -555,6 +555,27 @@ NULL
 
 NULL
 
+
+#' Monthly Arrivals to New Zealand
+#'
+#' Monthly international passenger arrivals to New Zealand from January 1921 to
+#' February 2026. Missing monthly observations, if present in the source series,
+#' are retained as rows with missing `arrivals.count` values.
+#'
+#' @name nzarrivals.df
+#' @docType data
+#' @format A data frame with monthly observations on 3 variables.
+#' \describe{
+#' \item{year}{Integer year.}
+#' \item{month}{Factor month abbreviation with levels given by `month.abb`.}
+#' \item{arrivals.count}{Integer number of international passenger arrivals.}
+#' }
+#' @source Stats NZ Infoshare, table ITM049AA, Total passenger movements
+#'   (monthly), Arrivals, Actual Counts. Last updated 14 April 2026.
+#' @keywords datasets
+
+NULL
+
 #' Oyster Abundances over Different Sites
 #'
 #' Data from an experiment to determine the abundance of oysters recruiting

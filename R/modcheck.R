@@ -1,6 +1,6 @@
-#' Model checking plots
+#' Deprecated model checking plots
 #' 
-#' Plots four model checking plots: residuals versus fitted values, a normal
+#' `modcheck()` is deprecated and is no longer exported. It plots four model checking plots: residuals versus fitted values, a normal
 #' Q-Q plot, a histogram of residuals with a normal distribution superimposed,
 #' and a Cook's distance plot.
 #' 
@@ -25,7 +25,7 @@
 #' @param \ldots additional parameters. Included for future flexibility, but unsure how this might be 
 #' used currently.
 #' @keywords hplot
-#' @examples
+#' @examplesIf FALSE
 #' 
 #' # Synthetic teaching example: an exponential growth curve
 #' set.seed(123)
@@ -33,24 +33,25 @@
 #' x = rnorm(100)
 #' y = exp(5 + 3 * x + e)
 #' fit = lm(y ~ x, data = data.frame(x, y))
-#' modcheck(fit)
+#' s20x:::modcheck(fit)
 #' 
 #' # An exponential growth curve with the correct transformation
 #' fit = lm(log(y) ~ x, data = data.frame(x, y))
-#' modcheck(fit)
+#' s20x:::modcheck(fit)
 #' 
 #' # Peruvian Indians data
 #' data(peru.df)
-#' modcheck(lm(BP ~ weight, data = peru.df))
+#' s20x:::modcheck(lm(BP ~ weight, data = peru.df))
 #' 
 #' @importFrom methods is
-#' @export modcheck 
 modcheck = function(x, ...) {
+  .Deprecated(
+    msg = "modcheck() is deprecated and is no longer exported; use eovcheck(), normcheck(), and cooks20x() directly."
+  )
   UseMethod("modcheck")
 }
 
 
-#' @export
 #' @describeIn modcheck Model checking plots
 modcheck.lm = function(x, plotOrder = 1:4, 
                        args = list(eovcheck = list(smoother = FALSE, 
@@ -80,8 +81,8 @@ modcheck.lm = function(x, plotOrder = 1:4,
     stop("plotOrder must be in 1:4")
   }
   
-  oldPar = par(parVals)
-  on.exit(par(oldPar))
+  restoreGraphicsParameters = saveGraphicsParameters(parVals)
+  on.exit(restoreGraphicsParameters())
   
   Plots = c(eovcheck, normcheck, normcheck, cooks20x)[plotOrder]
   

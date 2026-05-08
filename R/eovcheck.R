@@ -188,10 +188,11 @@ eovcheck.formula = function(x, data = NULL,
     on.exit(par(opar))
     
     
-    plot(residuals(fit) ~ fitted(fit), xlab = xlab, ylab = ylab, main = "", ...)
+    diagnosticData = getModelResidualFittedData(fit, context = "equality-of-variance model")
+    plot(diagnosticData$residuals ~ diagnosticData$fitted, xlab = xlab, ylab = ylab, main = "", ...)
     abline(h = 0, lty = 3, col = "lightgrey")
-    resids = residuals(fit)
-    yhat = fitted(fit)
+    resids = diagnosticData$residuals
+    yhat = diagnosticData$fitted
     
     if (smoother) {
         lines(lowess(yhat, resids), col = "lightblue")
@@ -216,7 +217,7 @@ eovcheck.formula = function(x, data = NULL,
 #' @importFrom methods is
 #' @export
 eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
-    if (missing(x) || !methods::is(x, "lm")){ 
+    if (missing(x) || !is(x, "lm")){ 
         stop("missing or incorrect lm object")
     }
     

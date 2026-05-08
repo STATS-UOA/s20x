@@ -1,6 +1,6 @@
-#' Box plots and normal quantile-quantile plots
+#' Deprecated box plots and normal quantile-quantile plots
 #'
-#' Draws boxplots and normal quantile-quantile plots of x for each value of the
+#' `boxqq()` is deprecated and is no longer exported. It draws boxplots and normal quantile-quantile plots of x for each value of the
 #' grouping variable g
 #'
 #'
@@ -15,22 +15,23 @@
 #' @note This is a legacy teaching helper retained for compatibility with
 #'   older course material. New teaching material should prefer current
 #'   diagnostic plotting workflows.
-#' @examples
+#' @examplesIf FALSE
 #'
 #' ## Zoo data
 #' data(zoo.df)
-#' boxqq(attendance ~ day.type, data = zoo.df)
+#' s20x:::boxqq(attendance ~ day.type, data = zoo.df)
 #'
-#' @export boxqq
 boxqq = function(formula, ...) {
+  .Deprecated(
+    msg = "boxqq() is deprecated and is no longer exported."
+  )
   UseMethod("boxqq")
 }
 
 #' @describeIn boxqq Box plots and normal quantile-quantile plots
-#' @export
 boxqq.formula = function(formula, data = NULL, ...) {
-  oldPar = par(no.readonly = TRUE)
-  on.exit(par(oldPar, no.readonly = TRUE))
+  restoreGraphicsParameters = saveGraphicsParameters(noReadonly = TRUE)
+  on.exit(restoreGraphicsParameters())
 
   if (missing(formula) || length(formula) != 3) {
     stop("'formula' missing or incorrect")

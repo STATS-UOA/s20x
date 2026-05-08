@@ -3,7 +3,7 @@
 \name{stripqq}
 \alias{stripqq}
 \alias{stripqq.formula}
-\title{Strip charts and normal quantile-quantile plots}
+\title{Deprecated strip charts and normal quantile-quantile plots}
 \usage{
 stripqq(formula, ...)
 
@@ -19,7 +19,7 @@ the levels of the factor `g'. \code{NA}s are allowed in the data.}
 \item{\ldots}{Optional arguments that are passed to the \code{stripchart} function.}
 }
 \description{
-Draws strip charts and normal quantile quantile plots of x for each value of
+`stripqq()` is deprecated and is no longer exported. It draws strip charts and normal quantile quantile plots of x for each value of
 the grouping variable g
 }
 \section{Methods (by class)}{
@@ -33,10 +33,11 @@ This is a legacy teaching helper retained for compatibility with
   diagnostic plotting workflows.
 }
 \examples{
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 
 ## Zoo data
 data(zoo.df)
-stripqq(attendance~day.type, data = zoo.df)
-
+s20x:::stripqq(attendance~day.type, data = zoo.df)
+\dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

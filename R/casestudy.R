@@ -37,6 +37,8 @@
 #' cs("9_2")
 #' }
 #'
+#' @importFrom rmarkdown render
+#' @importFrom utils browseURL
 #' @export
 casestudy = function(
     id,
@@ -96,7 +98,7 @@ casestudy = function(
   file.copy(rmd, localRmd, overwrite = TRUE)
 
   out = do.call(
-    rmarkdown::render,
+    render,
     c(
       list(
         input = localRmd,
@@ -109,12 +111,21 @@ casestudy = function(
   )
 
   if (open) {
-    utils::browseURL(out)
+    browseURL(out)
   }
 
   invisible(out)
 }
 
+#' Resolve case-study output arguments
+#'
+#' Normalise legacy and camelCase output-directory arguments for `casestudy()`.
+#'
+#' @param output_dir legacy output directory argument.
+#' @param outputDirWasSupplied logical; whether `output_dir` was supplied by the caller.
+#' @param ... additional rendering arguments.
+#' @return A list containing `outputDir` and remaining `renderArgs`.
+#' @keywords internal
 resolveCaseStudyOutputArgs = function(output_dir, outputDirWasSupplied, ...) {
   renderArgs = list(...)
   argNames = names(renderArgs)

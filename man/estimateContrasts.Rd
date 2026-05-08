@@ -42,10 +42,6 @@ Returns a matrix whose rows correspond to the different contrasts
 Calculates and prints Tukey multiple confidence intervals for contrasts in
 one or two-way ANOVA.
 }
-\note{
-This function is no longer exported as it should never be called by the
-  user. It will ultimately be removed.
-}
 \examples{
 ## computer data:
 data(computer.df)
@@ -53,7 +49,7 @@ computer.df = within(computer.df, {selfassess = factor(selfassess)})
 computer.fit = lm(score ~ selfassess, data = computer.df)
 contrast.matrix = matrix(c(-1 / 2, -1 / 2, 1), byrow = TRUE, nrow = 1, ncol = 3)
 contrast.matrix
-s20x:::estimateContrasts(contrast.matrix, computer.fit)
+estimateContrasts(contrast.matrix, computer.fit)
 }
 \seealso{
 [summary1way()], [summary2way()], [multipleComp()]
