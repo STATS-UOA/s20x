@@ -12,7 +12,7 @@ rawData = rawData[periodRows, , drop = FALSE]
 
 year = as.integer(substr(rawData$period, 1, 4))
 monthNumber = as.integer(substr(rawData$period, 6, 7))
-month = factor(month.abb[monthNumber], levels = month.abb, ordered = TRUE)
+month = factor(month.abb[monthNumber], levels = month.abb)
 arrivals.count = as.integer(rawData$arrivals.count)
 
 nzarrivals.df = data.frame(

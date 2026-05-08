@@ -1,3 +1,8 @@
+# s20x 3.2.276
+
+## Data
+- Store `nzarrivals.df$month` as a factor with levels ordered by `month.abb` and update the dataset documentation accordingly.
+
 # s20x 3.2.274
 
 ## Data

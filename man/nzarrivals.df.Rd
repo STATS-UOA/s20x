@@ -8,7 +8,7 @@
 A data frame with monthly observations on 3 variables.
 \describe{
 \item{year}{Integer year.}
-\item{month}{Character month abbreviation using `month.abb`.}
+\item{month}{Factor month abbreviation with levels given by `month.abb`.}
 \item{arrivals.count}{Integer number of international passenger arrivals.}
 }
 }
