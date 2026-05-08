@@ -3,7 +3,7 @@
 \name{modelcheck}
 \alias{modelcheck}
 \alias{modelcheck.lm}
-\title{Deprecated model checking plots}
+\title{Model checking plots}
 \usage{
 modelcheck(x, ...)
 
@@ -26,28 +26,26 @@ called for its plotting side effects and does not provide a stable data return
 object.
 }
 \description{
-`modelcheck()` is deprecated and is no longer exported. Use focused
-diagnostic helpers such as [eovcheck()], [normcheck()], and [cooks20x()]
-directly in new teaching material.
+Draw the teaching diagnostic plots used by older `s20x` workflows.
+`modelcheck()` is retained as an exported compatibility helper for model
+checking, while newer teaching material may use focused diagnostic helpers
+such as [eovcheck()], [normcheck()], and [cooks20x()] directly.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{modelcheck(lm)}: Model checking plots
+\item \code{modelcheck(lm)}: Model checking plots for linear models.
 
 }}
 \examples{
-\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 data(peru.df)
 lmFit = lm(BP ~ weight, data = peru.df)
 
 # Plot residuals versus fitted values only
-# Deprecated compatibility helper, no longer exported
-s20x:::modelcheck(lmFit, 1)
+modelcheck(lmFit, 1)
 
 # Plot residuals versus fitted values, histogram, and Q-Q plot
-s20x:::modelcheck(lmFit, 1:2)
+modelcheck(lmFit, 1:2)
 
 # Plot all diagnostics
-s20x:::modelcheck(lmFit)
-\dontshow{\}) # examplesIf}
+modelcheck(lmFit)
 }

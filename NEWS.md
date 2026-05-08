@@ -1,6 +1,7 @@
 # s20x 3.2.274
 
-- Preserve roxygen cross-package help links while limiting qualified namespace-call checks to executable R code and documenting remaining internal helpers.
+## Data
+- Add `nzarrivals.df`, a monthly Stats NZ Infoshare arrivals data set, and fix the Stage 14 `colors()` import so note-level checks remain strict.
 
 # s20x 3.2.273
 

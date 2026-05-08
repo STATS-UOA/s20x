@@ -76,6 +76,7 @@ normcheck = function(x, ...) {
 
 #' @export
 #' @describeIn normcheck Testing for normality plot
+#' @importFrom grDevices colors
 normcheck.default = function(x,
                              xlab = c("Theoretical Quantiles", ""), 
                              ylab = c("Sample Quantiles", ""),

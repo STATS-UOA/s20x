@@ -1,8 +1,9 @@
-#' Deprecated model checking plots
+#' Model checking plots
 #'
-#' `modelcheck()` is deprecated and is no longer exported. Use focused
-#' diagnostic helpers such as [eovcheck()], [normcheck()], and [cooks20x()]
-#' directly in new teaching material.
+#' Draw the teaching diagnostic plots used by older `s20x` workflows.
+#' `modelcheck()` is retained as an exported compatibility helper for model
+#' checking, while newer teaching material may use focused diagnostic helpers
+#' such as [eovcheck()], [normcheck()], and [cooks20x()] directly.
 #'
 #' @param x The fitted model.
 #' @param which The plot(s) to be drawn. Residuals versus fitted values
@@ -13,74 +14,71 @@
 #' @return Draws diagnostic plots for teaching model checking. The function is
 #' called for its plotting side effects and does not provide a stable data return
 #' object.
-#' @examplesIf FALSE
+#' @examples
 #' data(peru.df)
 #' lmFit = lm(BP ~ weight, data = peru.df)
 #'
 #' # Plot residuals versus fitted values only
-#' # Deprecated compatibility helper, no longer exported
-#' s20x:::modelcheck(lmFit, 1)
+#' modelcheck(lmFit, 1)
 #'
 #' # Plot residuals versus fitted values, histogram, and Q-Q plot
-#' s20x:::modelcheck(lmFit, 1:2)
+#' modelcheck(lmFit, 1:2)
 #'
 #' # Plot all diagnostics
-#' s20x:::modelcheck(lmFit)
+#' modelcheck(lmFit)
+#' @export
 modelcheck = function(x, ...) {
-  .Deprecated(
-    msg = "modelcheck() is deprecated and is no longer exported; use eovcheck(), normcheck(), and cooks20x() directly."
-  )
   UseMethod("modelcheck")
 }
 
-#' @describeIn modelcheck Model checking plots
+#' @describeIn modelcheck Model checking plots for linear models.
+#' @export
 modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
-  
-  if(!all(which %in% 1:3)){
+  if (!all(which %in% 1:3)) {
     stop("which must be in 1:3")
   }
-  
-  createLayoutMatrix = function(){
+
+  createLayoutMatrix = function() {
     M = matrix(NA, nrow = length(which), ncol = 2)
-    k = 1  # Value of next plot
-    
+    k = 1
+
     if (1 %in% which) {
       M[1, ] = c(1, 1)
       k = k + 1
     }
-    
+
     if (2 %in% which) {
       M[k, ] = c(k, k + 1)
       k = k + 2
     }
-    
-    if (3 %in% which){
+
+    if (3 %in% which) {
       M[length(which), ] = c(k, k)
     }
-    
-    return(M)
+
+    M
   }
-  
+
   M = createLayoutMatrix()
   layout(M)
   restoreGraphicsParameters = saveGraphicsParameters("mar", "mgp")
   on.exit(restoreGraphicsParameters())
-  
+
   par(mar = mar, mgp = c(2, 1, 0))
-  
-  if (1 %in% which){
+
+  if (1 %in% which) {
     plot(x, which = 1, ...)
   }
-  
-  if (2 %in% which){
+
+  if (2 %in% which) {
     plot(x, which = 2, ...)
-    hist(resid(x), xlab="Residuals",main = "Histogram of residuals")
+    hist(resid(x), xlab = "Residuals", main = "Histogram of residuals")
   }
-  
-  if(3 %in% which){
+
+  if (3 %in% which) {
     plot(x, which = 4, ...)
   }
-  
 
   layout(1)
+  invisible(x)
 }
