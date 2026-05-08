@@ -32,6 +32,16 @@ autocorPlot = function(fit, main = "Current vs Lagged residuals", ...) {
 }
 
 
+#' Deprecated autocorrelation plot alias
+#'
+#' Provides a deprecated compatibility alias for `autocorPlot()`.
+#'
+#' @param fit output from the function `lm()`.
+#' @param main the plot title.
+#' @param ... extra parameters passed to `autocorPlot()`.
+#' @return Invisibly returns the result of `autocorPlot()`, called for its
+#' plotting side effect.
+#' @keywords internal
 autocor.plot = function(fit, main = "Current vs Lagged residuals", ...) {
   .Deprecated(
     new = "autocorPlot",
