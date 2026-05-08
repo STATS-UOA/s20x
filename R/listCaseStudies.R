@@ -22,6 +22,7 @@
 #' ids = listCaseStudies()
 #' }
 #'
+#' @importFrom tools file_path_sans_ext
 #' @export
 listCaseStudies = function() {
   csDir = system.file("case_studies", package = "s20x")
@@ -57,7 +58,7 @@ listCaseStudies = function() {
   }
 
   parseNumber = function(fileName) {
-    base = tools::file_path_sans_ext(basename(fileName))
+    base = file_path_sans_ext(basename(fileName))
     match = regexec("^CS(\\d+)_([0-9]+)$", base)
     groups = regmatches(base, match)[[1]]
     if (length(groups) == 0) {
@@ -69,7 +70,7 @@ listCaseStudies = function() {
   info = lapply(files, function(file) {
     number = parseNumber(file)
     list(
-      id = tools::file_path_sans_ext(basename(file)),
+      id = file_path_sans_ext(basename(file)),
       major = number[1],
       minor = number[2],
       title = extractTitle(file)

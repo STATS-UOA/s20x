@@ -1,3 +1,7 @@
+# s20x 3.2.274
+
+- Preserve roxygen cross-package help links while limiting qualified namespace-call checks to executable R code and documenting remaining internal helpers.
+
 # s20x 3.2.273
 
 - Document remaining Stage 14 internal helper functions with roxygen2 comments.

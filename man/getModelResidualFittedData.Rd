@@ -2,22 +2,22 @@
 % Please edit documentation in R/model-diagnostic-helpers.R
 \name{getModelResidualFittedData}
 \alias{getModelResidualFittedData}
-\title{Extract aligned residuals and fitted values}
+\title{Get model residual and fitted-value data}
 \usage{
 getModelResidualFittedData(object, residualType = NULL, context = "model")
 }
 \arguments{
 \item{object}{a fitted model object.}
 
-\item{residualType}{optional residual type passed to [residuals()].}
+\item{residualType}{optional residual type passed to [stats::residuals()].}
 
-\item{context}{short description of the calling context for error messages.}
+\item{context}{character description used in error messages.}
 }
 \value{
 A list with `fitted` and `residuals` components.
 }
 \description{
-Extract residuals and fitted values from a fitted model object and check that
-their lengths align before diagnostic plotting helpers use them.
+Extract residuals and fitted values from a fitted model and validate that the
+two vectors are aligned for diagnostic plotting.
 }
 \keyword{internal}

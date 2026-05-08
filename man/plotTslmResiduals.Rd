@@ -11,7 +11,7 @@ plotTslmResiduals(diagnosticData, residualType = "normalised", ...)
 
 \item{residualType}{residual type label used for plot text.}
 
-\item{...}{additional graphical arguments passed to [plot()].}
+\item{...}{additional graphical arguments passed to [graphics::plot()].}
 }
 \value{
 Called for its plotting side effect.

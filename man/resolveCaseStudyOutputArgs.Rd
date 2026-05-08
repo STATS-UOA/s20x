@@ -2,22 +2,21 @@
 % Please edit documentation in R/casestudy.R
 \name{resolveCaseStudyOutputArgs}
 \alias{resolveCaseStudyOutputArgs}
-\title{Resolve case study output arguments}
+\title{Resolve case-study output arguments}
 \usage{
 resolveCaseStudyOutputArgs(output_dir, outputDirWasSupplied, ...)
 }
 \arguments{
-\item{output_dir}{Legacy output directory argument.}
+\item{output_dir}{legacy output directory argument.}
 
-\item{outputDirWasSupplied}{Logical; whether `output_dir` was supplied.}
+\item{outputDirWasSupplied}{logical; whether `output_dir` was supplied by the caller.}
 
-\item{...}{Additional render arguments.}
+\item{...}{additional rendering arguments.}
 }
 \value{
 A list containing `outputDir` and remaining `renderArgs`.
 }
 \description{
-Normalises legacy and camelCase output-directory arguments before a case
-study is rendered.
+Normalise legacy and camelCase output-directory arguments for `casestudy()`.
 }
 \keyword{internal}

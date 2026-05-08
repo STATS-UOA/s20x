@@ -1,13 +1,22 @@
-# Internal model-diagnostic data helpers.
-
+#' Get model residual and fitted-value data
+#'
+#' Extract residuals and fitted values from a fitted model and validate that the
+#' two vectors are aligned for diagnostic plotting.
+#'
+#' @param object a fitted model object.
+#' @param residualType optional residual type passed to [stats::residuals()].
+#' @param context character description used in error messages.
+#' @return A list with `fitted` and `residuals` components.
+#' @keywords internal
+#' @importFrom stats fitted residuals
 getModelResidualFittedData = function(object, residualType = NULL, context = "model") {
   if (is.null(residualType)) {
-    residualValues = stats::residuals(object)
+    residualValues = residuals(object)
   } else {
-    residualValues = stats::residuals(object, type = residualType)
+    residualValues = residuals(object, type = residualType)
   }
 
-  fittedValues = stats::fitted(object)
+  fittedValues = fitted(object)
 
   if (length(residualValues) != length(fittedValues)) {
     stop(

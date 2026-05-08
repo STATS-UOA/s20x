@@ -42,12 +42,12 @@ lmFit = lm(BP ~ weight, data = peru.df)
 
 # Plot residuals versus fitted values only
 # Deprecated compatibility helper, no longer exported
-modelcheck(lmFit, 1)
+s20x:::modelcheck(lmFit, 1)
 
 # Plot residuals versus fitted values, histogram, and Q-Q plot
-modelcheck(lmFit, 1:2)
+s20x:::modelcheck(lmFit, 1:2)
 
 # Plot all diagnostics
-modelcheck(lmFit)
+s20x:::modelcheck(lmFit)
 \dontshow{\}) # examplesIf}
 }

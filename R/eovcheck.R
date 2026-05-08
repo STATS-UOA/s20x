@@ -217,7 +217,7 @@ eovcheck.formula = function(x, data = NULL,
 #' @importFrom methods is
 #' @export
 eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE, ...) {
-    if (missing(x) || !methods::is(x, "lm")){ 
+    if (missing(x) || !is(x, "lm")){ 
         stop("missing or incorrect lm object")
     }
     

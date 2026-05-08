@@ -2,25 +2,17 @@
 % Please edit documentation in R/tslm.R
 \name{anova.tslm}
 \alias{anova.tslm}
-\alias{print.anova.tslm}
 \title{ANOVA tables for time series linear models}
 \usage{
 \method{anova}{tslm}(object, ..., verbose = FALSE)
-
-\method{print}{anova.tslm}(x, digits = max(3L, getOption("digits") - 3L), ...)
 }
 \arguments{
 \item{object}{a fitted `tslm` object.}
 
-\item{...}{optional additional fitted model objects for model comparisons,
-or additional arguments passed to print methods.}
+\item{...}{optional additional fitted model objects for model comparisons.}
 
 \item{verbose}{logical. For AR-error models, use `TRUE` to return the raw
-underlying [anova.gls()] output.}
-
-\item{x}{an ANOVA table produced by `anova.tslm()`.}
-
-\item{digits}{number of significant digits used when printing ANOVA output.}
+underlying [nlme::anova.gls()] output.}
 }
 \value{
 An analysis-of-variance-style table.
@@ -30,9 +22,9 @@ Produces analysis-of-variance-style tables for `tslm` objects.
 }
 \details{
 For ordinary `tslm()` fits without autoregressive error terms, `anova()`
-returns the usual analysis of variance table from [anova.lm()].
+returns the usual analysis of variance table from [stats::anova.lm()].
 
-For AR-error models fitted through [gls()], the reported tests are
+For AR-error models fitted through [nlme::gls()], the reported tests are
 Wald-style tests of model terms. These test whether each term contributes to
 the fitted mean model after allowing for the estimated autocorrelation
 structure. Because these models do not use the ordinary independent-error
@@ -41,13 +33,8 @@ sum-of-squares decomposition, the compact table reports `Df`, `F value`, and
 models with care: `verbose = TRUE` exposes the underlying `nlme` comparison
 output rather than recreating an ordinary `lm` ANOVA table.
 
-Use `verbose = TRUE` to see the underlying [anova.gls()] output.
+Use `verbose = TRUE` to see the underlying [nlme::anova.gls()] output.
 }
-\section{Methods (by generic)}{
-\itemize{
-\item \code{print(anova.tslm)}: Print a time series linear-model ANOVA table.
-
-}}
 \examples{
 data(beer.df)
 fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)

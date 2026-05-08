@@ -41,7 +41,7 @@ This is a legacy teaching helper retained for compatibility with
 
 ## Zoo data
 data(zoo.df)
-boxqq(attendance ~ day.type, data = zoo.df)
+s20x:::boxqq(attendance ~ day.type, data = zoo.df)
 \dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

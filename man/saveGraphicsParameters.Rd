@@ -7,16 +7,19 @@
 saveGraphicsParameters(..., noReadonly = FALSE)
 }
 \arguments{
-\item{...}{Graphics parameters passed to `par()`.}
+\item{...}{Graphics parameters passed to [graphics::par()] when
+`noReadonly = FALSE`.}
 
-\item{noReadonly}{Logical; if `TRUE`, save all writable graphics parameters.}
+\item{noReadonly}{Logical; if `TRUE`, save all readonly-safe graphics
+parameters using `par(no.readonly = TRUE)`.}
 }
 \value{
-A function that restores the captured graphics parameters invisibly.
+A function that restores the saved graphics parameters and invisibly
+  returns them.
 }
 \description{
-Captures graphics parameters and returns a closure that restores them. This
-helper centralises diagnostic-plotting cleanup so plotting functions can use
-`on.exit()` consistently.
+Captures a graphics-parameter state and returns a closure that restores it.
+This helper centralises the common `par()`/`on.exit()` pattern used by
+diagnostic plotting functions.
 }
 \keyword{internal}

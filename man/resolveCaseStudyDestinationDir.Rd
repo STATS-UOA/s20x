@@ -2,20 +2,20 @@
 % Please edit documentation in R/openCaseStudy.R
 \name{resolveCaseStudyDestinationDir}
 \alias{resolveCaseStudyDestinationDir}
-\title{Resolve case study destination directory}
+\title{Resolve case-study destination directory}
 \usage{
 resolveCaseStudyDestinationDir(dest_dir = getwd(), ...)
 }
 \arguments{
-\item{dest_dir}{Legacy destination directory argument.}
+\item{dest_dir}{legacy destination directory argument.}
 
-\item{...}{Additional compatibility arguments.}
+\item{...}{additional compatibility arguments.}
 }
 \value{
-A single destination directory path.
+A single destination-directory path.
 }
 \description{
-Normalises legacy and camelCase destination-directory arguments before a
-case study source file is copied.
+Normalise legacy and camelCase destination-directory arguments for
+`openCaseStudy()`.
 }
 \keyword{internal}

@@ -1,3 +1,16 @@
+#' Estimate two-factor contrasts
+#'
+#' Internal implementation for contrast estimation from balanced two-factor
+#' linear models.
+#'
+#' @param contrast.matrix contrast matrix.
+#' @param fit fitted `lm` object.
+#' @param alpha significance level.
+#' @param row logical; if `TRUE`, estimate row contrasts, otherwise column contrasts.
+#' @param L optional number of contrasts used for adjustment.
+#' @param FUN formatting function applied to interval columns.
+#' @return A matrix of contrast estimates and Tukey-adjusted p-values.
+#' @keywords internal
 estimateContrasts2 = function(contrast.matrix, fit, alpha = 0.05, row = TRUE, L, FUN) {
     if (!inherits(fit, "lm")) 
         stop("Second input is not an \"lm\" object")

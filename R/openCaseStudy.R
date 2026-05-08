@@ -21,6 +21,8 @@
 #' openCaseStudy("2.1", destDir = tempdir())
 #' }
 #'
+#' @importFrom rstudioapi isAvailable navigateToFile
+#' @importFrom utils file.edit
 #' @export
 openCaseStudy = function(id, dest_dir = getwd(), overwrite = FALSE, ...) {
   if (!is.character(id) || length(id) != 1 || !nzchar(id)) {
@@ -69,15 +71,24 @@ openCaseStudy = function(id, dest_dir = getwd(), overwrite = FALSE, ...) {
     stop("Failed to copy case study to: ", destinationPath, call. = FALSE)
   }
 
-  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
-    rstudioapi::navigateToFile(destinationPath)
+  if (requireNamespace("rstudioapi", quietly = TRUE) && isAvailable()) {
+    navigateToFile(destinationPath)
   } else {
-    utils::file.edit(destinationPath)
+    file.edit(destinationPath)
   }
 
   invisible(destinationPath)
 }
 
+#' Resolve case-study destination directory
+#'
+#' Normalise legacy and camelCase destination-directory arguments for
+#' `openCaseStudy()`.
+#'
+#' @param dest_dir legacy destination directory argument.
+#' @param ... additional compatibility arguments.
+#' @return A single destination-directory path.
+#' @keywords internal
 resolveCaseStudyDestinationDir = function(dest_dir = getwd(), ...) {
   dots = list(...)
   dotNames = names(dots)
