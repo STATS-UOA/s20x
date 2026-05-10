@@ -34,7 +34,7 @@ Example and documentation consistency cleanup:
 
 ## Style requirements
 
-Use my R development style:
+Use my R development style skill:
   - `=` assignment
 - camelCase names
 - curly braces for all control structures
@@ -42,3 +42,9 @@ Use my R development style:
 - `@importFrom` rather than executable `pkg::fun()` calls
 - do not remove valid roxygen links such as `[stats::lm()]`
 - do not create `data-raw/`
+- remove `data-raw`
+
+## Skills
+- Use my s20x-stage-script generator skill
+- Use my R development style skill
+- Use my s20x-merge-script skill when I ask to merge back to the master.
