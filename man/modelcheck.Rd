@@ -7,7 +7,13 @@
 \usage{
 modelcheck(x, ...)
 
-\method{modelcheck}{lm}(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...)
+\method{modelcheck}{lm}(
+  x,
+  which = 1:3,
+  mar = c(3, 4, 1.5, 4),
+  engine = c("base", "ggplot2"),
+  ...
+)
 }
 \arguments{
 \item{x}{The fitted model.}
@@ -16,14 +22,21 @@ modelcheck(x, ...)
 (\code{which = 1}), histogram and Q-Q plot of residuals
 (\code{which = 2}), and Cook's distance plot (\code{which = 3}).}
 
-\item{mar}{Margins applied to each selected plot.}
+\item{mar}{Margins applied to each selected plot. Ignored by the ggplot2
+engine.}
 
-\item{\ldots}{any other arguments to pass to \code{\link{plot}}}
+\item{engine}{plotting engine to use. The default, \code{"base"}, preserves
+the original base graphics output. Use \code{"ggplot2"} for optional ggplot2
+objects.}
+
+\item{\ldots}{any other arguments to pass to \code{\link{plot}} for the base
+engine. Extra arguments are currently ignored by the ggplot2 engine.}
 }
 \value{
-Draws diagnostic plots for teaching model checking. The function is
-called for its plotting side effects and does not provide a stable data return
-object.
+Draws diagnostic plots for teaching model checking when using the
+base engine. With \code{engine = "ggplot2"}, returns a ggplot object for a
+single selected plot, or a named list of ggplot objects for multiple selected
+plots.
 }
 \description{
 Draw the teaching diagnostic plots used by older `s20x` workflows.
@@ -31,11 +44,11 @@ Draw the teaching diagnostic plots used by older `s20x` workflows.
 checking, while newer teaching material may use focused diagnostic helpers
 such as [eovcheck()], [normcheck()], and [cooks20x()] directly.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{modelcheck(lm)}: Model checking plots for linear models.
-
-}}
+\details{
+The default base graphics engine preserves the original teaching plots. The
+optional ggplot2 engine returns ggplot objects when \pkg{ggplot2} is
+installed.
+}
 \examples{
 data(peru.df)
 lmFit = lm(BP ~ weight, data = peru.df)

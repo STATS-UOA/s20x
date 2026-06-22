@@ -1,3 +1,9 @@
+# s20x 3.2.286
+
+## Modernisation
+- Added an optional ggplot2 engine to modelcheck() while preserving the original base graphics output as the default.
+- Returned a ggplot object for the optional residual-versus-fitted model checking diagnostic when ggplot2 is installed.
+
 # s20x 3.2.285
 
 ## Modernisation
