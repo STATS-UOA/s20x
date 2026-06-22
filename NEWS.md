@@ -1,3 +1,9 @@
+# s20x 3.2.285
+
+## Modernisation
+- Added an optional ggplot2 engine to eovcheck() while preserving the original base graphics output as the default.
+- Returned a ggplot object for the optional residual-versus-fitted equality-of-variance diagnostic when ggplot2 is installed.
+
 # s20x 3.2.280
 
 ## Modernisation

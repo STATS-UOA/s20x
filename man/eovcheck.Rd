@@ -17,16 +17,25 @@ eovcheck(x, ...)
   smoother = FALSE,
   twosd = FALSE,
   levene = FALSE,
+  engine = c("base", "ggplot2"),
   ...
 )
 
-\method{eovcheck}{lm}(x, smoother = FALSE, twosd = FALSE, levene = FALSE, ...)
+\method{eovcheck}{lm}(
+  x,
+  smoother = FALSE,
+  twosd = FALSE,
+  levene = FALSE,
+  engine = c("base", "ggplot2"),
+  ...
+)
 }
 \arguments{
 \item{x}{A linear model formula. Alternatively, a fitted lm object from
 a linear model.}
 
-\item{\dots}{Optional arguments}
+\item{\dots}{Optional arguments passed to the base plotting engine. Extra
+arguments are currently ignored by the ggplot2 engine.}
 
 \item{data}{A data frame in which to evaluate the formula.}
 
@@ -43,11 +52,14 @@ plot}
 
 \item{levene}{if \code{TRUE} then the P-value from Levene's test for equality of
 variance is displayed}
+
+\item{engine}{plotting engine to use. The default, \code{"base"}, preserves
+the original base graphics output. Use \code{"ggplot2"} for an optional
+ggplot2 object.}
 }
 \value{
-Draws the residual-versus-fitted diagnostic plot. The function is
-called for its plotting side effects and does not provide a stable data return
-object.
+Draws the residual-versus-fitted diagnostic plot when using the base
+engine. With \code{engine = "ggplot2"}, returns a ggplot object.
 }
 \description{
 Plots the residuals versus the fitted (or predicted) values from a linear
@@ -60,16 +72,14 @@ from the Residual Mean Sqare (Within group mean square = WGMS). This can be
 useful in highlighting potential outliers. If the model has one or two
 factors and no continous variables, i.e. if it is a oneway or twoway ANOVA
 model, and \code{levene = TRUE} then the P-value from Levene's test for
-equality variance is displayed in the top left hand corner,as long as the
+equality variance is displayed in the top left hand corner, as long as the
 number of observations per group exceeds two.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{eovcheck(formula)}: Testing for equality of variance plot
-
-\item \code{eovcheck(lm)}: Testing for equality of variance plot
-
-}}
+\details{
+The default base graphics engine preserves the original teaching plot. The
+optional ggplot2 engine returns a ggplot object when \pkg{ggplot2} is
+installed.
+}
 \examples{
 
 # one way ANOVA - oysters
@@ -84,7 +94,7 @@ eovcheck(Oysters ~ Site, data = oysters.df)
 
 # A two-way model without interaction
 data(soyabean.df)
-soya.fit=lm(yield ~ planttime + cultivar, data = soyabean.df)
+soya.fit = lm(yield ~ planttime + cultivar, data = soyabean.df)
 eovcheck(soya.fit)
 
 # A two-way model with interaction
@@ -103,7 +113,7 @@ data(airpass.df)
 t = 1:144
 month = factor(rep(1:12, 12))
 airpass.df = data.frame(passengers = airpass.df$passengers, t = t, month = month)
-airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1] 
+airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1]
                  + log(passengers)[-144], data  = airpass.df)
 eovcheck(airpass.fit)
 
