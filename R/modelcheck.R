@@ -5,15 +5,25 @@
 #' checking, while newer teaching material may use focused diagnostic helpers
 #' such as [eovcheck()], [normcheck()], and [cooks20x()] directly.
 #'
+#' The default base graphics engine preserves the original teaching plots. The
+#' optional ggplot2 engine returns ggplot objects when \pkg{ggplot2} is
+#' installed.
+#'
 #' @param x The fitted model.
 #' @param which The plot(s) to be drawn. Residuals versus fitted values
 #' (\code{which = 1}), histogram and Q-Q plot of residuals
 #' (\code{which = 2}), and Cook's distance plot (\code{which = 3}).
-#' @param mar Margins applied to each selected plot.
-#' @param \ldots any other arguments to pass to \code{\link{plot}}
-#' @return Draws diagnostic plots for teaching model checking. The function is
-#' called for its plotting side effects and does not provide a stable data return
-#' object.
+#' @param mar Margins applied to each selected plot. Ignored by the ggplot2
+#' engine.
+#' @param engine plotting engine to use. The default, \code{"base"}, preserves
+#' the original base graphics output. Use \code{"ggplot2"} for optional ggplot2
+#' objects.
+#' @param \ldots any other arguments to pass to \code{\link{plot}} for the base
+#' engine. Extra arguments are currently ignored by the ggplot2 engine.
+#' @return Draws diagnostic plots for teaching model checking when using the
+#' base engine. With \code{engine = "ggplot2"}, returns a ggplot object for a
+#' single selected plot, or a named list of ggplot objects for multiple selected
+#' plots.
 #' @examples
 #' data(peru.df)
 #' lmFit = lm(BP ~ weight, data = peru.df)
@@ -31,11 +41,18 @@ modelcheck = function(x, ...) {
   UseMethod("modelcheck")
 }
 
-#' @describeIn modelcheck Model checking plots for linear models.
+#' @rdname modelcheck
 #' @export
-modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
+modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4),
+                          engine = c("base", "ggplot2"), ...) {
+  engine = match.arg(engine)
+
   if (!all(which %in% 1:3)) {
     stop("which must be in 1:3")
+  }
+
+  if (engine == "ggplot2") {
+    return(modelcheckGgplot2(x = x, which = which))
   }
 
   createLayoutMatrix = function() {
@@ -81,4 +98,94 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4), ...) {
 
   layout(1)
   invisible(x)
+}
+
+#' Build model checking diagnostics using ggplot2
+#'
+#' @param x fitted linear model.
+#' @param which selected diagnostic plots.
+#' @return A ggplot object or a named list of ggplot objects.
+#' @noRd
+modelcheckGgplot2 = function(x, which) {
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("The ggplot2 engine requires the ggplot2 package.", call. = FALSE)
+  }
+
+  plots = list()
+
+  if (1 %in% which) {
+    plots$residuals = modelcheckGgplot2Residuals(x)
+  }
+
+  if (2 %in% which) {
+    normalityPlots = normcheck(x, engine = "ggplot2")
+    plots$qq = normalityPlots$qq
+    plots$histogram = normalityPlots$histogram
+  }
+
+  if (3 %in% which) {
+    plots$cooks = modelcheckGgplot2Cooks(x)
+  }
+
+  if (length(plots) == 1) {
+    return(plots[[1]])
+  }
+
+  class(plots) = c("s20xModelcheckGgplot2", class(plots))
+  plots
+}
+
+#' Build a ggplot2 residual-versus-fitted plot for modelcheck
+#'
+#' @param x fitted linear model.
+#' @return A ggplot object.
+#' @noRd
+modelcheckGgplot2Residuals = function(x) {
+  ggplot = getExportedValue("ggplot2", "ggplot")
+  aes = getExportedValue("ggplot2", "aes")
+  geomPoint = getExportedValue("ggplot2", "geom_point")
+  geomHline = getExportedValue("ggplot2", "geom_hline")
+  labs = getExportedValue("ggplot2", "labs")
+
+  diagnosticData = getModelResidualFittedData(x, context = "linear model")
+  plotData = data.frame(
+    fitted = as.numeric(diagnosticData[["fitted"]]),
+    residuals = as.numeric(diagnosticData[["residuals"]])
+  )
+
+  ggplot(
+    plotData,
+    aes(x = plotData[["fitted"]], y = plotData[["residuals"]])
+  ) +
+    geomPoint(shape = 1) +
+    geomHline(yintercept = 0, linetype = 3, colour = "lightgrey") +
+    labs(x = "Fitted values", y = "Residuals", title = "")
+}
+
+#' Build a ggplot2 Cook's distance plot for modelcheck
+#'
+#' @param x fitted linear model.
+#' @return A ggplot object.
+#' @noRd
+modelcheckGgplot2Cooks = function(x) {
+  ggplot = getExportedValue("ggplot2", "ggplot")
+  aes = getExportedValue("ggplot2", "aes")
+  geomPoint = getExportedValue("ggplot2", "geom_point")
+  geomLine = getExportedValue("ggplot2", "geom_line")
+  geomHline = getExportedValue("ggplot2", "geom_hline")
+  labs = getExportedValue("ggplot2", "labs")
+
+  cooksData = data.frame(
+    observation = seq_along(cooks.distance(x)),
+    cooksDistance = as.numeric(cooks.distance(x))
+  )
+
+  ggplot(
+    cooksData,
+    aes(x = cooksData[["observation"]], y = cooksData[["cooksDistance"]])
+  ) +
+    geomLine() +
+    geomPoint(shape = 1) +
+    geomHline(yintercept = 0, linetype = 3, colour = "lightgrey") +
+    labs(x = "Obs. number", y = "Cook's distance", title = "Cook's distance")
 }

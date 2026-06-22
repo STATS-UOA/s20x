@@ -1,3 +1,40 @@
+# s20x 3.2.288
+
+## Development notes
+- Archived the Stage 16 plotting modernisation developer note under Completed.
+- Recorded that pairs20x(), normcheck(), eovcheck(), and modelcheck() now have optional ggplot2 engines with base graphics preserved as the default.
+- Kept this as a documentation wrap-up stage with no intended plotting behavior changes.
+
+# s20x 3.2.287
+
+## Modernisation
+- Refined the optional ggplot2/GGally panels in pairs20x() with a base-like white theme.
+- Preserved the original base graphics output as the default teaching path.
+- Kept GGally and ggplot2 as optional dependencies for the modern plotting engine.
+
+# s20x 3.2.286
+
+## Modernisation
+- Added an optional ggplot2 engine to modelcheck() while preserving the original base graphics output as the default.
+- Returned a ggplot object for the optional residual-versus-fitted model checking diagnostic when ggplot2 is installed.
+
+# s20x 3.2.285
+
+## Modernisation
+- Added an optional ggplot2 engine to eovcheck() while preserving the original base graphics output as the default.
+- Returned a ggplot object for the optional residual-versus-fitted equality-of-variance diagnostic when ggplot2 is installed.
+
+# s20x 3.2.280
+
+## Modernisation
+- Added an optional ggplot2 engine to normcheck() while preserving the original base graphics output as the default.
+- Returned ggplot objects for optional normal Q-Q and residual histogram diagnostics when ggplot2 is installed.
+
+# s20x 3.2.278
+
+## Modernisation
+- Added an optional ggplot2/GGally engine to pairs20x() while preserving the original base graphics output as the default.
+
 # s20x 3.2.276
 
 ## Data

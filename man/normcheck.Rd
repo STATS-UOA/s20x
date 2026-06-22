@@ -22,6 +22,7 @@ normcheck(x, ...)
   shapiro.wilk = FALSE,
   whichPlot = 1:2,
   usePar = TRUE,
+  engine = c("base", "ggplot2"),
   ...
 )
 
@@ -38,6 +39,7 @@ normcheck(x, ...)
   shapiro.wilk = FALSE,
   whichPlot = 1:2,
   usePar = TRUE,
+  engine = c("base", "ggplot2"),
   ...
 )
 
@@ -55,13 +57,16 @@ normcheck(x, ...)
   whichPlot = 1:2,
   usePar = TRUE,
   residualType = "normalised",
+  engine = c("base", "ggplot2"),
   ...
 )
 }
 \arguments{
 \item{x}{the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.}
 
-\item{\dots}{additional arguments which are passed to both \code{qqnorm} and \code{hist}}
+\item{\dots}{additional arguments which are passed to both \code{qqnorm} and \code{hist}
+for the base engine. Extra arguments are currently ignored by the ggplot2
+engine.}
 
 \item{xlab}{a title for the x-axis of both the Q-Q plot and the histogram: see \code{\link{title}}.}
 
@@ -71,7 +76,7 @@ normcheck(x, ...)
 
 \item{col}{a colour for the bars of the histogram.}
 
-\item{bootstrap}{if \code{TRUE} then \code{B} samples will be taken from a Normal distribution 
+\item{bootstrap}{if \code{TRUE} then \code{B} samples will be taken from a Normal distribution
 with the same mean and standard deviation as \code{x}. These will be plotted
 in a lighter colour behind the empirical quantiles to show how much variation
 would be expected in the Q-Q plot for a sample of the same size from a truly
@@ -91,12 +96,16 @@ test for normality is displayed in the top-left corner of the Q-Q plot.}
 \item{whichPlot}{legal values are  \code{1}, \code{2}, and any pair of the two, i.e. \code{1:2}, \code{2:1},
 \code{c(1,2)}, \code{c(2,1)}, or variants of \code{c(1,1)}.
 \code{1:2} is used by default and draws a normal Q-Q plot and a histogram of the residuals
-in that order. The order of the labels in \code{xlab} and \code{ylab} assume this order, and will be 
+in that order. The order of the labels in \code{xlab} and \code{ylab} assume this order, and will be
 reordered automatically if the order is anything other than \code{1:2}.}
 
 \item{usePar}{if \code{TRUE}, this function sets \code{\link{par}} for the user. If \code{FALSE},
 this function assumes \code{\link{par}} has been set by the user and should
-not be overridden.}
+not be overridden. Ignored by the ggplot2 engine.}
+
+\item{engine}{plotting engine to use. The default, \code{"base"}, preserves
+the original base graphics output. Use \code{"ggplot2"} for optional ggplot2
+objects.}
 
 \item{residualType}{for \code{tslm} objects, the residual scale to use in the normality plots.
 The default is \code{"normalised"}, which checks the residuals after accounting for
@@ -105,9 +114,9 @@ are both accepted for compatibility. Other choices are \code{"response"} and
 \code{"pearson"}.}
 }
 \value{
-Draws the selected normality diagnostic plots. The function is called
-for its plotting side effects and does not provide a stable data return
-object.
+Draws the selected normality diagnostic plots when using the base
+engine. With \code{engine = "ggplot2"}, returns a ggplot object for a single
+selected plot or a named list of ggplot objects for multiple selected plots.
 }
 \description{
 Plots two plots side by side. First, it draws a normal Q-Q plot of the
@@ -116,20 +125,16 @@ residuals and slope equal to the standard deviation of the residuals. If
 \code{shapiro.wilk = TRUE}, the P-value from the Shapiro-Wilk test for
 normality is shown in the top-left corner of the Q-Q plot. Second, it draws
 a histogram of the residuals. A normal distribution is fitted and
-superimposed over the histogram. Note: if you want to leave the 
+superimposed over the histogram. Note: if you want to leave the
 x-axis blank in the histogram then use \code{xlab = c("Theoretical Quantiles", " ")}
 , i.e. leave a space between the quotes. If you do not leave a space,
 information will be extracted from \code{x}.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{normcheck(default)}: Testing for normality plot
-
-\item \code{normcheck(lm)}: Testing for normality plot
-
-\item \code{normcheck(tslm)}: Testing for normality plot
-
-}}
+\details{
+The default base graphics engine preserves the original teaching plots. The
+optional ggplot2 engine returns ggplot objects when \pkg{ggplot2} is
+installed.
+}
 \examples{
 
 # Synthetic teaching example: an exponential growth curve
