@@ -1,3 +1,9 @@
+# s20x 3.2.280
+
+## Modernisation
+- Added an optional ggplot2 engine to normcheck() while preserving the original base graphics output as the default.
+- Returned ggplot objects for optional normal Q-Q and residual histogram diagnostics when ggplot2 is installed.
+
 # s20x 3.2.278
 
 ## Modernisation
