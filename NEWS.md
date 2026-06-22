@@ -1,3 +1,10 @@
+# s20x 3.2.287
+
+## Modernisation
+- Refined the optional ggplot2/GGally panels in pairs20x() with a base-like white theme.
+- Preserved the original base graphics output as the default teaching path.
+- Kept GGally and ggplot2 as optional dependencies for the modern plotting engine.
+
 # s20x 3.2.286
 
 ## Modernisation

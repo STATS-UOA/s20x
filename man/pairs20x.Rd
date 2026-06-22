@@ -27,7 +27,8 @@ frame.
 \details{
 The default base graphics engine preserves the original s20x teaching plot.
 The optional ggplot2 engine uses GGally when both optional packages are
-installed.
+installed and applies a base-like theme so the output remains close to
+the original teaching plot.
 }
 \examples{
 

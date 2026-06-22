@@ -5,7 +5,8 @@
 #'
 #' The default base graphics engine preserves the original s20x teaching plot.
 #' The optional ggplot2 engine uses GGally when both optional packages are
-#' installed.
+#' installed and applies a base-like theme so the output remains close to
+#' the original teaching plot.
 #'
 #' @param x a data frame.
 #' @param na.rm if TRUE then only complete cases will be displayed.
@@ -115,7 +116,8 @@ pairs20xGgplot2SmoothPanel = function(data, mapping, ...) {
     ggplot(data = data, mapping = mapping) +
         geomPoint(shape = 1) +
         geomSmooth(method = "loess", formula = y ~ x, se = FALSE,
-            colour = "red", linewidth = 0.4)
+            colour = "red", linewidth = 0.4) +
+        pairs20xGgplot2BaseTheme()
 }
 
 #' Build a ggplot2 histogram panel for pairs20x
@@ -130,7 +132,8 @@ pairs20xGgplot2HistogramPanel = function(data, mapping, ...) {
     geomHistogram = getExportedValue("ggplot2", "geom_histogram")
 
     ggplot(data = data, mapping = mapping) +
-        geomHistogram(bins = 10, fill = "cyan", colour = "black")
+        geomHistogram(bins = 10, fill = "cyan", colour = "black") +
+        pairs20xGgplot2BaseTheme()
 }
 
 #' Build a ggplot2 correlation panel for pairs20x
@@ -158,4 +161,22 @@ pairs20xGgplot2CorrelationPanel = function(data, mapping, digits = 2,
     ggplot(data.frame(x = 0.5, y = 0.5)) +
         annotate("text", x = 0.5, y = 0.5, label = txt, size = 3 + 7 * r) +
         themeVoid()
+}
+
+#' Build a base-like ggplot2 theme for pairs20x panels
+#'
+#' @return A ggplot2 theme object.
+#' @noRd
+pairs20xGgplot2BaseTheme = function() {
+    theme = getExportedValue("ggplot2", "theme")
+    elementBlank = getExportedValue("ggplot2", "element_blank")
+    elementRect = getExportedValue("ggplot2", "element_rect")
+
+    theme(
+        panel.background = elementRect(fill = "white", colour = NA),
+        plot.background = elementRect(fill = "white", colour = NA),
+        panel.grid.major = elementBlank(),
+        panel.grid.minor = elementBlank(),
+        strip.background = elementRect(fill = "white", colour = NA)
+    )
 }
