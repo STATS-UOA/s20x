@@ -4,6 +4,13 @@
 
 This file records user-visible development changes to s20x.
 
+# s20x 3.2.293
+
+## Modernisation
+- Added a README-level explanation of the optional diagnostic plotting engines while preserving base graphics as the default teaching workflow.
+- Added a Stage 17.4 developer note recording the documentation-only scope and optional-dependency guard pattern.
+- No plotting behaviour or public API changed.
+
 # s20x 3.2.288
 
 ## Development notes

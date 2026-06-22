@@ -18,6 +18,31 @@ logic for this is to preserve the datasets as is to avoid lecture notes mismatch
 A repository for the University of Auckland s20x R library. This library is used in our large undergrad classes STATS 201, STATS 208 and BIOSCI 209
 
 
+## Diagnostic plotting engines
+
+Recent modernisation work has preserved the original base graphics teaching output while adding optional reusable plot objects for selected diagnostic helpers. The default behaviour remains unchanged: functions such as `normcheck()`, `eovcheck()`, `modelcheck()`, and `pairs20x()` continue to draw the familiar base graphics plots unless another engine is requested.
+
+Where supported, use `engine = "ggplot2"` to request the modern plotting engine. The optional engine is intended for workflows where a plot object is useful for saving, arranging, or further customisation. It requires the optional plotting packages documented by each help page, while the base engine remains available without those optional packages.
+
+Examples:
+
+```r
+peruFit = lm(BP ~ Age + Weight + Years, data = peru.df)
+normcheck(peruFit)
+
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  normPlots = normcheck(peruFit, engine = "ggplot2")
+}
+```
+
+```r
+if (requireNamespace("ggplot2", quietly = TRUE) &&
+    requireNamespace("GGally", quietly = TRUE)) {
+  pairsPlot = pairs20x(peru.df, engine = "ggplot2")
+}
+```
+
+
 # Build Notes
 
 We will attempt to add information about the changes in each new release (whether it makes it to CRAN or not) here, from version 3.1-21 onwards
