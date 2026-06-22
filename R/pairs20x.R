@@ -3,10 +3,12 @@
 #' Plots pairwise scatter plots with histograms and correlations for the data
 #' frame.
 #'
-#' The default base graphics engine preserves the original s20x teaching plot.
-#' The optional ggplot2 engine uses GGally when both optional packages are
-#' installed and applies a base-like theme so the output remains close to
-#' the original teaching plot.
+#' The default base graphics engine preserves the original s20x teaching plot and
+#' draws directly on the active graphics device. The optional ggplot2 engine uses
+#' GGally when both optional packages are installed and returns a reusable plot
+#' matrix for reports or further customisation. The ggplot2/GGally output is
+#' intentionally optional so existing teaching material can continue to rely on
+#' the base graphics default.
 #'
 #' @param x a data frame.
 #' @param na.rm if TRUE then only complete cases will be displayed.
@@ -19,9 +21,16 @@
 #' @keywords hplot
 #' @examples
 #'
-#' ##peruvian indians
+#' ## Peruvian Indians
 #' data(peru.df)
 #' pairs20x(peru.df)
+#'
+#' # Optional ggplot2/GGally engine for a reusable plot matrix
+#' if (requireNamespace("ggplot2", quietly = TRUE) &&
+#'     requireNamespace("GGally", quietly = TRUE)) {
+#'   pairsPlot = pairs20x(peru.df, engine = "ggplot2")
+#'   class(pairsPlot)
+#' }
 #'
 #' @export pairs20x
 pairs20x = function(x, na.rm = TRUE, engine = c("base", "ggplot2"), ...) {

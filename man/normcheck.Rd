@@ -131,9 +131,11 @@ x-axis blank in the histogram then use \code{xlab = c("Theoretical Quantiles", "
 information will be extracted from \code{x}.
 }
 \details{
-The default base graphics engine preserves the original teaching plots. The
-optional ggplot2 engine returns ggplot objects when \pkg{ggplot2} is
-installed.
+The default base graphics engine preserves the original teaching plots and
+draws directly on the active graphics device. The optional ggplot2 engine is
+intended for users who want reusable plot objects for reports or further
+customisation; it requires \pkg{ggplot2} to be installed and returns ggplot
+objects instead of drawing base graphics side effects.
 }
 \examples{
 
@@ -154,7 +156,14 @@ normcheck(residuals(fit))
 
 # Peruvian Indians data
 data(peru.df)
-normcheck(lm(BP ~ weight, data = peru.df))
+peruFit = lm(BP ~ weight, data = peru.df)
+normcheck(peruFit)
+
+# Optional ggplot2 engine for reusable plot objects
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  normPlots = normcheck(peruFit, engine = "ggplot2")
+  names(normPlots)
+}
 
 }
 \seealso{

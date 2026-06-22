@@ -1,3 +1,9 @@
+# s20x development news
+
+## Purpose
+
+This file records user-visible development changes to s20x.
+
 # s20x 3.2.288
 
 ## Development notes
@@ -234,3 +240,11 @@
 - Normalised style in small utility files as part of the staged modernisation work.
 - Added package infrastructure for automated R CMD check runs.
 - Updated package build ignores for repository-only infrastructure files.
+
+## s20x 3.2.290
+
+- Clarified that the default base plotting engine preserves direct teaching graphics while optional ggplot2 engines return reusable plot objects.
+- Added guarded examples for optional ggplot2 and GGally plotting engines in normcheck(), eovcheck(), modelcheck(), and pairs20x().
+- Kept ggplot2 and GGally usage behind requireNamespace() guards so examples remain compatible when optional packages are unavailable.
+- Regenerated documentation should be produced by devtools::document() during the stage runner.
+

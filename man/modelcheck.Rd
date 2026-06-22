@@ -45,9 +45,11 @@ checking, while newer teaching material may use focused diagnostic helpers
 such as [eovcheck()], [normcheck()], and [cooks20x()] directly.
 }
 \details{
-The default base graphics engine preserves the original teaching plots. The
-optional ggplot2 engine returns ggplot objects when \pkg{ggplot2} is
-installed.
+The default base graphics engine preserves the original teaching plots and
+draws directly on the active graphics device. The optional ggplot2 engine is
+intended for users who want reusable plot objects for reports or further
+customisation; it requires \pkg{ggplot2} to be installed and returns ggplot
+objects instead of drawing base graphics side effects.
 }
 \examples{
 data(peru.df)
@@ -61,4 +63,10 @@ modelcheck(lmFit, 1:2)
 
 # Plot all diagnostics
 modelcheck(lmFit)
+
+# Optional ggplot2 engine for reusable plot objects
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  diagnosticPlots = modelcheck(lmFit, engine = "ggplot2")
+  names(diagnosticPlots)
+}
 }

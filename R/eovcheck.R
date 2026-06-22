@@ -13,9 +13,11 @@
 #' equality variance is displayed in the top left hand corner, as long as the
 #' number of observations per group exceeds two.
 #'
-#' The default base graphics engine preserves the original teaching plot. The
-#' optional ggplot2 engine returns a ggplot object when \pkg{ggplot2} is
-#' installed.
+#' The default base graphics engine preserves the original teaching plot and
+#' draws directly on the active graphics device. The optional ggplot2 engine is
+#' intended for users who want a reusable plot object for reports or further
+#' customisation; it requires \pkg{ggplot2} to be installed and returns a ggplot
+#' object instead of drawing a base graphics side effect.
 #'
 #' @param x A linear model formula. Alternatively, a fitted lm object from
 #' a linear model.
@@ -73,6 +75,12 @@
 #' airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1]
 #'                  + log(passengers)[-144], data  = airpass.df)
 #' eovcheck(airpass.fit)
+#'
+#' # Optional ggplot2 engine for a reusable plot object
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
+#'   class(eovPlot)
+#' }
 #'
 #' @importFrom methods is
 #' @export eovcheck
