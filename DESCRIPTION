@@ -1,5 +1,5 @@
 Package: s20x
-Version: 3.2.277
+Version: 3.2.278
 Title: Functions for University of Auckland Course STATS 201/208 Data
         Analysis
 Authors@R: c(
@@ -22,8 +22,8 @@ Description: A set of functions used in teaching STATS 201/208 Data Analysis at
     accessible to a large undergraduate population who are mostly not statistics
     majors.
 Depends: R (>= 4.0.0)
-Suggests: bootstrap, dafs, emmeans, formatR, ggplot2, knitr, markdown,
-        testthat (>= 3.0.0)
+Suggests: bootstrap, dafs, emmeans, formatR, GGally, ggplot2, knitr,
+        markdown, testthat (>= 3.0.0)
 Encoding: UTF-8
 Imports: stats, graphics, grDevices, methods, nlme, rmarkdown, rstudioapi,
         tools, utils

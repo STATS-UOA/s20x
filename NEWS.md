@@ -1,3 +1,8 @@
+# s20x 3.2.278
+
+## Modernisation
+- Added an optional ggplot2/GGally engine to pairs20x() while preserving the original base graphics output as the default.
+
 # s20x 3.2.276
 
 ## Data
