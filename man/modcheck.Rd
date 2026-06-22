@@ -50,19 +50,14 @@ function is called for its plotting side effects and does not provide a stable
 data return object.
 }
 \description{
-`modcheck()` is deprecated and is no longer exported. It plots four model checking plots: residuals versus fitted values, a normal
-Q-Q plot, a histogram of residuals with a normal distribution superimposed,
-and a Cook's distance plot.
+`modcheck()` is deprecated and is no longer exported. It plots four model
+checking plots: residuals versus fitted values, a normal Q-Q plot, a
+histogram of residuals with a normal distribution superimposed, and a Cook's
+distance plot.
 }
 \section{Methods (by class)}{
 \itemize{
 \item \code{modcheck(lm)}: Model checking plots
 
 }}
-\examples{
-\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
-# This legacy helper is no longer exported. Use modelcheck(), eovcheck(),
-# normcheck(), and cooks20x() directly in new teaching material.
-\dontshow{\}) # examplesIf}
-}
 \keyword{hplot}

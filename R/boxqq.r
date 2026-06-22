@@ -1,7 +1,8 @@
 #' Deprecated box plots and normal quantile-quantile plots
 #'
-#' `boxqq()` is deprecated and is no longer exported. It draws boxplots and normal quantile-quantile plots of x for each value of the
-#' grouping variable g
+#' `boxqq()` is deprecated and is no longer exported. It draws boxplots
+#' and normal quantile-quantile plots of `x` for each level of the grouping
+#' variable `g`.
 #'
 #'
 #' @param formula A symbolic specification of the form \code{x ~ g} can be given,
@@ -15,9 +16,6 @@
 #' @note This is a legacy teaching helper retained for compatibility with
 #'   older course material. New teaching material should prefer current
 #'   diagnostic plotting workflows.
-#' @examplesIf FALSE
-#' # This legacy helper is no longer exported.
-#'
 boxqq = function(formula, ...) {
   .Deprecated(
     msg = "boxqq() is deprecated and is no longer exported."

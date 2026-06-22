@@ -23,8 +23,9 @@ the levels of the factor \code{g}. \code{NA}'s are allowed in the data.}
 Returns the plot.
 }
 \description{
-`boxqq()` is deprecated and is no longer exported. It draws boxplots and normal quantile-quantile plots of x for each value of the
-grouping variable g
+`boxqq()` is deprecated and is no longer exported. It draws boxplots
+and normal quantile-quantile plots of `x` for each level of the grouping
+variable `g`.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -35,10 +36,5 @@ grouping variable g
 This is a legacy teaching helper retained for compatibility with
   older course material. New teaching material should prefer current
   diagnostic plotting workflows.
-}
-\examples{
-\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
-# This legacy helper is no longer exported.
-\dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

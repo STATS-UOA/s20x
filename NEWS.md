@@ -241,6 +241,13 @@ This file records user-visible development changes to s20x.
 - Added package infrastructure for automated R CMD check runs.
 - Updated package build ignores for repository-only infrastructure files.
 
+## s20x 3.2.292
+
+- Removed no-op examplesIf blocks from deprecated, unexported legacy helper documentation.
+- Clarified the deprecated boxqq(), stripqq(), and modcheck() descriptions without restoring exported examples.
+- Preserved legacy helper behavior while reducing CRAN-facing example clutter in generated Rd files.
+- Regenerated documentation should be produced by devtools::document() during the stage runner.
+
 ## s20x 3.2.291
 
 - Refreshed legacy helper documentation so deprecated, unexported functions no longer show direct internal-call examples.
