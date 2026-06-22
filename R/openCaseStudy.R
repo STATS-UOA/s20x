@@ -16,9 +16,9 @@
 #' @return Invisibly returns the path to the copied file.
 #'
 #' @examples
-#' \dontrun{
-#' openCaseStudy("2.1")
-#' openCaseStudy("2.1", destDir = tempdir())
+#' if (interactive()) {
+#'   openCaseStudy("2.1")
+#'   openCaseStudy("2.1", destDir = tempdir())
 #' }
 #'
 #' @importFrom rstudioapi isAvailable navigateToFile

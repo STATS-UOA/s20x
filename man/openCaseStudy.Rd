@@ -35,9 +35,9 @@ inside the package is copied to \code{dest_dir} (so it is writable), then
 opened in the RStudio editor when available (otherwise the system editor).
 }
 \examples{
-\dontrun{
-openCaseStudy("2.1")
-openCaseStudy("2.1", destDir = tempdir())
+if (interactive()) {
+  openCaseStudy("2.1")
+  openCaseStudy("2.1", destDir = tempdir())
 }
 
 }

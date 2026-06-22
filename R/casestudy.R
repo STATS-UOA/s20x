@@ -30,11 +30,11 @@
 #' Invisibly returns the path to the rendered HTML file.
 #'
 #' @examples
-#' \dontrun{
-#' casestudy("CS9_2")
-#' casestudy("9.2")
-#' casestudy("9_2", outputDir = tempdir())
-#' cs("9_2")
+#' if (interactive()) {
+#'   casestudy("CS9_2")
+#'   casestudy("9.2")
+#'   casestudy("9_2", outputDir = tempdir())
+#'   cs("9_2")
 #' }
 #'
 #' @importFrom rmarkdown render

@@ -34,10 +34,7 @@ This is a legacy teaching helper retained for compatibility with
 }
 \examples{
 \dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
-
-## Zoo data
-data(zoo.df)
-s20x:::stripqq(attendance~day.type, data = zoo.df)
+# This legacy helper is no longer exported.
 \dontshow{\}) # examplesIf}
 }
 \keyword{hplot}

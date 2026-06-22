@@ -16,10 +16,7 @@
 #'   older course material. New teaching material should prefer current
 #'   diagnostic plotting workflows.
 #' @examplesIf FALSE
-#'
-#' ## Zoo data
-#' data(zoo.df)
-#' s20x:::boxqq(attendance ~ day.type, data = zoo.df)
+#' # This legacy helper is no longer exported.
 #'
 boxqq = function(formula, ...) {
   .Deprecated(

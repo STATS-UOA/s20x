@@ -26,23 +26,9 @@
 #' used currently.
 #' @keywords hplot
 #' @examplesIf FALSE
-#' 
-#' # Synthetic teaching example: an exponential growth curve
-#' set.seed(123)
-#' e = rnorm(100, 0, 0.1)
-#' x = rnorm(100)
-#' y = exp(5 + 3 * x + e)
-#' fit = lm(y ~ x, data = data.frame(x, y))
-#' s20x:::modcheck(fit)
-#' 
-#' # An exponential growth curve with the correct transformation
-#' fit = lm(log(y) ~ x, data = data.frame(x, y))
-#' s20x:::modcheck(fit)
-#' 
-#' # Peruvian Indians data
-#' data(peru.df)
-#' s20x:::modcheck(lm(BP ~ weight, data = peru.df))
-#' 
+#' # This legacy helper is no longer exported. Use modelcheck(), eovcheck(),
+#' # normcheck(), and cooks20x() directly in new teaching material.
+#'
 #' @importFrom methods is
 modcheck = function(x, ...) {
   .Deprecated(

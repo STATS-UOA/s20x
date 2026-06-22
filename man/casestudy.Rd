@@ -52,11 +52,11 @@ any required packages installed for the selected case study.
 The rendered HTML file is returned invisibly.
 }
 \examples{
-\dontrun{
-casestudy("CS9_2")
-casestudy("9.2")
-casestudy("9_2", outputDir = tempdir())
-cs("9_2")
+if (interactive()) {
+  casestudy("CS9_2")
+  casestudy("9.2")
+  casestudy("9_2", outputDir = tempdir())
+  cs("9_2")
 }
 
 }

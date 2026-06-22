@@ -31,9 +31,9 @@ numerical order, not alphabetical order.
 The function invisibly returns a character vector of case study identifiers.
 }
 \examples{
-\dontrun{
-listCaseStudies()
-ids = listCaseStudies()
+if (interactive()) {
+  listCaseStudies()
+  ids = listCaseStudies()
 }
 
 }

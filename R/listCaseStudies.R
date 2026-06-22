@@ -17,9 +17,9 @@
 #' Invisibly returns a character vector of case study identifiers.
 #'
 #' @examples
-#' \dontrun{
-#' listCaseStudies()
-#' ids = listCaseStudies()
+#' if (interactive()) {
+#'   listCaseStudies()
+#'   ids = listCaseStudies()
 #' }
 #'
 #' @importFrom tools file_path_sans_ext

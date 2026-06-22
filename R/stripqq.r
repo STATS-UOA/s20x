@@ -14,10 +14,7 @@
 #'   older course material. New teaching material should prefer current
 #'   diagnostic plotting workflows.
 #' @examplesIf FALSE
-#'
-#' ## Zoo data
-#' data(zoo.df)
-#' s20x:::stripqq(attendance~day.type, data = zoo.df)
+#' # This legacy helper is no longer exported.
 #'
 stripqq = function(formula, ...) {
   .Deprecated(

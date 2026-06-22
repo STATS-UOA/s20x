@@ -241,6 +241,13 @@ This file records user-visible development changes to s20x.
 - Added package infrastructure for automated R CMD check runs.
 - Updated package build ignores for repository-only infrastructure files.
 
+## s20x 3.2.291
+
+- Refreshed legacy helper documentation so deprecated, unexported functions no longer show direct internal-call examples.
+- Replaced older case-study dontrun examples with interactive examples for CRAN-facing documentation hygiene.
+- Preserved case-study and deprecated-helper behavior while making the examples clearer for current teaching material.
+- Regenerated documentation should be produced by devtools::document() during the stage runner.
+
 ## s20x 3.2.290
 
 - Clarified that the default base plotting engine preserves direct teaching graphics while optional ggplot2 engines return reusable plot objects.
