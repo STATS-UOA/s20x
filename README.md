@@ -24,6 +24,14 @@ Recent modernisation work has preserved the original base graphics teaching outp
 
 Where supported, use `engine = "ggplot2"` to request the modern plotting engine. The optional engine is intended for workflows where a plot object is useful for saving, arranging, or further customisation. It requires the optional plotting packages documented by each help page, while the base engine remains available without those optional packages.
 
+Use the plotting engines this way:
+
+| Task | Recommended call | Notes |
+| --- | --- | --- |
+| Teaching, labs, and lecture notes | `normcheck(fit)` or `modelcheck(fit)` | Uses the original base graphics output. |
+| Save or arrange a diagnostic plot object | `normcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns a plot object or a list of plot objects. |
+| Save or arrange a pairs plot | `pairs20x(data, engine = "ggplot2")` | Requires both `ggplot2` and `GGally`. |
+
 Examples:
 
 ```r
@@ -32,6 +40,7 @@ normcheck(peruFit)
 
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   normPlots = normcheck(peruFit, engine = "ggplot2")
+  normPlots
 }
 ```
 
@@ -39,8 +48,11 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
 if (requireNamespace("ggplot2", quietly = TRUE) &&
     requireNamespace("GGally", quietly = TRUE)) {
   pairsPlot = pairs20x(peru.df, engine = "ggplot2")
+  pairsPlot
 }
 ```
+
+The base engine draws directly on the active graphics device and usually returns no reusable object. The ggplot2 engine is for users who need to keep, print, save, or combine the result later. This distinction is intentional so existing course material keeps the familiar plots while newer workflows can opt into object-based graphics.
 
 
 # Build Notes

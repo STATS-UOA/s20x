@@ -4,6 +4,13 @@
 
 This file records user-visible development changes to s20x.
 
+# s20x 3.2.294
+
+## Modernisation
+- Clarified README guidance for choosing between base and ggplot2 diagnostic plotting engines.
+- Added package-level documentation describing stable teaching defaults and optional plotting engines.
+- No plotting behaviour or public API changed.
+
 # s20x 3.2.293
 
 ## Modernisation

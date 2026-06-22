@@ -6,7 +6,17 @@
 \alias{s20x-package}
 \title{s20x: Functions for University of Auckland Course STATS 201/208 Data Analysis}
 \description{
-A set of functions used in teaching STATS 201/208 Data Analysis at the University of Auckland. The functions are designed to make parts of R more accessible to a large undergraduate population who are mostly not statistics majors.
+The s20x package provides teaching-oriented helper functions and datasets for
+University of Auckland STATS 201 and STATS 208 data analysis courses. The
+package keeps student-facing defaults stable so existing lecture notes, labs,
+and examples continue to behave as expected.
+}
+\details{
+Selected diagnostic plotting helpers now support optional plotting engines.
+The default base graphics engine preserves the original teaching output. Use
+\code{engine = "ggplot2"} only when a reusable plot object is useful for
+saving, arranging, or further customisation. The optional engine requires the
+plotting packages documented on the relevant help pages.
 }
 \seealso{
 Useful links:

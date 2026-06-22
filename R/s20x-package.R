@@ -1,3 +1,16 @@
+#' s20x: Functions for University of Auckland Course STATS 201/208 Data Analysis
+#'
+#' The s20x package provides teaching-oriented helper functions and datasets for
+#' University of Auckland STATS 201 and STATS 208 data analysis courses. The
+#' package keeps student-facing defaults stable so existing lecture notes, labs,
+#' and examples continue to behave as expected.
+#'
+#' Selected diagnostic plotting helpers now support optional plotting engines.
+#' The default base graphics engine preserves the original teaching output. Use
+#' \code{engine = "ggplot2"} only when a reusable plot object is useful for
+#' saving, arranging, or further customisation. The optional engine requires the
+#' plotting packages documented on the relevant help pages.
+#'
 #' @keywords internal
 "_PACKAGE"
 
