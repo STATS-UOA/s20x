@@ -1,3 +1,10 @@
+# s20x 3.2.288
+
+## Development notes
+- Archived the Stage 16 plotting modernisation developer note under Completed.
+- Recorded that pairs20x(), normcheck(), eovcheck(), and modelcheck() now have optional ggplot2 engines with base graphics preserved as the default.
+- Kept this as a documentation wrap-up stage with no intended plotting behavior changes.
+
 # s20x 3.2.287
 
 ## Modernisation
