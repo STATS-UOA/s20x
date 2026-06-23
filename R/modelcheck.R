@@ -147,11 +147,10 @@ modelcheckGgplot2 = function(x, which) {
 #' @return A ggplot object.
 #' @noRd
 modelcheckGgplot2Residuals = function(x) {
-  ggplot = getPlottingFunction("ggplot2", "ggplot")
-  aes = getPlottingFunction("ggplot2", "aes")
-  geomPoint = getPlottingFunction("ggplot2", "geom_point")
-  geomHline = getPlottingFunction("ggplot2", "geom_hline")
-  labs = getPlottingFunction("ggplot2", "labs")
+  ggplotFunctions = getPlottingFunctions(
+    "ggplot2",
+    c("ggplot", "aes", "geom_point", "geom_hline", "labs")
+  )
 
   diagnosticData = getModelResidualFittedData(x, context = "linear model")
   plotData = data.frame(
@@ -159,13 +158,20 @@ modelcheckGgplot2Residuals = function(x) {
     residuals = as.numeric(diagnosticData[["residuals"]])
   )
 
-  ggplot(
+  ggplotFunctions[["ggplot"]](
     plotData,
-    aes(x = plotData[["fitted"]], y = plotData[["residuals"]])
+    ggplotFunctions[["aes"]](
+      x = plotData[["fitted"]],
+      y = plotData[["residuals"]]
+    )
   ) +
-    geomPoint(shape = 1) +
-    geomHline(yintercept = 0, linetype = 3, colour = "lightgrey") +
-    labs(x = "Fitted values", y = "Residuals", title = "")
+    ggplotFunctions[["geom_point"]](shape = 1) +
+    ggplotFunctions[["geom_hline"]](
+      yintercept = 0,
+      linetype = 3,
+      colour = "lightgrey"
+    ) +
+    ggplotFunctions[["labs"]](x = "Fitted values", y = "Residuals", title = "")
 }
 
 #' Build a ggplot2 Cook's distance plot for modelcheck
@@ -174,24 +180,33 @@ modelcheckGgplot2Residuals = function(x) {
 #' @return A ggplot object.
 #' @noRd
 modelcheckGgplot2Cooks = function(x) {
-  ggplot = getPlottingFunction("ggplot2", "ggplot")
-  aes = getPlottingFunction("ggplot2", "aes")
-  geomPoint = getPlottingFunction("ggplot2", "geom_point")
-  geomLine = getPlottingFunction("ggplot2", "geom_line")
-  geomHline = getPlottingFunction("ggplot2", "geom_hline")
-  labs = getPlottingFunction("ggplot2", "labs")
+  ggplotFunctions = getPlottingFunctions(
+    "ggplot2",
+    c("ggplot", "aes", "geom_point", "geom_line", "geom_hline", "labs")
+  )
 
   cooksData = data.frame(
     observation = seq_along(cooks.distance(x)),
     cooksDistance = as.numeric(cooks.distance(x))
   )
 
-  ggplot(
+  ggplotFunctions[["ggplot"]](
     cooksData,
-    aes(x = cooksData[["observation"]], y = cooksData[["cooksDistance"]])
+    ggplotFunctions[["aes"]](
+      x = cooksData[["observation"]],
+      y = cooksData[["cooksDistance"]]
+    )
   ) +
-    geomLine() +
-    geomPoint(shape = 1) +
-    geomHline(yintercept = 0, linetype = 3, colour = "lightgrey") +
-    labs(x = "Obs. number", y = "Cook's distance", title = "Cook's distance")
+    ggplotFunctions[["geom_line"]]() +
+    ggplotFunctions[["geom_point"]](shape = 1) +
+    ggplotFunctions[["geom_hline"]](
+      yintercept = 0,
+      linetype = 3,
+      colour = "lightgrey"
+    ) +
+    ggplotFunctions[["labs"]](
+      x = "Obs. number",
+      y = "Cook's distance",
+      title = "Cook's distance"
+    )
 }

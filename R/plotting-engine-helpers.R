@@ -48,3 +48,22 @@ matchPlottingEngine = function(engine, choices = c("base", "ggplot2")) {
 getPlottingFunction = function(package, functionName) {
   getExportedValue(package, functionName)
 }
+#' Get multiple exported functions from an optional plotting package
+#'
+#' Retrieves several plotting functions at once after the caller has checked that
+#' the optional package is available. This keeps grouped optional-package lookups
+#' readable in ggplot2 implementations without changing when packages are
+#' required.
+#'
+#' @param package character name of the optional plotting package.
+#' @param functionNames character vector of exported function names to retrieve.
+#' @return A named list of exported function objects.
+#' @keywords internal
+getPlottingFunctions = function(package, functionNames) {
+  functions = lapply(functionNames, function(functionName) {
+    getPlottingFunction(package, functionName)
+  })
+  names(functions) = functionNames
+
+  functions
+}

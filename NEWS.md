@@ -2,6 +2,14 @@
 
 ## Purpose
 
+
+## s20x 3.2.300
+
+- Added a grouped optional plotting function lookup helper for ggplot2 implementations.
+- Refactored modelcheck ggplot2 residual and Cook distance builders to use grouped helper lookups.
+- Preserved base graphics as the default engine and kept ggplot2 optional.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.299
 
 - Centralised optional plotting function lookup behind the internal getPlottingFunction() helper.
