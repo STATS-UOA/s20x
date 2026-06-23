@@ -34,7 +34,7 @@
 #'
 #' @export pairs20x
 pairs20x = function(x, na.rm = TRUE, engine = c("base", "ggplot2"), ...) {
-    engine = match.arg(engine)
+    engine = matchPlottingEngine(engine)
 
     if (na.rm) {
         x = x[complete.cases(x), ]

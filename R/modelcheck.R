@@ -53,7 +53,7 @@ modelcheck = function(x, ...) {
 #' @export
 modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4),
                           engine = c("base", "ggplot2"), ...) {
-  engine = match.arg(engine)
+  engine = matchPlottingEngine(engine)
 
   if (!all(which %in% 1:3)) {
     stop("which must be in 1:3")

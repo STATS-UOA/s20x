@@ -99,7 +99,7 @@ eovcheck.formula = function(x, data = NULL,
     stop("missing or incorrect formula formula")
   }
 
-  engine = match.arg(engine)
+  engine = matchPlottingEngine(engine)
 
   call = match.call()
   m = match.call()
@@ -236,7 +236,7 @@ eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
     stop("missing or incorrect lm object")
   }
 
-  engine = match.arg(engine)
+  engine = matchPlottingEngine(engine)
 
   form = formula(x$call$formula)
   data.f = data.frame(eval(x$call$data, parent.frame()))

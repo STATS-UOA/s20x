@@ -19,3 +19,17 @@ requirePlottingPackage = function(package, engine = "ggplot2") {
 
   invisible(TRUE)
 }
+
+#' Match a plotting engine argument
+#'
+#' Applies the standard plotting engine argument matching used by exported
+#' plotting functions. Keeping this in one place makes engine-dispatch cleanup
+#' stages less repetitive without changing the accepted engine values.
+#'
+#' @param engine character plotting engine argument.
+#' @param choices character vector of accepted plotting engines.
+#' @return The matched plotting engine.
+#' @keywords internal
+matchPlottingEngine = function(engine, choices = c("base", "ggplot2")) {
+  match.arg(engine, choices)
+}

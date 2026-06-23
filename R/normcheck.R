@@ -102,7 +102,7 @@ normcheck.default = function(x,
                              bcol = "lightgrey", shapiro.wilk = FALSE,
                              whichPlot = 1:2, usePar = TRUE,
                              engine = c("base", "ggplot2"), ...) {
-  engine = match.arg(engine)
+  engine = matchPlottingEngine(engine)
 
   if (!all(whichPlot %in% 1:2)) {
     stop("whichPlot must be in 1:2")
@@ -162,7 +162,7 @@ normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""),
     stop("missing or incorrect lm object")
   }
 
-  engine = match.arg(engine)
+  engine = matchPlottingEngine(engine)
 
   if (!all(whichPlot %in% 1:2)) {
     stop("whichPlot must be in 1:2")
@@ -213,7 +213,7 @@ normcheck.tslm = function(x, xlab = c("Theoretical Quantiles", ""),
   }
 
   residualType = matchTslmResidualType(residualType)
-  engine = match.arg(engine)
+  engine = matchPlottingEngine(engine)
 
   normcheck(
     residuals(x, type = residualType),
