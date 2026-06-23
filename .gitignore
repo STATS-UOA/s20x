@@ -14,3 +14,4 @@ reports/
 s20x_stage*_completed.zip
 .positai
 .Rapp.history
+.s20x_validation_mode
