@@ -4,6 +4,14 @@
 
 This file records user-visible development changes to s20x.
 
+# s20x 3.2.295
+
+## Modernisation
+- Completed a final consistency pass over README and package-level plotting-engine documentation.
+- Clarified optional ggplot2 and GGally requirements for diagnostic plotting helpers.
+- Ignored stage-runner validation scratch files in package builds so strict checks do not report them as hidden-file notes.
+- No plotting behaviour or public API changed.
+
 # s20x 3.2.294
 
 ## Modernisation

@@ -9,7 +9,9 @@
 #' The default base graphics engine preserves the original teaching output. Use
 #' \code{engine = "ggplot2"} only when a reusable plot object is useful for
 #' saving, arranging, or further customisation. The optional engine requires the
-#' plotting packages documented on the relevant help pages.
+#' plotting packages documented on the relevant help pages: \pkg{ggplot2} for
+#' \code{normcheck()}, \code{eovcheck()}, and \code{modelcheck()}, and both
+#' \pkg{ggplot2} and \pkg{GGally} for \code{pairs20x()}.
 #'
 #' @keywords internal
 "_PACKAGE"
