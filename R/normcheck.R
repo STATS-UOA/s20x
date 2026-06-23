@@ -448,12 +448,16 @@ normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 #' @noRd
 normcheckGgplot2Qq = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
                               shapiro.wilk) {
-  ggplot = getPlottingFunction("ggplot2", "ggplot")
-  aes = getPlottingFunction("ggplot2", "aes")
-  geomPoint = getPlottingFunction("ggplot2", "geom_point")
-  geomAbline = getPlottingFunction("ggplot2", "geom_abline")
-  labs = getPlottingFunction("ggplot2", "labs")
-  annotate = getPlottingFunction("ggplot2", "annotate")
+  ggplotFunctions = getPlottingFunctions(
+    "ggplot2",
+    c("ggplot", "aes", "geom_point", "geom_abline", "labs", "annotate")
+  )
+  ggplot = ggplotFunctions[["ggplot"]]
+  aes = ggplotFunctions[["aes"]]
+  geomPoint = ggplotFunctions[["geom_point"]]
+  geomAbline = ggplotFunctions[["geom_abline"]]
+  labs = ggplotFunctions[["labs"]]
+  annotate = ggplotFunctions[["annotate"]]
 
   qqp = qqnorm(x, plot.it = FALSE)
   plotData = data.frame(theoretical = qqp$x, sample = qqp$y)
@@ -538,12 +542,16 @@ normcheckBootstrapQqData = function(x, B) {
 #' @return A ggplot object.
 #' @noRd
 normcheckGgplot2Histogram = function(x, xlab, ylab, main, col) {
-  ggplot = getPlottingFunction("ggplot2", "ggplot")
-  aes = getPlottingFunction("ggplot2", "aes")
-  geomRect = getPlottingFunction("ggplot2", "geom_rect")
-  geomLine = getPlottingFunction("ggplot2", "geom_line")
-  labs = getPlottingFunction("ggplot2", "labs")
-  coordCartesian = getPlottingFunction("ggplot2", "coord_cartesian")
+  ggplotFunctions = getPlottingFunctions(
+    "ggplot2",
+    c("ggplot", "aes", "geom_rect", "geom_line", "labs", "coord_cartesian")
+  )
+  ggplot = ggplotFunctions[["ggplot"]]
+  aes = ggplotFunctions[["aes"]]
+  geomRect = ggplotFunctions[["geom_rect"]]
+  geomLine = ggplotFunctions[["geom_line"]]
+  labs = ggplotFunctions[["labs"]]
+  coordCartesian = ggplotFunctions[["coord_cartesian"]]
 
   mx = mean(x)
   sx = sd(x)

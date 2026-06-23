@@ -3,6 +3,14 @@
 ## Purpose
 
 
+
+## s20x 3.2.301
+
+- Refactored normcheck ggplot2 Q-Q and histogram builders to use grouped optional plotting function lookups.
+- Refactored the eovcheck ggplot2 diagnostic builder to use grouped optional plotting function lookups.
+- Preserved base graphics as the default engine and kept ggplot2 optional.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.300
 
 - Added a grouped optional plotting function lookup helper for ggplot2 implementations.
