@@ -61,7 +61,7 @@ test_that("internal residual and fitted helper returns aligned diagnostic data",
   group = factor(c("A", "A", "B", "B", "B"))
   fit = lm(values ~ group)
 
-  diagnosticData = s20x:::getModelResidualFittedData(fit, context = "linear model")
+  diagnosticData = getS20xInternal("getModelResidualFittedData")(fit, context = "linear model")
 
   expect_named(diagnosticData, c("fitted", "residuals"))
   expect_equal(diagnosticData$fitted, fitted(fit))

@@ -4,7 +4,7 @@ test_that("internal prediction helpers preserve base prediction output", {
   lmNewdata = data.frame(x = 6)
 
   expect_equal(
-    s20x:::predictLmWithSe(lmFit, lmNewdata),
+    getS20xInternal("predictLmWithSe")(lmFit, lmNewdata),
     predict.lm(lmFit, lmNewdata, se.fit = TRUE)
   )
 
@@ -13,7 +13,7 @@ test_that("internal prediction helpers preserve base prediction output", {
   glmNewdata = data.frame(x = 6)
 
   expect_equal(
-    s20x:::predictGlmWithSe(glmFit, glmNewdata),
+    getS20xInternal("predictGlmWithSe")(glmFit, glmNewdata),
     predict.glm(glmFit, glmNewdata, se.fit = TRUE)
   )
 })
@@ -23,7 +23,7 @@ test_that("teaching prediction wrappers use the shared helper path without chang
   lmFit = lm(y ~ x, data = data)
   lmNewdata = data.frame(x = 6)
   lmResult = predict20x(lmFit, lmNewdata, print.out = FALSE)
-  lmBase = s20x:::predictLmWithSe(lmFit, lmNewdata)
+  lmBase = getS20xInternal("predictLmWithSe")(lmFit, lmNewdata)
 
   expect_equal(lmResult$fit, lmBase$fit)
   expect_equal(lmResult$se.fit, lmBase$se.fit)
@@ -32,7 +32,7 @@ test_that("teaching prediction wrappers use the shared helper path without chang
   glmFit = glm(y ~ x, data = countData, family = poisson(link = "log"))
   glmNewdata = data.frame(x = 6)
   countResult = predictCount(glmFit, glmNewdata, print.out = FALSE)
-  glmBase = s20x:::predictGlmWithSe(glmFit, glmNewdata)
+  glmBase = getS20xInternal("predictGlmWithSe")(glmFit, glmNewdata)
 
   expect_equal(countResult$Predicted, unname(round(exp(glmBase$fit), 3)))
 
@@ -50,7 +50,7 @@ test_that("internal prediction interval helpers preserve existing linear-model a
   intervalQuantile = qt(percent, df)
   predictionSe = sqrt(residualScale^2 + seFit^2)
 
-  result = s20x:::lmTeachingPredictionIntervals(
+  result = getS20xInternal("lmTeachingPredictionIntervals")(
     fit = fit,
     seFit = seFit,
     residualScale = residualScale,
@@ -71,7 +71,7 @@ test_that("internal GLM interval helpers preserve existing normal and quasi arit
   percent = 1 - (1 - cilevel) / 2
   intervalQuantile = qnorm(percent)
 
-  result = s20x:::glmTeachingConfidenceIntervals(
+  result = getS20xInternal("glmTeachingConfidenceIntervals")(
     fit = fit,
     seFit = seFit,
     cilevel = cilevel,
@@ -80,27 +80,27 @@ test_that("internal GLM interval helpers preserve existing normal and quasi arit
 
   expect_equal(result$confLower, fit - intervalQuantile * seFit)
   expect_equal(result$confUpper, fit + intervalQuantile * seFit)
-  expect_equal(s20x:::glmTeachingIntervalQuantile(cilevel), qnorm(percent))
+  expect_equal(getS20xInternal("glmTeachingIntervalQuantile")(cilevel), qnorm(percent))
 
   quasiFit = glm(
     c(1, 2, 3, 4, 6) ~ c(1, 2, 3, 4, 5),
     family = quasipoisson(link = "log")
   )
   expect_equal(
-    s20x:::glmTeachingIntervalQuantile(cilevel, quasiFit, quasit = TRUE),
+    getS20xInternal("glmTeachingIntervalQuantile")(cilevel, quasiFit, quasit = TRUE),
     qt(percent, quasiFit$df.res)
   )
 })
 
 test_that("internal prediction newdata validation preserves wrapper error text", {
   expect_error(
-    s20x:::validatePredictionNewdata(list(x = 1)),
+    getS20xInternal("validatePredictionNewdata")(list(x = 1)),
     'Argument \"newdata\" is not a data frame!',
     fixed = TRUE
   )
 
   newdata = data.frame(x = 1)
-  expect_invisible(s20x:::validatePredictionNewdata(newdata))
+  expect_invisible(getS20xInternal("validatePredictionNewdata")(newdata))
 })
 
 test_that("internal prediction output format helpers preserve legacy shape", {
@@ -110,7 +110,7 @@ test_that("internal prediction output format helpers preserve legacy shape", {
     upr = c(2.3456, 3.4567)
   )
 
-  result = s20x:::formatTeachingPredictionFrame(
+  result = getS20xInternal("formatTeachingPredictionFrame")(
     values = values,
     rowNames = c("1", "2"),
     columnNames = c("Predicted", " Conf.lower", "Conf.upper"),
@@ -134,12 +134,12 @@ test_that("internal GLM output format helper returns a stable data-frame shape",
   confLower = c(0.8, 1.7)
   confUpper = c(1.2, 2.3)
 
-  linkResult = s20x:::formatGlmPredictionFrame(
+  linkResult = getS20xInternal("formatGlmPredictionFrame")(
     fit = fit,
     confLower = confLower,
     confUpper = confUpper
   )
-  responseResult = s20x:::formatGlmPredictionFrame(
+  responseResult = getS20xInternal("formatGlmPredictionFrame")(
     fit = fit,
     confLower = confLower,
     confUpper = confUpper,
@@ -153,8 +153,8 @@ test_that("internal GLM output format helper returns a stable data-frame shape",
 })
 
 test_that("internal GLM type normalisation preserves legacy fallback", {
-  expect_equal(s20x:::normaliseGlmPredictionType("response"), "response")
-  expect_equal(s20x:::normaliseGlmPredictionType("link"), "link")
-  expect_equal(s20x:::normaliseGlmPredictionType("bad-type"), "link")
-  expect_equal(s20x:::normaliseGlmPredictionType(NULL), "link")
+  expect_equal(getS20xInternal("normaliseGlmPredictionType")("response"), "response")
+  expect_equal(getS20xInternal("normaliseGlmPredictionType")("link"), "link")
+  expect_equal(getS20xInternal("normaliseGlmPredictionType")("bad-type"), "link")
+  expect_equal(getS20xInternal("normaliseGlmPredictionType")(NULL), "link")
 })

@@ -147,31 +147,26 @@ modelcheckGgplot2 = function(x, which) {
 #' @return A ggplot object.
 #' @noRd
 modelcheckGgplot2Residuals = function(x) {
-  ggplotFunctions = getPlottingFunctions(
-    "ggplot2",
-    c("ggplot", "aes", "geom_point", "geom_hline", "labs")
-  )
-
   diagnosticData = getModelResidualFittedData(x, context = "linear model")
   plotData = data.frame(
     fitted = as.numeric(diagnosticData[["fitted"]]),
     residuals = as.numeric(diagnosticData[["residuals"]])
   )
 
-  ggplotFunctions[["ggplot"]](
+  ggplot(
     plotData,
-    ggplotFunctions[["aes"]](
+    aes(
       x = plotData[["fitted"]],
       y = plotData[["residuals"]]
     )
   ) +
-    ggplotFunctions[["geom_point"]](shape = 1) +
-    ggplotFunctions[["geom_hline"]](
+    geom_point(shape = 1) +
+    geom_hline(
       yintercept = 0,
       linetype = 3,
       colour = "lightgrey"
     ) +
-    ggplotFunctions[["labs"]](x = "Fitted values", y = "Residuals", title = "")
+    labs(x = "Fitted values", y = "Residuals", title = "")
 }
 
 #' Build a ggplot2 Cook's distance plot for modelcheck
@@ -180,31 +175,26 @@ modelcheckGgplot2Residuals = function(x) {
 #' @return A ggplot object.
 #' @noRd
 modelcheckGgplot2Cooks = function(x) {
-  ggplotFunctions = getPlottingFunctions(
-    "ggplot2",
-    c("ggplot", "aes", "geom_point", "geom_line", "geom_hline", "labs")
-  )
-
   cooksData = data.frame(
     observation = seq_along(cooks.distance(x)),
     cooksDistance = as.numeric(cooks.distance(x))
   )
 
-  ggplotFunctions[["ggplot"]](
+  ggplot(
     cooksData,
-    ggplotFunctions[["aes"]](
+    aes(
       x = cooksData[["observation"]],
       y = cooksData[["cooksDistance"]]
     )
   ) +
-    ggplotFunctions[["geom_line"]]() +
-    ggplotFunctions[["geom_point"]](shape = 1) +
-    ggplotFunctions[["geom_hline"]](
+    geom_line() +
+    geom_point(shape = 1) +
+    geom_hline(
       yintercept = 0,
       linetype = 3,
       colour = "lightgrey"
     ) +
-    ggplotFunctions[["labs"]](
+    labs(
       x = "Obs. number",
       y = "Cook's distance",
       title = "Cook's distance"

@@ -1,14 +1,14 @@
 test_that("casestudy output argument resolver keeps legacy and camelCase names", {
   tempPath = tempfile("case-study-output")
 
-  legacyArgs = s20x:::resolveCaseStudyOutputArgs(
+  legacyArgs = getS20xInternal("resolveCaseStudyOutputArgs")(
     output_dir = tempPath,
     outputDirWasSupplied = TRUE
   )
   expect_identical(legacyArgs$outputDir, tempPath)
   expect_identical(legacyArgs$renderArgs, list())
 
-  aliasArgs = s20x:::resolveCaseStudyOutputArgs(
+  aliasArgs = getS20xInternal("resolveCaseStudyOutputArgs")(
     output_dir = tempfile("case-study-output-default"),
     outputDirWasSupplied = FALSE,
     outputDir = tempPath,
@@ -20,7 +20,7 @@ test_that("casestudy output argument resolver keeps legacy and camelCase names",
 
 test_that("casestudy output argument resolver rejects ambiguous output names", {
   expect_error(
-    s20x:::resolveCaseStudyOutputArgs(
+    getS20xInternal("resolveCaseStudyOutputArgs")(
       output_dir = tempfile(),
       outputDirWasSupplied = TRUE,
       outputDir = tempfile()
@@ -29,7 +29,7 @@ test_that("casestudy output argument resolver rejects ambiguous output names", {
     fixed = TRUE
   )
   expect_error(
-    s20x:::resolveCaseStudyOutputArgs(
+    getS20xInternal("resolveCaseStudyOutputArgs")(
       output_dir = "",
       outputDirWasSupplied = TRUE
     ),

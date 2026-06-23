@@ -448,24 +448,13 @@ normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 #' @noRd
 normcheckGgplot2Qq = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
                               shapiro.wilk) {
-  ggplotFunctions = getPlottingFunctions(
-    "ggplot2",
-    c("ggplot", "aes", "geom_point", "geom_abline", "labs", "annotate")
-  )
-  ggplot = ggplotFunctions[["ggplot"]]
-  aes = ggplotFunctions[["aes"]]
-  geomPoint = ggplotFunctions[["geom_point"]]
-  geomAbline = ggplotFunctions[["geom_abline"]]
-  labs = ggplotFunctions[["labs"]]
-  annotate = ggplotFunctions[["annotate"]]
-
   qqp = qqnorm(x, plot.it = FALSE)
   plotData = data.frame(theoretical = qqp$x, sample = qqp$y)
   plotObject = ggplot(plotData, aes(x = plotData[["theoretical"]], y = plotData[["sample"]]))
 
   if (bootstrap) {
     bootstrapData = normcheckBootstrapQqData(x, B)
-    plotObject = plotObject + geomPoint(
+    plotObject = plotObject + geom_point(
       data = bootstrapData,
       mapping = aes(
         x = bootstrapData[["theoretical"]],
@@ -477,8 +466,8 @@ normcheckGgplot2Qq = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
   }
 
   plotObject = plotObject +
-    geomPoint(shape = 1) +
-    geomAbline(intercept = mean(x), slope = sd(x)) +
+    geom_point(shape = 1) +
+    geom_abline(intercept = mean(x), slope = sd(x)) +
     labs(x = xlab, y = ylab, title = main)
 
   if (shapiro.wilk) {
@@ -542,17 +531,6 @@ normcheckBootstrapQqData = function(x, B) {
 #' @return A ggplot object.
 #' @noRd
 normcheckGgplot2Histogram = function(x, xlab, ylab, main, col) {
-  ggplotFunctions = getPlottingFunctions(
-    "ggplot2",
-    c("ggplot", "aes", "geom_rect", "geom_line", "labs", "coord_cartesian")
-  )
-  ggplot = ggplotFunctions[["ggplot"]]
-  aes = ggplotFunctions[["aes"]]
-  geomRect = ggplotFunctions[["geom_rect"]]
-  geomLine = ggplotFunctions[["geom_line"]]
-  labs = ggplotFunctions[["labs"]]
-  coordCartesian = ggplotFunctions[["coord_cartesian"]]
-
   mx = mean(x)
   sx = sd(x)
   h = hist(x, plot = FALSE)
@@ -573,7 +551,7 @@ normcheckGgplot2Histogram = function(x, xlab, ylab, main, col) {
   )
 
   ggplot() +
-    geomRect(
+    geom_rect(
       data = histData,
       mapping = aes(
         xmin = histData[["xmin"]],
@@ -584,12 +562,12 @@ normcheckGgplot2Histogram = function(x, xlab, ylab, main, col) {
       fill = col,
       colour = "black"
     ) +
-    geomLine(
+    geom_line(
       data = normalData,
       mapping = aes(x = normalData[["x"]], y = normalData[["y"]]),
       linetype = 3,
       linewidth = 1.5
     ) +
-    coordCartesian(xlim = c(xmin, xmax), ylim = c(0, ymax), expand = FALSE) +
+    coord_cartesian(xlim = c(xmin, xmax), ylim = c(0, ymax), expand = FALSE) +
     labs(x = xlab, y = ylab, title = main)
 }

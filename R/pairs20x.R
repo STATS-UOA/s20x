@@ -87,14 +87,12 @@ pairs20xBase = function(x, ...) {
 #' Draw the optional ggplot2/GGally pairs20x plot
 #'
 #' @param x a data frame.
-#' @param \dots optional arguments passed to \code{GGally::ggpairs()}.
+#' @param \dots optional arguments passed to \code{ggpairs()}.
 #' @return Returns a GGally plot matrix.
 #' @noRd
 pairs20xGgplot2 = function(x, ...) {
     requirePlottingPackage("ggplot2")
     requirePlottingPackage("GGally")
-
-    ggpairs = getPlottingFunction("GGally", "ggpairs")
 
     ggpairs(
         x,
@@ -114,13 +112,9 @@ pairs20xGgplot2 = function(x, ...) {
 #' @return A ggplot object.
 #' @noRd
 pairs20xGgplot2SmoothPanel = function(data, mapping, ...) {
-    ggplot = getPlottingFunction("ggplot2", "ggplot")
-    geomPoint = getPlottingFunction("ggplot2", "geom_point")
-    geomSmooth = getPlottingFunction("ggplot2", "geom_smooth")
-
     ggplot(data = data, mapping = mapping) +
-        geomPoint(shape = 1) +
-        geomSmooth(method = "loess", formula = y ~ x, se = FALSE,
+        geom_point(shape = 1) +
+        geom_smooth(method = "loess", formula = y ~ x, se = FALSE,
             colour = "red", linewidth = 0.4) +
         pairs20xGgplot2BaseTheme()
 }
@@ -133,11 +127,8 @@ pairs20xGgplot2SmoothPanel = function(data, mapping, ...) {
 #' @return A ggplot object.
 #' @noRd
 pairs20xGgplot2HistogramPanel = function(data, mapping, ...) {
-    ggplot = getPlottingFunction("ggplot2", "ggplot")
-    geomHistogram = getPlottingFunction("ggplot2", "geom_histogram")
-
     ggplot(data = data, mapping = mapping) +
-        geomHistogram(bins = 10, fill = "cyan", colour = "black") +
+        geom_histogram(bins = 10, fill = "cyan", colour = "black") +
         pairs20xGgplot2BaseTheme()
 }
 
@@ -152,20 +143,15 @@ pairs20xGgplot2HistogramPanel = function(data, mapping, ...) {
 #' @noRd
 pairs20xGgplot2CorrelationPanel = function(data, mapping, digits = 2,
                                            prefix = "", ...) {
-    ggplot = getPlottingFunction("ggplot2", "ggplot")
-    annotate = getPlottingFunction("ggplot2", "annotate")
-    themeVoid = getPlottingFunction("ggplot2", "theme_void")
-    evalDataCol = getPlottingFunction("GGally", "eval_data_col")
-
-    xValues = evalDataCol(data, mapping$x)
-    yValues = evalDataCol(data, mapping$y)
+    xValues = eval_data_col(data, mapping$x)
+    yValues = eval_data_col(data, mapping$y)
     r = abs(cor(xValues, yValues))
     txt = format(c(r, 0.123456789), digits = digits)[1]
     txt = paste(prefix, txt, sep = "")
 
     ggplot(data.frame(x = 0.5, y = 0.5)) +
         annotate("text", x = 0.5, y = 0.5, label = txt, size = 3 + 7 * r) +
-        themeVoid()
+        theme_void()
 }
 
 #' Build a base-like ggplot2 theme for pairs20x panels
@@ -173,15 +159,11 @@ pairs20xGgplot2CorrelationPanel = function(data, mapping, digits = 2,
 #' @return A ggplot2 theme object.
 #' @noRd
 pairs20xGgplot2BaseTheme = function() {
-    theme = getPlottingFunction("ggplot2", "theme")
-    elementBlank = getPlottingFunction("ggplot2", "element_blank")
-    elementRect = getPlottingFunction("ggplot2", "element_rect")
-
     theme(
-        panel.background = elementRect(fill = "white", colour = NA),
-        plot.background = elementRect(fill = "white", colour = NA),
-        panel.grid.major = elementBlank(),
-        panel.grid.minor = elementBlank(),
-        strip.background = elementRect(fill = "white", colour = NA)
+        panel.background = element_rect(fill = "white", colour = NA),
+        plot.background = element_rect(fill = "white", colour = NA),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_rect(fill = "white", colour = NA)
     )
 }

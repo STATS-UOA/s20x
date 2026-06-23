@@ -4,6 +4,15 @@
 
 
 
+
+## s20x 3.2.302
+
+- Replaced dynamic ggplot2 and GGally plotting function lookups with direct calls backed by roxygen import declarations.
+- Moved ggplot2 and GGally into Imports so their functions can be declared through NAMESPACE.
+- Removed namespace operator usage from controlled package and test code by using imported functions and a shared internal-test helper.
+- Preserved base graphics as the default plotting engine.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.301
 
 - Refactored normcheck ggplot2 Q-Q and histogram builders to use grouped optional plotting function lookups.

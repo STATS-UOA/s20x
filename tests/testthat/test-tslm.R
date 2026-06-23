@@ -10,7 +10,7 @@ test_that("tslm falls back to lm when no AR term is supplied", {
 })
 
 test_that("tslm removes ar terms from the mean formula", {
-  parsedFormula = s20x:::parseTslmFormula(beer ~ t + ar(2))
+  parsedFormula = getS20xInternal("parseTslmFormula")(beer ~ t + ar(2))
 
   expect_equal(parsedFormula$errorSpec$type, "ar")
   expect_equal(parsedFormula$errorSpec$p, 2L)
@@ -19,7 +19,7 @@ test_that("tslm removes ar terms from the mean formula", {
 
 test_that("tslm rejects unsupported future error structures", {
   expect_error(
-    s20x:::parseTslmFormula(beer ~ t + arma(1, 1)),
+    getS20xInternal("parseTslmFormula")(beer ~ t + arma(1, 1)),
     "Only ar\\(p\\) error structures"
   )
 })
@@ -42,7 +42,7 @@ test_that("tslm fits AR models when nlme is available", {
 })
 
 test_that("tslm preserves no-intercept mean formulas", {
-  parsedFormula = s20x:::parseTslmFormula(beer ~ 0 + t + ar(1))
+  parsedFormula = getS20xInternal("parseTslmFormula")(beer ~ 0 + t + ar(1))
 
   expect_equal(deparse(parsedFormula$meanFormula), "beer ~ t - 1")
 })
@@ -64,19 +64,19 @@ test_that("tslm reports missing time variables clearly", {
 
 test_that("tslm rejects multiple error structures", {
   expect_error(
-    s20x:::parseTslmFormula(beer ~ t + ar(1) + ar(2)),
+    getS20xInternal("parseTslmFormula")(beer ~ t + ar(1) + ar(2)),
     "Specify only one error structure"
   )
 })
 
 test_that("tslm validates AR order", {
   expect_error(
-    s20x:::parseTslmFormula(beer ~ t + ar(0)),
+    getS20xInternal("parseTslmFormula")(beer ~ t + ar(0)),
     "positive integer"
   )
 
   expect_error(
-    s20x:::parseTslmFormula(beer ~ t + ar(1.5)),
+    getS20xInternal("parseTslmFormula")(beer ~ t + ar(1.5)),
     "positive integer"
   )
 })
@@ -158,7 +158,7 @@ test_that("plot.tslm aligns AR model diagnostics without dropping values", {
   )
 
   fit = tslm(y ~ x + ar(1), data = data, time = t)
-  diagnosticData = s20x:::getTslmDiagnosticData(fit)
+  diagnosticData = getS20xInternal("getTslmDiagnosticData")(fit)
 
   expect_length(diagnosticData$residuals, nrow(data))
   expect_length(diagnosticData$fitted, nrow(data))
@@ -189,7 +189,7 @@ test_that("tslm residuals support normalised residuals", {
   expect_type(normalisedResiduals, "double")
   expect_length(normalisedResiduals, length(responseResiduals))
   expect_equal(normalisedResiduals, normalizedResiduals)
-  expect_equal(normalisedResiduals, responseResiduals / stats::sigma(fit$fit))
+  expect_equal(normalisedResiduals, responseResiduals / sigma(fit$fit))
 })
 
 test_that("plot.tslm can use response and normalised residuals", {

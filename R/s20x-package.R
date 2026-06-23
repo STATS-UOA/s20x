@@ -22,5 +22,7 @@
 #' @importFrom utils packageDescription vignette
 #' @importFrom utils read.table
 #' @importFrom methods is
+#' @importFrom ggplot2 aes annotate coord_cartesian element_blank element_rect geom_abline geom_hline geom_histogram geom_line geom_point geom_rect geom_smooth ggplot labs theme theme_void
+#' @importFrom GGally eval_data_col ggpairs
 ## usethis namespace: end
 NULL

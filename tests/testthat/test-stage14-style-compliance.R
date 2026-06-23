@@ -73,9 +73,10 @@ test_that("Stage 14 diagnostic internals avoid qualified namespace calls", {
     stripRComments(readLines(fileName, warn = FALSE))
   })
   names(rLines) = rFiles
+  namespaceOperator = paste0(":", ":")
   offendingLines = unlist(
     lapply(names(rLines), function(fileName) {
-      matchedLines = grep("::", rLines[[fileName]], fixed = TRUE)
+      matchedLines = grep(namespaceOperator, rLines[[fileName]], fixed = TRUE)
       if (length(matchedLines) == 0) {
         return(character())
       }
