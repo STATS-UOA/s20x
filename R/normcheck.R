@@ -448,12 +448,12 @@ normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 #' @noRd
 normcheckGgplot2Qq = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
                               shapiro.wilk) {
-  ggplot = getExportedValue("ggplot2", "ggplot")
-  aes = getExportedValue("ggplot2", "aes")
-  geomPoint = getExportedValue("ggplot2", "geom_point")
-  geomAbline = getExportedValue("ggplot2", "geom_abline")
-  labs = getExportedValue("ggplot2", "labs")
-  annotate = getExportedValue("ggplot2", "annotate")
+  ggplot = getPlottingFunction("ggplot2", "ggplot")
+  aes = getPlottingFunction("ggplot2", "aes")
+  geomPoint = getPlottingFunction("ggplot2", "geom_point")
+  geomAbline = getPlottingFunction("ggplot2", "geom_abline")
+  labs = getPlottingFunction("ggplot2", "labs")
+  annotate = getPlottingFunction("ggplot2", "annotate")
 
   qqp = qqnorm(x, plot.it = FALSE)
   plotData = data.frame(theoretical = qqp$x, sample = qqp$y)
@@ -538,12 +538,12 @@ normcheckBootstrapQqData = function(x, B) {
 #' @return A ggplot object.
 #' @noRd
 normcheckGgplot2Histogram = function(x, xlab, ylab, main, col) {
-  ggplot = getExportedValue("ggplot2", "ggplot")
-  aes = getExportedValue("ggplot2", "aes")
-  geomRect = getExportedValue("ggplot2", "geom_rect")
-  geomLine = getExportedValue("ggplot2", "geom_line")
-  labs = getExportedValue("ggplot2", "labs")
-  coordCartesian = getExportedValue("ggplot2", "coord_cartesian")
+  ggplot = getPlottingFunction("ggplot2", "ggplot")
+  aes = getPlottingFunction("ggplot2", "aes")
+  geomRect = getPlottingFunction("ggplot2", "geom_rect")
+  geomLine = getPlottingFunction("ggplot2", "geom_line")
+  labs = getPlottingFunction("ggplot2", "labs")
+  coordCartesian = getPlottingFunction("ggplot2", "coord_cartesian")
 
   mx = mean(x)
   sx = sd(x)

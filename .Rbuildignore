@@ -10,6 +10,7 @@
 ^scripts($|/)
 ^Meta($|/)
 ^\.s20x_built_pkg_path$
+^\.s20x_validation_mode$
 ^\.s20x_stage.*_validation_mode$
 ^\.positai$
 ^\.claude$

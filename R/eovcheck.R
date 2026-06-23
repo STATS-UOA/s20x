@@ -305,13 +305,13 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
 eovcheckGgplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
   requirePlottingPackage("ggplot2")
 
-  ggplot = getExportedValue("ggplot2", "ggplot")
-  aes = getExportedValue("ggplot2", "aes")
-  geomPoint = getExportedValue("ggplot2", "geom_point")
-  geomHline = getExportedValue("ggplot2", "geom_hline")
-  geomSmooth = getExportedValue("ggplot2", "geom_smooth")
-  labs = getExportedValue("ggplot2", "labs")
-  annotate = getExportedValue("ggplot2", "annotate")
+  ggplot = getPlottingFunction("ggplot2", "ggplot")
+  aes = getPlottingFunction("ggplot2", "aes")
+  geomPoint = getPlottingFunction("ggplot2", "geom_point")
+  geomHline = getPlottingFunction("ggplot2", "geom_hline")
+  geomSmooth = getPlottingFunction("ggplot2", "geom_smooth")
+  labs = getPlottingFunction("ggplot2", "labs")
+  annotate = getPlottingFunction("ggplot2", "annotate")
 
   diagnosticData = diagnosticInfo$diagnosticData
   plotData = data.frame(

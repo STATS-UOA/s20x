@@ -33,3 +33,18 @@ requirePlottingPackage = function(package, engine = "ggplot2") {
 matchPlottingEngine = function(engine, choices = c("base", "ggplot2")) {
   match.arg(engine, choices)
 }
+
+#' Get an exported function from an optional plotting package
+#'
+#' Retrieves a plotting function after the caller has checked that the optional
+#' package is available. This keeps dynamic optional-package lookups in one
+#' helper rather than repeating direct exported-value retrieval in each plotting
+#' implementation.
+#'
+#' @param package character name of the optional plotting package.
+#' @param functionName character name of the exported function to retrieve.
+#' @return The exported function object.
+#' @keywords internal
+getPlottingFunction = function(package, functionName) {
+  getExportedValue(package, functionName)
+}

@@ -94,7 +94,7 @@ pairs20xGgplot2 = function(x, ...) {
     requirePlottingPackage("ggplot2")
     requirePlottingPackage("GGally")
 
-    ggpairs = getExportedValue("GGally", "ggpairs")
+    ggpairs = getPlottingFunction("GGally", "ggpairs")
 
     ggpairs(
         x,
@@ -114,9 +114,9 @@ pairs20xGgplot2 = function(x, ...) {
 #' @return A ggplot object.
 #' @noRd
 pairs20xGgplot2SmoothPanel = function(data, mapping, ...) {
-    ggplot = getExportedValue("ggplot2", "ggplot")
-    geomPoint = getExportedValue("ggplot2", "geom_point")
-    geomSmooth = getExportedValue("ggplot2", "geom_smooth")
+    ggplot = getPlottingFunction("ggplot2", "ggplot")
+    geomPoint = getPlottingFunction("ggplot2", "geom_point")
+    geomSmooth = getPlottingFunction("ggplot2", "geom_smooth")
 
     ggplot(data = data, mapping = mapping) +
         geomPoint(shape = 1) +
@@ -133,8 +133,8 @@ pairs20xGgplot2SmoothPanel = function(data, mapping, ...) {
 #' @return A ggplot object.
 #' @noRd
 pairs20xGgplot2HistogramPanel = function(data, mapping, ...) {
-    ggplot = getExportedValue("ggplot2", "ggplot")
-    geomHistogram = getExportedValue("ggplot2", "geom_histogram")
+    ggplot = getPlottingFunction("ggplot2", "ggplot")
+    geomHistogram = getPlottingFunction("ggplot2", "geom_histogram")
 
     ggplot(data = data, mapping = mapping) +
         geomHistogram(bins = 10, fill = "cyan", colour = "black") +
@@ -152,10 +152,10 @@ pairs20xGgplot2HistogramPanel = function(data, mapping, ...) {
 #' @noRd
 pairs20xGgplot2CorrelationPanel = function(data, mapping, digits = 2,
                                            prefix = "", ...) {
-    ggplot = getExportedValue("ggplot2", "ggplot")
-    annotate = getExportedValue("ggplot2", "annotate")
-    themeVoid = getExportedValue("ggplot2", "theme_void")
-    evalDataCol = getExportedValue("GGally", "eval_data_col")
+    ggplot = getPlottingFunction("ggplot2", "ggplot")
+    annotate = getPlottingFunction("ggplot2", "annotate")
+    themeVoid = getPlottingFunction("ggplot2", "theme_void")
+    evalDataCol = getPlottingFunction("GGally", "eval_data_col")
 
     xValues = evalDataCol(data, mapping$x)
     yValues = evalDataCol(data, mapping$y)
@@ -173,9 +173,9 @@ pairs20xGgplot2CorrelationPanel = function(data, mapping, digits = 2,
 #' @return A ggplot2 theme object.
 #' @noRd
 pairs20xGgplot2BaseTheme = function() {
-    theme = getExportedValue("ggplot2", "theme")
-    elementBlank = getExportedValue("ggplot2", "element_blank")
-    elementRect = getExportedValue("ggplot2", "element_rect")
+    theme = getPlottingFunction("ggplot2", "theme")
+    elementBlank = getPlottingFunction("ggplot2", "element_blank")
+    elementRect = getPlottingFunction("ggplot2", "element_rect")
 
     theme(
         panel.background = elementRect(fill = "white", colour = NA),

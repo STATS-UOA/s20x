@@ -2,6 +2,13 @@
 
 ## Purpose
 
+## s20x 3.2.299
+
+- Centralised optional plotting function lookup behind the internal getPlottingFunction() helper.
+- Replaced repeated direct getExportedValue() calls in the ggplot2 and GGally plotting implementations.
+- Preserved base graphics as the default engine and kept ggplot2/GGally optional.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.298
 
 - Added matchPlottingEngine() as a shared internal helper for plotting engine argument matching.

@@ -147,11 +147,11 @@ modelcheckGgplot2 = function(x, which) {
 #' @return A ggplot object.
 #' @noRd
 modelcheckGgplot2Residuals = function(x) {
-  ggplot = getExportedValue("ggplot2", "ggplot")
-  aes = getExportedValue("ggplot2", "aes")
-  geomPoint = getExportedValue("ggplot2", "geom_point")
-  geomHline = getExportedValue("ggplot2", "geom_hline")
-  labs = getExportedValue("ggplot2", "labs")
+  ggplot = getPlottingFunction("ggplot2", "ggplot")
+  aes = getPlottingFunction("ggplot2", "aes")
+  geomPoint = getPlottingFunction("ggplot2", "geom_point")
+  geomHline = getPlottingFunction("ggplot2", "geom_hline")
+  labs = getPlottingFunction("ggplot2", "labs")
 
   diagnosticData = getModelResidualFittedData(x, context = "linear model")
   plotData = data.frame(
@@ -174,12 +174,12 @@ modelcheckGgplot2Residuals = function(x) {
 #' @return A ggplot object.
 #' @noRd
 modelcheckGgplot2Cooks = function(x) {
-  ggplot = getExportedValue("ggplot2", "ggplot")
-  aes = getExportedValue("ggplot2", "aes")
-  geomPoint = getExportedValue("ggplot2", "geom_point")
-  geomLine = getExportedValue("ggplot2", "geom_line")
-  geomHline = getExportedValue("ggplot2", "geom_hline")
-  labs = getExportedValue("ggplot2", "labs")
+  ggplot = getPlottingFunction("ggplot2", "ggplot")
+  aes = getPlottingFunction("ggplot2", "aes")
+  geomPoint = getPlottingFunction("ggplot2", "geom_point")
+  geomLine = getPlottingFunction("ggplot2", "geom_line")
+  geomHline = getPlottingFunction("ggplot2", "geom_hline")
+  labs = getPlottingFunction("ggplot2", "labs")
 
   cooksData = data.frame(
     observation = seq_along(cooks.distance(x)),
