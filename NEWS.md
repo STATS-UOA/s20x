@@ -5,6 +5,15 @@
 
 
 
+
+## s20x 3.2.303
+
+- Added regression tests that scan controlled R and test files for namespace operators in executable code.
+- Added regression tests that scan controlled R and test files for dynamic namespace lookup helpers.
+- Reworked the internal-test helper to avoid getFromNamespace() while preserving access to unexported helpers during tests.
+- Preserved the Stage 18.6 import-based plotting cleanup and base graphics defaults.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.302
 
 - Replaced dynamic ggplot2 and GGally plotting function lookups with direct calls backed by roxygen import declarations.

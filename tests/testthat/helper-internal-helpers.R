@@ -1,3 +1,4 @@
 getS20xInternal = function(name) {
-  getFromNamespace(name, "s20x")
+  namespaceEnv = asNamespace("s20x")
+  get(name, envir = namespaceEnv, inherits = FALSE)
 }
