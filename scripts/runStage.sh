@@ -2,21 +2,71 @@
 set -euo pipefail
 
 usage() {
-  echo "Usage: $0 STAGE [DOWNLOADS_DIR]"
+  echo "Usage: $0 STAGE [DOWNLOADS_DIR] [-sn N|--start-step-number N]"
   echo "Example: $0 16.1"
   echo "Example: $0 16_1"
   echo "Example: $0 run_s20x_stage16.1.sh"
   echo "Example: $0 16.1 ~/Downloads"
+  echo "Example: $0 18.1 -sn 8"
+  echo "Example: $0 18.1 ~/Downloads --start-step-number 8"
   echo ""
   echo "This runs run_s20x_stageSTAGE.sh with s20x_stageSTAGE_change_set.zip."
+  echo "The -sn/--start-step-number option is forwarded to the stage runner."
 }
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+if [ $# -lt 1 ]; then
   usage
   exit 1
 fi
 
 stageInput="$1"
+shift
+
+startStepNumber=""
+downloadsDir=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -sn|--start-step-number)
+      if [ $# -lt 2 ]; then
+        echo "Missing value for $1"
+        usage
+        exit 1
+      fi
+      startStepNumber="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -* )
+      echo "Unknown option: $1"
+      usage
+      exit 1
+      ;;
+    *)
+      if [ -n "$downloadsDir" ]; then
+        echo "Unexpected extra argument: $1"
+        usage
+        exit 1
+      fi
+      downloadsDir="$1"
+      shift
+      ;;
+  esac
+done
+
+if [ -n "$startStepNumber" ] && [[ ! "$startStepNumber" =~ ^[0-9]+$ ]]; then
+  echo "Start step number must be a positive integer; got: $startStepNumber"
+  exit 1
+fi
+
+if [ -n "$startStepNumber" ] && [ "$startStepNumber" -lt 1 ]; then
+  echo "Start step number must be a positive integer; got: $startStepNumber"
+  exit 1
+fi
+
 stage="$stageInput"
 stage="${stage##*/}"
 stage="${stage%.sh}"
@@ -40,14 +90,14 @@ if [[ ! "$stageDot" =~ ^[0-9]+(\.[0-9]+)*$ ]]; then
   exit 1
 fi
 
-if [ $# -eq 2 ]; then
-  downloadsDir="$2"
-elif [ -d "$HOME/Downloads" ]; then
-  downloadsDir="$HOME/Downloads"
-elif [[ "$(uname -s)" == "Darwin" ]]; then
-  downloadsDir="$HOME/Downloads"
-else
-  downloadsDir="/c/Users/james/Downloads"
+if [ -z "$downloadsDir" ]; then
+  if [ -d "$HOME/Downloads" ]; then
+    downloadsDir="$HOME/Downloads"
+  elif [[ "$(uname -s)" == "Darwin" ]]; then
+    downloadsDir="$HOME/Downloads"
+  else
+    downloadsDir="/c/Users/james/Downloads"
+  fi
 fi
 
 scriptCandidates=(
@@ -90,4 +140,10 @@ if [ -z "$changesZip" ]; then
   exit 1
 fi
 
-bash "$scriptPath" --install-files "$changesZip"
+runnerArgs=(--install-files "$changesZip")
+
+if [ -n "$startStepNumber" ]; then
+  runnerArgs+=(--start-step-number "$startStepNumber")
+fi
+
+bash "$scriptPath" "${runnerArgs[@]}"

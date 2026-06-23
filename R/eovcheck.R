@@ -303,9 +303,7 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
 #' @return A ggplot object.
 #' @noRd
 eovcheckGgplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("The ggplot2 engine requires the ggplot2 package.", call. = FALSE)
-  }
+  requirePlottingPackage("ggplot2")
 
   ggplot = getExportedValue("ggplot2", "ggplot")
   aes = getExportedValue("ggplot2", "aes")

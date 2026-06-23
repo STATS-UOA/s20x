@@ -396,9 +396,7 @@ normcheckBase = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 #' @noRd
 normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
                             shapiro.wilk, whichPlot) {
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("The ggplot2 engine requires the ggplot2 package.", call. = FALSE)
-  }
+  requirePlottingPackage("ggplot2")
 
   plots = vector("list", length(whichPlot))
   names(plots) = ifelse(whichPlot == 1, "qq", "histogram")

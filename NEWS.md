@@ -2,6 +2,13 @@
 
 ## Purpose
 
+## s20x 3.2.297
+
+- Added a shared internal helper for optional plotting package availability checks.
+- Replaced duplicated ggplot2 and GGally engine checks in normcheck(), eovcheck(), modelcheck(), and pairs20x().
+- Added a Stage 18.1 plotting audit note to record remaining cleanup candidates.
+- Preserved base graphics defaults, optional ggplot2/GGally behavior, and teaching-oriented plotting output.
+
 This file records user-visible development changes to s20x.
 
 # s20x 3.2.295

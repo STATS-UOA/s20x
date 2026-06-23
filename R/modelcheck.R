@@ -115,9 +115,7 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4),
 #' @return A ggplot object or a named list of ggplot objects.
 #' @noRd
 modelcheckGgplot2 = function(x, which) {
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("The ggplot2 engine requires the ggplot2 package.", call. = FALSE)
-  }
+  requirePlottingPackage("ggplot2")
 
   plots = list()
 

@@ -91,12 +91,8 @@ pairs20xBase = function(x, ...) {
 #' @return Returns a GGally plot matrix.
 #' @noRd
 pairs20xGgplot2 = function(x, ...) {
-    if (!requireNamespace("ggplot2", quietly = TRUE)) {
-        stop("The ggplot2 engine requires the ggplot2 package.", call. = FALSE)
-    }
-    if (!requireNamespace("GGally", quietly = TRUE)) {
-        stop("The ggplot2 engine requires the GGally package.", call. = FALSE)
-    }
+    requirePlottingPackage("ggplot2")
+    requirePlottingPackage("GGally")
 
     ggpairs = getExportedValue("GGally", "ggpairs")
 
