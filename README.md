@@ -31,7 +31,7 @@ Use the plotting engines this way:
 | Teaching, labs, and lecture notes | `normcheck(fit)` or `modelcheck(fit)` | Uses the original base graphics output. |
 | Save or arrange a normality diagnostic | `normcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns reusable Q-Q and histogram plot objects. |
 | Save or arrange an equality-of-variance diagnostic | `eovcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns a reusable residual-versus-fitted plot object. |
-| Save or arrange a model-checking diagnostic | `modelcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns a reusable residual-versus-fitted plot object. |
+| Save or arrange model-checking diagnostics | `modelcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns a reusable named list for multiple diagnostics, or a single plot object when `which` selects one diagnostic. |
 | Save or arrange a pairs plot | `pairs20x(data, engine = "ggplot2")` | Requires both `ggplot2` and `GGally`; returns a reusable plot matrix. |
 
 Examples:
@@ -54,7 +54,7 @@ if (requireNamespace("ggplot2", quietly = TRUE) &&
 }
 ```
 
-The base engine draws directly on the active graphics device and usually returns no reusable object. The ggplot2 engine is for users who need to keep, print, save, or combine the result later. This distinction is intentional so existing course material keeps the familiar plots while newer workflows can opt into object-based graphics.
+The base engine draws directly on the active graphics device and usually returns no reusable object. The ggplot2 engine is for users who need to keep, print, save, or combine the result later. When a helper creates more than one ggplot2 diagnostic, the return value is a named list so individual plots can be selected by name, for example `diagnosticPlots$residuals` or `normPlots$qq`. This distinction is intentional so existing course material keeps the familiar plots while newer workflows can opt into object-based graphics.
 
 The optional engines are deliberately guarded with `requireNamespace()` in examples. That keeps package checks and student installations working even when optional plotting packages are not installed.
 
