@@ -8,7 +8,6 @@
 Meta/
 chatgpt-bundles/
 build/
-dev/
 reports/
 .DS_Store
 s20x_stage*_completed.zip
