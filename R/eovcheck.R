@@ -76,13 +76,17 @@
 #'                  + log(passengers)[-144], data  = airpass.df)
 #' eovcheck(airpass.fit)
 #'
-#' # Optional ggplot2 engine for a reusable plot object
+#' # Optional ggplot2 engine for reusable plot objects
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
 #'   class(eovPlot)
+#'
+#'   eovcheck(oyster.fit, engine = "ggplot2", smoother = TRUE)
+#'   eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE, levene = TRUE)
 #' }
 #'
 #' @importFrom methods is
+#' @importFrom rlang .data
 #' @export eovcheck
 eovcheck = function(x, ...) {
   UseMethod("eovcheck")
@@ -206,7 +210,7 @@ eovcheck.formula = function(x, data = NULL,
   )
 
   if (engine == "ggplot2") {
-    return(eovcheckGgplot2(
+    return(eovcheck_ggplot2(
       diagnosticInfo = diagnosticInfo,
       xlab = xlab,
       ylab = ylab,
@@ -302,7 +306,7 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
 #' @param twosd whether to draw +/- 2 sigma reference lines.
 #' @return A ggplot object.
 #' @noRd
-eovcheckGgplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
+eovcheck_ggplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
   requirePlottingPackage("ggplot2")
 
 
@@ -314,7 +318,7 @@ eovcheckGgplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
 
   plotObject = ggplot(
     plotData,
-    aes(x = plotData[["fitted"]], y = plotData[["residuals"]])
+    aes(x = .data$fitted, y = .data$residuals)
   ) +
     geom_point(shape = 1) +
     geom_hline(yintercept = 0, linetype = 3, colour = "lightgrey") +

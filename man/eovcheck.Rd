@@ -119,10 +119,13 @@ airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1]
                  + log(passengers)[-144], data  = airpass.df)
 eovcheck(airpass.fit)
 
-# Optional ggplot2 engine for a reusable plot object
+# Optional ggplot2 engine for reusable plot objects
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
   class(eovPlot)
+
+  eovcheck(oyster.fit, engine = "ggplot2", smoother = TRUE)
+  eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE, levene = TRUE)
 }
 
 }

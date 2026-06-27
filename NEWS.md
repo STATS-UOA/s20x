@@ -7,6 +7,15 @@
 
 
 
+
+## s20x 3.2.306
+
+- Polished the optional ggplot2 engine for eovcheck() while preserving base graphics as the default.
+- Renamed internal eovcheck ggplot2 helpers to use clearer *_ggplot2 names.
+- Reworked ggplot2 aesthetic mappings to use data-column pronouns and avoid external-vector warnings.
+- Added ggplot2-engine examples and an offline regression test for clean plot printing.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.305
 
 - Restored the documented s20xNormcheckGgplot2 return class while retaining the clearer internal s20xNormcheck_ggplot2 class alias.

@@ -55,3 +55,19 @@ test_that("eovcheck formula method passes engine and Levene arguments", {
 
   expect_s3_class(plotObject, "ggplot")
 })
+
+
+test_that("eovcheck ggplot2 engine prints without aesthetic mapping warnings", {
+  skip_if_not_installed("ggplot2")
+
+  sampleData = data.frame(
+    response = c(1.1, 1.9, 3.2, 3.8, 5.3, 5.7, 7.1, 8.2),
+    predictor = c(1, 2, 3, 4, 5, 6, 7, 8)
+  )
+  fit = lm(response ~ predictor, data = sampleData)
+
+  plotObject = eovcheck(fit, engine = "ggplot2")
+
+  expect_s3_class(plotObject, "ggplot")
+  expect_silent(print(plotObject))
+})
