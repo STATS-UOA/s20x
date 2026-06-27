@@ -10,7 +10,7 @@ test_that("ggplot2 diagnostic engines document the multiple-plot return contract
   normPlots = normcheck(fit, engine = "ggplot2")
   modelPlots = modelcheck(fit, engine = "ggplot2")
 
-  expect_s3_class(normPlots, "s20xNormcheckGgplot2")
+  expect_s3_class(normPlots, "s20xNormcheck_ggplot2")
   expect_named(normPlots, c("qq", "histogram"))
   expect_s3_class(normPlots$qq, "ggplot")
   expect_s3_class(normPlots$histogram, "ggplot")

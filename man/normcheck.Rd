@@ -117,6 +117,8 @@ are both accepted for compatibility. Other choices are \code{"response"} and
 Draws the selected normality diagnostic plots when using the base
 engine. With \code{engine = "ggplot2"}, returns a ggplot object for a single
 selected plot or a named list of ggplot objects for multiple selected plots.
+When multiple ggplot2 plots are selected, printing the returned object draws
+the plots side by side to match the base graphics teaching layout.
 }
 \description{
 Plots two plots side by side. First, it draws a normal Q-Q plot of the
@@ -163,6 +165,9 @@ normcheck(peruFit)
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   normPlots = normcheck(peruFit, engine = "ggplot2")
   names(normPlots)
+
+  normcheck(peruFit, engine = "ggplot2", whichPlot = 1)
+  normcheck(peruFit, engine = "ggplot2", whichPlot = 2)
 }
 
 }

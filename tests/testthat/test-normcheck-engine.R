@@ -29,7 +29,7 @@ test_that("normcheck ggplot2 engine returns ggplot objects when available", {
   bothPlots = normcheck(values, engine = "ggplot2", whichPlot = 1:2)
 
   expect_s3_class(qqPlot, "ggplot")
-  expect_s3_class(bothPlots, "s20xNormcheckGgplot2")
+  expect_s3_class(bothPlots, "s20xNormcheck_ggplot2")
   expect_length(bothPlots, 2)
 })
 

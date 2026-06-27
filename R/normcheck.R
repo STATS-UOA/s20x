@@ -56,6 +56,8 @@
 #' @return Draws the selected normality diagnostic plots when using the base
 #' engine. With \code{engine = "ggplot2"}, returns a ggplot object for a single
 #' selected plot or a named list of ggplot objects for multiple selected plots.
+#' When multiple ggplot2 plots are selected, printing the returned object draws
+#' the plots side by side to match the base graphics teaching layout.
 #' @seealso \code{\link{shapiro.test}}.
 #' @keywords hplot
 #' @examples
@@ -84,6 +86,9 @@
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   normPlots = normcheck(peruFit, engine = "ggplot2")
 #'   names(normPlots)
+#'
+#'   normcheck(peruFit, engine = "ggplot2", whichPlot = 1)
+#'   normcheck(peruFit, engine = "ggplot2", whichPlot = 2)
 #' }
 #'
 #' @export normcheck
@@ -93,7 +98,8 @@ normcheck = function(x, ...) {
 
 #' @export
 #' @rdname normcheck
-#' @importFrom grDevices colors
+#' @importFrom grDevices colors nclass.Sturges
+#' @importFrom ggplot2 after_stat stat_function
 normcheck.default = function(x,
                              xlab = c("Theoretical Quantiles", ""),
                              ylab = c("Sample Quantiles", ""),
@@ -117,7 +123,7 @@ normcheck.default = function(x,
   bcol = match.arg(bcol, colors())
 
   if (engine == "ggplot2") {
-    return(normcheckGgplot2(
+    return(normcheck_ggplot2(
       x = x,
       xlab = xlab,
       ylab = ylab,
@@ -394,7 +400,7 @@ normcheckBase = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 #' @param whichPlot selected plot identifiers.
 #' @return A ggplot object or a named list of ggplot objects.
 #' @noRd
-normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
+normcheck_ggplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
                             shapiro.wilk, whichPlot) {
   requirePlottingPackage("ggplot2")
 
@@ -403,7 +409,7 @@ normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 
   for (i in seq_along(whichPlot)) {
     if (whichPlot[i] == 1) {
-      plots[[i]] = normcheckGgplot2Qq(
+      plots[[i]] = normcheck_ggplot2_QQ(
         x = x,
         xlab = xlab[i],
         ylab = ylab[i],
@@ -415,7 +421,7 @@ normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
         shapiro.wilk = shapiro.wilk
       )
     } else {
-      plots[[i]] = normcheckGgplot2Histogram(
+      plots[[i]] = normcheck_ggplot2_Histogram(
         x = x,
         xlab = xlab[i],
         ylab = ylab[i],
@@ -429,7 +435,7 @@ normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
     return(plots[[1]])
   }
 
-  class(plots) = c("s20xNormcheckGgplot2", class(plots))
+  class(plots) = c("s20xNormcheck_ggplot2", class(plots))
   plots
 }
 
@@ -446,19 +452,19 @@ normcheckGgplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 #' @param shapiro.wilk whether Shapiro-Wilk text should be shown.
 #' @return A ggplot object.
 #' @noRd
-normcheckGgplot2Qq = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
+normcheck_ggplot2_QQ = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
                               shapiro.wilk) {
   qqp = qqnorm(x, plot.it = FALSE)
   plotData = data.frame(theoretical = qqp$x, sample = qqp$y)
-  plotObject = ggplot(plotData, aes(x = plotData[["theoretical"]], y = plotData[["sample"]]))
+  plotObject = ggplot(plotData, aes(x = .data$theoretical, y = .data$sample))
 
   if (bootstrap) {
-    bootstrapData = normcheckBootstrapQqData(x, B)
+    bootstrapData = normcheckBootstrapQQData(x, B)
     plotObject = plotObject + geom_point(
       data = bootstrapData,
       mapping = aes(
-        x = bootstrapData[["theoretical"]],
-        y = bootstrapData[["sample"]]
+        x = .data$theoretical,
+        y = .data$sample
       ),
       shape = bpch,
       colour = bcol
@@ -501,7 +507,7 @@ normcheckGgplot2Qq = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
 #' @param B number of bootstrap samples.
 #' @return A data frame of theoretical and sample quantiles.
 #' @noRd
-normcheckBootstrapQqData = function(x, B) {
+normcheckBootstrapQQData = function(x, B) {
   mx = mean(x)
   sx = sd(x)
   nx = length(x)
@@ -530,44 +536,59 @@ normcheckBootstrapQqData = function(x, B) {
 #' @param col histogram fill colour.
 #' @return A ggplot object.
 #' @noRd
-normcheckGgplot2Histogram = function(x, xlab, ylab, main, col) {
+normcheck_ggplot2_Histogram = function(x, xlab, ylab, main, col) {
   mx = mean(x)
   sx = sd(x)
-  h = hist(x, plot = FALSE)
   rx = range(x)
-  xmin = min(rx[1], mx - 3.5 * sx, h$breaks[1])
-  xmax = max(rx[2], mx + 3.5 * sx, h$breaks[length(h$breaks)])
-  ymax = max(h$density, dnorm(mx, mx, sx)) * 1.05
+  xmin = min(rx[1], mx - 3.5 * sx)
+  xmax = max(rx[2], mx + 3.5 * sx)
+  plotData = data.frame(x = x)
 
-  histData = data.frame(
-    xmin = h$breaks[-length(h$breaks)],
-    xmax = h$breaks[-1],
-    ymin = 0,
-    ymax = h$density
-  )
-  normalData = data.frame(
-    x = seq(xmin, xmax, length.out = 100),
-    y = dnorm(seq(xmin, xmax, length.out = 100), mx, sx)
-  )
-
-  ggplot() +
-    geom_rect(
-      data = histData,
-      mapping = aes(
-        xmin = histData[["xmin"]],
-        xmax = histData[["xmax"]],
-        ymin = histData[["ymin"]],
-        ymax = histData[["ymax"]]
-      ),
+  ggplot(plotData, aes(x = .data$x)) +
+    geom_histogram(
+      mapping = aes(y = after_stat(density)),
+      bins = nclass.Sturges(x),
       fill = col,
       colour = "black"
     ) +
-    geom_line(
-      data = normalData,
-      mapping = aes(x = normalData[["x"]], y = normalData[["y"]]),
+    stat_function(
+      fun = dnorm,
+      args = list(mean = mx, sd = sx),
       linetype = 3,
       linewidth = 1.5
     ) +
-    coord_cartesian(xlim = c(xmin, xmax), ylim = c(0, ymax), expand = FALSE) +
+    coord_cartesian(xlim = c(xmin, xmax), expand = FALSE) +
     labs(x = xlab, y = ylab, title = main)
+}
+
+
+#' Print ggplot2 normcheck plots
+#'
+#' Draws multiple ggplot2 normcheck plots side by side so the optional ggplot2
+#' engine mirrors the base graphics layout for the default \code{whichPlot = 1:2}
+#' case.
+#'
+#' @param x an object returned by \code{normcheck(..., engine = "ggplot2")}
+#'   when multiple plots are selected.
+#' @param \dots additional arguments passed to \code{print.ggplot}.
+#' @return Invisibly returns \code{x}.
+#' @export
+#' @importFrom grid grid.newpage grid.layout pushViewport popViewport viewport
+#' @importFrom rlang .data
+print.s20xNormcheck_ggplot2 = function(x, ...) {
+  nPlots = length(x)
+
+  if (nPlots == 0) {
+    return(invisible(x))
+  }
+
+  grid.newpage()
+  pushViewport(viewport(layout = grid.layout(1, nPlots)))
+  on.exit(popViewport())
+
+  for (i in seq_along(x)) {
+    print(x[[i]], vp = viewport(layout.pos.row = 1, layout.pos.col = i), ...)
+  }
+
+  invisible(x)
 }

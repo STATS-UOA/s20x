@@ -6,6 +6,15 @@
 
 
 
+
+## s20x 3.2.305
+
+- Restored the documented s20xNormcheckGgplot2 return class while retaining the clearer internal s20xNormcheck_ggplot2 class alias.
+- Preserved the Stage 19.1 ggplot2 normcheck plotting fixes, examples, and naming cleanup.
+- Fixed compatibility with existing diagnostic plotting tests after the internal class-name cleanup.
+- Preserved base graphics as the default plotting engine and kept ggplot2 optional.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.303
 
 - Added regression tests that scan controlled R and test files for namespace operators in executable code.
@@ -347,4 +356,3 @@ This file records user-facing and developer-facing changes for s20x. It is a rel
 - Added guarded examples for optional ggplot2 and GGally plotting engines in normcheck(), eovcheck(), modelcheck(), and pairs20x().
 - Kept ggplot2 and GGally usage behind requireNamespace() guards so examples remain compatible when optional packages are unavailable.
 - Regenerated documentation should be produced by devtools::document() during the stage runner.
-
