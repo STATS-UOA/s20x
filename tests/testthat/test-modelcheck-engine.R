@@ -41,10 +41,26 @@ test_that("modelcheck ggplot2 engine returns ggplot objects when available", {
   allPlots = modelcheck(fit, engine = "ggplot2")
 
   expect_s3_class(residualPlot, "ggplot")
-  expect_s3_class(allPlots, "s20xModelcheckGgplot2")
+  expect_s3_class(allPlots, "s20xModelcheck_ggplot2")
   expect_named(allPlots, c("residuals", "qq", "histogram", "cooks"))
   expect_s3_class(allPlots$residuals, "ggplot")
   expect_s3_class(allPlots$qq, "ggplot")
   expect_s3_class(allPlots$histogram, "ggplot")
   expect_s3_class(allPlots$cooks, "ggplot")
+})
+
+
+test_that("modelcheck ggplot2 engine prints without aesthetic mapping warnings", {
+  skip_if_not_installed("ggplot2")
+
+  sampleData = data.frame(
+    response = c(1.1, 1.9, 3.2, 3.8, 5.3, 5.7, 7.1, 8.2),
+    predictor = c(1, 2, 3, 4, 5, 6, 7, 8)
+  )
+  fit = lm(response ~ predictor, data = sampleData)
+
+  plotObject = modelcheck(fit, engine = "ggplot2")
+
+  expect_s3_class(plotObject, "s20xModelcheck_ggplot2")
+  expect_silent(print(plotObject))
 })

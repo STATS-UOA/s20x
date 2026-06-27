@@ -8,6 +8,16 @@
 
 
 
+
+## s20x 3.2.307
+
+- Polished the optional ggplot2 engine for modelcheck() while preserving base graphics as the default.
+- Renamed internal modelcheck ggplot2 helpers and list classes to use clearer *_ggplot2 names.
+- Reworked ggplot2 aesthetic mappings to use data-column pronouns and avoid external-vector warnings.
+- Added a print method for multiple ggplot2 modelcheck plots and ggplot2-engine examples for individual diagnostics.
+- Added offline regression tests for the renamed class and clean plot printing.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.306
 
 - Polished the optional ggplot2 engine for eovcheck() while preserving base graphics as the default.

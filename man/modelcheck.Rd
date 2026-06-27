@@ -68,5 +68,9 @@ modelcheck(lmFit)
 if (requireNamespace("ggplot2", quietly = TRUE)) {
   diagnosticPlots = modelcheck(lmFit, engine = "ggplot2")
   names(diagnosticPlots)
+
+  modelcheck(lmFit, which = 1, engine = "ggplot2")
+  modelcheck(lmFit, which = 2, engine = "ggplot2")
+  modelcheck(lmFit, which = 3, engine = "ggplot2")
 }
 }

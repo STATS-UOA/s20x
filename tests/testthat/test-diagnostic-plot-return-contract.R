@@ -15,7 +15,7 @@ test_that("ggplot2 diagnostic engines document the multiple-plot return contract
   expect_s3_class(normPlots$qq, "ggplot")
   expect_s3_class(normPlots$histogram, "ggplot")
 
-  expect_s3_class(modelPlots, "s20xModelcheckGgplot2")
+  expect_s3_class(modelPlots, "s20xModelcheck_ggplot2")
   expect_named(modelPlots, c("residuals", "qq", "histogram", "cooks"))
   expect_s3_class(modelPlots$residuals, "ggplot")
   expect_s3_class(modelPlots$qq, "ggplot")
@@ -38,7 +38,7 @@ test_that("modelcheck ggplot2 engine returns a single plot for each single diagn
   cooksPlot = modelcheck(fit, which = 3, engine = "ggplot2")
 
   expect_s3_class(residualPlot, "ggplot")
-  expect_s3_class(normalityPlots, "s20xModelcheckGgplot2")
+  expect_s3_class(normalityPlots, "s20xModelcheck_ggplot2")
   expect_named(normalityPlots, c("qq", "histogram"))
   expect_s3_class(normalityPlots$qq, "ggplot")
   expect_s3_class(normalityPlots$histogram, "ggplot")

@@ -43,7 +43,12 @@
 #' if (requireNamespace("ggplot2", quietly = TRUE)) {
 #'   diagnosticPlots = modelcheck(lmFit, engine = "ggplot2")
 #'   names(diagnosticPlots)
+#'
+#'   modelcheck(lmFit, which = 1, engine = "ggplot2")
+#'   modelcheck(lmFit, which = 2, engine = "ggplot2")
+#'   modelcheck(lmFit, which = 3, engine = "ggplot2")
 #' }
+#' @importFrom rlang .data
 #' @export
 modelcheck = function(x, ...) {
   UseMethod("modelcheck")
@@ -60,7 +65,7 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4),
   }
 
   if (engine == "ggplot2") {
-    return(modelcheckGgplot2(x = x, which = which))
+    return(modelcheck_ggplot2(x = x, which = which))
   }
 
   createLayoutMatrix = function() {
@@ -114,13 +119,13 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4),
 #' @param which selected diagnostic plots.
 #' @return A ggplot object or a named list of ggplot objects.
 #' @noRd
-modelcheckGgplot2 = function(x, which) {
+modelcheck_ggplot2 = function(x, which) {
   requirePlottingPackage("ggplot2")
 
   plots = list()
 
   if (1 %in% which) {
-    plots$residuals = modelcheckGgplot2Residuals(x)
+    plots$residuals = modelcheck_ggplot2_Residuals(x)
   }
 
   if (2 %in% which) {
@@ -130,14 +135,14 @@ modelcheckGgplot2 = function(x, which) {
   }
 
   if (3 %in% which) {
-    plots$cooks = modelcheckGgplot2Cooks(x)
+    plots$cooks = modelcheck_ggplot2_Cooks(x)
   }
 
   if (length(plots) == 1) {
     return(plots[[1]])
   }
 
-  class(plots) = c("s20xModelcheckGgplot2", class(plots))
+  class(plots) = c("s20xModelcheck_ggplot2", class(plots))
   plots
 }
 
@@ -146,7 +151,7 @@ modelcheckGgplot2 = function(x, which) {
 #' @param x fitted linear model.
 #' @return A ggplot object.
 #' @noRd
-modelcheckGgplot2Residuals = function(x) {
+modelcheck_ggplot2_Residuals = function(x) {
   diagnosticData = getModelResidualFittedData(x, context = "linear model")
   plotData = data.frame(
     fitted = as.numeric(diagnosticData[["fitted"]]),
@@ -156,8 +161,8 @@ modelcheckGgplot2Residuals = function(x) {
   ggplot(
     plotData,
     aes(
-      x = plotData[["fitted"]],
-      y = plotData[["residuals"]]
+      x = .data$fitted,
+      y = .data$residuals
     )
   ) +
     geom_point(shape = 1) +
@@ -174,7 +179,7 @@ modelcheckGgplot2Residuals = function(x) {
 #' @param x fitted linear model.
 #' @return A ggplot object.
 #' @noRd
-modelcheckGgplot2Cooks = function(x) {
+modelcheck_ggplot2_Cooks = function(x) {
   cooksData = data.frame(
     observation = seq_along(cooks.distance(x)),
     cooksDistance = as.numeric(cooks.distance(x))
@@ -183,8 +188,8 @@ modelcheckGgplot2Cooks = function(x) {
   ggplot(
     cooksData,
     aes(
-      x = cooksData[["observation"]],
-      y = cooksData[["cooksDistance"]]
+      x = .data$observation,
+      y = .data$cooksDistance
     )
   ) +
     geom_line() +
@@ -199,4 +204,45 @@ modelcheckGgplot2Cooks = function(x) {
       y = "Cook's distance",
       title = "Cook's distance"
     )
+}
+
+
+#' Print ggplot2 modelcheck plots
+#'
+#' Draws multiple ggplot2 modelcheck plots together so the optional ggplot2
+#' engine gives a single printed diagnostic display rather than showing list
+#' structure at the console.
+#'
+#' @param x an object returned by \code{modelcheck(..., engine = "ggplot2")}
+#'   when multiple plots are selected.
+#' @param \dots additional arguments passed to \code{print.ggplot}.
+#' @return Invisibly returns \code{x}.
+#' @export
+#' @importFrom grid grid.newpage grid.layout pushViewport popViewport viewport
+print.s20xModelcheck_ggplot2 = function(x, ...) {
+  nPlots = length(x)
+
+  if (nPlots == 0) {
+    return(invisible(x))
+  }
+
+  if (identical(names(x), c("qq", "histogram"))) {
+    nRows = 1
+    nCols = 2
+  } else {
+    nCols = if (nPlots == 1) { 1 } else { 2 }
+    nRows = ceiling(nPlots / nCols)
+  }
+
+  grid.newpage()
+  pushViewport(viewport(layout = grid.layout(nRows, nCols)))
+  on.exit(popViewport())
+
+  for (i in seq_along(x)) {
+    rowNumber = ceiling(i / nCols)
+    colNumber = i - (rowNumber - 1) * nCols
+    print(x[[i]], vp = viewport(layout.pos.row = rowNumber, layout.pos.col = colNumber), ...)
+  }
+
+  invisible(x)
 }
