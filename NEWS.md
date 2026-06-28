@@ -12,6 +12,14 @@
 
 
 
+
+## s20x 3.2.312
+
+- Added an explicit loess formula to the optional modelcheck() ggplot2 smoother so printing the diagnostic plot object is silent.
+- Preserved the Stage 19.6 base-like ggplot2 diagnostic styling and Cook's distance vertical-line display.
+- Kept the base graphics engine as the default and preserved the optional ggplot2 object-return paths.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.310
 
 - Polished the optional ggplot2 eovcheck output so the two-standard-deviation reference lines remain visible.

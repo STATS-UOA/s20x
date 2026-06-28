@@ -47,3 +47,15 @@ test_that("normcheck lm method passes engine and bootstrap arguments", {
 
   expect_s3_class(plotObject, "ggplot")
 })
+
+
+test_that("normcheck ggplot2 engine uses a base-like theme", {
+  skip_if_not_installed("ggplot2")
+
+  values = c(-2, -1, 0, 1, 2)
+
+  bothPlots = normcheck(values, engine = "ggplot2", whichPlot = 1:2)
+
+  expect_true(inherits(bothPlots$qq$theme$panel.grid.major, "element_blank"))
+  expect_true(inherits(bothPlots$histogram$theme$panel.grid.major, "element_blank"))
+})

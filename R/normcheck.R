@@ -473,8 +473,9 @@ normcheck_ggplot2_QQ = function(x, xlab, ylab, main, bootstrap, B, bpch, bcol,
 
   plotObject = plotObject +
     geom_point(shape = 1) +
-    geom_abline(intercept = mean(x), slope = sd(x)) +
-    labs(x = xlab, y = ylab, title = main)
+    geom_abline(intercept = mean(x), slope = sd(x), linewidth = 0.4) +
+    labs(x = xlab, y = ylab, title = main) +
+    s20x_ggplot2_base_theme()
 
   if (shapiro.wilk) {
     stest = shapiro.test(x)
@@ -560,10 +561,11 @@ normcheck_ggplot2_Histogram = function(x, xlab, ylab, main, col) {
       data = normalData,
       mapping = aes(x = .data$x, y = .data$y),
       linetype = 3,
-      linewidth = 1.5
+      linewidth = 0.5
     ) +
     coord_cartesian(xlim = c(xmin, xmax), expand = FALSE) +
-    labs(x = xlab, y = ylab, title = main)
+    labs(x = xlab, y = ylab, title = main) +
+    s20x_ggplot2_base_theme()
 }
 
 

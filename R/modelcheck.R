@@ -169,9 +169,18 @@ modelcheck_ggplot2_Residuals = function(x) {
     geom_hline(
       yintercept = 0,
       linetype = 3,
-      colour = "lightgrey"
+      colour = "lightgrey",
+      linewidth = 0.4
     ) +
-    labs(x = "Fitted values", y = "Residuals", title = "")
+    geom_smooth(
+      method = "loess",
+      formula = y ~ x,
+      se = FALSE,
+      colour = "red",
+      linewidth = 0.4
+    ) +
+    labs(x = "Fitted values", y = "Residuals", title = "Residuals vs Fitted") +
+    s20x_ggplot2_base_theme()
 }
 
 #' Build a ggplot2 Cook's distance plot for modelcheck
@@ -192,18 +201,25 @@ modelcheck_ggplot2_Cooks = function(x) {
       y = .data$cooksDistance
     )
   ) +
-    geom_line() +
-    geom_point(shape = 1) +
+    geom_segment(
+      aes(
+        xend = .data$observation,
+        yend = 0
+      ),
+      linewidth = 0.4
+    ) +
     geom_hline(
       yintercept = 0,
       linetype = 3,
-      colour = "lightgrey"
+      colour = "lightgrey",
+      linewidth = 0.4
     ) +
     labs(
       x = "Obs. number",
       y = "Cook's distance",
       title = "Cook's distance"
-    )
+    ) +
+    s20x_ggplot2_base_theme()
 }
 
 
