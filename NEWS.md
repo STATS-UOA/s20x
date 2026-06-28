@@ -13,6 +13,14 @@
 
 
 
+
+## s20x 3.2.313
+
+- Changed the optional eovcheck() ggplot2 smoother example to use the peru.fit regression model rather than the oyster one-way ANOVA-style fit.
+- Kept the oyster example for the ggplot2 object-return and Levene/two-standard-deviation demonstrations where it remains appropriate.
+- Avoided loess singularity warnings in the documented smoother example while preserving package behaviour.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.312
 
 - Added an explicit loess formula to the optional modelcheck() ggplot2 smoother so printing the diagnostic plot object is silent.

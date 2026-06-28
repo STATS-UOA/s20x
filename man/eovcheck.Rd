@@ -124,7 +124,7 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
   eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
   class(eovPlot)
 
-  eovcheck(oyster.fit, engine = "ggplot2", smoother = TRUE)
+  eovcheck(peru.fit, engine = "ggplot2", smoother = TRUE)
   eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE, levene = TRUE)
 }
 
