@@ -94,14 +94,20 @@ pairs20x_ggplot2 = function(x, ...) {
     requirePlottingPackage("ggplot2")
     requirePlottingPackage("GGally")
 
-    ggpairs(
+    plotMatrix = ggpairs(
         x,
         upper = list(continuous = pairs20x_ggplot2SmoothPanel),
         lower = list(continuous = pairs20x_ggplot2CorrelationPanel),
         diag = list(continuous = pairs20x_ggplot2HistogramPanel),
+        columnLabels = NULL,
+        axisLabels = "none",
         progress = FALSE,
         ...
     )
+
+    plotMatrix$axisLabels = "none"
+
+    plotMatrix + pairs20x_ggplot2MatrixTheme()
 }
 
 #' Build a ggplot2 scatterplot smoother panel for pairs20x
@@ -113,9 +119,9 @@ pairs20x_ggplot2 = function(x, ...) {
 #' @noRd
 pairs20x_ggplot2SmoothPanel = function(data, mapping, ...) {
     ggplot(data = data, mapping = mapping) +
-        geom_point(shape = 1) +
+        geom_point(shape = 5, size = 1, stroke = 0.35) +
         geom_smooth(method = "loess", formula = y ~ x, se = FALSE,
-            colour = "red", linewidth = 0.4) +
+            colour = "red", linewidth = 0.25) +
         pairs20x_ggplot2BaseTheme()
 }
 
@@ -127,8 +133,23 @@ pairs20x_ggplot2SmoothPanel = function(data, mapping, ...) {
 #' @return A ggplot object.
 #' @noRd
 pairs20x_ggplot2HistogramPanel = function(data, mapping, ...) {
+    xValues = eval_data_col(data, mapping$x)
+    xLabel = pairs20x_ggplot2MappingLabel(mapping, "x")
+    histBreaks = hist(xValues, plot = FALSE)$breaks
+    labelData = data.frame(
+        x = mean(range(xValues, finite = TRUE)),
+        y = 0.95 * max(hist(xValues, breaks = histBreaks, plot = FALSE)$counts),
+        label = xLabel
+    )
+
     ggplot(data = data, mapping = mapping) +
-        geom_histogram(bins = 10, fill = "cyan", colour = "black") +
+        geom_histogram(breaks = histBreaks, fill = "cyan", colour = "black") +
+        geom_text(
+            data = labelData,
+            mapping = aes(x = .data$x, y = .data$y, label = .data$label),
+            inherit.aes = FALSE,
+            size = 5
+        ) +
         pairs20x_ggplot2BaseTheme()
 }
 
@@ -148,10 +169,39 @@ pairs20x_ggplot2CorrelationPanel = function(data, mapping, digits = 2,
     r = abs(cor(xValues, yValues))
     txt = format(c(r, 0.123456789), digits = digits)[1]
     txt = paste(prefix, txt, sep = "")
+    labelData = data.frame(
+        x = mean(range(xValues, finite = TRUE)),
+        y = mean(range(yValues, finite = TRUE)),
+        label = txt,
+        size = max(0.1, 10 * r)
+    )
 
-    ggplot(data.frame(x = 0.5, y = 0.5)) +
-        annotate("text", x = 0.5, y = 0.5, label = txt, size = 3 + 7 * r) +
-        theme_void()
+    ggplot(data = data, mapping = mapping) +
+        geom_blank() +
+        geom_text(
+            data = labelData,
+            mapping = aes(
+                x = .data$x,
+                y = .data$y,
+                label = .data$label,
+                size = .data$size
+            ),
+            inherit.aes = FALSE
+        ) +
+        scale_size_identity() +
+        pairs20x_ggplot2BaseTheme()
+}
+
+#' Extract a readable variable name from a GGally panel mapping
+#'
+#' @param mapping panel mapping supplied by GGally.
+#' @param component mapping component to read.
+#' @return A character label.
+#' @noRd
+pairs20x_ggplot2MappingLabel = function(mapping, component) {
+    mappingExpr = get_expr(mapping[[component]])
+    mappingLabel = as.character(mappingExpr)
+    mappingLabel[length(mappingLabel)]
 }
 
 #' Build a base-like ggplot2 theme for pairs20x panels
@@ -164,6 +214,25 @@ pairs20x_ggplot2BaseTheme = function() {
         plot.background = element_rect(fill = "white", colour = NA),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        strip.background = element_rect(fill = "white", colour = NA)
+        panel.border = element_rect(fill = NA, colour = "black", linewidth = 0.35),
+        axis.title = element_blank(),
+        axis.text = element_text(colour = "black", size = 8),
+        axis.ticks = element_line(colour = "black", linewidth = 0.35),
+        strip.background = element_blank(),
+        strip.text = element_blank(),
+        plot.margin = margin(1, 1, 1, 1, unit = "pt")
+    )
+}
+
+#' Build a base-like GGally matrix theme for pairs20x
+#'
+#' @return A ggplot2 theme object.
+#' @noRd
+pairs20x_ggplot2MatrixTheme = function() {
+    theme(
+        panel.spacing = unit(0, "pt"),
+        strip.background = element_blank(),
+        strip.text = element_blank(),
+        axis.title = element_blank()
     )
 }

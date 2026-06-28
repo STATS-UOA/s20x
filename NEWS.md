@@ -15,6 +15,14 @@
 
 
 
+
+## s20x 3.2.317
+
+- Added the missing ggplot2 geom_segment() import used by the base-like modelcheck() Cook's distance panel.
+- Set the returned pairs20x() GGally matrix axisLabels field to document the outside-axis contract used by the optional ggplot2 engine.
+- Preserved the Stage 19.7 pairs20x() visual-parity changes and the base graphics default.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.315
 
 - Added the missing ggplot2 geom_text import used by the modelcheck() Cook's distance labels.
