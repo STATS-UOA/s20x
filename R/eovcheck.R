@@ -316,13 +316,31 @@ eovcheck_ggplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
     residuals = as.numeric(diagnosticData[["residuals"]])
   )
 
+  yRange = range(plotData$residuals, finite = TRUE)
+
+  if (twosd) {
+    sigma = summary(diagnosticInfo$fit)$sigma
+    twoSdValues = c(-2, 2) * sigma
+    yRange = range(c(yRange, twoSdValues), finite = TRUE)
+  } else {
+    sigma = NULL
+    twoSdValues = NULL
+  }
+
   plotObject = ggplot(
     plotData,
     aes(x = .data$fitted, y = .data$residuals)
   ) +
     geom_point(shape = 1) +
     geom_hline(yintercept = 0, linetype = 3, colour = "lightgrey") +
-    labs(x = xlab, y = ylab, title = "")
+    labs(x = xlab, y = ylab, title = "") +
+    coord_cartesian(ylim = yRange) +
+    theme(
+      panel.background = element_rect(fill = "white", colour = NA),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      panel.border = element_rect(fill = NA, colour = "black")
+    )
 
   if (smoother) {
     smootherColour = if (is.null(col)) {
@@ -334,15 +352,20 @@ eovcheck_ggplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
   }
 
   if (twosd) {
-    sigma = summary(diagnosticInfo$fit)$sigma
-    plotObject = plotObject + geom_hline(yintercept = c(-2, 2) * sigma, linetype = 3, colour = "grey")
+    plotObject = plotObject + geom_hline(
+      yintercept = twoSdValues,
+      linetype = 3,
+      colour = "grey",
+      linewidth = 2
+    )
   }
 
   if (diagnosticInfo$showLevene) {
+    xRange = range(plotData$fitted, finite = TRUE)
     plotObject = plotObject + annotate(
       "text",
-      x = min(plotData$fitted, na.rm = TRUE),
-      y = max(plotData$residuals, na.rm = TRUE),
+      x = xRange[1] + diff(xRange) * 0.02,
+      y = yRange[2] - diff(yRange) * 0.02,
       label = paste("Levene Test P-value: ", round(diagnosticInfo$pValue, 4)),
       hjust = 0,
       vjust = 1

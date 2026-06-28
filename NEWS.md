@@ -11,6 +11,15 @@
 
 
 
+
+## s20x 3.2.310
+
+- Polished the optional ggplot2 eovcheck output so the two-standard-deviation reference lines remain visible.
+- Included the plus/minus two-standard-deviation limits in the plotted y-range and matched the base plot line weight more closely.
+- Removed the default grey ggplot2 panel styling from the optional eovcheck engine to keep the teaching plot closer to base graphics.
+- Kept the base graphics engine as the default and preserved the optional ggplot2 object-return path.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.309
 
 - Extended the optional normcheck() ggplot2 histogram density curve across the full displayed x-axis range.
