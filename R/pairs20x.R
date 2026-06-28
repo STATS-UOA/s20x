@@ -136,9 +136,11 @@ pairs20x_ggplot2HistogramPanel = function(data, mapping, ...) {
     xValues = eval_data_col(data, mapping$x)
     xLabel = pairs20x_ggplot2MappingLabel(mapping, "x")
     histBreaks = hist(xValues, plot = FALSE)$breaks
+    histCounts = hist(xValues, breaks = histBreaks, plot = FALSE)$counts
+    histMaximum = max(histCounts)
     labelData = data.frame(
         x = mean(range(xValues, finite = TRUE)),
-        y = 0.95 * max(hist(xValues, breaks = histBreaks, plot = FALSE)$counts),
+        y = 1.3 * histMaximum,
         label = xLabel
     )
 
@@ -150,6 +152,7 @@ pairs20x_ggplot2HistogramPanel = function(data, mapping, ...) {
             inherit.aes = FALSE,
             size = 5
         ) +
+        coord_cartesian(ylim = c(0, 1.5 * histMaximum), expand = FALSE) +
         pairs20x_ggplot2BaseTheme()
 }
 

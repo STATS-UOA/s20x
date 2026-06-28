@@ -79,3 +79,21 @@ test_that("pairs20x ggplot2 correlation sizing keeps small correlations small", 
   expect_s3_class(panel, "ggplot")
   expect_lt(textLayer$data$size, 3)
 })
+
+
+test_that("pairs20x ggplot2 histogram panel reserves diagonal label space", {
+  skip_if_not_installed("ggplot2")
+  skip_if_not_installed("GGally")
+
+  histogramPanel = getS20xInternal("pairs20x_ggplot2HistogramPanel")
+  values = data.frame(first = c(1, 2, 3, 4, 5, 6, 7, 8))
+  aesFun = get("aes", envir = asNamespace("ggplot2"), inherits = FALSE)
+  mapping = aesFun(x = first)
+
+  panel = histogramPanel(values, mapping)
+  labelLayer = panel$layers[[2]]
+
+  expect_s3_class(panel, "ggplot")
+  expect_equal(labelLayer$data$y, 1.3 * max(hist(values$first, plot = FALSE)$counts))
+  expect_equal(panel$coordinates$limits$y, c(0, 1.5 * max(hist(values$first, plot = FALSE)$counts)))
+})

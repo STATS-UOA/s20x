@@ -16,6 +16,15 @@
 
 
 
+
+## s20x 3.2.318
+
+- Adjusted pairs20x() ggplot2 diagonal histogram panels so the y-limits reserve base-like headroom for variable labels.
+- Moved diagonal labels above the histogram bars rather than inside the plotted counts.
+- Added a regression test for the ggplot2 histogram panel y-limit contract.
+- Preserved the base graphics engine as the default and kept ggplot2/GGally optional.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.317
 
 - Added the missing ggplot2 geom_segment() import used by the base-like modelcheck() Cook's distance panel.
