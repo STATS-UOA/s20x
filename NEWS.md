@@ -17,6 +17,22 @@
 
 
 
+
+
+## s20x 3.2.320
+
+- Added final release-polish wording for optional plotting engines, with base graphics remaining the default.
+- Confirmed Stage 20.1 is limited to dependency-safety and release-note polish rather than new plotting functionality.
+- Preserved compatibility by treating ggplot2 and GGally as optional engines rather than required plotting dependencies.
+- Used the stage workflow's validation-mode detection so only changed files trigger package checks.
+
+## s20x 3.2.319
+
+- Added final release-polish wording for optional plotting engines, with base graphics remaining the default.
+- Confirmed Stage 20.1 is limited to dependency-safety and release-note polish rather than new plotting functionality.
+- Preserved compatibility by treating ggplot2 and GGally as optional engines rather than required plotting dependencies.
+- Used the stage workflow's validation-mode detection so only changed files trigger package checks.
+
 ## s20x 3.2.318
 
 - Adjusted pairs20x() ggplot2 diagonal histogram panels so the y-limits reserve base-like headroom for variable labels.
