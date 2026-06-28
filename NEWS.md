@@ -14,6 +14,14 @@
 
 
 
+
+## s20x 3.2.315
+
+- Added the missing ggplot2 geom_text import used by the modelcheck() Cook's distance labels.
+- Kept the Stage 19.6.3 base-like ggplot2 modelcheck layout and Cook's distance display unchanged.
+- Preserved the base graphics engine as the default and kept ggplot2 optional.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.313
 
 - Changed the optional eovcheck() ggplot2 smoother example to use the peru.fit regression model rather than the oyster one-way ANOVA-style fit.

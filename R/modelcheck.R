@@ -49,6 +49,7 @@
 #'   modelcheck(lmFit, which = 3, engine = "ggplot2")
 #' }
 #' @importFrom rlang .data
+#' @importFrom ggplot2 geom_text
 #' @export
 modelcheck = function(x, ...) {
   UseMethod("modelcheck")
@@ -189,10 +190,16 @@ modelcheck_ggplot2_Residuals = function(x) {
 #' @return A ggplot object.
 #' @noRd
 modelcheck_ggplot2_Cooks = function(x) {
+  cooksDistance = as.numeric(cooks.distance(x))
   cooksData = data.frame(
-    observation = seq_along(cooks.distance(x)),
-    cooksDistance = as.numeric(cooks.distance(x))
+    observation = seq_along(cooksDistance),
+    cooksDistance = cooksDistance
   )
+
+  labelCount = min(3L, length(cooksDistance))
+  labelObservations = order(cooksDistance, decreasing = TRUE)[seq_len(labelCount)]
+  labelData = cooksData[labelObservations, , drop = FALSE]
+  labelData$label = as.character(labelData$observation)
 
   ggplot(
     cooksData,
@@ -214,6 +221,12 @@ modelcheck_ggplot2_Cooks = function(x) {
       colour = "lightgrey",
       linewidth = 0.4
     ) +
+    geom_text(
+      data = labelData,
+      mapping = aes(label = .data$label),
+      vjust = -0.3,
+      size = 3
+    ) +
     labs(
       x = "Obs. number",
       y = "Cook's distance",
@@ -222,6 +235,48 @@ modelcheck_ggplot2_Cooks = function(x) {
     s20x_ggplot2_base_theme()
 }
 
+
+
+#' Compute ggplot2 modelcheck print layout positions
+#'
+#' @param plotNames names of selected modelcheck plots.
+#' @return A list containing row count and viewport positions.
+#' @noRd
+modelcheck_ggplot2_layout_positions = function(plotNames) {
+  rowNumber = 1L
+  positions = list()
+
+  if ("residuals" %in% plotNames) {
+    positions$residuals = list(row = rowNumber, col = 1:2)
+    rowNumber = rowNumber + 1L
+  }
+
+  if (all(c("qq", "histogram") %in% plotNames)) {
+    positions$qq = list(row = rowNumber, col = 1L)
+    positions$histogram = list(row = rowNumber, col = 2L)
+    rowNumber = rowNumber + 1L
+  } else {
+    if ("qq" %in% plotNames) {
+      positions$qq = list(row = rowNumber, col = 1:2)
+      rowNumber = rowNumber + 1L
+    }
+
+    if ("histogram" %in% plotNames) {
+      positions$histogram = list(row = rowNumber, col = 1:2)
+      rowNumber = rowNumber + 1L
+    }
+  }
+
+  if ("cooks" %in% plotNames) {
+    positions$cooks = list(row = rowNumber, col = 1:2)
+    rowNumber = rowNumber + 1L
+  }
+
+  list(
+    nRows = rowNumber - 1L,
+    positions = positions[plotNames]
+  )
+}
 
 #' Print ggplot2 modelcheck plots
 #'
@@ -242,22 +297,22 @@ print.s20xModelcheck_ggplot2 = function(x, ...) {
     return(invisible(x))
   }
 
-  if (identical(names(x), c("qq", "histogram"))) {
-    nRows = 1
-    nCols = 2
-  } else {
-    nCols = if (nPlots == 1) { 1 } else { 2 }
-    nRows = ceiling(nPlots / nCols)
-  }
+  layoutPositions = modelcheck_ggplot2_layout_positions(names(x))
 
   grid.newpage()
-  pushViewport(viewport(layout = grid.layout(nRows, nCols)))
+  pushViewport(viewport(layout = grid.layout(layoutPositions$nRows, 2)))
   on.exit(popViewport())
 
-  for (i in seq_along(x)) {
-    rowNumber = ceiling(i / nCols)
-    colNumber = i - (rowNumber - 1) * nCols
-    print(x[[i]], vp = viewport(layout.pos.row = rowNumber, layout.pos.col = colNumber), ...)
+  for (plotName in names(x)) {
+    plotPosition = layoutPositions$positions[[plotName]]
+    print(
+      x[[plotName]],
+      vp = viewport(
+        layout.pos.row = plotPosition$row,
+        layout.pos.col = plotPosition$col
+      ),
+      ...
+    )
   }
 
   invisible(x)
