@@ -99,7 +99,7 @@ normcheck = function(x, ...) {
 #' @export
 #' @rdname normcheck
 #' @importFrom grDevices colors nclass.Sturges
-#' @importFrom ggplot2 after_stat stat_function
+#' @importFrom ggplot2 after_stat
 normcheck.default = function(x,
                              xlab = c("Theoretical Quantiles", ""),
                              ylab = c("Sample Quantiles", ""),
@@ -539,10 +539,15 @@ normcheckBootstrapQQData = function(x, B) {
 normcheck_ggplot2_Histogram = function(x, xlab, ylab, main, col) {
   mx = mean(x)
   sx = sd(x)
-  rx = range(x)
+  rx = range(x, finite = TRUE)
   xmin = min(rx[1], mx - 3.5 * sx)
   xmax = max(rx[2], mx + 3.5 * sx)
+  normalX = seq(xmin, xmax, length.out = 400)
   plotData = data.frame(x = x)
+  normalData = data.frame(
+    x = normalX,
+    y = dnorm(normalX, mx, sx)
+  )
 
   ggplot(plotData, aes(x = .data$x)) +
     geom_histogram(
@@ -551,9 +556,9 @@ normcheck_ggplot2_Histogram = function(x, xlab, ylab, main, col) {
       fill = col,
       colour = "black"
     ) +
-    stat_function(
-      fun = dnorm,
-      args = list(mean = mx, sd = sx),
+    geom_line(
+      data = normalData,
+      mapping = aes(x = .data$x, y = .data$y),
       linetype = 3,
       linewidth = 1.5
     ) +

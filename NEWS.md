@@ -10,6 +10,15 @@
 
 
 
+
+## s20x 3.2.309
+
+- Extended the optional normcheck() ggplot2 histogram density curve across the full displayed x-axis range.
+- Kept the histogram as a native ggplot2 geom_histogram() layer while replacing stat_function() with explicit density data.
+- Preserved base graphics defaults and existing normcheck() return behaviour.
+- Documented the Stage 19.5 normcheck density-curve polish notes.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.308
 
 - Polished the optional ggplot2/GGally engine for pairs20x() while preserving base graphics as the default.
