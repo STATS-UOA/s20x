@@ -41,7 +41,7 @@ pairs20x = function(x, na.rm = TRUE, engine = c("base", "ggplot2"), ...) {
     }
 
     if (engine == "ggplot2") {
-        return(pairs20xGgplot2(x, ...))
+        return(pairs20x_ggplot2(x, ...))
     }
 
     pairs20xBase(x, ...)
@@ -90,15 +90,15 @@ pairs20xBase = function(x, ...) {
 #' @param \dots optional arguments passed to \code{ggpairs()}.
 #' @return Returns a GGally plot matrix.
 #' @noRd
-pairs20xGgplot2 = function(x, ...) {
+pairs20x_ggplot2 = function(x, ...) {
     requirePlottingPackage("ggplot2")
     requirePlottingPackage("GGally")
 
     ggpairs(
         x,
-        upper = list(continuous = pairs20xGgplot2SmoothPanel),
-        lower = list(continuous = pairs20xGgplot2CorrelationPanel),
-        diag = list(continuous = pairs20xGgplot2HistogramPanel),
+        upper = list(continuous = pairs20x_ggplot2SmoothPanel),
+        lower = list(continuous = pairs20x_ggplot2CorrelationPanel),
+        diag = list(continuous = pairs20x_ggplot2HistogramPanel),
         progress = FALSE,
         ...
     )
@@ -111,12 +111,12 @@ pairs20xGgplot2 = function(x, ...) {
 #' @param \dots unused panel arguments.
 #' @return A ggplot object.
 #' @noRd
-pairs20xGgplot2SmoothPanel = function(data, mapping, ...) {
+pairs20x_ggplot2SmoothPanel = function(data, mapping, ...) {
     ggplot(data = data, mapping = mapping) +
         geom_point(shape = 1) +
         geom_smooth(method = "loess", formula = y ~ x, se = FALSE,
             colour = "red", linewidth = 0.4) +
-        pairs20xGgplot2BaseTheme()
+        pairs20x_ggplot2BaseTheme()
 }
 
 #' Build a ggplot2 histogram panel for pairs20x
@@ -126,10 +126,10 @@ pairs20xGgplot2SmoothPanel = function(data, mapping, ...) {
 #' @param \dots unused panel arguments.
 #' @return A ggplot object.
 #' @noRd
-pairs20xGgplot2HistogramPanel = function(data, mapping, ...) {
+pairs20x_ggplot2HistogramPanel = function(data, mapping, ...) {
     ggplot(data = data, mapping = mapping) +
         geom_histogram(bins = 10, fill = "cyan", colour = "black") +
-        pairs20xGgplot2BaseTheme()
+        pairs20x_ggplot2BaseTheme()
 }
 
 #' Build a ggplot2 correlation panel for pairs20x
@@ -141,7 +141,7 @@ pairs20xGgplot2HistogramPanel = function(data, mapping, ...) {
 #' @param \dots unused panel arguments.
 #' @return A ggplot object.
 #' @noRd
-pairs20xGgplot2CorrelationPanel = function(data, mapping, digits = 2,
+pairs20x_ggplot2CorrelationPanel = function(data, mapping, digits = 2,
                                            prefix = "", ...) {
     xValues = eval_data_col(data, mapping$x)
     yValues = eval_data_col(data, mapping$y)
@@ -158,7 +158,7 @@ pairs20xGgplot2CorrelationPanel = function(data, mapping, digits = 2,
 #'
 #' @return A ggplot2 theme object.
 #' @noRd
-pairs20xGgplot2BaseTheme = function() {
+pairs20x_ggplot2BaseTheme = function() {
     theme(
         panel.background = element_rect(fill = "white", colour = NA),
         plot.background = element_rect(fill = "white", colour = NA),

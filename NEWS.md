@@ -9,6 +9,15 @@
 
 
 
+
+## s20x 3.2.308
+
+- Polished the optional ggplot2/GGally engine for pairs20x() while preserving base graphics as the default.
+- Renamed internal pairs20x ggplot2 helpers to use clearer *_ggplot2 names.
+- Kept the existing ggplot2/GGally example and return-class tests for the optional plot matrix path.
+- Documented the Stage 19.4 pairs20x plotting-engine review notes.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.307
 
 - Polished the optional ggplot2 engine for modelcheck() while preserving base graphics as the default.
