@@ -1,5 +1,42 @@
 data(beer.df)
 
+test_that("tslm evaluates formulas in the calling environment when data is omitted", {
+  y = beer.df$beer
+  x = beer.df$t
+
+  fit = tslm(y ~ x)
+  lmFit = lm(y ~ x)
+
+  expect_s3_class(fit, "tslm")
+  expect_s3_class(fit$fit, "lm")
+  expect_equal(coef(fit), coef(lmFit))
+})
+
+test_that("tslm still evaluates formulas with an explicit data frame", {
+  fit = tslm(beer ~ t, data = beer.df)
+  lmFit = lm(beer ~ t, data = beer.df)
+
+  expect_s3_class(fit, "tslm")
+  expect_s3_class(fit$fit, "lm")
+  expect_equal(coef(fit), coef(lmFit))
+})
+
+test_that("tslm evaluates AR formulas and time variables without explicit data", {
+  skip_if_not_installed("nlme")
+
+  y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3)
+  x = seq_len(8)
+  t = seq_len(8)
+
+  fit = tslm(y ~ x + ar(1), time = t)
+
+  expect_s3_class(fit, "tslm")
+  expect_s3_class(fit$fit, "gls")
+  expect_equal(fit$errorSpec$p, 1L)
+  expect_equal(fit$time, "t")
+  expect_equal(fit$modelData$t, t)
+})
+
 test_that("tslm falls back to lm when no AR term is supplied", {
   fit = tslm(beer ~ t, data = beer.df)
 

@@ -19,7 +19,7 @@
 #'
 #' For AR-error models, `time` should usually name the variable giving the time
 #' order of the observations. If `time` is omitted, `tslm()` fits the model using
-#' the row order of `data` and gives a warning so that this assumption is
+#' the row order of the model data and gives a warning so that this assumption is
 #' visible.
 #'
 #' Diagnostic methods for AR-error models use normalised residuals by default,
@@ -29,9 +29,11 @@
 #'
 #' @param formula a model formula. Use `ar(p)` in the right hand side to specify
 #'   AR(p) errors, for example `y ~ x + ar(1)`.
-#' @param data a data frame containing the variables in the model.
-#' @param time optional unquoted or quoted name of the time variable in `data`.
-#'   If omitted for an AR model, the row order of `data` is used.
+#' @param data an optional data frame containing the variables in the model.
+#'   If omitted, variables are taken from the calling environment.
+#' @param time optional unquoted or quoted name of the time variable in `data`
+#'   or in the calling environment. If omitted for an AR model, the row order
+#'   of the model data is used.
 #' @param method fitting method passed to [nlme::gls()] for AR models. Defaults
 #'   to `"REML"`.
 #' @param ... additional arguments passed to [stats::lm()] or [nlme::gls()].
@@ -58,6 +60,7 @@
 #'
 #' @export
 #' @importFrom stats AIC BIC anova lm as.formula formula terms coef residuals fitted predict
+#' @importFrom stats update
 #' @importFrom stats logLik model.frame nobs vcov
 #' @importFrom graphics abline par plot
 #' @importFrom stats acf printCoefmat qqline qqnorm
@@ -65,29 +68,26 @@
 #' @importFrom utils packageVersion
 #' @importFrom methods is
 #' @seealso [stats::lm()], [nlme::gls()], [nlme::corARMA()]
-tslm = function(formula, data, time, method = "REML", ...) {
+tslm = function(formula, data = parent.frame(), time, method = "REML", ...) {
   if (missing(formula)) {
     stop("'formula' must be supplied", call. = FALSE)
   }
 
-  if (missing(data)) {
-    stop("'data' must be supplied", call. = FALSE)
-  }
-
-  if (!is.data.frame(data)) {
-    stop("'data' must be a data frame", call. = FALSE)
-  }
-
   parsedFormula = parseTslmFormula(formula)
-  dataCall = substitute(data)
+  dataCall = if (missing(data)) {
+    quote(parent.frame())
+  } else {
+    substitute(data)
+  }
   timeName = if (missing(time)) {
     NULL
   } else {
     captureOptionalName(substitute(time))
   }
+  modelData = makeTslmModelData(parsedFormula$meanFormula, data, timeName)
 
   if (is.null(parsedFormula$errorSpec)) {
-    fit = lm(parsedFormula$meanFormula, data = data, ...)
+    fit = lm(parsedFormula$meanFormula, data = modelData, ...)
     fit$call$formula = parsedFormula$meanFormula
     fit$call$data = dataCall
   } else {
@@ -100,15 +100,19 @@ tslm = function(formula, data, time, method = "REML", ...) {
       )
       correlationForm = as.formula("~ 1")
     } else {
-      if (!timeName %in% names(data)) {
-        stop("The time variable '", timeName, "' was not found in 'data'", call. = FALSE)
+      if (!timeName %in% names(modelData)) {
+        stop(
+          "The time variable '", timeName,
+          "' was not found in 'data' or the calling environment",
+          call. = FALSE
+        )
       }
       correlationForm = as.formula(paste("~", timeName))
     }
 
     fit = gls(
       parsedFormula$meanFormula,
-      data = data,
+      data = modelData,
       correlation = corARMA(
         p = parsedFormula$errorSpec$p,
         q = 0,
@@ -128,11 +132,59 @@ tslm = function(formula, data, time, method = "REML", ...) {
       meanFormula = parsedFormula$meanFormula,
       errorSpec = parsedFormula$errorSpec,
       time = timeName,
-      modelData = data,
+      modelData = modelData,
       fit = fit
     ),
     class = "tslm"
   )
+}
+
+
+#' Make tslm model data
+#'
+#' Build the model frame used internally by `tslm()`.
+#'
+#' @param meanFormula formula used for the mean model after removing `ar()`.
+#' @param data data frame or environment used to evaluate the model formula.
+#' @param timeName optional name of the time variable.
+#' @return A model frame containing the mean-model variables and, when supplied,
+#'   the time variable.
+#' @keywords internal
+makeTslmModelData = function(meanFormula, data, timeName = NULL) {
+  modelVars = all.vars(meanFormula)
+
+  if (!is.null(timeName) && !timeName %in% modelVars) {
+    modelVars = c(modelVars, timeName)
+  }
+
+  if (length(modelVars) == 0L) {
+    return(data.frame(.tslmIntercept = seq_len(nrow(model.frame(meanFormula, data = data)))))
+  }
+
+  modelFrameFormula = as.formula(paste("~", paste(modelVars, collapse = " + ")))
+
+  modelData = tryCatch(
+    model.frame(modelFrameFormula, data = data),
+    error = function(e) {
+      if (!is.null(timeName)) {
+        meanModelData = tryCatch(
+          model.frame(as.formula(paste("~", paste(all.vars(meanFormula), collapse = " + "))), data = data),
+          error = function(e2) NULL
+        )
+
+        if (!is.null(meanModelData)) {
+          stop(
+            "The time variable '", timeName,
+            "' was not found in 'data' or the calling environment",
+            call. = FALSE
+          )
+        }
+      }
+      stop(conditionMessage(e), call. = FALSE)
+    }
+  )
+
+  modelData
 }
 
 #' @export

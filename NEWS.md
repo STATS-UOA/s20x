@@ -19,6 +19,14 @@
 
 
 
+## s20x 3.2.323
+
+- Updated tslm() so formulas can be evaluated from the calling environment when data is omitted, matching the familiar lm() and glm() workflow.
+- Preserved explicit data-frame use for tslm() while using model-frame-based data handling for safer internal evaluation.
+- Added deterministic tests covering omitted data and explicit data for ordinary tslm() fits.
+- Kept the change small and backward compatible for the Stage 21.1 CRAN-preparation workflow.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.320
 
 - Added final release-polish wording for optional plotting engines, with base graphics remaining the default.

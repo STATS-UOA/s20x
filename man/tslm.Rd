@@ -4,16 +4,18 @@
 \alias{tslm}
 \title{Fit a linear model with optional autoregressive errors}
 \usage{
-tslm(formula, data, time, method = "REML", ...)
+tslm(formula, data = parent.frame(), time, method = "REML", ...)
 }
 \arguments{
 \item{formula}{a model formula. Use `ar(p)` in the right hand side to specify
 AR(p) errors, for example `y ~ x + ar(1)`.}
 
-\item{data}{a data frame containing the variables in the model.}
+\item{data}{an optional data frame containing the variables in the model.
+If omitted, variables are taken from the calling environment.}
 
-\item{time}{optional unquoted or quoted name of the time variable in `data`.
-If omitted for an AR model, the row order of `data` is used.}
+\item{time}{optional unquoted or quoted name of the time variable in `data`
+or in the calling environment. If omitted for an AR model, the row order
+of the model data is used.}
 
 \item{method}{fitting method passed to [nlme::gls()] for AR models. Defaults
 to `"REML"`.}
@@ -46,7 +48,7 @@ with AR(1) errors.
 
 For AR-error models, `time` should usually name the variable giving the time
 order of the observations. If `time` is omitted, `tslm()` fits the model using
-the row order of `data` and gives a warning so that this assumption is
+the row order of the model data and gives a warning so that this assumption is
 visible.
 
 Diagnostic methods for AR-error models use normalised residuals by default,
