@@ -37,6 +37,40 @@ test_that("tslm evaluates AR formulas and time variables without explicit data",
   expect_equal(fit$modelData$t, t)
 })
 
+test_that("tslm calling-environment fits match explicit data frame fits", {
+  y = beer.df$beer
+  x = beer.df$t
+
+  environmentFit = tslm(y ~ x)
+  dataFit = tslm(beer ~ t, data = beer.df)
+
+  expect_s3_class(environmentFit, "tslm")
+  expect_s3_class(environmentFit$fit, "lm")
+  expect_equal(unname(coef(environmentFit)), unname(coef(dataFit)))
+})
+
+test_that("tslm AR calling-environment fits match explicit data frame fits", {
+  skip_if_not_installed("nlme")
+
+  data(airpass.df)
+
+  passengers = airpass.df$passengers
+  t = airpass.df$t
+  month = airpass.df$month
+
+  environmentFit = tslm(log(passengers) ~ t + month + ar(1), time = t)
+  dataFit = tslm(log(passengers) ~ t + month + ar(1),
+    data = airpass.df,
+    time = t
+  )
+
+  expect_s3_class(environmentFit, "tslm")
+  expect_s3_class(environmentFit$fit, "gls")
+  expect_equal(environmentFit$errorSpec$p, 1L)
+  expect_equal(environmentFit$time, "t")
+  expect_equal(unname(coef(environmentFit)), unname(coef(dataFit)))
+})
+
 test_that("tslm falls back to lm when no AR term is supplied", {
   fit = tslm(beer ~ t, data = beer.df)
 

@@ -33,7 +33,6 @@ Useful links:
 
 Authors:
 \itemize{
-  \item James Curran \email{j.curran@auckland.ac.nz} (Wrote the original R package. Current maintainer.)
   \item Brant Deppa (Wrote the original R scripts this package is derived from)
 }
 

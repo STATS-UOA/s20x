@@ -1,5 +1,5 @@
 Package: s20x
-Version: 3.2.323
+Version: 3.2.325
 Title: Functions for University of Auckland Course STATS 201/208 Data
         Analysis
 Authors@R: c(
@@ -32,3 +32,4 @@ URL: https://github.com/STATS-UOA/s20x
 BugReports: https://github.com/STATS-UOA/s20x/issues
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.3

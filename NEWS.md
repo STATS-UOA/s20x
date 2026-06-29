@@ -19,6 +19,14 @@
 
 
 
+## s20x 3.2.325
+
+- Added regression tests comparing tslm() calling-environment fits with explicit data-frame fits.
+- Covered both ordinary lm-backed fits and AR gls-backed fits using the existing beer.df and airpass.df teaching datasets.
+- Preserved the Stage 21.1 tslm() implementation while locking in the new data-optional behaviour before CRAN submission.
+- Kept tests offline, deterministic, and focused on user-visible teaching workflows.
+- Validated by the standard s20x stage workflow.
+
 ## s20x 3.2.323
 
 - Updated tslm() so formulas can be evaluated from the calling environment when data is omitted, matching the familiar lm() and glm() workflow.
