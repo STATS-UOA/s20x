@@ -11,7 +11,7 @@ test_that("diagnostic plotting helpers keep current argument validation", {
   expect_warning(
     expect_error(
       modcheck(fit, plotOrder = 5),
-      "plotOrder must be in 1:4",
+      "no applicable method for 'modcheck'",
       fixed = TRUE
     ),
     "modcheck\\(\\) is deprecated"

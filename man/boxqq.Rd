@@ -2,12 +2,9 @@
 % Please edit documentation in R/boxqq.r
 \name{boxqq}
 \alias{boxqq}
-\alias{boxqq.formula}
 \title{Deprecated box plots and normal quantile-quantile plots}
 \usage{
 boxqq(formula, ...)
-
-\method{boxqq}{formula}(formula, data = NULL, ...)
 }
 \arguments{
 \item{formula}{A symbolic specification of the form \code{x ~ g} can be given,
@@ -16,8 +13,6 @@ the levels of the factor \code{g}. \code{NA}'s are allowed in the data.}
 
 \item{...}{Arguments to be passed to methods, such as graphical parameters
 (see \code{\link{par}}).}
-
-\item{data}{An optional data frame in which to evaluate the formula.}
 }
 \value{
 Returns the plot.
@@ -27,11 +22,6 @@ Returns the plot.
 and normal quantile-quantile plots of `x` for each level of the grouping
 variable `g`.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{boxqq(formula)}: Box plots and normal quantile-quantile plots
-
-}}
 \note{
 This is a legacy teaching helper retained for compatibility with
   older course material. New teaching material should prefer current

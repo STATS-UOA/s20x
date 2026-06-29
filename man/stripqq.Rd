@@ -2,20 +2,15 @@
 % Please edit documentation in R/stripqq.r
 \name{stripqq}
 \alias{stripqq}
-\alias{stripqq.formula}
 \title{Deprecated strip charts and normal quantile-quantile plots}
 \usage{
 stripqq(formula, ...)
-
-\method{stripqq}{formula}(formula, data = NULL, ...)
 }
 \arguments{
 \item{formula}{A symbolic specification of the form \code{x ~ g} can be
 given, indicating the observations in the vector \code{x} are grouped
 according to the levels of the factor \code{g}. \code{NA}s are allowed in
 the data.}
-
-\item{data}{An optional data frame in which to evaluate the formula}
 
 \item{\ldots}{Optional arguments that are passed to the \code{stripchart} function.}
 }
@@ -24,11 +19,6 @@ the data.}
 charts and normal quantile-quantile plots of `x` for each level of the
 grouping variable `g`.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{stripqq(formula)}: Strip charts and normal quantile-quantile plots
-
-}}
 \note{
 This is a legacy teaching helper retained for compatibility with
   older course material. New teaching material should prefer current

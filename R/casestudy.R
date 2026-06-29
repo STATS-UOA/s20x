@@ -104,7 +104,7 @@ casestudy = function(
         input = localRmd,
         output_dir = outputDir,
         quiet = quiet,
-        envir = .GlobalEnv
+        envir = new.env(parent = globalenv())
       ),
       renderArgs
     )

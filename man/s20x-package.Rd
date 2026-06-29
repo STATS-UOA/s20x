@@ -45,8 +45,8 @@ Other contributors:
   \item Andrew Balemi \email{a.balemi@auckland.ac.nz} [contributor]
   \item Chris Wild \email{c.wild@auckland.ac.nz} [contributor]
   \item Sophie Jones [contributor]
-  \item Dineika Chandra [contractor]
-  \item Brendan McArdle [contractor]
+  \item Dineika Chandra [contributor]
+  \item Brendan McArdle [contributor]
 }
 
 }

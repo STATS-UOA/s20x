@@ -19,6 +19,16 @@
 
 
 
+## s20x 3.3.0
+
+- Prepared s20x 3.3.0 as a CRAN-facing release after optional plotting engine polish and the tslm() calling-environment compatibility fix.
+- Removed obsolete deprecated diagnostics methods that triggered roxygen warnings during documentation regeneration.
+- Updated diagnostic API tests so modcheck.lm removal is treated as deliberate while modelcheck remains the supported model diagnostic helper.
+- Removed stale roxygen argument tags for deleted diagnostics methods so regenerated Rd usage sections pass CRAN checks.
+- Replaced non-standard DESCRIPTION contributor roles with CRAN-standard ctb roles.
+- Rendered casestudy() files in a fresh environment with globalenv() as the parent instead of passing .GlobalEnv directly.
+- Validated with strict tests, local as-CRAN checks, and external CRAN preflight submissions.
+
 ## s20x 3.2.325
 
 - Added regression tests comparing tslm() calling-environment fits with explicit data-frame fits.
