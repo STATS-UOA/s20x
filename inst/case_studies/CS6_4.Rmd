@@ -6,7 +6,7 @@ output:
 ---
 ```{r setup, include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -51,7 +50,7 @@ No. On the log-scale, the standard deviations are nearly identical, and the mids
 
 ## Model Building and Check Assumptions
 ```{r, out.width = "70%", fig.align = 'center'}
-rain.fit  = lm(log(rain) ~ seed, data = rain.df)
+rain.fit = lm(log(rain) ~ seed, data = rain.df)
 plot(rain.fit, which = 1)
 normcheck(rain.fit)
 cooks20x(rain.fit)
@@ -71,16 +70,17 @@ exp(predict(rain.fit.2, pred.df, interval = "confidence"))
 ```
 
 ```{r, echo=FALSE}
-conf1=as.data.frame(exp(predict(rain.fit.2, pred.df, interval = "confidence")))
+conf1 = as.data.frame(exp(predict(rain.fit.2, pred.df, interval = "confidence")))
 resultStr1 = paste0(sprintf("%.1f", conf1$lwr), " to ", sprintf("%.1f", conf1$upr))
 
 
 conf2 = as.data.frame(100 * (exp(confint(rain.fit.2)) - 1))
 
-resultStr2 = sprintf("%s%% to %s%%",
-                    format(round(conf2$`2.5 %`,0), big.mark = ",", trim = TRUE),
-                    format(round(conf2$`97.5 %`,-1), big.mark = ",", trim = TRUE)
-                    )
+resultStr2 = sprintf(
+  "%s%% to %s%%",
+  format(round(conf2$`2.5 %`, 0), big.mark = ",", trim = TRUE),
+  format(round(conf2$`97.5 %`, -1), big.mark = ",", trim = TRUE)
+)
 ```
 
 # Methods and Assumption Checks

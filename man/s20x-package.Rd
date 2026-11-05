@@ -12,13 +12,10 @@ package keeps student-facing defaults stable so existing lecture notes, labs,
 and examples continue to behave as expected.
 }
 \details{
-Selected diagnostic plotting helpers now support optional plotting engines.
-The default base graphics engine preserves the original teaching output. Use
-\code{engine = "ggplot2"} only when a reusable plot object is useful for
-saving, arranging, or further customisation. The optional engine requires the
-plotting packages documented on the relevant help pages: \pkg{ggplot2} for
-\code{normcheck()}, \code{eovcheck()}, and \code{modelcheck()}, and both
-\pkg{ggplot2} and \pkg{GGally} for \code{pairs20x()}.
+Selected diagnostic plotting helpers support two plotting engines. The default
+base graphics engine preserves the original teaching output. Use
+\code{engine = "ggplot2"} when a reusable plot object is useful for saving,
+arranging, or further customisation.
 }
 \seealso{
 Useful links:
@@ -33,6 +30,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item James Curran \email{j.curran@auckland.ac.nz} (Wrote the original R package. Current maintainer.)
   \item Brant Deppa (Wrote the original R scripts this package is derived from)
 }
 

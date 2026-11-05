@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 # Do not delete this!
-# It loads the s20x library for you. If you delete it 
+# It loads the s20x library for you. If you delete it
 # your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -78,10 +77,11 @@ exp(confint(PriceAge.fit2))
 
 ```{r, echo=FALSE}
 conf1 = as.data.frame(exp(confint(PriceAge.fit2)))
-resultStr1 = sprintf("A$%s to A$%s",
-                    format(round(conf1$`2.5 %`,-2), big.mark = ",", trim = TRUE),
-                    format(round(conf1$`97.5 %`,-2), big.mark = ",", trim = TRUE)
-                    )
+resultStr1 = sprintf(
+  "A$%s to A$%s",
+  format(round(conf1$`2.5 %`, -2), big.mark = ",", trim = TRUE),
+  format(round(conf1$`97.5 %`, -2), big.mark = ",", trim = TRUE)
+)
 
 conf2 = as.data.frame(abs(100 * (exp(confint(PriceAge.fit2)) - 1)))
 resultStr2 = paste0(sprintf("%.1f%%", conf2$`97.5 %`), " to ", sprintf("%.1f%%", conf2$`2.5 %`))

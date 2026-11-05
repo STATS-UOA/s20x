@@ -1,6 +1,4 @@
 test_that("ggplot2 diagnostic engines document the multiple-plot return contract", {
-  skip_if_not_installed("ggplot2")
-
   sampleData = data.frame(
     response = c(1.1, 1.9, 3.2, 3.8, 5.3, 5.7),
     predictor = c(1, 2, 3, 4, 5, 6)
@@ -25,8 +23,6 @@ test_that("ggplot2 diagnostic engines document the multiple-plot return contract
 
 
 test_that("modelcheck ggplot2 engine returns a single plot for each single diagnostic", {
-  skip_if_not_installed("ggplot2")
-
   sampleData = data.frame(
     response = c(1.1, 1.9, 3.2, 3.8, 5.3, 5.7),
     predictor = c(1, 2, 3, 4, 5, 6)

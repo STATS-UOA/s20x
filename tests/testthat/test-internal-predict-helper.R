@@ -31,12 +31,12 @@ test_that("teaching prediction wrappers use the shared helper path without chang
   countData = data.frame(y = c(1, 2, 3, 4, 6), x = c(1, 2, 3, 4, 5))
   glmFit = glm(y ~ x, data = countData, family = poisson(link = "log"))
   glmNewdata = data.frame(x = 6)
-  countResult = predictCount(glmFit, glmNewdata, print.out = FALSE)
+  countResult = suppressWarnings(predictCount(glmFit, glmNewdata, print.out = FALSE))
   glmBase = getS20xInternal("predictGlmWithSe")(glmFit, glmNewdata)
 
   expect_equal(countResult$Predicted, unname(round(exp(glmBase$fit), 3)))
 
-  glmResult = suppressMessages(predictGLM(glmFit, glmNewdata, type = "link"))
+  glmResult = suppressMessages(suppressWarnings(predictGLM(glmFit, glmNewdata, type = "link")))
   expect_equal(glmResult[, "fit"], unname(glmBase$fit))
 })
 

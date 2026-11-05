@@ -6,7 +6,7 @@ output:
 ---
 ```{r RC-CS92-000, include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -97,9 +96,11 @@ b = coef(thyroid.fit2)
 # Note this won't work unless you have ggplot2 installed
 library(ggplot2)
 thyroid.df = cbind(thyroid.df, predict(thyroid.fit2, interval = "confidence"))
-ggplot(thyroid.df, aes(x = body, y = thyroid, color = trt)) + geom_point() +
-      geom_line(aes(y = fit)) + geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.4) + 
-      scale_color_manual(values = c("#000000", "#FF0000"))
+ggplot(thyroid.df, aes(x = body, y = thyroid, color = trt)) +
+  geom_point() +
+  geom_line(aes(y = fit)) +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.4) +
+  scale_color_manual(values = c("#000000", "#FF0000"))
 ```
 
 ## Model Building and Check Assumptions Continued...

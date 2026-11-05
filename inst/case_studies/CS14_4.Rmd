@@ -6,12 +6,12 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.height=3)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile
 library(s20x)
 ## From now on we also need the emmeans library:
@@ -58,16 +58,20 @@ load(system.file("extdata", "Geoduck.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5,fig.width=8,eval = FALSE}
-Geoduck.df=read.csv("Geoduck.csv", stringsAsFactors = TRUE)
-plot(Count~Age,main="Number of Geoducks by Age",
-     sub="dashed line = year of storm",data=Geoduck.df)
-abline(v=10,lty=2)
+Geoduck.df = read.csv("Geoduck.csv", stringsAsFactors = TRUE)
+plot(Count ~ Age,
+  main = "Number of Geoducks by Age",
+  sub = "dashed line = year of storm", data = Geoduck.df
+)
+abline(v = 10, lty = 2)
 ```
 
 ```{r,fig.height=5,fig.width=8, echo = FALSE}
-plot(Count~Age,main="Number of Geoducks by Age",
-     sub="dashed line = year of storm",data=Geoduck.df)
-abline(v=10,lty=2)
+plot(Count ~ Age,
+  main = "Number of Geoducks by Age",
+  sub = "dashed line = year of storm", data = Geoduck.df
+)
+abline(v = 10, lty = 2)
 ```
 
 ## Comment on plot.
@@ -79,24 +83,23 @@ There is some indication of a storm effect at age 10, but it is hard to be sure.
 
 ## Fit an appropriate GLM:
 ```{r,fig.height=5,fig.width=6}
-duckfit1=glm(Count~Age*Storm,family=poisson,data=Geoduck.df)
-plot(duckfit1,which=1)
+duckfit1 = glm(Count ~ Age * Storm, family = poisson, data = Geoduck.df)
+plot(duckfit1, which = 1)
 summary(duckfit1)
-1-pchisq(60.985,44) 
+1 - pchisq(60.985, 44)
 
 # Evidence of overdispersion
-duckfit2=glm(Count~Age*Storm,family=quasipoisson,data=Geoduck.df)
+duckfit2 = glm(Count ~ Age * Storm, family = quasipoisson, data = Geoduck.df)
 summary(duckfit2)
 
 # Drop interaction
-duckfit3=glm(Count~Age+Storm,family=quasipoisson,data=Geoduck.df)
+duckfit3 = glm(Count ~ Age + Storm, family = quasipoisson, data = Geoduck.df)
 summary(duckfit3)
 exp(confint(duckfit3))
-100*(exp(confint(duckfit3))[2:3,]-1)
-
+100 * (exp(confint(duckfit3))[2:3, ] - 1)
 ```
 ```{r, echo = FALSE, message=FALSE}
-conf1 = data.frame(100*(exp(confint(duckfit3))[2:3,]-1))
+conf1 = data.frame(100 * (exp(confint(duckfit3))[2:3, ] - 1))
 names(conf1) <- c("lower", "upper")
 resultStr1 = paste0(sprintf("%.1f%%", abs(conf1$upper)), " and ", sprintf("%.1f%%", abs(conf1$lower)))
 ```
@@ -129,33 +132,33 @@ For any age class of geoducks old enough to be affected by the storm, there was 
 
 ## Produce predicted values for the expected number of geoducks at each age group using this model, including intervals. Add these intervals to a plot of the data.
 ```{r,fig.height=5,fig.width=8}
-
 # Create predictions for geoducks age less than 10, after the storm
-Pred.data1 = data.frame(Age = seq(1,9),Storm=rep(0,9))
-PredAfter=predictGLM(duckfit3,Pred.data1,type="response")
+Pred.data1 = data.frame(Age = seq(1, 9), Storm = rep(0, 9))
+PredAfter = predict20x(duckfit3, Pred.data1, print.out = FALSE)$frame
 PredAfter
 
 # Create predictions for geoducks age 10 or more, before the storm but don't display these.
-Pred.data2 = data.frame(Age = seq(10,50),Storm=rep(1,41))
-PredBefore=predictGLM(duckfit3,Pred.data2,type="response")
+Pred.data2 = data.frame(Age = seq(10, 50), Storm = rep(1, 41))
+PredBefore = predict20x(duckfit3, Pred.data2, print.out = FALSE)$frame
 
 # Redo plot from above.
-plot(Count~Age,main="Number of Geoducks by Age",
-     sub="dashed line = year of storm",data=Geoduck.df)
-abline(v=10,lty=2)
+plot(Count ~ Age,
+  main = "Number of Geoducks by Age",
+  sub = "dashed line = year of storm", data = Geoduck.df
+)
+abline(v = 10, lty = 2)
 
 
 # Add after lines to plot.Interval bounds as dashed lines.
-lines(seq(1,9),PredAfter[,1],col="Green" )
-lines(seq(1,9),PredAfter[,2],col="Green",lty=2 )
-lines(seq(1,9),PredAfter[,3],col="Green",lty=2 )
+lines(seq(1, 9), PredAfter[, 1], col = "Green")
+lines(seq(1, 9), PredAfter[, 2], col = "Green", lty = 2)
+lines(seq(1, 9), PredAfter[, 3], col = "Green", lty = 2)
 
 
 # Add before lines to plot.Interval bounds as dashed lines.
-lines(seq(10,50),PredBefore[,1],col="Blue" )
-lines(seq(10,50),PredBefore[,2],col="Blue",lty=2 )
-lines(seq(10,50),PredBefore[,3],col="Blue",lty=2 )
-
+lines(seq(10, 50), PredBefore[, 1], col = "Blue")
+lines(seq(10, 50), PredBefore[, 2], col = "Blue", lty = 2)
+lines(seq(10, 50), PredBefore[, 3], col = "Blue", lty = 2)
 ```
 
 

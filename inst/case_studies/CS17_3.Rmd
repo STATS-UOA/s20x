@@ -31,59 +31,59 @@ The variables are:
 
 ```{r, echo=FALSE,warning=FALSE}
 load(system.file("extdata", "AkldRent.df.rda", package = "s20x"))
-AkldRent.df$Rent=AkldRent.df$Auckland
-AkldRent=subset(AkldRent.df,select=c(Month,Rent))
+AkldRent.df$Rent = AkldRent.df$Auckland
+AkldRent = subset(AkldRent.df, select = c(Month, Rent))
 ```
 
 ```{r,fig.height=4.5}
-Rent.ts=ts(AkldRent$Rent,frequency=12,start=c(2006,1))
-plot(log(Rent.ts),main="Average log-weekly rent in Auckland")
-abline(v=c(2006:2016),lty=2)
+Rent.ts = ts(AkldRent$Rent, frequency = 12, start = c(2006, 1))
+plot(log(Rent.ts), main = "Average log-weekly rent in Auckland")
+abline(v = c(2006:2016), lty = 2)
 ```
 
 ```{r,fig.height=7}
-logRent.stl=stl(log(Rent.ts),s.window="periodic")
+logRent.stl = stl(log(Rent.ts), s.window = "periodic")
 plot(logRent.stl)
-abline(v=c(2006:2016),lty=2)
+abline(v = c(2006:2016), lty = 2)
 ```
 
 
 ```{r ,fig.height=7}
-head(logRent.stl$time.series,13)
+head(logRent.stl$time.series, 13)
 ```
 
 ```{r ,fig.height=5}
-logRent.hw=HoltWinters(log(Rent.ts))
-predict(logRent.hw,n.ahead=6,prediction.interval = TRUE)
+logRent.hw = HoltWinters(log(Rent.ts))
+predict(logRent.hw, n.ahead = 6, prediction.interval = TRUE)
 ```
 
 
 ```{r ,fig.height=4}
-n=nrow(AkldRent)
-time.pt=seq(2006+1/12,2015+11/12,1/12)
+n = nrow(AkldRent)
+time.pt = seq(2006 + 1 / 12, 2015 + 11 / 12, 1 / 12)
 time.pt
 ```
 
 ```{r ,fig.height=4}
-months=factor(rep(month.abb, 10))[1:n]
-months=factor(months,levels=month.abb)
+months = factor(rep(month.abb, 10))[1:n]
+months = factor(months, levels = month.abb)
 months
 ```
 
 
 
 ```{r ,fig.height=4}
-logRent=log(AkldRent$Rent)
-logRentfit1.lm=lm(logRent~time.pt++months)
+logRent = log(AkldRent$Rent)
+logRentfit1.lm = lm(logRent ~ time.pt + +months)
 acf(resid(logRentfit1.lm))
-logRentfit2.lm=lm(logRent[-1]~time.pt[-1]+logRent[-n]+months[-1])
+logRentfit2.lm = lm(logRent[-1] ~ time.pt[-1] + logRent[-n] + months[-1])
 acf(resid(logRentfit2.lm))
 ```
 
 ```{r,fig.height=4}
 library(s20x)
-plot(residuals(logRentfit2.lm),type="l")
-normcheck(logRentfit2.lm,main="Histogram",xlab="Residuals")
+plot(residuals(logRentfit2.lm), type = "l")
+normcheck(logRentfit2.lm, main = "Histogram", xlab = "Residuals")
 ```
 
 ```{r ,fig.height=4}
@@ -97,9 +97,9 @@ anova(logRentfit2.lm)
 
 
 ```{r,fig.height=4,include=FALSE}
-fit.lm2q=lm(logRent[-1]~time.pt[-1]+I(time.pt[-1]^2)+logRent[-n]+months[-1])
+fit.lm2q = lm(logRent[-1] ~ time.pt[-1] + I(time.pt[-1]^2) + logRent[-n] + months[-1])
 summary(fit.lm2q)
-plot(fit.lm2q,which=1)
+plot(fit.lm2q, which = 1)
 normcheck(fit.lm2q)
 acf(resid(fit.lm2q))
 ```
@@ -107,9 +107,9 @@ acf(resid(fit.lm2q))
 
 
 ```{r,include=FALSE}
-#For purpose of predicting Dec 2015 rent
-c(time.pt[n],logRent[n])
-pred=exp(-28.604938+0.0076+time.pt[n]*0.01551+logRent[n]*0.571065)
+# For purpose of predicting Dec 2015 rent
+c(time.pt[n], logRent[n])
+pred = exp(-28.604938 + 0.0076 + time.pt[n] * 0.01551 + logRent[n] * 0.571065)
 ```
 
 

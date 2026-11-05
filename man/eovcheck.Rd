@@ -49,7 +49,7 @@ plot}
 \item{twosd}{if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd}
 
 \item{engine}{plotting engine to use. The default, \code{"base"}, preserves
-the original base graphics output. Use \code{"ggplot2"} for an optional
+the original base graphics output. Use \code{"ggplot2"} for a
 ggplot2 object.}
 }
 \value{
@@ -68,9 +68,9 @@ useful in highlighting potential outliers.
 }
 \details{
 The default base graphics engine preserves the original teaching plot and
-draws directly on the active graphics device. The optional ggplot2 engine is
+draws directly on the active graphics device. The ggplot2 engine is
 intended for users who want a reusable plot object for reports or further
-customisation; it requires \pkg{ggplot2} to be installed and returns a ggplot
+customisation, and returns a ggplot
 object instead of drawing a base graphics side effect.
 }
 \examples{
@@ -110,14 +110,12 @@ airpass.fit = lm(log(passengers)[-1] ~ t[-1] + month[-1]
                  + log(passengers)[-144], data  = airpass.df)
 eovcheck(airpass.fit)
 
-# Optional ggplot2 engine for reusable plot objects
-if (requireNamespace("ggplot2", quietly = TRUE)) {
-  eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
-  class(eovPlot)
+# ggplot2 engine for reusable plot objects
+eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
+class(eovPlot)
 
-  eovcheck(peru.fit, engine = "ggplot2", smoother = TRUE)
-  eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE)
-}
+eovcheck(peru.fit, engine = "ggplot2", smoother = TRUE)
+eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE)
 
 }
 \keyword{hplot}

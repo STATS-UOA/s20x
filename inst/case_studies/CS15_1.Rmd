@@ -6,7 +6,7 @@ output:
 ---
 ```{r, include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 # Problem
 The experiment consisted of observing the number of fish at given fork lengths that entered a trawl codend, and the number of those fish that were retained by it.
@@ -38,13 +37,13 @@ load(system.file("extdata", "Haddock.df.rda", package = "s20x"))
 ```{r, out.width = "80%", fig.align = 'center', eval = FALSE}
 Haddock.df = read.table("Haddock.txt", header = TRUE)
 Haddock.df$n = with(Haddock.df, codend + cover)
-Haddock.df$propn = with(Haddock.df, codend/n)
+Haddock.df$propn = with(Haddock.df, codend / n)
 plot(propn ~ forklen, data = Haddock.df, xlab = "Fork length (cm)", las = 1)
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', echo = FALSE}
 Haddock.df$n = with(Haddock.df, codend + cover)
-Haddock.df$propn = with(Haddock.df, codend/n)
+Haddock.df$propn = with(Haddock.df, codend / n)
 plot(propn ~ forklen, data = Haddock.df, xlab = "Fork length (cm)", las = 1)
 ```
 
@@ -57,12 +56,12 @@ plot(Haddock.glm, which = 1)
 summary(Haddock.glm)
 1 - pchisq(23.436, 34)
 exp(confint(Haddock.glm))
-100*(exp(confint(Haddock.glm))-1)
+100 * (exp(confint(Haddock.glm)) - 1)
 ```
 ```{r, echo= FALSE,message=FALSE}
-conf1 = data.frame(100*(exp(confint(Haddock.glm))-1))
+conf1 = data.frame(100 * (exp(confint(Haddock.glm)) - 1))
 names(conf1) <- c("lower", "upper")
-resultStr1 = paste0(sprintf("%.0f%%", abs(conf1[2,]$lower)), " and ", sprintf("%.0f%%", abs(conf1[2,]$upper)))
+resultStr1 = paste0(sprintf("%.0f%%", abs(conf1[2, ]$lower)), " and ", sprintf("%.0f%%", abs(conf1[2, ]$upper)))
 ```
 
 

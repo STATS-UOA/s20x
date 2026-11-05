@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Background
@@ -42,13 +41,13 @@ load(system.file("extdata", "Babies.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center',fig.height=4.25,echo=-1, eval = FALSE}
-par(mar=c(0,0,0,0))
+par(mar = c(0, 0, 0, 0))
 Babies.df = read.table("babies_data.txt", header = TRUE)
 pairs20x(Babies.df[, c(1, 2, 4, 5, 6)])
 ```
 
 ```{r, out.width = "80%", fig.align = 'center',fig.height=4.25,echo=FALSE}
-par(mar=c(0,0,0,0))
+par(mar = c(0, 0, 0, 0))
 pairs20x(Babies.df[, c(1, 2, 4, 5, 6)])
 ```
 
@@ -62,7 +61,7 @@ Let us look deeper into the relationship between `bwt` and `gestation`.
 
 ```{r, out.width = "80%", fig.align = 'center'}
 plot(bwt ~ gestation, data = Babies.df, col = "gray60")
-lines(lowess(Babies.df$gestation,Babies.df$bwt), col = "tomato", lwd = 2)
+lines(lowess(Babies.df$gestation, Babies.df$bwt), col = "tomato", lwd = 2)
 text(152, 120, "?")
 text(185, 115, "?")
 abline(v = 294, col = "steelblue", lwd = 2)
@@ -100,16 +99,19 @@ bwt.fit4 = lm(bwt ~ gestation * OD + weight, data = Babies.df[-c(239, 820), ])
 summary(bwt.fit4)
 bwt.fit5 = lm(bwt ~ gestation * OD + weight + height, data = Babies.df[-c(239, 820), ])
 summary(bwt.fit5)
-# Let's create BMI from both of these measurements 
-Babies.df$bmi = with(Babies.df, weight/(height^2) * 703)
-bwt.fit6 = lm(bwt ~ gestation * OD + weight + height + bmi, 
-    data = Babies.df[-c(239, 820), ])
+# Let's create BMI from both of these measurements
+Babies.df$bmi = with(Babies.df, weight / (height^2) * 703)
+bwt.fit6 = lm(bwt ~ gestation * OD + weight + height + bmi,
+  data = Babies.df[-c(239, 820), ]
+)
 summary(bwt.fit6)
-bwt.fit7 = lm(bwt ~ gestation * OD + height + bmi + not.first.born, 
-    data = Babies.df[-c(239, 820), ])
+bwt.fit7 = lm(bwt ~ gestation * OD + height + bmi + not.first.born,
+  data = Babies.df[-c(239, 820), ]
+)
 summary(bwt.fit7)
-bwt.fit8 = lm(bwt ~ gestation * OD + height + bmi + not.first.born + smokes, 
-    data = Babies.df[-c(239, 820), ])
+bwt.fit8 = lm(bwt ~ gestation * OD + height + bmi + not.first.born + smokes,
+  data = Babies.df[-c(239, 820), ]
+)
 summary(bwt.fit8)
 cooks20x(bwt.fit8)
 normcheck(bwt.fit8)
@@ -117,22 +119,22 @@ confint(bwt.fit8)
 ```
 
 ```{r, echo=FALSE}
-conf1 = as.data.frame(t(abs(confint(bwt.fit8)[2,])))
+conf1 = as.data.frame(t(abs(confint(bwt.fit8)[2, ])))
 resultStr1 = paste0(sprintf("%.2f", conf1$`2.5 %`), " to ", sprintf("%.2f", conf1$`97.5 %`))
 
-conf2 = as.data.frame(t(abs(confint(bwt.fit8)[8,])))
+conf2 = as.data.frame(t(abs(confint(bwt.fit8)[8, ])))
 resultStr2 = paste0(sprintf("%.2f", conf2$`97.5 %`), " to ", sprintf("%.2f", conf2$`2.5 %`))
 
-conf3 = as.data.frame(t(abs(confint(bwt.fit8)[4,])))
+conf3 = as.data.frame(t(abs(confint(bwt.fit8)[4, ])))
 resultStr3 = paste0(sprintf("%.2f", conf3$`2.5 %`), " to ", sprintf("%.2f", conf3$`97.5 %`))
 
-conf4 = as.data.frame(t(abs(confint(bwt.fit8)[5,])))
+conf4 = as.data.frame(t(abs(confint(bwt.fit8)[5, ])))
 resultStr4 = paste0(sprintf("%.2f", conf4$`2.5 %`), " to ", sprintf("%.2f", conf4$`97.5 %`))
 
-conf5 = as.data.frame(t(abs(confint(bwt.fit8)[7,])))
+conf5 = as.data.frame(t(abs(confint(bwt.fit8)[7, ])))
 resultStr5 = paste0(sprintf("%.2f", conf5$`97.5 %`), " to ", sprintf("%.2f", conf5$`2.5 %`))
 
-conf6 = as.data.frame(t(abs(confint(bwt.fit8)[6,])))
+conf6 = as.data.frame(t(abs(confint(bwt.fit8)[6, ])))
 resultStr6 = paste0(sprintf("%.2f", conf6$`97.5 %`), " to ", sprintf("%.2f", conf6$`2.5 %`))
 ```
 

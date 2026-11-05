@@ -47,7 +47,7 @@ water.df$Location
 
 Much better. Now how about that plot?
 ```{r, out.width = "85%", fig.align = 'center'}
-plot(Mortality~Ca, pch = as.character(water.df$Location), data = water.df)
+plot(Mortality ~ Ca, pch = as.character(water.df$Location), data = water.df)
 ```
 
 ```{r, out.width = "85%", fig.align = 'center'}
@@ -88,20 +88,24 @@ Minimal change in $R^2$. How do the fitted lines look on the plot?
 
 ```{r, out.width = "85%", fig.align = 'center'}
 b = coef(water.fit2)
-plot(Mortality~Ca, pch = as.character(water.df$Location), data = water.df)
+plot(Mortality ~ Ca, pch = as.character(water.df$Location), data = water.df)
 abline(b[1:2], col = "blue", lty = 2, lwd = 2)
 abline(b[1] + b[3], b[2], col = "red", lty = 2, lwd = 2)
-legend("topright", lty = 2, lwd = 2, col = c("blue", "red"), 
-    legend = c("North", "South"), bty = "n")
+legend("topright",
+  lty = 2, lwd = 2, col = c("blue", "red"),
+  legend = c("North", "South"), bty = "n"
+)
 # This code puts some confidence bounds around the lines.
 # It's pretty complicated if you don't know R and it isn't examinable
-pred.df = data.frame(Ca = rep(seq(0, 160, by = 20), 2), 
-    Location = rep(c('N', 'S'), c(9, 9)))
+pred.df = data.frame(
+  Ca = rep(seq(0, 160, by = 20), 2),
+  Location = rep(c('N', 'S'), c(9, 9))
+)
 water.pred = predict(water.fit, newdata = pred.df, interval = "confidence")
-for(i in 1:2){
+for (i in 1:2) {
   idx = 1:9 + (i - 1) * 9
-  for(j in c("lwr", "upr")){
-      lines(pred.df$Ca[idx], water.pred[idx, j], lty = 3, lwd = 2, col = "lightgrey");
+  for (j in c("lwr", "upr")) {
+    lines(pred.df$Ca[idx], water.pred[idx, j], lty = 3, lwd = 2, col = "lightgrey");
   }
 }
 ```

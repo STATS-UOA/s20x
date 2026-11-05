@@ -6,7 +6,7 @@ output:
 ---
 ```{r setup, echo=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 library(s20x)
 ```
@@ -26,18 +26,18 @@ The variables measured were:
 We were interested in predicting the cost of damage caused to houses by fires depending on how far away they are from the nearest fire station. In particular, we want to predict the cost of damage to individual randomly chosen houses that are 1 and 4 miles from the fire station.  
 
 ```{r plot-real, echo=FALSE, out.width = "80%", fig.align = 'center',fig.height=4}
-data(fire.df) 
+data(fire.df)
 ```
 
 # Read in and inspect the data:
 ```{r fig.height=3.5, eval=FALSE}
 # import the data
-fire.df=read.table("fire.txt", header=TRUE)
-plot(damage~distance,main="Cost of damage versus distance", data=fire.df)
+fire.df = read.table("fire.txt", header = TRUE)
+plot(damage ~ distance, main = "Cost of damage versus distance", data = fire.df)
 ```
 
 ```{r,echo=FALSE,out.width = "85%", fig.align = 'center'}
-plot(damage~distance,main="Cost of damage versus distance", data=fire.df)
+plot(damage ~ distance, main = "Cost of damage versus distance", data = fire.df)
 ```
 # Comment on the plot
 
@@ -46,10 +46,10 @@ There is, not surprisingly, an increasing trend with the distance from the fire 
 # Fit model and check assumptions
 ```{r }
 # fit the model
-fire.fit<-lm(damage~distance,data=fire.df)
+fire.fit <- lm(damage ~ distance, data = fire.df)
 
-#Assumption checks
-plot(fire.fit,which=1)
+# Assumption checks
+plot(fire.fit, which = 1)
 normcheck(fire.fit)
 cooks20x(fire.fit)
 ```
@@ -63,37 +63,40 @@ so it is not surprising that a single point could be influential.
 There is no reason to remove this point.
 
 ```{r fig.height=3, fig.width=5}
-#Get summary output and confidence intervals
+# Get summary output and confidence intervals
 summary(fire.fit)
 confint(fire.fit)
 ```
 
 ```{r, echo=FALSE}
 cf = as.data.frame(confint(fire.fit) * 1000)
-resultConf = sprintf("$%s to $%s",
-        format(round(cf$`2.5 %`, -2), big.mark = ",", trim = TRUE),
-        format(round(cf$`97.5 %`, -2), big.mark = ",", trim = TRUE))
+resultConf = sprintf(
+  "$%s to $%s",
+  format(round(cf$`2.5 %`, -2), big.mark = ",", trim = TRUE),
+  format(round(cf$`97.5 %`, -2), big.mark = ",", trim = TRUE)
+)
 ```
 
 # Plot with superimposed line
 ```{r }
-plot(damage~distance, main="Cost of damage versus distance", data=fire.df)
+plot(damage ~ distance, main = "Cost of damage versus distance", data = fire.df)
 abline(fire.fit)
 ```
 
 # Get additional predicted output
 ```{r}
-preddistance.df=data.frame(distance=c(1,4))
-predict(fire.fit,preddistance.df,interval="prediction")
+preddistance.df = data.frame(distance = c(1, 4))
+predict(fire.fit, preddistance.df, interval = "prediction")
 ```
 
 ```{r, echo=FALSE}
-preddistance.df=data.frame(distance=c(1,4))
-p = as.data.frame(predict(fire.fit, preddistance.df, interval = "prediction")*1000)
-resultStr = sprintf("$%s to $%s",
-                    format(round(p$lwr,-2), big.mark = ",", trim = TRUE),
-                    format(round(p$upr,-2), big.mark = ",", trim = TRUE)
-                    )
+preddistance.df = data.frame(distance = c(1, 4))
+p = as.data.frame(predict(fire.fit, preddistance.df, interval = "prediction") * 1000)
+resultStr = sprintf(
+  "$%s to $%s",
+  format(round(p$lwr, -2), big.mark = ",", trim = TRUE),
+  format(round(p$upr, -2), big.mark = ",", trim = TRUE)
+)
 ```
 
 # Method and Assumption Checks 

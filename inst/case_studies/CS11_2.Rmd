@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -41,10 +41,10 @@ Stats20x.df = read.table("STATS20x.txt", header = TRUE)
 ```
 
 ```{r, out.width = "85%", fig.align = 'center'}
-Stats20x.df$Degree=factor(Stats20x.df$Degree)
-#Draw boxplot
+Stats20x.df$Degree = factor(Stats20x.df$Degree)
+# Draw boxplot
 plot(Exam ~ Degree, data = Stats20x.df)
-#Summary stats:
+# Summary stats:
 summaryStats(Exam ~ Degree, Stats20x.df)
 ```
 
@@ -61,16 +61,15 @@ summary(degree.fit)
 
 ## Multiple Comparisons Output
 ```{r, out.width = "90%", fig.align = 'center',echo=-1}
-options(digits=4)
-pairs(emmeans(degree.fit, ~Degree), infer=TRUE)
+options(digits = 4)
+pairs(emmeans(degree.fit, ~Degree), infer = TRUE)
 ```
 ```{r, echo = FALSE}
-options(digits=4)
-stats.pair=as.data.frame(pairs(emmeans(degree.fit, ~Degree), infer=TRUE))
-conf1=subset(stats.pair, p.value<0.05)
+options(digits = 4)
+stats.pair = as.data.frame(pairs(emmeans(degree.fit, ~Degree), infer = TRUE))
+conf1 = subset(stats.pair, p.value < 0.05)
 resultStr1 = paste0(sprintf("%.0f", conf1$lower.CL), " and ", sprintf("%.0f", conf1$upper.CL))
 resultStr2 = paste0(sprintf("%.0f", abs(conf1$upper.CL)), " and ", sprintf("%.0f", abs(conf1$lower.CL)))
-
 ```
 # Methods and Assumption Checks
 We wish to explain exam marks using degree, a factor with four levels, so we fitted a One-way ANOVA model to these data.

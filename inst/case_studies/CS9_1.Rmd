@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -39,8 +38,10 @@ head(teach.df)
 str(teach.df)
 # We need to convert method into a factor variable
 teach.df$method = factor(teach.df$method)
-plot(lang ~ IQ, main = "Language Score versus IQ (by method)",
-    pch = as.character(teach.df$method), data = teach.df)
+plot(lang ~ IQ,
+  main = "Language Score versus IQ (by method)",
+  pch = as.character(teach.df$method), data = teach.df
+)
 ```
 
 Looking at the coded scatter plot, we can see three parallel lines. It appears that the score is increasing with IQ and that method 2 is scoring highest and method 3 is scoring lowest. The variability around these individual lines is much lower than the variability seen in the separate plots.
@@ -63,8 +64,10 @@ confint(teach.fit2)
 
 ## Visualise the Final Model
 ```{r, out.width = "80%", fig.align = 'center'}
-plot(lang ~ IQ, main = "Language Score versus IQ (by method)",
-    pch = as.character(teach.df$method), data = teach.df)
+plot(lang ~ IQ,
+  main = "Language Score versus IQ (by method)",
+  pch = as.character(teach.df$method), data = teach.df
+)
 abline(teach.fit2$coef[1], teach.fit2$coef[2], lty = 1)
 abline(teach.fit2$coef[1] + teach.fit2$coef[3], teach.fit2$coef[2], lty = 2)
 abline(teach.fit2$coef[1] + teach.fit2$coef[4], teach.fit2$coef[2], lty = 4)
@@ -77,13 +80,13 @@ teach.fit3 = lm(lang ~ IQ + method, data = teach.df)
 confint(teach.fit3)
 ```
 ```{r, echo=FALSE}
-conf1 = as.data.frame(abs(confint(teach.fit3)[c(3,4),]))
+conf1 = as.data.frame(abs(confint(teach.fit3)[c(3, 4), ]))
 resultStr1 = paste0(sprintf("%.1f", conf1$`97.5 %`), " and ", sprintf("%.1f", conf1$`2.5 %`))
 
-conf2 = as.data.frame(t(abs(confint(teach.fit2)[4,])))
+conf2 = as.data.frame(t(abs(confint(teach.fit2)[4, ])))
 resultStr2 = paste0(sprintf("%.1f", conf2$`97.5 %`), " and ", sprintf("%.1f", conf2$`2.5 %`))
 
-conf3 = as.data.frame(t(abs(confint(teach.fit2)[2,]*10)))
+conf3 = as.data.frame(t(abs(confint(teach.fit2)[2, ] * 10)))
 resultStr3 = paste0(sprintf("%.1f", conf3$`2.5 %`), " and ", sprintf("%.1f", conf3$`97.5 %`))
 ```
 
@@ -133,7 +136,7 @@ teach.df$method = relevel(teach.df$method, ref = "2")
 teach.fit6 = lm(lang ~ method, data = teach.df)
 ci = confint(teach.fit5)
 ci2 = confint(teach.fit6)
-r2 = round(100*summary(teach.fit5)$r.squared)
+r2 = round(100 * summary(teach.fit5)$r.squared)
 ```
 
 With 95% confidence :
@@ -150,12 +153,12 @@ Our model explains almost `r r2`% of the variation in language score. You should
 This will only make sense after Chapter 11:
 
 ```{r, warning=FALSE, message=FALSE, echo=-1}
-options(digits=4)
+options(digits = 4)
 require(emmeans)
-emmeans(teach.fit2, specs = pairwise ~ method, infer=TRUE)$contrasts
+emmeans(teach.fit2, specs = pairwise ~ method, infer = TRUE)$contrasts
 
-#Compare to
-cbind(coef(summary(teach.fit2)),confint(teach.fit2))
-cbind(coef(summary(teach.fit3)),confint(teach.fit3))
+# Compare to
+cbind(coef(summary(teach.fit2)), confint(teach.fit2))
+cbind(coef(summary(teach.fit3)), confint(teach.fit3))
 ```
 

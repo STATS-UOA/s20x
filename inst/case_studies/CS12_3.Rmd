@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -48,15 +48,17 @@ load(system.file("extdata", "Weed.df.rda", package = "s20x"))
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
 # The call for tab delimited data
-Weed.df = read.table("Weed.txt", header = TRUE, sep = "\t") 
+Weed.df = read.table("Weed.txt", header = TRUE, sep = "\t")
 ```
 
 ```{r, out.width = "75%", fig.align = 'center'}
 # Several R commands to subset the data for answering the question of interest:
 WeedDf = transform(Weed.df, logAlg = log(Alg), Ratio = as.character(Ratio))
 WeedDf = transform(WeedDf, Ratio = as.numeric(substr(Ratio, 3, nchar(Ratio))))
-WeedDf = transform(WeedDf, fTime = factor(Time), fTemp = factor(Temp), 
-                           fRatio = factor(Ratio))
+WeedDf = transform(WeedDf,
+  fTime = factor(Time), fTemp = factor(Temp),
+  fRatio = factor(Ratio)
+)
 KdaDf = subset(WeedDf, subset = (!is.na(HiKda)))
 interactionPlots(HiKda ~ fTemp + fTime, data = KdaDf)
 # Also look at the interaction plot the other way around:
@@ -68,7 +70,7 @@ An interaction is suggested because of the non-parallel lines. When the temperat
 ## Model Building and Check Assumptions
 ```{r, out.width = "75%", fig.align = 'center'}
 Kda.lm = lm(HiKda ~ fTime * fTemp, data = KdaDf)
-plot(Kda.lm, which=1)
+plot(Kda.lm, which = 1)
 normcheck(Kda.lm)
 cooks20x(Kda.lm)
 anova(Kda.lm)
@@ -77,17 +79,16 @@ summary(Kda.lm)
 
 ## Pairwise comparisons
 ```{r}
-Kda.pairs = pairs(emmeans(Kda.lm, ~ fTime*fTemp), infer=TRUE)
+Kda.pairs = pairs(emmeans(Kda.lm, ~ fTime * fTemp), infer = TRUE)
 # Simplify the display of pairwise comparisons.
 # Because factor levels are numbers, need to enter as "fTime2", "fTime3", etc:
 displayPairs(Kda.pairs, c("fTime2", "fTime3", "fTime4"), c("fTemp60", "fTemp70", "fTemp80"))
 ```
 
 ```{r, echo = FALSE}
-conf1=data.frame(Kda.pairs)
-conf1= subset(conf1, p.value<0.05)
-resultStr1 = paste0(sprintf("%.0f", abs(conf1[3,]$lower.CL)), " and ", sprintf("%.0f", abs(conf1[3,]$upper.CL)))
-
+conf1 = data.frame(Kda.pairs)
+conf1 = subset(conf1, p.value < 0.05)
+resultStr1 = paste0(sprintf("%.0f", abs(conf1[3, ]$lower.CL)), " and ", sprintf("%.0f", abs(conf1[3, ]$upper.CL)))
 ```
 
 
@@ -121,6 +122,6 @@ Had there been no interaction then the multi-comparison adjustment would have pr
 
 ```{r}
 Kda.Wrong.lm = lm(HiKda ~ fTime + fTemp, data = KdaDf)
-pairs(emmeans(Kda.Wrong.lm, ~fTime), infer=TRUE)
-pairs(emmeans(Kda.Wrong.lm, ~fTemp), infer=TRUE)
+pairs(emmeans(Kda.Wrong.lm, ~fTime), infer = TRUE)
+pairs(emmeans(Kda.Wrong.lm, ~fTemp), infer = TRUE)
 ```

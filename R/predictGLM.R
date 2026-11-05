@@ -25,6 +25,7 @@
 #' @return A data frame with columns \code{fit}, \code{lwr}, and \code{upr} containing
 #'   fitted values and confidence limits on the requested scale.
 #' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.
+#' @note Deprecated in s20x 3.3.9. Use \code{\link{predict20x}} instead.
 #' @keywords htest
 #' @export predictGLM
 predictGLM = function(object,
@@ -33,6 +34,8 @@ predictGLM = function(object,
                       cilevel = 0.95,
                       quasit = FALSE,
                       ...) {
+  .Deprecated(msg = "predictGLM() is deprecated; use predict20x() instead.")
+
   if (!inherits(object, "glm")) {
     stop("First input is not a \"glm\" object")
   }

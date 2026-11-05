@@ -22,8 +22,6 @@ test_that("tslm still evaluates formulas with an explicit data frame", {
 })
 
 test_that("tslm evaluates AR formulas and time variables without explicit data", {
-  skip_if_not_installed("nlme")
-
   y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3)
   x = seq_len(8)
   t = seq_len(8)
@@ -50,8 +48,6 @@ test_that("tslm calling-environment fits match explicit data frame fits", {
 })
 
 test_that("tslm AR calling-environment fits match explicit data frame fits", {
-  skip_if_not_installed("nlme")
-
   data(airpass.df)
 
   passengers = airpass.df$passengers
@@ -96,8 +92,6 @@ test_that("tslm rejects unsupported future error structures", {
 })
 
 test_that("tslm fits AR models when nlme is available", {
-  skip_if_not_installed("nlme")
-
   data = data.frame(
     y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
     x = seq_len(8),
@@ -119,8 +113,6 @@ test_that("tslm preserves no-intercept mean formulas", {
 })
 
 test_that("tslm reports missing time variables clearly", {
-  skip_if_not_installed("nlme")
-
   data = data.frame(
     y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
     x = seq_len(8),
@@ -153,8 +145,6 @@ test_that("tslm validates AR order", {
 })
 
 test_that("tslm accepts quoted and unquoted time column names", {
-  skip_if_not_installed("nlme")
-
   data = data.frame(
     y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
     x = seq_len(8),
@@ -181,8 +171,6 @@ test_that("tslm exposes common model generics", {
 })
 
 test_that("summary.tslm prints a compact teaching summary", {
-  skip_if_not_installed("nlme")
-
   data = data.frame(
     y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
     x = seq_len(8),
@@ -220,8 +208,6 @@ test_that("plot.tslm supports the teaching diagnostic plots", {
 })
 
 test_that("plot.tslm aligns AR model diagnostics without dropping values", {
-  skip_if_not_installed("nlme")
-
   data = data.frame(
     y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
     x = seq_len(8),
@@ -302,8 +288,6 @@ test_that("normcheck.tslm can use normalised residuals", {
 })
 
 test_that("anova.tslm prints a compact teaching table for AR fits", {
-  skip_if_not_installed("nlme")
-
   data = data.frame(
     y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
     x = seq_len(8),
@@ -328,8 +312,6 @@ test_that("anova.tslm prints a compact teaching table for AR fits", {
 })
 
 test_that("anova.tslm can return verbose underlying anova output", {
-  skip_if_not_installed("nlme")
-
   data = data.frame(
     y = c(1.0, 1.5, 2.1, 2.7, 3.0, 3.4, 4.0, 4.3),
     x = seq_len(8),
@@ -345,8 +327,6 @@ test_that("anova.tslm can return verbose underlying anova output", {
 
 
 test_that("documented airpass.df teaching workflow is stable", {
-  skip_if_not_installed("nlme")
-
   data(airpass.df)
 
   fit = tslm(log(passengers) ~ t + month + ar(1),
@@ -371,8 +351,6 @@ test_that("documented airpass.df teaching workflow is stable", {
 })
 
 test_that("documented tslm diagnostic residual choices run", {
-  skip_if_not_installed("nlme")
-
   data(airpass.df)
 
   fit = tslm(log(passengers) ~ t + month + ar(1),
@@ -413,7 +391,6 @@ test_that("tslm diagnostics follow time order when rows are shuffled", {
 })
 
 test_that("tslm AR diagnostics follow time order when rows are shuffled", {
-  skip_if_not_installed("nlme")
   data(airpass.df)
 
   getData = getS20xInternal("getTslmDiagnosticData")
@@ -431,7 +408,6 @@ test_that("tslm AR diagnostics follow time order when rows are shuffled", {
 })
 
 test_that("tslm AR coefficients do not depend on row order", {
-  skip_if_not_installed("nlme")
   data(airpass.df)
 
   sortedFit = tslm(log(passengers) ~ t + ar(1), data = airpass.df, time = t)
@@ -470,7 +446,6 @@ test_that("tslm keeps offset terms in the mean model", {
 })
 
 test_that("tslm stops rather than dropping an offset from an AR model", {
-  skip_if_not_installed("nlme")
   data(airpass.df)
 
   expect_error(
@@ -495,7 +470,6 @@ test_that("tslm finds variables local to a calling function alongside data", {
 })
 
 test_that("tslm finds a local time variable alongside data", {
-  skip_if_not_installed("nlme")
   data(airpass.df)
 
   fitInsideFunction = function(data) {

@@ -6,12 +6,12 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.height=3)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile
 library(s20x)
 ## From now on we also need the emmeans library:
@@ -53,12 +53,12 @@ load(system.file("extdata", "Batteries.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5,fig.width=8, eval= FALSE}
-Batteries.df=read.csv("Batteries.csv", stringsAsFactors=TRUE)
-interactionPlots(lifetime~temp+material,data=Batteries.df)
+Batteries.df = read.csv("Batteries.csv", stringsAsFactors = TRUE)
+interactionPlots(lifetime ~ temp + material, data = Batteries.df)
 ```
 
 ```{r,fig.height=5,fig.width=8, echo= FALSE}
-interactionPlots(lifetime~temp+material,data=Batteries.df)
+interactionPlots(lifetime ~ temp + material, data = Batteries.df)
 ```
 
 ## Comment on the plot.
@@ -69,23 +69,22 @@ At both high and low temperature there doesn't seem to be much difference in bat
 ## Fit model, simplify as necessary, and generate inference output
 
 ```{r, fig.height=7,fig.width=7}
-battery.fit=lm(lifetime~temp*material,data=Batteries.df)
+battery.fit = lm(lifetime ~ temp * material, data = Batteries.df)
 
 modelcheck(battery.fit)
 
 anova(battery.fit)
 summary(battery.fit)
 
-battery.pairs <- pairs(emmeans(battery.fit, ~temp*material), infer=TRUE)
-displayPairs(battery.pairs, c("low", "med","high"), c("A", "B","C"))
+battery.pairs <- pairs(emmeans(battery.fit, ~ temp * material), infer = TRUE)
+displayPairs(battery.pairs, c("low", "med", "high"), c("A", "B", "C"))
 ```
 
 ```{r, echo=FALSE}
 conf1 = data.frame(battery.pairs)
-conf1 = subset(conf1, p.value<0.05)
-resultStr1 = paste0(sprintf("%.0f", abs(conf1[11,]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[11,]$lower.CL)))
-resultStr2 = paste0(sprintf("%.0f", abs(conf1[9,]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[9,]$lower.CL)))
-
+conf1 = subset(conf1, p.value < 0.05)
+resultStr1 = paste0(sprintf("%.0f", abs(conf1[11, ]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[11, ]$lower.CL)))
+resultStr2 = paste0(sprintf("%.0f", abs(conf1[9, ]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[9, ]$lower.CL)))
 ```
 
 

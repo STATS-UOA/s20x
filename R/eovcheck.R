@@ -10,9 +10,9 @@
 #' useful in highlighting potential outliers.
 #'
 #' The default base graphics engine preserves the original teaching plot and
-#' draws directly on the active graphics device. The optional ggplot2 engine is
+#' draws directly on the active graphics device. The ggplot2 engine is
 #' intended for users who want a reusable plot object for reports or further
-#' customisation; it requires \pkg{ggplot2} to be installed and returns a ggplot
+#' customisation, and returns a ggplot
 #' object instead of drawing a base graphics side effect.
 #'
 #' @param x A linear model formula. Alternatively, a fitted lm object from
@@ -25,7 +25,7 @@
 #' plot
 #' @param twosd if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd
 #' @param engine plotting engine to use. The default, \code{"base"}, preserves
-#' the original base graphics output. Use \code{"ggplot2"} for an optional
+#' the original base graphics output. Use \code{"ggplot2"} for a
 #' ggplot2 object.
 #' @param \dots Optional arguments passed to the base plotting engine. Extra
 #' arguments are currently ignored by the ggplot2 engine.
@@ -69,14 +69,12 @@
 #'                  + log(passengers)[-144], data  = airpass.df)
 #' eovcheck(airpass.fit)
 #'
-#' # Optional ggplot2 engine for reusable plot objects
-#' if (requireNamespace("ggplot2", quietly = TRUE)) {
-#'   eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
-#'   class(eovPlot)
+#' # ggplot2 engine for reusable plot objects
+#' eovPlot = eovcheck(oyster.fit, engine = "ggplot2")
+#' class(eovPlot)
 #'
-#'   eovcheck(peru.fit, engine = "ggplot2", smoother = TRUE)
-#'   eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE)
-#' }
+#' eovcheck(peru.fit, engine = "ggplot2", smoother = TRUE)
+#' eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE)
 #'
 #' @importFrom methods is
 #' @importFrom rlang .data
@@ -267,8 +265,6 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
 #' @return A ggplot object.
 #' @noRd
 eovcheck_ggplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
-  requirePlottingPackage("ggplot2")
-
 
   diagnosticData = diagnosticInfo$diagnosticData
   plotData = data.frame(

@@ -5,6 +5,7 @@ test_that("deprecated functions warn when called directly", {
 
   fit = lm(BP ~ weight, data = peru.df)
   siteFit = lm(log(Oysters) ~ Site, data = oysters.df)
+  glmFit = glm(BP ~ weight, data = peru.df, family = poisson)
   contrasts = matrix(c(1, -1, 0), nrow = 1)
 
   pdf(NULL)
@@ -35,6 +36,8 @@ test_that("deprecated functions warn when called directly", {
   )
   expect_warning(capture.output(freq1way(c(10, 20, 30))), "deprecated")
   expect_warning(normcheck(fit, shapiro.wilk = TRUE), "deprecated")
+  expect_warning(predictCount(glmFit, data.frame(weight = 70), print.out = FALSE), "predict20x")
+  expect_warning(suppressMessages(predictGLM(glmFit, data.frame(weight = 70))), "predict20x")
   expect_warning(normcheck(peru.df$BP, shapiro.wilk = TRUE), "deprecated")
 })
 

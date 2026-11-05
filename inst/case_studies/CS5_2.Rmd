@@ -6,12 +6,12 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.height=3)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r setup, echo=FALSE, warning=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile
 library(s20x)
 ```
@@ -52,20 +52,20 @@ load(system.file("extdata", "houses.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=3.8,fig.width=6, eval= FALSE}
-houses.df=read.csv("Houses.csv",header=TRUE, stringsAsFactors = TRUE)
-plot(price~livingSpace, houses.df, main="Price versus Living Area",horizontal=TRUE)
-summaryStats(price~livingSpace, houses.df)
+houses.df = read.csv("Houses.csv", header = TRUE, stringsAsFactors = TRUE)
+plot(price ~ livingSpace, houses.df, main = "Price versus Living Area", horizontal = TRUE)
+summaryStats(price ~ livingSpace, houses.df)
 
-plot(log(price)~livingSpace, houses.df, main="log(Price) versus Living Area",horizontal=TRUE)
-summaryStats(log(price)~livingSpace, houses.df)
+plot(log(price) ~ livingSpace, houses.df, main = "log(Price) versus Living Area", horizontal = TRUE)
+summaryStats(log(price) ~ livingSpace, houses.df)
 ```
 
 ```{r,fig.height=3.8,fig.width=6, echo= FALSE}
-boxplot(price~livingSpace, houses.df, main="Price versus Living Area",horizontal=TRUE)
-summaryStats(price~livingSpace, houses.df)
+boxplot(price ~ livingSpace, houses.df, main = "Price versus Living Area", horizontal = TRUE)
+summaryStats(price ~ livingSpace, houses.df)
 
-boxplot(log(price)~livingSpace, houses.df, main="log(Price) versus Living Area",horizontal=TRUE)
-summaryStats(log(price)~livingSpace, houses.df)
+boxplot(log(price) ~ livingSpace, houses.df, main = "log(Price) versus Living Area", horizontal = TRUE)
+summaryStats(log(price) ~ livingSpace, houses.df)
 ```
 
 
@@ -82,9 +82,8 @@ We also have financial data, and so interpreting the results as percentage chang
 The data is right skewed, but this is not the major concern for this particular dataset  as the skewness isn't too extreme and we have a sufficiently large sample size for the Central Limit Theorem to come into play.
 
 ```{r,fig.height=6,fig.width=6}
-
 # Log the response variable and fit the model:
-houses.fit1 = lm(log(price)~livingSpace, houses.df)
+houses.fit1 = lm(log(price) ~ livingSpace, houses.df)
 modelcheck(houses.fit1)
 summary(houses.fit1)
 confint(houses.fit1)
@@ -92,45 +91,46 @@ confint(houses.fit1)
 exp(confint(houses.fit1))
 
 # Extract second row of CI output only.
-exp(confint(houses.fit1)[2,])
+exp(confint(houses.fit1)[2, ])
 
 # % change 100*(value-1)
-100*(exp(confint(houses.fit1)[2,])-1)
+100 * (exp(confint(houses.fit1)[2, ]) - 1)
 
 # % Change CI for opposite direction (Large - Small), so negative confidence interval before back transform
-100*(exp(-confint(houses.fit1)[2,])-1)
+100 * (exp(-confint(houses.fit1)[2, ]) - 1)
 
 
 # Rotate factor to get intercept to give estimates when area = small
-houses.df=within(houses.df, {livingSpaceR=factor(livingSpace,levels=c("Small","Large"))})
-houses.fit2 = lm(log(price)~livingSpaceR, houses.df)
+houses.df = within(houses.df, {
+  livingSpaceR = factor(livingSpace, levels = c("Small", "Large"))
+})
+houses.fit2 = lm(log(price) ~ livingSpaceR, houses.df)
 summary(houses.fit2)
 confint(houses.fit2)
 # back transform
 exp(confint(houses.fit2))
-
-
 ```
 ```{r,fig.height=6,fig.width=6, echo=FALSE}
-conf1 = as.data.frame(t(abs(100*(exp(confint(houses.fit1)[2,])-1))))
+conf1 = as.data.frame(t(abs(100 * (exp(confint(houses.fit1)[2, ]) - 1))))
 resultStr1 = paste0(sprintf("%.1f%%", conf1$`97.5 %`), " and ", sprintf("%.1f%%", conf1$`2.5 %`))
 
 # % Change CI for opposite direction (Large - Small), so negative confidence interval before back transform
-conf2=as.data.frame(t(100*(exp(-confint(houses.fit1)[2,])-1)))
+conf2 = as.data.frame(t(100 * (exp(-confint(houses.fit1)[2, ]) - 1)))
 resultStr2 = paste0(sprintf("%.1f%%", conf2$`97.5 %`), " and ", sprintf("%.1f%%", conf2$`2.5 %`))
 
 conf3 = as.data.frame(exp(confint(houses.fit1)))
-resultStr3 = sprintf("$%s and $%s",
-                    format(round(conf3$`2.5 %`,-3), big.mark = ",", trim = TRUE),
-                    format(round(conf3$`97.5 %`,-3), big.mark = ",", trim = TRUE)
-                    )
+resultStr3 = sprintf(
+  "$%s and $%s",
+  format(round(conf3$`2.5 %`, -3), big.mark = ",", trim = TRUE),
+  format(round(conf3$`97.5 %`, -3), big.mark = ",", trim = TRUE)
+)
 
 conf4 = as.data.frame(exp(confint(houses.fit2)))
-resultStr4 = sprintf("$%s and $%s",
-                    format(round(conf4$`2.5 %`,-3), big.mark = ",", trim = TRUE),
-                    format(round(conf4$`97.5 %`,-3), big.mark = ",", trim = TRUE)
-                    )
-
+resultStr4 = sprintf(
+  "$%s and $%s",
+  format(round(conf4$`2.5 %`, -3), big.mark = ",", trim = TRUE),
+  format(round(conf4$`97.5 %`, -3), big.mark = ",", trim = TRUE)
+)
 ```
 
 ## Method and Assumption Checks

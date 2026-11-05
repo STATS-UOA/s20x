@@ -27,35 +27,36 @@ minne.df = read.csv("Data/minneapolis.csv")
 ```
 
 ```{r, fig.height = 5, fig.width = 6, fig.align='center'}
-minne.ts = ts(minne.df$arrests, start = c(1966,1), frequency = 12)
+minne.ts = ts(minne.df$arrests, start = c(1966, 1), frequency = 12)
 plot(minne.ts, ylab = "Number of people arrested")
-abline(v=c(1966:1979), lty = 2)
+abline(v = c(1966:1979), lty = 2)
 ```
 
 ```{r, fig.height = 4, fig.width = 6, fig.align='center'}
 minne.stl = stl(minne.ts, s.window = "periodic")
 plot(minne.stl)
-abline(v=c(1966:1979), lty = 2)
+abline(v = c(1966:1979), lty = 2)
 ```
 
 
 ```{r}
 minne.df = within(minne.df, {
-  month = factor(c(rep(month.abb, 12), month.abb[1:7]), 
-                 levels = month.abb);
-  t     = 1:151
-  change=1*(t>5*12)
-                              })
+  month = factor(c(rep(month.abb, 12), month.abb[1:7]),
+    levels = month.abb
+  );
+  t = 1:151
+  change = 1 * (t > 5 * 12)
+})
 ```
 
 ```{r}
-minne.fit = lm(arrests~  change + month + t, data = minne.df)
+minne.fit = lm(arrests ~ change + month + t, data = minne.df)
 anova(minne.fit)
 ```
 
 
 ```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
-plot(residuals(minne.fit),type="l")
+plot(residuals(minne.fit), type = "l")
 ```
 
 ```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
@@ -68,16 +69,16 @@ acf(residuals(minne.fit))
 ```
 
 ```{r}
-minne.fit1 = lm(arrests[-1]~ change[-1]+month[-1] + arrests[-151]
-              +  t[-1], data = minne.df)
+minne.fit1 = lm(arrests[-1] ~ change[-1] + month[-1] + arrests[-151]
+  + t[-1], data = minne.df)
 
 anova(minne.fit1)
 ```
 
 ```{r,fig.height = 3.5, fig.width = 6, fig.align='center'}
-
-minne.fit2 = lm(arrests[-1]~ change[-1]+month[-1] + arrests[-151], 
-               data = minne.df)
+minne.fit2 = lm(arrests[-1] ~ change[-1] + month[-1] + arrests[-151],
+  data = minne.df
+)
 anova(minne.fit2)
 acf(residuals(minne.fit2))
 ```
@@ -88,7 +89,7 @@ summary(minne.fit2)
 
 
 ```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}
-plot(residuals(minne.fit2),type="l")
+plot(residuals(minne.fit2), type = "l")
 ```
 
 ```{r, fig.height = 3.5, fig.width = 6, fig.align='center'}

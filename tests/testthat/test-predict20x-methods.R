@@ -23,7 +23,7 @@ test_that("predict20x matches predictCount on the response scale for a log link"
 
   expect_equal(
     predict20x(fit, newdata, print.out = FALSE)$frame,
-    predictCount(fit, newdata, print.out = FALSE)
+    suppressWarnings(predictCount(fit, newdata, print.out = FALSE))
   )
 })
 
@@ -62,7 +62,7 @@ test_that("predictCount still exponentiates a logit-link model", {
   newdata = data.frame(weight = 70)
 
   expect_equal(
-    predictCount(fit, newdata, digit = 8, print.out = FALSE)$Predicted,
+    suppressWarnings(predictCount(fit, newdata, digit = 8, print.out = FALSE))$Predicted,
     unname(exp(predict(fit, newdata))),
     tolerance = 1e-6
   )

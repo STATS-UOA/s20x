@@ -6,7 +6,7 @@ output:
 ---
 ```{r, include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -62,7 +61,7 @@ predAttend.df = data.frame(Attend = c("No", "Yes"))
 # Using `interval = "confidence"' to get CI for expected exam score
 # for each level of Attend
 predict(examAttend.fit, predAttend.df, interval = "confidence")
-# Using `interval = "predition"' to get PI for individual student's exam score 
+# Using `interval = "predition"' to get PI for individual student's exam score
 # for each level of Attend
 predict(examAttend.fit, predAttend.df, interval = "prediction")
 ```

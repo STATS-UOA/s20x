@@ -104,7 +104,7 @@ this function assumes \code{\link{par}} has been set by the user and should
 not be overridden. Ignored by the ggplot2 engine.}
 
 \item{engine}{plotting engine to use. The default, \code{"base"}, preserves
-the original base graphics output. Use \code{"ggplot2"} for optional ggplot2
+the original base graphics output. Use \code{"ggplot2"} for ggplot2
 objects.}
 
 \item{residualType}{for \code{tslm} objects, the residual scale to use in the normality plots.
@@ -134,9 +134,9 @@ information will be extracted from \code{x}.
 }
 \details{
 The default base graphics engine preserves the original teaching plots and
-draws directly on the active graphics device. The optional ggplot2 engine is
+draws directly on the active graphics device. The ggplot2 engine is
 intended for users who want reusable plot objects for reports or further
-customisation; it requires \pkg{ggplot2} to be installed and returns ggplot
+customisation, and returns ggplot
 objects instead of drawing base graphics side effects.
 }
 \examples{
@@ -161,14 +161,12 @@ data(peru.df)
 peruFit = lm(BP ~ weight, data = peru.df)
 normcheck(peruFit)
 
-# Optional ggplot2 engine for reusable plot objects
-if (requireNamespace("ggplot2", quietly = TRUE)) {
-  normPlots = normcheck(peruFit, engine = "ggplot2")
-  names(normPlots)
+# ggplot2 engine for reusable plot objects
+normPlots = normcheck(peruFit, engine = "ggplot2")
+names(normPlots)
 
-  normcheck(peruFit, engine = "ggplot2", whichPlot = 1)
-  normcheck(peruFit, engine = "ggplot2", whichPlot = 2)
-}
+normcheck(peruFit, engine = "ggplot2", whichPlot = 1)
+normcheck(peruFit, engine = "ggplot2", whichPlot = 2)
 
 }
 \seealso{

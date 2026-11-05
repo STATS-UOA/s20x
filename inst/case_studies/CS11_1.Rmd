@@ -6,7 +6,7 @@ output:
 ---
 ```{r include = FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem:
@@ -57,7 +56,7 @@ load(system.file("extdata", "Fruitfly.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
-Fruitfly.df = read.csv("Fruitfly.csv", stringsAsFactors=TRUE)
+Fruitfly.df = read.csv("Fruitfly.csv", stringsAsFactors = TRUE)
 plot(days ~ group, data = Fruitfly.df)
 summaryStats(days ~ group, Fruitfly.df)
 ```
@@ -82,15 +81,14 @@ summary(ff.fit)
 library(emmeans)
 Fruitfly.emm = emmeans(ff.fit, ~group)
 # View all pairwise comparisons:
-pairs(Fruitfly.emm, infer=TRUE)
+pairs(Fruitfly.emm, infer = TRUE)
 # View only the comparisons that are significant at the 5% level:
-Fruitfly.pairs = data.frame(pairs(Fruitfly.emm, infer=TRUE))
-subset(Fruitfly.pairs, p.value<0.05)
+Fruitfly.pairs = data.frame(pairs(Fruitfly.emm, infer = TRUE))
+subset(Fruitfly.pairs, p.value < 0.05)
 ```
 ```{r, echo=FALSE}
-conf1=as.data.frame(subset(Fruitfly.pairs, p.value<0.05))
+conf1 = as.data.frame(subset(Fruitfly.pairs, p.value < 0.05))
 resultStr1 = paste0(sprintf("%.0f", conf1$lower.CL), " to ", sprintf("%.0f", conf1$upper.CL))
-
 ```
 
 

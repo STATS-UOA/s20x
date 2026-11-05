@@ -31,7 +31,7 @@ test_that("predictCount interval columns remain rounded exponentiated link-scale
   cilevel = 0.90
   digit = 4
 
-  result = predictCount(fit, newdata, cilevel = cilevel, digit = digit, print.out = FALSE)
+  result = suppressWarnings(predictCount(fit, newdata, cilevel = cilevel, digit = digit, print.out = FALSE))
   basePrediction = predict.glm(fit, newdata, se.fit = TRUE)
   percent = 1 - (1 - cilevel) / 2
   intervalQuantile = qnorm(percent)
@@ -54,8 +54,8 @@ test_that("predictGLM response scale applies the inverse link to fit and confide
   newdata = data.frame(x = 6)
   cilevel = 0.90
 
-  linkResult = suppressMessages(predictGLM(fit, newdata, type = "link", cilevel = cilevel))
-  responseResult = suppressMessages(predictGLM(fit, newdata, type = "response", cilevel = cilevel))
+  linkResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "link", cilevel = cilevel)))
+  responseResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "response", cilevel = cilevel)))
   expectedResponse = as.data.frame(fit$family$linkinv(as.matrix(linkResult)))
   names(expectedResponse) = c("fit", "lwr", "upr")
 

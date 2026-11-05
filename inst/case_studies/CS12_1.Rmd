@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -57,8 +56,8 @@ Exam marks for students who passed the test are centred higher than for students
 ```{r, out.width = "70%", fig.align = 'center'}
 Exam.fit = lm(Exam ~ Attend * Pass.test, data = Stats20x.df)
 # The model formula could of also been `Exam ~ Attend + Pass.test + Attend:Past.test'
-plot(Exam.fit,1)
-modelcheck(Exam.fit,2:3)
+plot(Exam.fit, 1)
+modelcheck(Exam.fit, 2:3)
 anova(Exam.fit)
 summary(Exam.fit)
 ```
@@ -66,7 +65,7 @@ summary(Exam.fit)
 ## Paiwise comparisons
 ```{r, out.width = "150%"}
 library(emmeans)
-Exam.pairs = pairs(emmeans(Exam.fit, ~Attend*Pass.test), infer=TRUE)
+Exam.pairs = pairs(emmeans(Exam.fit, ~ Attend * Pass.test), infer = TRUE)
 Exam.pairs
 # Get a simpler display using displayPairs:
 displayPairs(Exam.pairs, c("Yes", "No"), c("pass", "nopass"))
@@ -75,7 +74,6 @@ displayPairs(Exam.pairs, c("Yes", "No"), c("pass", "nopass"))
 ```{r, echo = FALSE}
 conf1 = as.data.frame(Exam.pairs)
 resultStr1 = paste0(sprintf("%.0f", abs(conf1$upper.CL)), " and ", sprintf("%.0f", abs(conf1$lower.CL)))
-
 ```
 
 # Methods and Assumption Checks 

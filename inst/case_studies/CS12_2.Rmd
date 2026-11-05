@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -51,7 +51,7 @@ Reef.df = read.csv("Reef.csv")
 ```
 
 ```{r, out.width = "80%", fig.align = 'center'}
-Reef.df = transform(Reef.df, Reef=factor(Reef), Time=factor(Time))
+Reef.df = transform(Reef.df, Reef = factor(Reef), Time = factor(Time))
 interactionPlots(Cover ~ Reef + Time, data = Reef.df)
 # Also look at the interaction plot the other way around:
 interactionPlots(Cover ~ Time + Reef, data = Reef.df)
@@ -62,7 +62,7 @@ The trend in coral cover over time appears to differ for impacted and control re
 ## Model Building and Check Assumptions
 ```{r, out.width = "75%", fig.align = 'center'}
 Cover.fit = lm(Cover ~ Time * Reef, data = Reef.df)
-plot(Cover.fit, which=1)
+plot(Cover.fit, which = 1)
 normcheck(Cover.fit)
 cooks20x(Cover.fit)
 anova(Cover.fit)
@@ -71,15 +71,14 @@ summary(Cover.fit)
 
 ## Pairwise comparisons using emmeans
 ```{r}
-Cover.pairs <- pairs(emmeans(Cover.fit, ~ Time*Reef), infer=TRUE)
+Cover.pairs <- pairs(emmeans(Cover.fit, ~ Time * Reef), infer = TRUE)
 # Simplify the display:
 displayPairs(Cover.pairs, c("Before", "After"), c("Control", "Impact"))
 ```
 ```{r, echo = FALSE}
-conf1=as.data.frame(Cover.pairs)
-resultStr1 = paste0(sprintf("%.0f", abs(conf1[6,]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[6,]$lower.CL)))
-resultStr2 = paste0(sprintf("%.0f", abs(conf1[2,]$lower.CL)), " and ", sprintf("%.0f", abs(conf1[2,]$upper.CL)))
-
+conf1 = as.data.frame(Cover.pairs)
+resultStr1 = paste0(sprintf("%.0f", abs(conf1[6, ]$upper.CL)), " and ", sprintf("%.0f", abs(conf1[6, ]$lower.CL)))
+resultStr2 = paste0(sprintf("%.0f", abs(conf1[2, ]$lower.CL)), " and ", sprintf("%.0f", abs(conf1[2, ]$upper.CL)))
 ```
 
 # Methods and Assumption Checks 

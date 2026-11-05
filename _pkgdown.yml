@@ -37,8 +37,6 @@ reference:
 - title: Predicting
   contents:
   - predict20x
-  - predictCount
-  - predictGLM
 - title: Time series
   contents:
   - tslm
@@ -67,6 +65,8 @@ reference:
   - layout20x
   - levene.test
   - onewayPlot
+  - predictCount
+  - predictGLM
   - residPlot
   - skewness
 - title: internal

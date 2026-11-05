@@ -6,9 +6,9 @@
 #' such as [eovcheck()], [normcheck()], and [cooks20x()] directly.
 #'
 #' The default base graphics engine preserves the original teaching plots and
-#' draws directly on the active graphics device. The optional ggplot2 engine is
+#' draws directly on the active graphics device. The ggplot2 engine is
 #' intended for users who want reusable plot objects for reports or further
-#' customisation; it requires \pkg{ggplot2} to be installed and returns ggplot
+#' customisation, and returns ggplot
 #' objects instead of drawing base graphics side effects.
 #'
 #' @param x The fitted model.
@@ -18,7 +18,7 @@
 #' @param mar Margins applied to each selected plot. Ignored by the ggplot2
 #' engine.
 #' @param engine plotting engine to use. The default, \code{"base"}, preserves
-#' the original base graphics output. Use \code{"ggplot2"} for optional ggplot2
+#' the original base graphics output. Use \code{"ggplot2"} for ggplot2
 #' objects.
 #' @param \ldots any other arguments to pass to \code{\link{plot}} for the base
 #' engine. Extra arguments are currently ignored by the ggplot2 engine.
@@ -39,15 +39,13 @@
 #' # Plot all diagnostics
 #' modelcheck(lmFit)
 #'
-#' # Optional ggplot2 engine for reusable plot objects
-#' if (requireNamespace("ggplot2", quietly = TRUE)) {
-#'   diagnosticPlots = modelcheck(lmFit, engine = "ggplot2")
-#'   names(diagnosticPlots)
+#' # ggplot2 engine for reusable plot objects
+#' diagnosticPlots = modelcheck(lmFit, engine = "ggplot2")
+#' names(diagnosticPlots)
 #'
-#'   modelcheck(lmFit, which = 1, engine = "ggplot2")
-#'   modelcheck(lmFit, which = 2, engine = "ggplot2")
-#'   modelcheck(lmFit, which = 3, engine = "ggplot2")
-#' }
+#' modelcheck(lmFit, which = 1, engine = "ggplot2")
+#' modelcheck(lmFit, which = 2, engine = "ggplot2")
+#' modelcheck(lmFit, which = 3, engine = "ggplot2")
 #' @importFrom rlang .data
 #' @importFrom ggplot2 geom_text
 #' @export
@@ -121,8 +119,6 @@ modelcheck.lm = function(x, which = 1:3, mar = c(3, 4, 1.5, 4),
 #' @return A ggplot object or a named list of ggplot objects.
 #' @noRd
 modelcheck_ggplot2 = function(x, which) {
-  requirePlottingPackage("ggplot2")
-
   plots = list()
 
   if (1 %in% which) {
@@ -280,7 +276,7 @@ modelcheck_ggplot2_layout_positions = function(plotNames) {
 
 #' Print ggplot2 modelcheck plots
 #'
-#' Draws multiple ggplot2 modelcheck plots together so the optional ggplot2
+#' Draws multiple ggplot2 modelcheck plots together so the ggplot2
 #' engine gives a single printed diagnostic display rather than showing list
 #' structure at the console.
 #'

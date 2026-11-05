@@ -19,7 +19,7 @@ test_that("predictCount keeps its current response-scale count output", {
   fit = glm(y ~ x, data = data, family = poisson(link = "log"))
   newdata = data.frame(x = 6)
 
-  result = predictCount(fit, newdata, print.out = FALSE)
+  result = suppressWarnings(predictCount(fit, newdata, print.out = FALSE))
   linkPrediction = predict.glm(fit, newdata, se.fit = TRUE)
   expectedFit = round(exp(linkPrediction$fit), 3)
 
@@ -33,8 +33,8 @@ test_that("predictGLM keeps its link and response scale behaviour with data-fram
   fit = glm(y ~ x, data = data, family = poisson(link = "log"))
   newdata = data.frame(x = 6)
 
-  linkResult = suppressMessages(predictGLM(fit, newdata, type = "link"))
-  responseResult = suppressMessages(predictGLM(fit, newdata, type = "response"))
+  linkResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "link")))
+  responseResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "response")))
   baseLink = predict.glm(fit, newdata, se.fit = TRUE)
 
   expect_s3_class(linkResult, "data.frame")
@@ -52,13 +52,13 @@ test_that("predictGLM keeps legacy fallback to link scale for unsupported type v
   fit = glm(y ~ x, data = data, family = poisson(link = "log"))
   newdata = data.frame(x = 6)
 
-  linkResult = suppressMessages(predictGLM(fit, newdata, type = "link"))
+  linkResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "link")))
   expect_message(
-    predictGLM(fit, newdata, type = "unsupported"),
+    suppressWarnings(predictGLM(fit, newdata, type = "unsupported")),
     "link scale",
     fixed = TRUE
   )
-  fallbackResult = suppressMessages(predictGLM(fit, newdata, type = "unsupported"))
+  fallbackResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "unsupported")))
 
   expect_equal(fallbackResult, linkResult)
 })
@@ -77,7 +77,7 @@ test_that("prediction wrappers preserve multi-row return shapes", {
   countData = data.frame(y = c(1, 2, 3, 4, 6), x = c(1, 2, 3, 4, 5))
   countFit = glm(y ~ x, data = countData, family = poisson(link = "log"))
   countNewdata = data.frame(x = c(6, 7))
-  countResult = predictCount(countFit, countNewdata, print.out = FALSE)
+  countResult = suppressWarnings(predictCount(countFit, countNewdata, print.out = FALSE))
 
   expect_s3_class(countResult, "data.frame")
   expect_named(countResult, c("Predicted", " Conf.lower", "Conf.upper"))
@@ -94,8 +94,8 @@ test_that("predictGLM preserves binomial logit return shape on both scales", {
   fit = glm(cbind(success, failure) ~ x, data = data, family = binomial(link = "logit"))
   newdata = data.frame(x = c(3, 5))
 
-  linkResult = suppressMessages(predictGLM(fit, newdata, type = "link"))
-  responseResult = suppressMessages(predictGLM(fit, newdata, type = "response"))
+  linkResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "link")))
+  responseResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "response")))
 
   expect_s3_class(linkResult, "data.frame")
   expect_s3_class(responseResult, "data.frame")
@@ -115,8 +115,8 @@ test_that("predictGLM quasi interval multiplier behaviour is covered at wrapper 
   percent = 1 - (1 - cilevel) / 2
   basePrediction = predict.glm(fit, newdata, se.fit = TRUE)
 
-  normalResult = suppressMessages(predictGLM(fit, newdata, cilevel = cilevel, quasit = FALSE))
-  quasiResult = suppressMessages(predictGLM(fit, newdata, cilevel = cilevel, quasit = TRUE))
+  normalResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, cilevel = cilevel, quasit = FALSE)))
+  quasiResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, cilevel = cilevel, quasit = TRUE)))
 
   normalExpected = data.frame(
     fit = unname(basePrediction$fit),
@@ -195,7 +195,7 @@ test_that("predictCount handles transformed terms", {
 
   fit = glm(BP ~ log(weight), data = peru.df, family = poisson)
   newdata = data.frame(weight = 70)
-  result = predictCount(fit, newdata, print.out = FALSE)
+  result = suppressWarnings(predictCount(fit, newdata, print.out = FALSE))
 
   expect_equal(
     result$Predicted,
@@ -213,15 +213,15 @@ test_that("predictGLM accepts the variables behind transformed terms", {
   logNewdata = data.frame(weight = 70)
 
   expect_equal(
-    suppressMessages(predictGLM(factorFit, factorNewdata))[[1]],
+    suppressMessages(suppressWarnings(predictGLM(factorFit, factorNewdata)))[[1]],
     unname(predict(factorFit, factorNewdata))
   )
   expect_equal(
-    suppressMessages(predictGLM(logFit, logNewdata))[[1]],
+    suppressMessages(suppressWarnings(predictGLM(logFit, logNewdata)))[[1]],
     unname(predict(logFit, logNewdata))
   )
   expect_error(
-    suppressMessages(predictGLM(logFit, data.frame(height = 170))),
+    suppressMessages(suppressWarnings(predictGLM(logFit, data.frame(height = 170)))),
     "newdata must be provided"
   )
 })
@@ -248,7 +248,7 @@ test_that("predictCount intervals are Wald limits on the log scale", {
 
   fit = glm(BP ~ weight, data = peru.df, family = poisson)
   newdata = data.frame(weight = c(60, 70))
-  frame = predictCount(fit, newdata, cilevel = 0.9, digit = 8, print.out = FALSE)
+  frame = suppressWarnings(predictCount(fit, newdata, cilevel = 0.9, digit = 8, print.out = FALSE))
 
   linkScale = predict(fit, newdata, se.fit = TRUE)
   halfWidth = qnorm(0.95) * linkScale$se.fit
@@ -269,12 +269,12 @@ test_that("predictGLM intervals match Wald limits for log and logit links", {
     linkScale = predict(fit, newdata, se.fit = TRUE)
     halfWidth = qnorm(0.975) * linkScale$se.fit
 
-    linkResult = suppressMessages(predictGLM(fit, newdata))
+    linkResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata)))
     expect_equal(linkResult$fit, unname(linkScale$fit))
     expect_equal(linkResult$lwr, unname(linkScale$fit - halfWidth))
     expect_equal(linkResult$upr, unname(linkScale$fit + halfWidth))
 
-    responseResult = suppressMessages(predictGLM(fit, newdata, type = "response"))
+    responseResult = suppressMessages(suppressWarnings(predictGLM(fit, newdata, type = "response")))
     expect_equal(responseResult$upr, unname(fit$family$linkinv(linkScale$fit + halfWidth)))
   }
 })
@@ -287,7 +287,7 @@ test_that("predictGLM quasit uses the t distribution for quasi families", {
   linkScale = predict(fit, newdata, se.fit = TRUE)
   halfWidth = qt(0.975, fit$df.residual) * linkScale$se.fit
 
-  result = suppressMessages(predictGLM(fit, newdata, quasit = TRUE))
+  result = suppressMessages(suppressWarnings(predictGLM(fit, newdata, quasit = TRUE)))
 
   expect_equal(result$upr, unname(linkScale$fit + halfWidth))
 })

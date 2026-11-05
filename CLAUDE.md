@@ -16,7 +16,7 @@ Rscript scripts/checkRStringEscapes.R                        # fast preflight fo
 Rscript -e 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), error_on = "warning")'   # matches CI
 ```
 
-- `ggplot2` and `GGally` must be installed before `devtools::test()` or `devtools::load_all()` will run. The docs call them optional, but they are hard `Imports` in `DESCRIPTION`, and `load_imports()` stops if they are missing.
+- `ggplot2` and `GGally` must be installed before `devtools::test()` or `devtools::load_all()` will run. They are hard `Imports`, deliberately, because the no-`::` rule rules out `Suggests`.
 - Tests use the built-in datasets. Do not create synthetic data to stand in for them. There is no `LazyData`, so load them explicitly: `data("peru.df", package = "s20x", envir = environment())`.
 - CI runs on ubuntu with R oldrel-1, release and devel, and fails on warnings as well as errors.
 
@@ -36,11 +36,10 @@ Not tested, but followed throughout: `=` for assignment, camelCase for new or to
 ## Architecture
 
 **Plotting engines.** `normcheck()`, `eovcheck()`, `modelcheck()` and `pairs20x()` take `engine = c("base", "ggplot2")`, and `"base"` must remain the default and keep its exact output.
-- Each function resolves the engine with `matchPlottingEngine()` and guards optional use with `requirePlottingPackage()` (both in `R/plotting-engine-helpers.R`), then branches to a `*_ggplot2` helper, for example `normcheck_ggplot2_QQ`.
+- Each function resolves the engine with `matchPlottingEngine()` (in `R/plotting-engine-helpers.R`), then branches to a `*_ggplot2` helper, for example `normcheck_ggplot2_QQ`.
 - The base engine draws on the active device and returns nothing reusable. The ggplot2 engine returns a ggplot object for a single plot, or a named list with an S3 class such as `s20xNormcheck_ggplot2` for several. That class's `print()` method lays the panels out with `grid`. The exception is `pairs20x()`, which returns a GGally `ggmatrix`. See `test-diagnostic-plot-return-contract.R` and `test-pairs20x-engine.R`.
 - `modelcheck_ggplot2` reuses `normcheck(x, engine = "ggplot2")`, so normcheck changes reach modelcheck.
 - Use `saveGraphicsParameters()` (`R/graphics-parameter-helpers.R`) to restore `par()` state in base plots. ggplot2 output aims to match the base teaching plots visually, via `s20x_ggplot2_base_theme()`.
-- Examples that use the ggplot2 engine are wrapped in `requireNamespace()` checks.
 
 **`tslm()`** (`R/tslm.R`) wraps a fitted model in a `tslm` S3 list. `parseTslmFormula()` strips any `ar(p)` term from the formula. Without one the fit is `lm`; with one it is `nlme::gls` with `corARMA`. The inner model is `$fit`, and the many S3 methods forward to it. Data may come from `data` or the calling environment, as with `lm()`. AR diagnostics use normalised residuals by default. `normcheck` has a `tslm` method, and `R/model-diagnostic-helpers.R` (`getModelResidualFittedData()`) handles residual extraction shared by the diagnostics.
 
@@ -49,6 +48,8 @@ Not tested, but followed throughout: `=` for assignment, camelCase for new or to
 **Case studies.** `inst/case_studies/CS<chapter>_<n>.Rmd` are shipped and read at runtime through `system.file()`.
 - `casestudy()` copies the Rmd to a working directory and renders it in a fresh environment; `openCaseStudy()` copies it for editing; `listCaseStudies()` lists them. Short aliases exist (`cs`, `lcs`, `listCS`, `opencs`, `ocs`).
 - Many case studies show a student-facing `read.table()` or `read.csv()` under `eval=FALSE`, with the real load in a hidden chunk, usually `load(system.file("extdata", ...))`. A few use `data()` instead. Keep the displayed and real loads in step.
+
+- Case study code is styled with `styler`. Run `Rscript scripts/styleCaseStudies.R` after editing; a GitHub check fails otherwise. It stops at line breaks so that `=` is kept.
 
 **Data.** `data/*.rda` are the documented datasets (roxygen in `R/s20x-data.R`). `inst/extdata/` holds undocumented files used by the case studies. Existing variables stay as they are to avoid mismatches with lecture notes, so add new variables rather than replacing old ones.
 

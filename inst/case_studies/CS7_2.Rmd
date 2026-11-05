@@ -6,12 +6,12 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.height=3)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r setup, echo=FALSE, warning=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile
 library(s20x)
 ```
@@ -47,15 +47,15 @@ load(system.file("extdata", "hometax.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.2,fig.width=6, eval = FALSE}
-hometax.df=read.csv("hometax.csv")
+hometax.df = read.csv("hometax.csv")
 
-trendscatter(Price~Tax,main="Price vs Tax",data=hometax.df)
-trendscatter(log(Price)~log(Tax),main="log(Price) vs log(Tax)",data=hometax.df)
+trendscatter(Price ~ Tax, main = "Price vs Tax", data = hometax.df)
+trendscatter(log(Price) ~ log(Tax), main = "log(Price) vs log(Tax)", data = hometax.df)
 ```
 
 ```{r,fig.height=4.2,fig.width=6, echo = FALSE}
-trendscatter(Price~Tax,main="Price vs Tax",data=hometax.df)
-trendscatter(log(Price)~log(Tax),main="log(Price) vs log(Tax)",data=hometax.df)
+trendscatter(Price ~ Tax, main = "Price vs Tax", data = hometax.df)
+trendscatter(log(Price) ~ log(Tax), main = "log(Price) vs log(Tax)", data = hometax.df)
 ```
 
 ## Comment on the two plots
@@ -78,31 +78,28 @@ A log-log model can be justified several ways:
 ## Fit model and check assumptions
 
 ```{r,fig.height=6,fig.width=6}
-homefit1=lm(log(Price)~log(Tax),data=hometax.df)
+homefit1 = lm(log(Price) ~ log(Tax), data = hometax.df)
 modelcheck(homefit1)
 summary(homefit1)
 confint(homefit1)
 
-confint(homefit1)[2,]
+confint(homefit1)[2, ]
 
-1.01^confint(homefit1)[2,]
+1.01^confint(homefit1)[2, ]
 
-1.5^confint(homefit1)[2,]
+1.5^confint(homefit1)[2, ]
 
-100*(1.01^confint(homefit1)[2,]-1)
+100 * (1.01^confint(homefit1)[2, ] - 1)
 
-100*(1.5^confint(homefit1)[2,]-1)
-
-
+100 * (1.5^confint(homefit1)[2, ] - 1)
 ```
 
 ```{r, echo=FALSE}
-conf1 = as.data.frame(t(confint(homefit1)[2,]))
+conf1 = as.data.frame(t(confint(homefit1)[2, ]))
 resultStr1 = paste0(sprintf("%.2f%%", conf1$`2.5 %`), " and ", sprintf("%.2f%%", conf1$`97.5 %`))
 
-conf2 = as.data.frame(t(100*(1.5^confint(homefit1)[2,]-1)))
+conf2 = as.data.frame(t(100 * (1.5^confint(homefit1)[2, ] - 1)))
 resultStr2 = paste0(sprintf("%.0f%%", conf2$`2.5 %`), " and ", sprintf("%.0f%%", conf2$`97.5 %`))
-
 ```
 
 ## Methods and assumption checks

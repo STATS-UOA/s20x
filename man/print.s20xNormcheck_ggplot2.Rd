@@ -16,7 +16,7 @@ when multiple plots are selected.}
 Invisibly returns \code{x}.
 }
 \description{
-Draws multiple ggplot2 normcheck plots side by side so the optional ggplot2
+Draws multiple ggplot2 normcheck plots side by side so the ggplot2
 engine mirrors the base graphics layout for the default \code{whichPlot = 1:2}
 case.
 }

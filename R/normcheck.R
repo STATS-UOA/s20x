@@ -12,9 +12,9 @@
 #' information will be extracted from \code{x}.
 #'
 #' The default base graphics engine preserves the original teaching plots and
-#' draws directly on the active graphics device. The optional ggplot2 engine is
+#' draws directly on the active graphics device. The ggplot2 engine is
 #' intended for users who want reusable plot objects for reports or further
-#' customisation; it requires \pkg{ggplot2} to be installed and returns ggplot
+#' customisation, and returns ggplot
 #' objects instead of drawing base graphics side effects.
 #'
 #' @param x the residuals from fitting a linear model.  Alternatively, a fitted \code{lm} object.
@@ -48,7 +48,7 @@
 #' are both accepted for compatibility. Other choices are \code{"response"} and
 #' \code{"pearson"}.
 #' @param engine plotting engine to use. The default, \code{"base"}, preserves
-#' the original base graphics output. Use \code{"ggplot2"} for optional ggplot2
+#' the original base graphics output. Use \code{"ggplot2"} for ggplot2
 #' objects.
 #' @param \dots additional arguments which are passed to both \code{qqnorm} and \code{hist}
 #' for the base engine. Extra arguments are currently ignored by the ggplot2
@@ -82,14 +82,12 @@
 #' peruFit = lm(BP ~ weight, data = peru.df)
 #' normcheck(peruFit)
 #'
-#' # Optional ggplot2 engine for reusable plot objects
-#' if (requireNamespace("ggplot2", quietly = TRUE)) {
-#'   normPlots = normcheck(peruFit, engine = "ggplot2")
-#'   names(normPlots)
+#' # ggplot2 engine for reusable plot objects
+#' normPlots = normcheck(peruFit, engine = "ggplot2")
+#' names(normPlots)
 #'
-#'   normcheck(peruFit, engine = "ggplot2", whichPlot = 1)
-#'   normcheck(peruFit, engine = "ggplot2", whichPlot = 2)
-#' }
+#' normcheck(peruFit, engine = "ggplot2", whichPlot = 1)
+#' normcheck(peruFit, engine = "ggplot2", whichPlot = 2)
 #'
 #' @export normcheck
 normcheck = function(x, ...) {
@@ -406,8 +404,6 @@ normcheckBase = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
 #' @noRd
 normcheck_ggplot2 = function(x, xlab, ylab, main, col, bootstrap, B, bpch, bcol,
                             shapiro.wilk, whichPlot) {
-  requirePlottingPackage("ggplot2")
-
   plots = vector("list", length(whichPlot))
   names(plots) = ifelse(whichPlot == 1, "qq", "histogram")
 
@@ -575,7 +571,7 @@ normcheck_ggplot2_Histogram = function(x, xlab, ylab, main, col) {
 
 #' Print ggplot2 normcheck plots
 #'
-#' Draws multiple ggplot2 normcheck plots side by side so the optional ggplot2
+#' Draws multiple ggplot2 normcheck plots side by side so the ggplot2
 #' engine mirrors the base graphics layout for the default \code{whichPlot = 1:2}
 #' case.
 #'

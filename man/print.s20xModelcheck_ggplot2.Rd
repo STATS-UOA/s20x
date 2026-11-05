@@ -16,7 +16,7 @@ when multiple plots are selected.}
 Invisibly returns \code{x}.
 }
 \description{
-Draws multiple ggplot2 modelcheck plots together so the optional ggplot2
+Draws multiple ggplot2 modelcheck plots together so the ggplot2
 engine gives a single printed diagnostic display rather than showing list
 structure at the console.
 }

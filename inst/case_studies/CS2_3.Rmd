@@ -6,7 +6,7 @@ output:
 ---
 ```{r setup, echo=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 library(s20x)
 ```
@@ -29,20 +29,20 @@ The variables measured were:
 We were interested in building a model to explain the price of diamond rings. In particular, we want to predict the price of a 0.3-carat diamond ring and a 1.2-carat diamond ring.  
 
 ```{r plot-real, echo=FALSE, out.width = "80%", fig.align = 'center',fig.height=4}
-data(diamonds.df) 
+data(diamonds.df)
 ```
 
 # Read in and inspect the data:
 ```{r fig.height=3.5,eval=FALSE}
 # import the data
-diamonds.df=read.table("diamonds.txt", header=TRUE)
+diamonds.df = read.table("diamonds.txt", header = TRUE)
 head(diamonds.df)
-plot(price~weight,main="Price versus weight of diamonds",data=diamonds.df)
+plot(price ~ weight, main = "Price versus weight of diamonds", data = diamonds.df)
 ```
 
 ```{r,echo=FALSE,out.width = "85%", fig.align = 'center'}
 head(diamonds.df)
-plot(price~weight,main="Price versus weight of diamonds",data=diamonds.df)
+plot(price ~ weight, main = "Price versus weight of diamonds", data = diamonds.df)
 ```
 
 # Comment on the plot
@@ -52,45 +52,48 @@ The scatter plot of price versus weight shows a strong, increasing, linear relat
 # Fit model and check assumptions
 ```{r, fig.align = 'center'}
 # fit the model
-diamond.fit<-lm(price~weight,data=diamonds.df)
+diamond.fit <- lm(price ~ weight, data = diamonds.df)
 
-#Assumption checks
-plot(diamond.fit,which=1) 
+# Assumption checks
+plot(diamond.fit, which = 1)
 normcheck(diamond.fit)
 cooks20x(diamond.fit)
 
-#Get summary output and confidence intervals
+# Get summary output and confidence intervals
 summary(diamond.fit)
 confint(diamond.fit)
 ```
 
 ```{r, echo=FALSE}
 cf = as.data.frame(confint(diamond.fit) * 0.1)
-resultConf = sprintf("$%s to $%s",
-        format(round(cf$`2.5 %`, -1), big.mark = ",", trim = TRUE),
-        format(round(cf$`97.5 %`, -1), big.mark = ",", trim = TRUE))
+resultConf = sprintf(
+  "$%s to $%s",
+  format(round(cf$`2.5 %`, -1), big.mark = ",", trim = TRUE),
+  format(round(cf$`97.5 %`, -1), big.mark = ",", trim = TRUE)
+)
 ```
 
 # Plot with superimposed line
 ```{r, fig.align = 'center'}
-plot(price~weight,main="Price versus weight of diamonds",data=diamonds.df)
-abline(diamond.fit$coef[1],diamond.fit$coef[2])
+plot(price ~ weight, main = "Price versus weight of diamonds", data = diamonds.df)
+abline(diamond.fit$coef[1], diamond.fit$coef[2])
 ```
 
 
 # Get additional predicted output required
 ```{r}
-predweight.df=data.frame(weight=c(0.3,1.2))
-predict(diamond.fit,predweight.df,interval="prediction")
+predweight.df = data.frame(weight = c(0.3, 1.2))
+predict(diamond.fit, predweight.df, interval = "prediction")
 ```
 
 ```{r, echo=FALSE}
-predweight.df=data.frame(weight=c(0.3,1.2))
+predweight.df = data.frame(weight = c(0.3, 1.2))
 p = as.data.frame(predict(diamond.fit, predweight.df, interval = "prediction"))
-resultStr = sprintf("$%s to $%s",
-                    format(round(p$lwr,-1), big.mark = ",", trim = TRUE),
-                    format(round(p$upr,-1), big.mark = ",", trim = TRUE)
-                    )
+resultStr = sprintf(
+  "$%s to $%s",
+  format(round(p$lwr, -1), big.mark = ",", trim = TRUE),
+  format(round(p$upr, -1), big.mark = ",", trim = TRUE)
+)
 ```
 
 # Method and Assumption Checks 

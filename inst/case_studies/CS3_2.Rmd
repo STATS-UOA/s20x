@@ -6,12 +6,12 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.height=3)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r setup, echo=FALSE,message=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile
 library(s20x)
 ```
@@ -48,7 +48,7 @@ load(system.file("extdata", "Galton.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.2,fig.width=6, eval=FALSE}
-Galton.df=read.csv("Galton3.csv", header=TRUE)
+Galton.df = read.csv("Galton3.csv", header = TRUE)
 hist(Galton.df$Height)
 summary(Galton.df$Height)
 ```
@@ -72,22 +72,21 @@ NOTES: The R code ```mean(y)``` calculates $\bar{y}$. The standard error is $se(
 ```{r}
 ybar = mean(Galton.df$Height)
 n = length(Galton.df$Height)
-se.ybar = sd(Galton.df$Height)/sqrt(n)
+se.ybar = sd(Galton.df$Height) / sqrt(n)
 
 # t-statistic for H0: mu=70 :
 (ybar - 70) / se.ybar
 
 # 95% confidence interval for the mean:
-ybar - qt(0.975, n-1) * se.ybar
-ybar + qt(0.975, n-1) * se.ybar
+ybar - qt(0.975, n - 1) * se.ybar
+ybar + qt(0.975, n - 1) * se.ybar
 
-ybar + c(-1, 1) * qt(0.975, n-1) * se.ybar
-
+ybar + c(-1, 1) * qt(0.975, n - 1) * se.ybar
 ```
 
 ##  Repeat the same calculation using the t.test function (done for you):
 ```{r}
-t.test(Galton.df$Height, mu=70)
+t.test(Galton.df$Height, mu = 70)
 ```
 
 **Note:** 
@@ -96,12 +95,12 @@ You should get exactly the same results from the manual calculations and using t
 
 ## Fit and check the null model (done for you):
 ```{r}
-Galton.fit=lm(Height~1,data=Galton.df)
+Galton.fit = lm(Height ~ 1, data = Galton.df)
 normcheck(Galton.fit)
 cooks20x(Galton.fit)
 summary(Galton.fit);
 confint(Galton.fit)
-70-confint(Galton.fit)
+70 - confint(Galton.fit)
 ```
 
 ```{r, echo=FALSE}
@@ -110,7 +109,7 @@ resultConf1 = paste0(sprintf("%.1f", cf1$`2.5 %`), " and ", sprintf("%.1f", cf1$
 ```
 
 ```{r, echo=FALSE}
-cf2 = as.data.frame(70-confint(Galton.fit))
+cf2 = as.data.frame(70 - confint(Galton.fit))
 resultConf2 = paste0(sprintf("%.1f", cf2$`97.5 %`), " and ", sprintf("%.1f", cf2$`2.5 %`))
 ```
 

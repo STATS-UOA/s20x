@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 # Problem
 We want to build a model to estimate the volume of a tree from the measurement of its height and diameter. This data set provides measurements of the diameter, height and volume of timber in 31 felled black cherry trees\footnote{From Ryan, T. A., Joiner, B. L. and Ryan, B. F. (1976) The Minitab Student Handbook. Duxbury Press.}.
@@ -100,7 +99,7 @@ resultStr1 = paste0(sprintf("%.2f%%", conf1$`2.5 %`), " and ", sprintf("%.2f%%",
 (std.errors = summary(Cherry.fit)$coeff[2:3, 2])
 
 # t-values for the two hypotheses beta1=1 and beta2=2
-(tstats = (estimates - c(1, 2))/std.errors)
+(tstats = (estimates - c(1, 2)) / std.errors)
 
 # p-values
 (pvals = 2 * (1 - pt(abs(tstats), 28)))
@@ -128,7 +127,7 @@ If you believe (and we have no reason not to) that the underlying relationship i
 
 ```{r}
 # Intercept only model.
-fit.beta0 = lm(I(logvolume-logheight-2*logdiameter)~1, data = Cherry.df)
+fit.beta0 = lm(I(logvolume - logheight - 2 * logdiameter) ~ 1, data = Cherry.df)
 # beta0 changes from -6.63 to -6.17
-summary(fit.beta0) 
+summary(fit.beta0)
 ```

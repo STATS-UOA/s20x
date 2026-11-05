@@ -6,7 +6,7 @@ output:
 ---
 ```{r, include=FALSE}
 # Do not delete this!
-# It loads the s20x library for you. If you delete it 
+# It loads the s20x library for you. If you delete it
 # your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -36,12 +35,12 @@ load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 
 ```{r, out.width='80%', fig.align='center', eval=FALSE}
 Stats20x.df = read.table("STATS20x.txt", header = TRUE)
-hist(Stats20x.df$Exam,xlab="Exam",main="")
+hist(Stats20x.df$Exam, xlab = "Exam", main = "")
 summaryStats(Stats20x.df$Exam)
 ```
 
 ```{r,echo=FALSE, fig.align = 'center'}
-hist(Stats20x.df$Exam,xlab="Exam",main="")
+hist(Stats20x.df$Exam, xlab = "Exam", main = "")
 summaryStats(Stats20x.df$Exam)
 ```
 
@@ -50,25 +49,25 @@ The exams marks are centred just above 50. The data look reasonably unimodal and
 ## Fitting the null model
 ### By hand...
 ```{r}
-( mn_exam = mean(Stats20x.df$Exam) ) # Sample mean
-( sd_exam = sd(Stats20x.df$Exam) ) # Sample standard deviation
-( n_exam = length(Stats20x.df$Exam) ) # Sample size
-( tmult_exam = qt(1 - 0.05/2, df = n_exam - 1) ) # t-multiplier
-( CI_exam = mn_exam + tmult_exam * c(-1, 1) * sd_exam/sqrt(n_exam) ) # Confidence Interval
-( se_exam = sd_exam/sqrt(n_exam) ) # Standard error
-(t_stat_exam = (mn_exam - 55)/(se_exam) ) # t-stat
-(pval_exam = 2 * (1 - pt(abs(t_stat_exam), df = n_exam - 1)) ) # p-value
+(mn_exam = mean(Stats20x.df$Exam)) # Sample mean
+(sd_exam = sd(Stats20x.df$Exam)) # Sample standard deviation
+(n_exam = length(Stats20x.df$Exam)) # Sample size
+(tmult_exam = qt(1 - 0.05 / 2, df = n_exam - 1)) # t-multiplier
+(CI_exam = mn_exam + tmult_exam * c(-1, 1) * sd_exam / sqrt(n_exam)) # Confidence Interval
+(se_exam = sd_exam / sqrt(n_exam)) # Standard error
+(t_stat_exam = (mn_exam - 55) / (se_exam)) # t-stat
+(pval_exam = 2 * (1 - pt(abs(t_stat_exam), df = n_exam - 1))) # p-value
 ```
 
 ### Using lm...
 ```{r}
-examNull.fit55 = lm(I(Exam-55) ~ 1, data = Stats20x.df)
-( pval_exam = coef(summary(examNull.fit55))[4] )
-55+confint(examNull.fit55) 
+examNull.fit55 = lm(I(Exam - 55) ~ 1, data = Stats20x.df)
+(pval_exam = coef(summary(examNull.fit55))[4])
+55 + confint(examNull.fit55)
 ```
 
 ```{r, echo=FALSE}
-cf = 55+confint(examNull.fit55) 
+cf = 55 + confint(examNull.fit55)
 resultConf = paste0(sprintf("%.1f", cf[1]), " to ", sprintf("%.1f", cf[2]))
 ```
 

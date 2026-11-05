@@ -7,7 +7,7 @@ output:
 
 ```{r, include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -59,9 +58,9 @@ could be similar at the two locations (i.e., no interaction).
 Snap.glm = glm(Freq ~ Locn * Reserve, family = poisson, data = Snap.df)
 summary(Snap.glm)
 1 - pchisq(14.678, 14)
-anova(Snap.glm, test="Chisq")
+anova(Snap.glm, test = "Chisq")
 Snap2.glm = glm(Freq ~ Locn + Reserve, family = poisson, data = Snap.df)
-anova(Snap2.glm, test="Chisq")
+anova(Snap2.glm, test = "Chisq")
 summary(Snap2.glm)
 plot(Snap2.glm, which = 1)
 exp(confint(Snap2.glm))

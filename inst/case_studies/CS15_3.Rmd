@@ -6,12 +6,12 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.height=3)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile
 library(s20x)
 ```
@@ -57,20 +57,22 @@ load(system.file("extdata", "Apache.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.8,fig.width=8, eval=FALSE}
-Apache.df=read.csv("Apache.csv",header=TRUE)
-plot(deaths/number_of_patients~apache_score, 
-     ylab="prob. of death", 
-     xlab="APACHE II score",data=Apache.df)
+Apache.df = read.csv("Apache.csv", header = TRUE)
+plot(deaths / number_of_patients ~ apache_score,
+  ylab = "prob. of death",
+  xlab = "APACHE II score", data = Apache.df
+)
 head(Apache.df)
-tail(Apache.df,10)
+tail(Apache.df, 10)
 ```
 
 ```{r,fig.height=4.8,fig.width=8, echo=FALSE}
-plot(deaths/number_of_patients~apache_score, 
-     ylab="prob. of death", 
-     xlab="APACHE II score",data=Apache.df)
+plot(deaths / number_of_patients ~ apache_score,
+  ylab = "prob. of death",
+  xlab = "APACHE II score", data = Apache.df
+)
 head(Apache.df)
-tail(Apache.df,10)
+tail(Apache.df, 10)
 ```
 
 ## Comment on plot.
@@ -80,59 +82,51 @@ The scatter plot clearly shows that the probability of death increase as the APA
 
 ## Fit an appropriate GLM:
 ```{r,fig.height=3.5,fig.width=6,message = FALSE}
-fit=glm(I(deaths/number_of_patients)~apache_score,weights=number_of_patients,family=binomial,data=Apache.df)
+fit = glm(I(deaths / number_of_patients) ~ apache_score, weights = number_of_patients, family = binomial, data = Apache.df)
 
-plot(fit,which=1)
-p.value = 1 - pchisq(summary(fit)$deviance, summary(fit)$df.residual) 
+plot(fit, which = 1)
+p.value = 1 - pchisq(summary(fit)$deviance, summary(fit)$df.residual)
 p.value
 
 summary(fit)
 confint(fit)
 exp(confint(fit))
 
-exp(confint(fit)[2,])
-100*(exp(confint(fit)[2,])-1)
+exp(confint(fit)[2, ])
+100 * (exp(confint(fit)[2, ]) - 1)
 
-exp(confint(fit)[2,]*5)
-100*(exp(confint(fit)[2,]*5)-1)
-
+exp(confint(fit)[2, ] * 5)
+100 * (exp(confint(fit)[2, ] * 5) - 1)
 ```
 
 ## 	Get intervals to predict the probability of a patient admitted to ICU dying with 30 days with APACHE II scores of 10, 20, 30 or 40. 
 ```{r}
-pred.df=data.frame(apache_score = c(10,20,30,40))
-predictGLM(fit, newdata=pred.df, type="response")
+pred.df = data.frame(apache_score = c(10, 20, 30, 40))
+predict20x(fit, newdata = pred.df)
 ```
 ```{r, echo=FALSE, message=FALSE}
-conf1 = data.frame(predictGLM(fit, newdata=pred.df, type="response"))
-resultStr1 = paste0(sprintf("%.2f", abs(conf1$lwr)), " and ", sprintf("%.2f", abs(conf1$upr)))
+conf1 = predict20x(fit, newdata = pred.df, digits = 8, print.out = FALSE)$frame
+resultStr1 = paste0(sprintf("%.2f", abs(conf1$` Conf.lower`)), " and ", sprintf("%.2f", abs(conf1$Conf.upper)))
 
-conf2 = t(exp(confint(fit)[2,]))
+conf2 = t(exp(confint(fit)[2, ]))
 conf2 = data.frame(conf2)
 names(conf2) = c("lower", "upper")
 resultStr2 = paste0(sprintf("%.2f", abs(conf2$lower)), " and ", sprintf("%.2f", abs(conf2$upper)))
 
-conf3 = t(100*(exp(confint(fit)[2,])-1))
+conf3 = t(100 * (exp(confint(fit)[2, ]) - 1))
 conf3 = data.frame(conf3)
 names(conf3) = c("lower", "upper")
 resultStr3 = paste0(sprintf("%.0f%%", abs(conf3$lower)), " and ", sprintf("%.0f%%", abs(conf3$upper)))
 
-conf4 = t(exp(confint(fit)[2,]*5))
+conf4 = t(exp(confint(fit)[2, ] * 5))
 conf4 = data.frame(conf4)
 names(conf4) = c("lower", "upper")
 resultStr4 = paste0(sprintf("%.2f", abs(conf4$lower)), " and ", sprintf("%.2f", abs(conf4$upper)))
 
-conf5 = t((100*(exp(confint(fit)[2,]*5)-1)))
+conf5 = t((100 * (exp(confint(fit)[2, ] * 5) - 1)))
 conf5 = data.frame(conf5)
 names(conf5) = c("lower", "upper")
 resultStr5 = paste0(sprintf("%.0f%%", abs(conf5$lower)), " and ", sprintf("%.0f%%", abs(conf5$upper)))
-
-
-
-
-
-
-
 ```
 
 ## Method and Assumption Checks
@@ -174,18 +168,17 @@ We estimate an increase in a typical patients APACHE II score  by 5 points is as
 ## Superimpose the model onto the original plot of the data, including confidence interval limits.
 ```{r,fig.height=5,fig.width=8,message = FALSE}
 # Create predictions for before over range 0-42.
-pred2.df = data.frame(apache_score = seq(0,42))
-Preds=predictGLM(fit, newdata=pred2.df, type="response")
+pred2.df = data.frame(apache_score = seq(0, 42))
+Preds = predict20x(fit, newdata = pred2.df, digits = 8, print.out = FALSE)$frame
 
 # Redo plot from above and add curve to the data.
-plot(deaths/number_of_patients~apache_score, ylab="prob. of death",  xlab="APACHE II score",
-     main="Plot with model superimposed",data=Apache.df)
-lines(seq(0,42),Preds[,1])
-lines(seq(0,42),Preds[,2],col="Red",lty=2 )
-lines(seq(0,42),Preds[,3],col="Red",lty=2 )
-
-
-
+plot(deaths / number_of_patients ~ apache_score,
+  ylab = "prob. of death", xlab = "APACHE II score",
+  main = "Plot with model superimposed", data = Apache.df
+)
+lines(seq(0, 42), Preds[, 1])
+lines(seq(0, 42), Preds[, 2], col = "Red", lty = 2)
+lines(seq(0, 42), Preds[, 3], col = "Red", lty = 2)
 ```
 
 

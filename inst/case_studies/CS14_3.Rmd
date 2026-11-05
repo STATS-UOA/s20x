@@ -6,12 +6,12 @@ output:
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.height=3)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile
 library(s20x)
 ## From now on we also need the emmeans library:
@@ -53,16 +53,16 @@ load(system.file("extdata", "email.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.5,fig.width=8, eval = FALSE}
-email.df = read.csv("email.csv",stringsAsFactors = TRUE)
-with(email.df, table(email))  
-boxplot(email~marital,horizontal=TRUE,data=email.df)
-summaryStats(email~marital,data=email.df)
+email.df = read.csv("email.csv", stringsAsFactors = TRUE)
+with(email.df, table(email))
+boxplot(email ~ marital, horizontal = TRUE, data = email.df)
+summaryStats(email ~ marital, data = email.df)
 ```
 
 ```{r,fig.height=4.5,fig.width=8, echo = FALSE}
-with(email.df, table(email))  
-boxplot(email~marital,horizontal=TRUE,data=email.df)
-summaryStats(email~marital,data=email.df)
+with(email.df, table(email))
+boxplot(email ~ marital, horizontal = TRUE, data = email.df)
+summaryStats(email ~ marital, data = email.df)
 ```
 
 ## Comment on plot(s) and/or summary statistics
@@ -74,7 +74,7 @@ The tables reveal that treating the response as counts is reasonable. The box pl
 
 ## Fit an appropriate GLM:
 ```{r,fig.height=3,fig.width=6}
-email.fit1 = glm(email ~ marital, family=poisson, data = email.df)
+email.fit1 = glm(email ~ marital, family = poisson, data = email.df)
 summary(email.fit1)
 plot(email.fit1, which = 1)
 
@@ -88,23 +88,21 @@ anova(email.fit2, test = "F")
 
 
 confint(email.fit2)
-exp(confint(email.fit2)[2,])
-100 * (exp(confint(email.fit2)[2,]) - 1)
+exp(confint(email.fit2)[2, ])
+100 * (exp(confint(email.fit2)[2, ]) - 1)
 
 # Rotate factor
-email.df <-within(email.df ,{maritalR <- factor(marital,levels = c("never", "married", "divorced"))})
+email.df <- within(email.df, {
+  maritalR <- factor(marital, levels = c("never", "married", "divorced"))
+})
 email.fit3 = glm(email ~ maritalR, family = quasipoisson, data = email.df)
 summary(email.fit3)
-
 ```
 ```{r, echo = FALSE}
-conf1 = t(100 * (exp(confint(email.fit2)[2,]) - 1))
+conf1 = t(100 * (exp(confint(email.fit2)[2, ]) - 1))
 conf1 = data.frame(conf1)
 names(conf1) <- c("lower", "upper")
 resultStr1 = paste0(sprintf("%.1f%%", abs(conf1$upper)), " and ", sprintf("%.1f%%", abs(conf1$lower)))
-
-
-
 ```
 
 ## Method and Assumption Checks

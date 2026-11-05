@@ -31,63 +31,66 @@ load(system.file("extdata", "MilkProd.df.rda", package = "s20x"))
 
 
 ```{r,fig.height=5,echo=-1}
-par(mar=c(4,4,2,0))
-MilkProd.ts=ts(MilkProd.df$production,frequency=12,start=c(2012,1))
-plot(MilkProd.ts,main="Milk productions in 1000s tonnes")
-abline(v=c(2012:2015),lty=2)
+par(mar = c(4, 4, 2, 0))
+MilkProd.ts = ts(MilkProd.df$production, frequency = 12, start = c(2012, 1))
+plot(MilkProd.ts, main = "Milk productions in 1000s tonnes")
+abline(v = c(2012:2015), lty = 2)
 ```
 
 ```{r,fig.height=6,echo=-1}
-par(mar=c(4,4,2,0))
-MilkProd.stl=stl(MilkProd.ts,s.window="periodic")
+par(mar = c(4, 4, 2, 0))
+MilkProd.stl = stl(MilkProd.ts, s.window = "periodic")
 plot(MilkProd.stl)
-abline(v=c(2012:2015),lty=2)
+abline(v = c(2012:2015), lty = 2)
 ```
 
 
 ```{r,fig.height=5}
-head(MilkProd.stl$time.series,13)
+head(MilkProd.stl$time.series, 13)
 ```
 
 
 ```{r,fig.height=5}
-MilkProd.hw=HoltWinters(MilkProd.ts)
-preds.hw=predict(MilkProd.hw,n.ahead=5,prediction.interval = TRUE)
+MilkProd.hw = HoltWinters(MilkProd.ts)
+preds.hw = predict(MilkProd.hw, n.ahead = 5, prediction.interval = TRUE)
 preds.hw
 ```
 
 
 ```{r,fig.height=5}
-plot(MilkProd.hw,preds.hw,lty.predicted=2, lty.interval=4,lwd=2)
+plot(MilkProd.hw, preds.hw, lty.predicted = 2, lty.interval = 4, lwd = 2)
 ```
 
 
 ```{r,fig.height=4}
-MilkProd.df=within(MilkProd.df, 
-                   {time=1:nrow(MilkProd.df);month.fac=factor(month)})
+MilkProd.df = within(MilkProd.df, {
+  time = 1:nrow(MilkProd.df);month.fac = factor(month)
+})
 ```
 
 
 ```{r,fig.height=4}
-MilkProd.lm=lm(production~time+month.fac, data=MilkProd.df)
+MilkProd.lm = lm(production ~ time + month.fac, data = MilkProd.df)
 acf(resid(MilkProd.lm))
 ```
 
 ```{r,fig.height=4}
 # start from observation 2
-MilkProd2.df=MilkProd.df[-1,]
+MilkProd2.df = MilkProd.df[-1, ]
 # put the past month as an explanatory variable
-MilkProd2.df=within(MilkProd2.df,{past.prod=MilkProd.df$production[-51]})
-MilkProd.lm2=lm(production~time+past.prod+month.fac, data=MilkProd2.df)
+MilkProd2.df = within(MilkProd2.df, {
+  past.prod = MilkProd.df$production[-51]
+})
+MilkProd.lm2 = lm(production ~ time + past.prod + month.fac, data = MilkProd2.df)
 ```
 
 
 
 ```{r,fig.height=4,echo=-1}
-par(mar=c(4,4,2,0))
-plot(residuals(MilkProd.lm2),type="l")
+par(mar = c(4, 4, 2, 0))
+plot(residuals(MilkProd.lm2), type = "l")
 library(s20x)
-normcheck(MilkProd.lm2, main="",xlab="Residuals")
+normcheck(MilkProd.lm2, main = "", xlab = "Residuals")
 ```
 
 

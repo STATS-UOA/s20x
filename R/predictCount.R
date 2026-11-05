@@ -26,9 +26,13 @@
 #'   \item{Conf.upper}{the upper confidence limit on the response scale.}
 #' }
 #' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictGLM}}, \code{\link{as.data.frame}}.
+#' @note Deprecated in s20x 3.3.9. Use \code{\link{predict20x}} instead, with
+#'   \code{type = "odds"} for the odds from a logit-link model.
 #' @keywords htest
 #' @export predictCount
 predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...) {
+  .Deprecated(msg = "predictCount() is deprecated; use predict20x() instead.")
+
   if (!inherits(object, "glm")) {
     stop("First input is not a \"glm\" object")
   }

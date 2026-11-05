@@ -10,7 +10,7 @@ s20x_ggplot2_base_theme()
 A ggplot2 theme object.
 }
 \description{
-Keeps optional ggplot2 diagnostic plots visually close to the original
+Keeps ggplot2 diagnostic plots visually close to the original
 teaching plots by removing the default grey panel and grid.
 }
 \keyword{internal}

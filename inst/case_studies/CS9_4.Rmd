@@ -6,7 +6,7 @@ output:
 ---
 ```{r RC-CS9_4-000,  setup, include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 knitr::opts_chunk$set(echo = TRUE, tidy = TRUE)
@@ -43,25 +43,31 @@ head(fev.df)
 ```{r RC-CS9_4-0012, out.width = "75%", fig.align = 'center'}
 # Any missing values?
 sum(is.na(fev.df))
-plot(fev~ht, pch = as.character(smoke), data = fev.df)
+plot(fev ~ ht, pch = as.character(smoke), data = fev.df)
 ```
 
 It's a little hard to see what is happening here. We can see that FEV gets more variable as the height increases. We should probably take logs. How about if we change visualising smokers from text to colours?
 
 ```{r RC-CS9_4-002, out.width = "75%", fig.align = 'center'}
-plot(log(fev)~ht, col = ifelse(smoke == 1, "red", "black"), 
-             pch = ifelse(smoke == 1, 19, 3), data = fev.df,
-     xlab = "Height (inches)")
-legend("topleft", col = c("red", "black"), pch = c(19, 3), 
-       legend = c("Smoker", "Non-smoker"), bty = "n")
+plot(log(fev) ~ ht,
+  col = ifelse(smoke == 1, "red", "black"),
+  pch = ifelse(smoke == 1, 19, 3), data = fev.df,
+  xlab = "Height (inches)"
+)
+legend("topleft",
+  col = c("red", "black"), pch = c(19, 3),
+  legend = c("Smoker", "Non-smoker"), bty = "n"
+)
 ```
 
 Taking logs has definitely helped, and it looks like there is a positive relationship between FEV and height. However, what also looks a little odd is that most of the smokers seem to be taller. What is going on?
 
 ```{r RC-CS9_4-003, out.width = "75%", fig.align = 'center'}
-plot(ht ~ age, col = ifelse(smoke == 1, "red", "black"), 
-               pch = ifelse(smoke == 1, 19, 3), data = fev.df,
-     ylab = "Height (inches)")
+plot(ht ~ age,
+  col = ifelse(smoke == 1, "red", "black"),
+  pch = ifelse(smoke == 1, 19, 3), data = fev.df,
+  ylab = "Height (inches)"
+)
 ```
 
 Hmmm--sneaky sneaky. Looks like we've got quite a few very young people in this study. Let's remove everyone below 9 years old (under the youngest smoking case) and take another look at the data.
@@ -69,18 +75,21 @@ Hmmm--sneaky sneaky. Looks like we've got quite a few very young people in this 
 ```{r RC-CS9_4-004, out.width = "75%", fig.align = 'center'}
 teens.df = subset(fev.df, age >= 9)
 teens.df$ht = 25.4 * teens.df$ht # Who wants height in inches. We want millimetres (mm)
-plot(log(fev)~ht, col = ifelse(smoke == 1, "red", "black"), 
-             pch = ifelse(smoke == 1, 19, 3), data = teens.df,
-     xlab = "Height (inches)")
-legend("topleft", col = c("red", "black"), pch = c(19, 3), 
-       legend = c("Smoker", "Non-smoker"), bty = "n")
-
+plot(log(fev) ~ ht,
+  col = ifelse(smoke == 1, "red", "black"),
+  pch = ifelse(smoke == 1, 19, 3), data = teens.df,
+  xlab = "Height (inches)"
+)
+legend("topleft",
+  col = c("red", "black"), pch = c(19, 3),
+  legend = c("Smoker", "Non-smoker"), bty = "n"
+)
 ```
 
 So is there any difference between the smokers and the non-smokers? It's a little hard to tell, but we should fit an interaction model to find out. We're also going to include the effect of sex, so there is an extra intraction to be included. We said we might be able to guess which are the males and which are the females. How? Possibly shorter? 
 
 ```{r RC-CS9_4-005, out.width = "70%", fig.align = 'center'}
-plot(ht~factor(sex), data = teens.df)
+plot(ht ~ factor(sex), data = teens.df)
 ```
 
 Well it is marginal. We could assume that the females are smaller than the males, but remember girls often grow faster at this age than boys, so that might be a silly assumption. Does it matter? Not really at this point. Let's just leave it undetermined at this point in time. Because each of our factors only has two levels, we don't need to really worry about coding them as factors, however we will do it anyway.
@@ -126,25 +135,35 @@ range(teens.df$ht)
 so let's build a data.frame that predicts at 1300 mm and 1900 mm, for each combination of the factors
 
 ```{r RC-CS9_4-010, out.width = "100%", fig.align = 'center'}
-pred.df = data.frame(ht = rep(c(1300, 1900), 4), 
-                     sex = factor(rep(c(0,1), c(4, 4))),
-                     smoke = rep(c("Yes", "No"), c(2, 2)))
+pred.df = data.frame(
+  ht = rep(c(1300, 1900), 4),
+  sex = factor(rep(c(0, 1), c(4, 4))),
+  smoke = rep(c("Yes", "No"), c(2, 2))
+)
 pred.df
 
 teens.pred = predict(teens.fit, newdata = pred.df)
 pred.df = cbind(pred.df, teens.pred)
-plot(log(fev)~ht, col = ifelse(smoke == "Yes", "red", "black"), 
-             pch = ifelse(smoke == "Yes", 19, 3), data = teens.df,
-     xlab = "Height (inches)")
-legend("topleft", col = c("red", "black"), pch = c(19, 3), 
-       legend = c("Smoker", "Non-smoker"), bty = "n")
+plot(log(fev) ~ ht,
+  col = ifelse(smoke == "Yes", "red", "black"),
+  pch = ifelse(smoke == "Yes", 19, 3), data = teens.df,
+  xlab = "Height (inches)"
+)
+legend("topleft",
+  col = c("red", "black"), pch = c(19, 3),
+  legend = c("Smoker", "Non-smoker"), bty = "n"
+)
 lines(teens.pred ~ ht, data = pred.df[1:2, ], col = "red")
 lines(teens.pred ~ ht, data = pred.df[3:4, ], col = "blue")
 lines(teens.pred ~ ht, data = pred.df[5:6, ], col = "green")
 lines(teens.pred ~ ht, data = pred.df[7:8, ], col = "pink")
-legend("bottomright", col = c("red", "blue", "green", "pink"), lty = 1, lwd = 2, 
-       legend = c("Sex 0, Smoker", "Sex 0, Non-smoker",
-                  "Sex 1, Smoker", "Sex 1, Non-smoker"), bty = "n")
+legend("bottomright",
+  col = c("red", "blue", "green", "pink"), lty = 1, lwd = 2,
+  legend = c(
+    "Sex 0, Smoker", "Sex 0, Non-smoker",
+    "Sex 1, Smoker", "Sex 1, Non-smoker"
+  ), bty = "n"
+)
 ```
 
 Looking at this plot, do we think we could get away with different lines? Probably not. To interpret this model we need to back-transform. However, this case study is probably complicated enough already :) What we can see is that the most striking difference is between the two genders in the smoking group. For simplicity, let's assume that `Sex 0` is female, and `Sex 1` is male. If we have this coding, then we can see that the rate of increase in FEV (with height) is much more severely affected for female smokers, in that tall female smokers seem to have a lower rate of increase in FEV than the other groups. Let's just take a quick look at the group `Sex 0, Smoker`.
@@ -160,9 +179,12 @@ What we're seeing here is that the smoking is making this line close to flat, re
 
 ```{r RC-CS9_4-019, out.width = "75%", fig.align = 'center', eval=requireNamespace("ggplot2", quietly = TRUE)}
 teens.df$smoke = relevel(teens.df$smoke, ref = "No")
-teens.df$sex  = factor(ifelse(teens.df$sex == 0, "Female", "Male"))
+teens.df$sex = factor(ifelse(teens.df$sex == 0, "Female", "Male"))
 library(ggplot2)
-ggplot(data = teens.df, aes(x = ht, y = log(fev))) + geom_point(shape = 1) + facet_grid(sex~smoke) + stat_smooth(method = "lm")
+ggplot(data = teens.df, aes(x = ht, y = log(fev))) +
+  geom_point(shape = 1) +
+  facet_grid(sex ~ smoke) +
+  stat_smooth(method = "lm")
 ```
 
 I'm guessing probably not, and if you wanted to spend the time, you might find that the slope is the same as the other groups. It looks like there are two males who might be influencing our view of things.
@@ -173,5 +195,8 @@ Who are these guys? Well they're shorter than the rest, they're male and they sm
 ```{r RC-CS9_4-020, out.width = "75%", fig.align = 'center'}
 outM = with(teens.df, which(sex == "Male" & smoke == "Yes" & log(fev) < 0.75))
 outM
-ggplot(data = teens.df[-outM, ], aes(x = ht, y = log(fev))) + geom_point(shape = 1) + facet_grid(sex~smoke) + stat_smooth(method = "lm")
+ggplot(data = teens.df[-outM, ], aes(x = ht, y = log(fev))) +
+  geom_point(shape = 1) +
+  facet_grid(sex ~ smoke) +
+  stat_smooth(method = "lm")
 ```

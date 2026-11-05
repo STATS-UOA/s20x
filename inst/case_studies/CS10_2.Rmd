@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
   dpi = 96
 )
 
-#The next line is required for pairs plots to work in R4.0.0
-#In future, pairs may be updated and then this will no longer be required.
+# The next line is required for pairs plots to work in R4.0.0
+# In future, pairs may be updated and then this will no longer be required.
 ```
 
 # Problem
@@ -43,18 +43,18 @@ load(system.file("extdata", "salary.df.rda", package = "s20x"))
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
 salary.df = read.table("salary.txt", header = TRUE)
-salary.df$sx=factor(salary.df$sx)
-salary.df$dg=factor(salary.df$dg)
-salary.df$rk=factor(salary.df$rk)
+salary.df$sx = factor(salary.df$sx)
+salary.df$dg = factor(salary.df$dg)
+salary.df$rk = factor(salary.df$rk)
 head(salary.df)
 tail(salary.df)
 pairs20x(salary.df[, c("sl", "sx", "rk", "yr", "dg", "yd")])
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', echo = FALSE}
-salary.df$sx=factor(salary.df$sx)
-salary.df$dg=factor(salary.df$dg)
-salary.df$rk=factor(salary.df$rk)
+salary.df$sx = factor(salary.df$sx)
+salary.df$dg = factor(salary.df$dg)
+salary.df$rk = factor(salary.df$rk)
 head(salary.df)
 tail(salary.df)
 pairs20x(salary.df[, c("sl", "sx", "rk", "yr", "dg", "yd")])
@@ -65,9 +65,9 @@ It seems that males have a larger mean `sl` than females. The higher the rank, t
 Since the response variable is salary, it would make sense to use log-salary so that effects will be multiplicative. Some previous analyses have also used `log(yr)` and `log(yd)` as explanatory variables. It is not obvious that this is the best choice, but for consistency we will follow these previous analyses. 
 
 ```{r, out.width = "75%", fig.align = 'center'} 
-salary.df$log.yr = log(salary.df$yr+1) # log(yr + 1) since log(0) = -infinity
-salary.df$log.yd = log(salary.df$yd) 
-salary.df$log.sl= log(salary.df$sl)
+salary.df$log.yr = log(salary.df$yr + 1) # log(yr + 1) since log(0) = -infinity
+salary.df$log.yd = log(salary.df$yd)
+salary.df$log.sl = log(salary.df$sl)
 pairs20x(salary.df[, c("log.sl", "sx", "rk", "log.yr", "dg", "log.yd")])
 ```
 It seems that males have a larger mean `log(sl)` than females. The higher the rank, the higher the `log(sl)`. As `log(yr)` increases the expected `log(sl)` increases. However, the low `log(sl)`s do not follow this observed trend. Still not too much going on in the relationship between `log(sl)` and `dg`.  There is a weak positive relationship between `log(sl)` and `log(yd)`. Also, as `log(yd)` increases the variability in `log(sl)` increases. In comparison to `sl` and `yd`, there is some improvement.
@@ -97,10 +97,10 @@ exp(confint(salary.fit4))
 ```
 
 ```{r, echo = FALSE}
-conf1 = as.data.frame(t(100*(2^confint(salary.fit4)[4, ]-1)))
+conf1 = as.data.frame(t(100 * (2^confint(salary.fit4)[4, ] - 1)))
 resultStr1 = paste0(sprintf("%.1f%%", conf1$`2.5 %`), " and ", sprintf("%.1f%%", conf1$`97.5 %`))
 
-conf2 = as.data.frame(100*(exp(confint(salary.fit4)[2:3,])-1))
+conf2 = as.data.frame(100 * (exp(confint(salary.fit4)[2:3, ]) - 1))
 resultStr2 = paste0(sprintf("%.0f%%", conf2$`2.5 %`), " and ", sprintf("%.0f%%", conf2$`97.5 %`))
 ```
 

@@ -4,16 +4,13 @@
 #' frame.
 #'
 #' The default base graphics engine preserves the original s20x teaching plot and
-#' draws directly on the active graphics device. The optional ggplot2 engine uses
-#' GGally when both optional packages are installed and returns a reusable plot
-#' matrix for reports or further customisation. The ggplot2/GGally output is
-#' intentionally optional so existing teaching material can continue to rely on
-#' the base graphics default.
+#' draws directly on the active graphics device. The ggplot2 engine uses GGally
+#' and returns a reusable plot matrix for reports or further customisation.
 #'
 #' @param x a data frame.
 #' @param na.rm if TRUE then only complete cases will be displayed.
 #' @param engine plotting engine to use. The default, \code{"base"}, preserves
-#'   the original base graphics output. Use \code{"ggplot2"} for the optional
+#'   the original base graphics output. Use \code{"ggplot2"} for the
 #'   ggplot2/GGally output.
 #' @param \dots optional arguments passed to the underlying plotting function.
 #' @return Returns the plot.
@@ -25,12 +22,9 @@
 #' data(peru.df)
 #' pairs20x(peru.df)
 #'
-#' # Optional ggplot2/GGally engine for a reusable plot matrix
-#' if (requireNamespace("ggplot2", quietly = TRUE) &&
-#'     requireNamespace("GGally", quietly = TRUE)) {
-#'   pairsPlot = pairs20x(peru.df, engine = "ggplot2")
-#'   class(pairsPlot)
-#' }
+#' # ggplot2/GGally engine for a reusable plot matrix
+#' pairsPlot = pairs20x(peru.df, engine = "ggplot2")
+#' class(pairsPlot)
 #'
 #' @export pairs20x
 pairs20x = function(x, na.rm = TRUE, engine = c("base", "ggplot2"), ...) {
@@ -86,16 +80,13 @@ pairs20xBase = function(x, ...) {
         diag.panel = panel.hist, ...)
 }
 
-#' Draw the optional ggplot2/GGally pairs20x plot
+#' Draw the ggplot2/GGally pairs20x plot
 #'
 #' @param x a data frame.
 #' @param \dots optional arguments passed to \code{ggpairs()}.
 #' @return Returns a GGally plot matrix.
 #' @noRd
 pairs20x_ggplot2 = function(x, ...) {
-    requirePlottingPackage("ggplot2")
-    requirePlottingPackage("GGally")
-
     plotMatrix = ggpairs(
         x,
         upper = list(continuous = pairs20x_ggplot2SmoothPanel),

@@ -6,7 +6,7 @@ output:
 ---
 ```{r, include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -42,20 +42,20 @@ load(system.file("extdata", "whio.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "100%", fig.align = 'center', eval = FALSE}
-whio.df <- read.csv("WhioChicks.csv", stringsAsFactors=TRUE)
+whio.df <- read.csv("WhioChicks.csv", stringsAsFactors = TRUE)
 head(whio.df)
-par(mar=c(8, 4, 3, 2), mgp=c(7, 1, 0))
-with(whio.df, boxplot(Survived/Chicks ~ Flood*Region, data = whio.df, las=2))
-title("Proportion of chicks surviving by flood status & region", cex.main=1)
+par(mar = c(8, 4, 3, 2), mgp = c(7, 1, 0))
+with(whio.df, boxplot(Survived / Chicks ~ Flood * Region, data = whio.df, las = 2))
+title("Proportion of chicks surviving by flood status & region", cex.main = 1)
 # Numbers of observations by predictor levels:
 table(whio.df$Flood, whio.df$Region)
 ```
 
 ```{r, out.width = "100%", fig.align = 'center', echo = FALSE}
 head(whio.df)
-par(mar=c(8, 4, 3, 2), mgp=c(7, 1, 0))
-with(whio.df, boxplot(Survived/Chicks ~ Flood*Region, data = whio.df, las=2))
-title("Proportion of chicks surviving by flood status & region", cex.main=1)
+par(mar = c(8, 4, 3, 2), mgp = c(7, 1, 0))
+with(whio.df, boxplot(Survived / Chicks ~ Flood * Region, data = whio.df, las = 2))
+title("Proportion of chicks surviving by flood status & region", cex.main = 1)
 # Numbers of observations by predictor levels:
 table(whio.df$Flood, whio.df$Region)
 ```
@@ -66,39 +66,38 @@ Chick survival appears to be higher in Fiordland than in the other two regions. 
 
 ## Model building and check assumptions
 ```{r,  out.width = "100%", fig.align = 'center'}
-whio.fit1 <- glm(cbind(Survived, Died) ~ Flood * Region, family=binomial, data=whio.df)
+whio.fit1 <- glm(cbind(Survived, Died) ~ Flood * Region, family = binomial, data = whio.df)
 summary(whio.fit1)
-1-pchisq(257.10, 26)
-whio.fit2 <- glm(cbind(Survived, Died) ~ Flood * Region, family=quasibinomial, data=whio.df)
-anova(whio.fit2, test="F")
-whio.fit3 <- glm(cbind(Survived, Died) ~ Flood + Region, family=quasibinomial, data=whio.df)
-anova(whio.fit3, test="F")
-whio.fit4 <- glm(cbind(Survived, Died) ~ Region, family=quasibinomial, data=whio.df)
-anova(whio.fit4, test="F")
-plot(whio.fit4, which=1)
+1 - pchisq(257.10, 26)
+whio.fit2 <- glm(cbind(Survived, Died) ~ Flood * Region, family = quasibinomial, data = whio.df)
+anova(whio.fit2, test = "F")
+whio.fit3 <- glm(cbind(Survived, Died) ~ Flood + Region, family = quasibinomial, data = whio.df)
+anova(whio.fit3, test = "F")
+whio.fit4 <- glm(cbind(Survived, Died) ~ Region, family = quasibinomial, data = whio.df)
+anova(whio.fit4, test = "F")
+plot(whio.fit4, which = 1)
 ```
 
 ## Inference output from the final model
 ```{r}
-predictGLM(whio.fit4, type="response", newdata=data.frame(Region=c("Fiordland", "Oparara", "TeUrewera")))
+predict20x(whio.fit4, newdata = data.frame(Region = c("Fiordland", "Oparara", "TeUrewera")))
 # Use emmeans for pairwise comparisons:
-whio.pairs <- pairs( emmeans(whio.fit4, "Region"), infer=TRUE)
+whio.pairs <- pairs(emmeans(whio.fit4, "Region"), infer = TRUE)
 # Convert to data-frame and remove unwanted columns for display:
-whio.pairs <- data.frame(whio.pairs)[,-c(3,4,7)]
+whio.pairs <- data.frame(whio.pairs)[, -c(3, 4, 7)]
 whio.pairs
-exp(data.frame(whio.pairs)[,c(2, 3, 4)])
-100*( exp(data.frame(whio.pairs)[,c(2, 3, 4)]) - 1 )
+exp(data.frame(whio.pairs)[, c(2, 3, 4)])
+100 * (exp(data.frame(whio.pairs)[, c(2, 3, 4)]) - 1)
 ```
 ```{r, echo=FALSE, message=FALSE}
-conf1 = data.frame(predictGLM(whio.fit4, type="response", newdata=data.frame(Region=c("Fiordland", "Oparara", "TeUrewera"))) * 100)
-resultStr1 = paste0(sprintf("%.0f%%", abs(conf1$lwr)), " and ", sprintf("%.0f%%", abs(conf1$upr)))
+conf1 = predict20x(whio.fit4, newdata = data.frame(Region = c("Fiordland", "Oparara", "TeUrewera")), digits = 8, print.out = FALSE)$frame * 100
+resultStr1 = paste0(sprintf("%.0f%%", abs(conf1$` Conf.lower`)), " and ", sprintf("%.0f%%", abs(conf1$Conf.upper)))
 
-conf2 = exp(data.frame(whio.pairs)[,c(2, 3, 4)])
+conf2 = exp(data.frame(whio.pairs)[, c(2, 3, 4)])
 resultStr2 = paste0(sprintf("%.2f", abs(conf2$asymp.LCL)), " and ", sprintf("%.2f", abs(conf2$asymp.UCL)))
 
-conf3 = 100*( exp(data.frame(whio.pairs)[,c(2, 3, 4)]) - 1 )
+conf3 = 100 * (exp(data.frame(whio.pairs)[, c(2, 3, 4)]) - 1)
 resultStr3 = paste0(sprintf("%.0f%%", abs(conf3$asymp.LCL)), " and ", sprintf("%.0f%%", abs(conf3$asymp.UCL)))
-
 ```
 # Methods and Assumption Checks
 

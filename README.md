@@ -46,17 +46,17 @@ predict20x(peruFit, data.frame(weight = 70, age = 30))
 
 The diagnostic functions draw the familiar base graphics teaching plots by default. They can also return reusable plot objects: functions such as `normcheck()`, `eovcheck()`, `modelcheck()`, and `pairs20x()` continue to draw the familiar base graphics plots unless another engine is requested.
 
-Where supported, use `engine = "ggplot2"` to request the modern plotting engine. The optional engine is intended for workflows where a plot object is useful for saving, arranging, or further customisation.
+Where supported, use `engine = "ggplot2"` to request the ggplot2 plotting engine. It is intended for workflows where a plot object is useful for saving, arranging, or further customisation.
 
 Use the plotting engines this way:
 
 | Task | Recommended call | Notes |
 | --- | --- | --- |
 | Teaching, labs, and lecture notes | `normcheck(fit)` or `modelcheck(fit)` | Uses the original base graphics output. |
-| Save or arrange a normality diagnostic | `normcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns reusable Q-Q and histogram plot objects. |
-| Save or arrange an equality-of-variance diagnostic | `eovcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns a reusable residual-versus-fitted plot object. |
-| Save or arrange model-checking diagnostics | `modelcheck(fit, engine = "ggplot2")` | Requires `ggplot2`; returns a reusable named list for multiple diagnostics, or a single plot object when `which` selects one diagnostic. |
-| Save or arrange a pairs plot | `pairs20x(data, engine = "ggplot2")` | Requires both `ggplot2` and `GGally`; returns a reusable plot matrix. |
+| Save or arrange a normality diagnostic | `normcheck(fit, engine = "ggplot2")` | Returns reusable Q-Q and histogram plot objects. |
+| Save or arrange an equality-of-variance diagnostic | `eovcheck(fit, engine = "ggplot2")` | Returns a reusable residual-versus-fitted plot object. |
+| Save or arrange model-checking diagnostics | `modelcheck(fit, engine = "ggplot2")` | Returns a reusable named list for multiple diagnostics, or a single plot object when `which` selects one diagnostic. |
+| Save or arrange a pairs plot | `pairs20x(data, engine = "ggplot2")` | Returns a reusable plot matrix. |
 
 Examples:
 
@@ -64,18 +64,13 @@ Examples:
 peruFit = lm(BP ~ Age + Weight + Years, data = peru.df)
 normcheck(peruFit)
 
-if (requireNamespace("ggplot2", quietly = TRUE)) {
-  normPlots = normcheck(peruFit, engine = "ggplot2")
-  normPlots
-}
+normPlots = normcheck(peruFit, engine = "ggplot2")
+normPlots
 ```
 
 ```r
-if (requireNamespace("ggplot2", quietly = TRUE) &&
-    requireNamespace("GGally", quietly = TRUE)) {
-  pairsPlot = pairs20x(peru.df, engine = "ggplot2")
-  pairsPlot
-}
+pairsPlot = pairs20x(peru.df, engine = "ggplot2")
+pairsPlot
 ```
 
 The base engine draws directly on the active graphics device and usually returns no reusable object. The ggplot2 engine is for users who need to keep, print, save, or combine the result later. When a helper creates more than one ggplot2 diagnostic, the return value is a named list so individual plots can be selected by name, for example `diagnosticPlots$residuals` or `normPlots$qq`. This distinction is intentional so existing course material keeps the familiar plots while newer workflows can opt into object-based graphics.

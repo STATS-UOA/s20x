@@ -21,8 +21,6 @@ test_that("normcheck validates the plotting engine argument", {
 
 
 test_that("normcheck ggplot2 engine returns ggplot objects when available", {
-  skip_if_not_installed("ggplot2")
-
   values = c(-2, -1, 0, 1, 2)
 
   qqPlot = normcheck(values, engine = "ggplot2", whichPlot = 1)
@@ -35,8 +33,6 @@ test_that("normcheck ggplot2 engine returns ggplot objects when available", {
 
 
 test_that("normcheck lm method passes engine and bootstrap arguments", {
-  skip_if_not_installed("ggplot2")
-
   sampleData = data.frame(
     response = c(1, 2, 3, 4, 5),
     predictor = c(1, 2, 3, 4, 5)
@@ -50,8 +46,6 @@ test_that("normcheck lm method passes engine and bootstrap arguments", {
 
 
 test_that("normcheck ggplot2 engine uses a base-like theme", {
-  skip_if_not_installed("ggplot2")
-
   values = c(-2, -1, 0, 1, 2)
 
   bothPlots = normcheck(values, engine = "ggplot2", whichPlot = 1:2)
@@ -90,7 +84,6 @@ test_that("normcheck accepts any colour R can draw with", {
 })
 
 test_that("normcheck ggplot2 engine accepts hex and palette colours", {
-  skip_if_not_installed("ggplot2")
   data("peru.df", package = "s20x", envir = environment())
 
   pdf(NULL)

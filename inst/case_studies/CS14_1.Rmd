@@ -6,7 +6,7 @@ output:
 ---
 ```{r include=FALSE}
 ## Do not delete this!
-## It loads the s20x library for you. If you delete it 
+## It loads the s20x library for you. If you delete it
 ## your document may not compile it.
 require(s20x)
 
@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   fig.ext = "png",
   dpi = 96
 )
-
 ```
 
 # Problem
@@ -42,13 +41,13 @@ load(system.file("extdata", "Quakes.df.rda", package = "s20x"))
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
 Quakes.df = read.table("EarthquakeMagnitudes.txt", header = TRUE)
-Quakes.df$Locn=as.factor(Quakes.df$Locn)
+Quakes.df$Locn = as.factor(Quakes.df$Locn)
 Quakes.df
 plot(Freq ~ Magnitude, data = Quakes.df, pch = substr(Locn, 1, 1))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', echo = FALSE}
-Quakes.df$Locn=as.factor(Quakes.df$Locn)
+Quakes.df$Locn = as.factor(Quakes.df$Locn)
 Quakes.df
 plot(Freq ~ Magnitude, data = Quakes.df, pch = substr(Locn, 1, 1))
 ```
@@ -69,7 +68,7 @@ Observation 16 has a largish residual, but as this observation has a very small 
 summary(Quake.gfit)
 1 - pchisq(8.23, 14)
 exp(confint(Quake.gfit)) # Row 3 gives multiplicative annual change in CA
-100 * (exp(confint(Quake.gfit)[3,])-1) # Percentage annual change in CA
+100 * (exp(confint(Quake.gfit)[3, ]) - 1) # Percentage annual change in CA
 ```
 
 ## Additional Output with `WA` as the baseline Level
@@ -77,15 +76,15 @@ exp(confint(Quake.gfit)) # Row 3 gives multiplicative annual change in CA
 Quakes.df$Locn = relevel(Quakes.df$Locn, ref = "WA")
 Quake2.gfit = glm(Freq ~ Locn * Magnitude, family = poisson, data = Quakes.df)
 exp(confint(Quake2.gfit)) # Row 3 gives multiplicative annual change in WA
-100 * (exp(confint(Quake2.gfit)[3,])-1) # Percentage annual change in WA
+100 * (exp(confint(Quake2.gfit)[3, ]) - 1) # Percentage annual change in WA
 ```
 ```{r, echo= FALSE,message=FALSE}
-conf1 = t(100 * (exp(confint(Quake2.gfit)[3,])-1))
+conf1 = t(100 * (exp(confint(Quake2.gfit)[3, ]) - 1))
 conf1 = data.frame(conf1)
 names(conf1) <- c("lower", "upper")
 resultStr1 = paste0(sprintf("%.1f%%", abs(conf1$upper)), " to ", sprintf("%.1f%%", abs(conf1$lower)))
 
-conf2 = t(100 * (exp(confint(Quake.gfit)[3,])-1))
+conf2 = t(100 * (exp(confint(Quake.gfit)[3, ]) - 1))
 conf2 = data.frame(conf2)
 names(conf2) <- c("lower", "upper")
 resultStr2 = paste0(sprintf("%.1f%%", abs(conf2$upper)), " and ", sprintf("%.1f%%", abs(conf2$lower)))

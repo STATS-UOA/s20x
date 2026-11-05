@@ -29,8 +29,6 @@ test_that("eovcheck validates the plotting engine argument", {
 
 
 test_that("eovcheck ggplot2 engine returns a ggplot object when available", {
-  skip_if_not_installed("ggplot2")
-
   sampleData = data.frame(
     response = c(1.1, 1.9, 3.2, 3.8, 5.3, 5.7),
     predictor = c(1, 2, 3, 4, 5, 6)
@@ -44,8 +42,6 @@ test_that("eovcheck ggplot2 engine returns a ggplot object when available", {
 
 
 test_that("eovcheck formula method passes the engine argument", {
-  skip_if_not_installed("ggplot2")
-
   sampleData = data.frame(
     response = c(1, 2, 2, 3, 4, 4, 5, 6),
     group = factor(rep(c("a", "b"), each = 4))
@@ -58,8 +54,6 @@ test_that("eovcheck formula method passes the engine argument", {
 
 
 test_that("eovcheck ggplot2 engine prints without aesthetic mapping warnings", {
-  skip_if_not_installed("ggplot2")
-
   sampleData = data.frame(
     response = c(1.1, 1.9, 3.2, 3.8, 5.3, 5.7, 7.1, 8.2),
     predictor = c(1, 2, 3, 4, 5, 6, 7, 8)
@@ -74,8 +68,6 @@ test_that("eovcheck ggplot2 engine prints without aesthetic mapping warnings", {
 
 
 test_that("eovcheck ggplot2 engine uses base-like theme and thin two sd lines", {
-  skip_if_not_installed("ggplot2")
-
   sampleData = data.frame(
     response = c(1.1, 1.9, 3.2, 3.8, 5.3, 5.7, 7.1, 8.2),
     predictor = c(1, 2, 3, 4, 5, 6, 7, 8)
@@ -98,8 +90,6 @@ test_that("eovcheck ggplot2 engine uses base-like theme and thin two sd lines", 
 
 test_that("eovcheck lm method respects subset in the fitted model", {
   data("peru.df", package = "s20x", envir = environment())
-  skip_if_not_installed("ggplot2")
-
   fit = lm(BP ~ weight, data = peru.df, subset = age > 25)
   plotObject = eovcheck(fit, engine = "ggplot2")
 
@@ -132,7 +122,6 @@ test_that("eovcheck lm method works with a stored formula", {
 })
 
 test_that("eovcheck lm and formula methods draw the same data", {
-  skip_if_not_installed("ggplot2")
   data("butterfat.df", package = "s20x", envir = environment())
 
   fit = lm(Butterfat ~ Breed, data = butterfat.df)
@@ -144,7 +133,6 @@ test_that("eovcheck lm and formula methods draw the same data", {
 })
 
 test_that("eovcheck plots the residuals of a weighted fit", {
-  skip_if_not_installed("ggplot2")
   data("butterfat.df", package = "s20x", envir = environment())
 
   fit = lm(Butterfat ~ Breed, data = butterfat.df, weights = Butterfat)
@@ -155,8 +143,6 @@ test_that("eovcheck plots the residuals of a weighted fit", {
 
 test_that("eovcheck still checks glm fits with least squares residuals", {
   data("peru.df", package = "s20x", envir = environment())
-  skip_if_not_installed("ggplot2")
-
   glmFit = glm(BP ~ weight, data = peru.df, family = gaussian(link = "log"))
   lmFit = lm(BP ~ weight, data = peru.df)
   plotObject = eovcheck(glmFit, engine = "ggplot2")
@@ -165,7 +151,6 @@ test_that("eovcheck still checks glm fits with least squares residuals", {
 })
 
 test_that("eovcheck ggplot2 engine puts two sd lines at two residual standard errors", {
-  skip_if_not_installed("ggplot2")
   data("butterfat.df", package = "s20x", envir = environment())
 
   lmFit = lm(Butterfat ~ Breed, data = butterfat.df)
@@ -209,7 +194,6 @@ test_that("eovcheck base engine puts two sd lines at two residual standard error
 })
 
 test_that("eovcheck ignores the removed levene argument with a clear warning", {
-  skip_if_not_installed("ggplot2")
   data("soyabean.df", package = "s20x", envir = environment())
 
   fit = lm(yield ~ planttime + cultivar, data = soyabean.df)

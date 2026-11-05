@@ -1,5 +1,12 @@
 # s20x news
 
+## s20x 3.3.9
+
+- Deprecated predictCount() and predictGLM() in favour of predict20x().
+- Moved the case studies to predict20x().
+- Styled the case study code with styler, and added a GitHub check that fails if a case study needs styling.
+- Corrected the documentation, which described ggplot2 and GGally as optional. Both are required dependencies, so the engine checks and example guards are gone.
+
 ## s20x 3.3.8
 
 - Made predict20x() an S3 generic with methods for lm, glm and tslm fits, so one function covers all of them. predictCount() and predictGLM() keep working as before.
