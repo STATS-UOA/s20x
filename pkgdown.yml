@@ -1,0 +1,55 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  articles/CS10_1: CS10_1.html
+  articles/CS10_2: CS10_2.html
+  articles/CS10_3: CS10_3.html
+  articles/CS11_1: CS11_1.html
+  articles/CS11_2: CS11_2.html
+  articles/CS11_3: CS11_3.html
+  articles/CS12_1: CS12_1.html
+  articles/CS12_2: CS12_2.html
+  articles/CS12_3: CS12_3.html
+  articles/CS12_4: CS12_4.html
+  articles/CS14_1: CS14_1.html
+  articles/CS14_2: CS14_2.html
+  articles/CS14_3: CS14_3.html
+  articles/CS14_4: CS14_4.html
+  articles/CS15_1: CS15_1.html
+  articles/CS15_2: CS15_2.html
+  articles/CS15_3: CS15_3.html
+  articles/CS15_4: CS15_4.html
+  articles/CS17_1: CS17_1.html
+  articles/CS17_2: CS17_2.html
+  articles/CS17_3: CS17_3.html
+  articles/CS17_4: CS17_4.html
+  articles/CS2_1: CS2_1.html
+  articles/CS2_2: CS2_2.html
+  articles/CS2_3: CS2_3.html
+  articles/CS3_1: CS3_1.html
+  articles/CS3_2: CS3_2.html
+  articles/CS4_1: CS4_1.html
+  articles/CS4_2: CS4_2.html
+  articles/CS5_1: CS5_1.html
+  articles/CS5_2: CS5_2.html
+  articles/CS6_1: CS6_1.html
+  articles/CS6_2: CS6_2.html
+  articles/CS6_3: CS6_3.html
+  articles/CS6_4: CS6_4.html
+  articles/CS6_5: CS6_5.html
+  articles/CS7_1: CS7_1.html
+  articles/CS7_2: CS7_2.html
+  articles/CS8_1: CS8_1.html
+  articles/CS8_2: CS8_2.html
+  articles/CS8_3: CS8_3.html
+  articles/CS9_1: CS9_1.html
+  articles/CS9_2: CS9_2.html
+  articles/CS9_3: CS9_3.html
+  articles/CS9_4: CS9_4.html
+  articles/CS9_5: CS9_5.html
+  articles/CS9_6: CS9_6.html
+last_built: 2026-11-05T03:24Z
+urls:
+  reference: https://stats-uoa.github.io/s20x/reference
+  article: https://stats-uoa.github.io/s20x/articles

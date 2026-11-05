@@ -1,0 +1,67 @@
+# s20x package version number
+
+Returns the version number of the s20x package. This is useful if a
+student has problems running commands and the maintainer needs to check
+the version number.
+
+## Usage
+
+``` r
+getVersion()
+```
+
+## Examples
+
+``` r
+
+getVersion()
+#> Package: s20x
+#> Version: 3.3.9
+#> Title: Functions for University of Auckland Course STATS 201/208 Data
+#>         Analysis
+#> Authors@R: c( person("Brant", "Deppa", role = "aut", comment = "Wrote
+#>         the original R scripts this package is derived from"),
+#>         person("James", "Curran", , "j.curran@auckland.ac.nz", role =
+#>         c("aut", "cre"), comment = "Wrote the original R package.
+#>         Current maintainer."), person("Hannah", "Yun", ,
+#>         "hyun536@aucklanduni.ac.nz", role = "ctb"), person("Rachel",
+#>         "Fewster", , "r.fewster@auckland.ac.nz", role = "ctb"),
+#>         person("Russell", "Millar", , "r.millar@auckland.ac.nz", role =
+#>         "ctb"), person("Ben", "Stevenson", ,
+#>         "ben.stevenson@auckland.ac.nz", role = "ctb"), person("Andrew",
+#>         "Balemi", , "a.balemi@auckland.ac.nz", role = "ctb"),
+#>         person("Chris", "Wild", , "c.wild@auckland.ac.nz", role =
+#>         "ctb"), person("Sophie", "Jones", role = "ctb"),
+#>         person("Dineika", "Chandra", role = "ctb"), person("Brendan",
+#>         "McArdle", role = "ctb") )
+#> Description: A set of functions used in teaching STATS 201/208 Data
+#>         Analysis at the University of Auckland. The functions are
+#>         designed to make parts of R more accessible to a large
+#>         undergraduate population who are mostly not statistics majors.
+#> Depends: R (>= 4.0.0)
+#> Suggests: bootstrap, dafs, emmeans, formatR, knitr, markdown, testthat
+#>         (>= 3.0.0)
+#> Encoding: UTF-8
+#> LazyData: true
+#> Imports: stats, graphics, grDevices, methods, GGally, ggplot2, nlme,
+#>         rlang, rmarkdown, rstudioapi, tools, utils
+#> License: GPL-2 | file LICENSE
+#> URL: https://github.com/STATS-UOA/s20x
+#> BugReports: https://github.com/STATS-UOA/s20x/issues
+#> Config/testthat/edition: 3
+#> Config/roxygen2/version: 8.1.1
+#> RemotePkgRef: local::.
+#> RemoteType: local
+#> NeedsCompilation: no
+#> Packaged: 2026-11-05 03:24:35 UTC; runner
+#> Author: Brant Deppa [aut] (Wrote the original R scripts this package is
+#>         derived from), James Curran [aut, cre] (Wrote the original R
+#>         package. Current maintainer.), Hannah Yun [ctb], Rachel Fewster
+#>         [ctb], Russell Millar [ctb], Ben Stevenson [ctb], Andrew Balemi
+#>         [ctb], Chris Wild [ctb], Sophie Jones [ctb], Dineika Chandra
+#>         [ctb], Brendan McArdle [ctb]
+#> Maintainer: James Curran <j.curran@auckland.ac.nz>
+#> Built: R 4.6.2; ; 2026-11-05 03:24:36 UTC; unix
+#> 
+#> -- File: /home/runner/work/_temp/Library/s20x/Meta/package.rds 
+```

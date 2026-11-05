@@ -1,0 +1,430 @@
+# s20x
+
+s20x supports data analysis teaching at the University of Auckland, in
+STATS 201, STATS 208 and BIOSCI 209. It provides model-checking plots,
+teaching summaries, predictions with intervals, datasets and worked case
+studies.
+
+## Installation
+
+``` r
+
+# From CRAN
+install.packages("s20x")
+
+# Development version
+remotes::install_github("STATS-UOA/s20x")
+```
+
+## A quick example
+
+``` r
+
+library(s20x)
+
+peruFit = lm(BP ~ weight + age, data = peru.df)
+
+# Check the model
+modelcheck(peruFit)
+
+# Predict, with confidence and prediction intervals
+predict20x(peruFit, data.frame(weight = 70, age = 30))
+```
+
+## What is in the package
+
+| Task | Functions |
+|----|----|
+| Explore the data | [`pairs20x()`](https://stats-uoa.github.io/s20x/reference/pairs20x.md), [`trendscatter()`](https://stats-uoa.github.io/s20x/reference/trendscatter.md), [`interactionPlots()`](https://stats-uoa.github.io/s20x/reference/interactionPlots.md), [`summaryStats()`](https://stats-uoa.github.io/s20x/reference/summaryStats.md) |
+| Check a model | [`modelcheck()`](https://stats-uoa.github.io/s20x/reference/modelcheck.md), [`normcheck()`](https://stats-uoa.github.io/s20x/reference/normcheck.md), [`eovcheck()`](https://stats-uoa.github.io/s20x/reference/eovcheck.md), [`cooks20x()`](https://stats-uoa.github.io/s20x/reference/cooks20x.md) |
+| Summarise an analysis | [`summary1way()`](https://stats-uoa.github.io/s20x/reference/summary1way.md), [`summary2way()`](https://stats-uoa.github.io/s20x/reference/summary2way.md), [`multipleComp()`](https://stats-uoa.github.io/s20x/reference/multipleComp.md), [`displayPairs()`](https://stats-uoa.github.io/s20x/reference/displayPairs.md), [`rowdistr()`](https://stats-uoa.github.io/s20x/reference/rowdistr.md) |
+| Predict | [`predict20x()`](https://stats-uoa.github.io/s20x/reference/predict20x.md) for `lm`, `glm` and `tslm` fits |
+| Time series | [`tslm()`](https://stats-uoa.github.io/s20x/reference/tslm.md) for linear models with AR(p) errors |
+| Case studies | [`listCaseStudies()`](https://stats-uoa.github.io/s20x/reference/listCaseStudies.md), [`casestudy()`](https://stats-uoa.github.io/s20x/reference/casestudy.md), [`openCaseStudy()`](https://stats-uoa.github.io/s20x/reference/openCaseStudy.md) |
+
+## Plotting engines
+
+The diagnostic functions draw the familiar base graphics teaching plots
+by default. They can also return reusable plot objects: functions such
+as
+[`normcheck()`](https://stats-uoa.github.io/s20x/reference/normcheck.md),
+[`eovcheck()`](https://stats-uoa.github.io/s20x/reference/eovcheck.md),
+[`modelcheck()`](https://stats-uoa.github.io/s20x/reference/modelcheck.md),
+and
+[`pairs20x()`](https://stats-uoa.github.io/s20x/reference/pairs20x.md)
+continue to draw the familiar base graphics plots unless another engine
+is requested.
+
+Where supported, use `engine = "ggplot2"` to request the ggplot2
+plotting engine. It is intended for workflows where a plot object is
+useful for saving, arranging, or further customisation.
+
+Use the plotting engines this way:
+
+| Task | Recommended call | Notes |
+|----|----|----|
+| Teaching, labs, and lecture notes | `normcheck(fit)` or `modelcheck(fit)` | Uses the original base graphics output. |
+| Save or arrange a normality diagnostic | `normcheck(fit, engine = "ggplot2")` | Returns reusable Q-Q and histogram plot objects. |
+| Save or arrange an equality-of-variance diagnostic | `eovcheck(fit, engine = "ggplot2")` | Returns a reusable residual-versus-fitted plot object. |
+| Save or arrange model-checking diagnostics | `modelcheck(fit, engine = "ggplot2")` | Returns a reusable named list for multiple diagnostics, or a single plot object when `which` selects one diagnostic. |
+| Save or arrange a pairs plot | `pairs20x(data, engine = "ggplot2")` | Returns a reusable plot matrix. |
+
+Examples:
+
+``` r
+
+peruFit = lm(BP ~ Age + Weight + Years, data = peru.df)
+normcheck(peruFit)
+
+normPlots = normcheck(peruFit, engine = "ggplot2")
+normPlots
+```
+
+``` r
+
+pairsPlot = pairs20x(peru.df, engine = "ggplot2")
+pairsPlot
+```
+
+The base engine draws directly on the active graphics device and usually
+returns no reusable object. The ggplot2 engine is for users who need to
+keep, print, save, or combine the result later. When a helper creates
+more than one ggplot2 diagnostic, the return value is a named list so
+individual plots can be selected by name, for example
+`diagnosticPlots$residuals` or `normPlots$qq`. This distinction is
+intentional so existing course material keeps the familiar plots while
+newer workflows can opt into object-based graphics.
+
+## Changes
+
+See `NEWS.md` for the release history.
+
+# Package index
+
+## Exploring data
+
+- [`pairs20x()`](https://stats-uoa.github.io/s20x/reference/pairs20x.md)
+  : Pairwise Scatter Plots with Histograms and Correlations
+- [`trendscatter()`](https://stats-uoa.github.io/s20x/reference/trendscatter.md)
+  : Trend and scatter plot
+- [`interactionPlots()`](https://stats-uoa.github.io/s20x/reference/interactionPlots.md)
+  : Interactions Plot for Two-way Analysis of Variance
+- [`summaryStats()`](https://stats-uoa.github.io/s20x/reference/summaryStats.md)
+  : Summary Statistics
+
+## Checking models
+
+- [`modelcheck()`](https://stats-uoa.github.io/s20x/reference/modelcheck.md)
+  : Model checking plots
+- [`normcheck()`](https://stats-uoa.github.io/s20x/reference/normcheck.md)
+  : Testing for normality plot
+- [`eovcheck()`](https://stats-uoa.github.io/s20x/reference/eovcheck.md)
+  : Testing for equality of variance plot
+- [`cooks20x()`](https://stats-uoa.github.io/s20x/reference/cooks20x.md)
+  : Cook's distance plot
+- [`print(`*`<s20xModelcheck_ggplot2>`*`)`](https://stats-uoa.github.io/s20x/reference/print.s20xModelcheck_ggplot2.md)
+  : Print ggplot2 modelcheck plots
+- [`print(`*`<s20xNormcheck_ggplot2>`*`)`](https://stats-uoa.github.io/s20x/reference/print.s20xNormcheck_ggplot2.md)
+  : Print ggplot2 normcheck plots
+
+## Summarising analyses
+
+- [`summary1way()`](https://stats-uoa.github.io/s20x/reference/summary1way.md)
+  : One-way Analysis of Variance Summary
+- [`summary2way()`](https://stats-uoa.github.io/s20x/reference/summary2way.md)
+  : Two-way Analysis of Variance Summary
+- [`multipleComp()`](https://stats-uoa.github.io/s20x/reference/multipleComp.md)
+  : Multiple Comparisons
+- [`displayPairs()`](https://stats-uoa.github.io/s20x/reference/displayPairs.md)
+  : Display within-level pairwise comparisons for saturated two-way
+  ANOVA model.
+- [`rowdistr()`](https://stats-uoa.github.io/s20x/reference/rowdistr.md)
+  : Row distributions from a cross-tabulation of two variables
+
+## Predicting
+
+- [`predict20x()`](https://stats-uoa.github.io/s20x/reference/predict20x.md)
+  : Teaching Predictions with Confidence and Prediction Intervals
+
+## Time series
+
+- [`tslm()`](https://stats-uoa.github.io/s20x/reference/tslm.md) : Fit a
+  linear model with optional autoregressive errors
+- [`anova(`*`<tslm>`*`)`](https://stats-uoa.github.io/s20x/reference/anova.tslm.md)
+  : ANOVA tables for time series linear models
+
+## Case studies
+
+- [`listCaseStudies()`](https://stats-uoa.github.io/s20x/reference/listCaseStudies.md)
+  [`listCS()`](https://stats-uoa.github.io/s20x/reference/listCaseStudies.md)
+  [`lcs()`](https://stats-uoa.github.io/s20x/reference/listCaseStudies.md)
+  : List available case studies
+- [`casestudy()`](https://stats-uoa.github.io/s20x/reference/casestudy.md)
+  [`cs()`](https://stats-uoa.github.io/s20x/reference/casestudy.md) :
+  Render a case study to HTML
+- [`openCaseStudy()`](https://stats-uoa.github.io/s20x/reference/openCaseStudy.md)
+  [`opencs()`](https://stats-uoa.github.io/s20x/reference/openCaseStudy.md)
+  [`ocs()`](https://stats-uoa.github.io/s20x/reference/openCaseStudy.md)
+  : Open a case study source file in the editor
+
+## Datasets
+
+- [`airpass.df`](https://stats-uoa.github.io/s20x/reference/airpass.df.md)
+  : International Airline Passengers
+- [`apples.df`](https://stats-uoa.github.io/s20x/reference/apples.df.md)
+  : Apples Data
+- [`arousal.df`](https://stats-uoa.github.io/s20x/reference/arousal.df.md)
+  : Changes in Pupil Size with Emotional Arousal
+- [`beer.df`](https://stats-uoa.github.io/s20x/reference/beer.df.md) :
+  US Beer Production
+- [`body.df`](https://stats-uoa.github.io/s20x/reference/body.df.md) :
+  Body Image and Ethnicity Data
+- [`books.df`](https://stats-uoa.github.io/s20x/reference/books.df.md) :
+  Books Data
+- [`bursary.df`](https://stats-uoa.github.io/s20x/reference/bursary.df.md)
+  : Bursary Results for Auckland Secondary Schools
+- [`butterfat.df`](https://stats-uoa.github.io/s20x/reference/butterfat.df.md)
+  : Butterfat Data
+- [`camplake.df`](https://stats-uoa.github.io/s20x/reference/camplake.df.md)
+  : Age and Length of Camp Lake Bluegills
+- [`chalk.df`](https://stats-uoa.github.io/s20x/reference/chalk.df.md) :
+  Chalk Data
+- [`computer.df`](https://stats-uoa.github.io/s20x/reference/computer.df.md)
+  : Computer Questionnaire
+- [`course.df`](https://stats-uoa.github.io/s20x/reference/course.df.md)
+  : Stats 20x Summer School Data
+- [`course2way.df`](https://stats-uoa.github.io/s20x/reference/course2way.df.md)
+  : Exam Mark, Gender and Attendance for Stats 20x Summer School
+  Students
+- [`diamonds.df`](https://stats-uoa.github.io/s20x/reference/diamonds.df.md)
+  : Prices and Weights of Diamonds
+- [`fire.df`](https://stats-uoa.github.io/s20x/reference/fire.df.md) :
+  Fire Damage and Distance from the Fire Station
+- [`fruitfly.df`](https://stats-uoa.github.io/s20x/reference/fruitfly.df.md)
+  : Fruitfly Data
+- [`house.df`](https://stats-uoa.github.io/s20x/reference/house.df.md) :
+  Sale and Advertised Prices of Houses
+- [`incomes.df`](https://stats-uoa.github.io/s20x/reference/incomes.df.md)
+  : Mean Family Incomes
+- [`lakemary.df`](https://stats-uoa.github.io/s20x/reference/lakemary.df.md)
+  : Ages and Lengths of Lake Mary Bluegills
+- [`larain.df`](https://stats-uoa.github.io/s20x/reference/larain.df.md)
+  : Los Angeles Rainfall
+- [`mazda.df`](https://stats-uoa.github.io/s20x/reference/mazda.df.md) :
+  Year and Price of Mazda Cars
+- [`mening.df`](https://stats-uoa.github.io/s20x/reference/mening.df.md)
+  : Monthly Notifications of Meningococcal Disease
+- [`mergers.df`](https://stats-uoa.github.io/s20x/reference/mergers.df.md)
+  : Merger Days
+- [`mozart.df`](https://stats-uoa.github.io/s20x/reference/mozart.df.md)
+  : Length of Mozart's Movements
+- [`nail.df`](https://stats-uoa.github.io/s20x/reference/nail.df.md) :
+  Nail Polish Data
+- [`nzalc.df`](https://stats-uoa.github.io/s20x/reference/nzalc.df.md) :
+  Quarterly Alcohol Available for Consumption in New Zealand
+- [`nzarrivals.df`](https://stats-uoa.github.io/s20x/reference/nzarrivals.df.md)
+  : Monthly Arrivals to New Zealand
+- [`oysters.df`](https://stats-uoa.github.io/s20x/reference/oysters.df.md)
+  : Oyster Abundances over Different Sites
+- [`peru.df`](https://stats-uoa.github.io/s20x/reference/peru.df.md) :
+  Peruvian Indians
+- [`rain.df`](https://stats-uoa.github.io/s20x/reference/rain.df.md) :
+  Cloud Seeding and Levels of Rainfall
+- [`seeds.df`](https://stats-uoa.github.io/s20x/reference/seeds.df.md) :
+  Seeds Data
+- [`sheep.df`](https://stats-uoa.github.io/s20x/reference/sheep.df.md) :
+  Sheep Data
+- [`skulls.df`](https://stats-uoa.github.io/s20x/reference/skulls.df.md)
+  : Skulls Data
+- [`snapper.df`](https://stats-uoa.github.io/s20x/reference/snapper.df.md)
+  : Snapper Weight Data
+- [`soyabean.df`](https://stats-uoa.github.io/s20x/reference/soyabean.df.md)
+  : Soya Bean Yields
+- [`teach.df`](https://stats-uoa.github.io/s20x/reference/teach.df.md) :
+  Comparison of Three Teaching Methods
+- [`technitron.df`](https://stats-uoa.github.io/s20x/reference/technitron.df.md)
+  : Technitron Salary Information
+- [`thyroid.df`](https://stats-uoa.github.io/s20x/reference/thyroid.df.md)
+  : Effect of a New Drug on Thyroid Weights
+- [`toothpaste.df`](https://stats-uoa.github.io/s20x/reference/toothpaste.df.md)
+  : Crest Toothpaste
+- [`zoo.df`](https://stats-uoa.github.io/s20x/reference/zoo.df.md) : Zoo
+  Attendance during an Advertising Campaign
+
+## Other functions
+
+- [`rr()`](https://stats-uoa.github.io/s20x/reference/rr.md) : Read Data
+- [`getVersion()`](https://stats-uoa.github.io/s20x/reference/getVersion.md)
+  : s20x package version number
+
+## Deprecated
+
+These still work, but will be removed in a later release.
+
+- [`autocorPlot()`](https://stats-uoa.github.io/s20x/reference/autocorPlot.md)
+  : Autocorrelation Plot
+- [`ciReg()`](https://stats-uoa.github.io/s20x/reference/ciReg.md) :
+  Confidence Intervals for Regression models
+- [`crossFactors()`](https://stats-uoa.github.io/s20x/reference/crossFactors.md)
+  : Crossed Factors
+- [`crosstabs()`](https://stats-uoa.github.io/s20x/reference/crosstabs.md)
+  : Crosstabulation of two variables
+- [`estimateContrasts()`](https://stats-uoa.github.io/s20x/reference/estimateContrasts.md)
+  : Contrast Estimates
+- [`freq1way()`](https://stats-uoa.github.io/s20x/reference/freq1way.md)
+  : Analysis of 1-dimensional frequency tables
+- [`layout20x()`](https://stats-uoa.github.io/s20x/reference/layout20x.md)
+  : Layout
+- [`levene.test()`](https://stats-uoa.github.io/s20x/reference/levene.test.md)
+  : Levene test for the ANOVA Assumption
+- [`onewayPlot()`](https://stats-uoa.github.io/s20x/reference/onewayPlot.md)
+  : One-way Analysis of Variance Plot
+- [`predictCount()`](https://stats-uoa.github.io/s20x/reference/predictCount.md)
+  : Predicted Counts for a Log-Link Generalised Linear Model
+- [`predictGLM()`](https://stats-uoa.github.io/s20x/reference/predictGLM.md)
+  : Prediction Intervals for Log-Link and Logit-Link Generalised Linear
+  Models
+- [`residPlot()`](https://stats-uoa.github.io/s20x/reference/residPlot.md)
+  : Fitted values versus residuals plot
+- [`skewness()`](https://stats-uoa.github.io/s20x/reference/skewness.md)
+  : Skewness Statistic
+
+# Articles
+
+### Chapter 2 case studies
+
+- [Case Study 2.1: Exam vs
+  Test](https://stats-uoa.github.io/s20x/articles/CS2_1.md):
+- [Case Study 2.2: Fire
+  Damage](https://stats-uoa.github.io/s20x/articles/CS2_2.md):
+- [Case Study 2.3: Diamond
+  Rings](https://stats-uoa.github.io/s20x/articles/CS2_3.md):
+
+### Chapter 3 case studies
+
+- [Case Study 3.1: Exam by
+  itself](https://stats-uoa.github.io/s20x/articles/CS3_1.md):
+- [Case Study 3.2: STATS 201/8 Extra Case Study - One
+  Sample](https://stats-uoa.github.io/s20x/articles/CS3_2.md):
+
+### Chapter 4 case studies
+
+- [Case Study 4.1: Exam vs Assignment
+  mark](https://stats-uoa.github.io/s20x/articles/CS4_1.md):
+- [Case Study 4.2: STATS 201/8 Extra Case Study - Quadratic
+  Model](https://stats-uoa.github.io/s20x/articles/CS4_2.md):
+
+### Chapter 5 case studies
+
+- [Case Study 5.1: Exam vs
+  Attendance](https://stats-uoa.github.io/s20x/articles/CS5_1.md):
+- [Case Study 5.2: STATS 201/8 Extra Case Study - Two sample, log
+  response](https://stats-uoa.github.io/s20x/articles/CS5_2.md):
+
+### Chapter 6 case studies
+
+- [Case Study 6.1: Mazda price vs
+  age](https://stats-uoa.github.io/s20x/articles/CS6_1.md):
+- [Case Study 6.2: Students' expenditure on haircuts by
+  gender](https://stats-uoa.github.io/s20x/articles/CS6_2.md):
+- [Case Study 6.3: Students' expenditure on
+  clothing](https://stats-uoa.github.io/s20x/articles/CS6_3.md):
+- [Case Study 6.4: Clouding
+  seeding](https://stats-uoa.github.io/s20x/articles/CS6_4.md):
+- [Case Study 6.5: STATS 201/8 Extra Case Study - Log-linear
+  model](https://stats-uoa.github.io/s20x/articles/CS6_5.md):
+
+### Chapter 7 case studies
+
+- [Case Study 7.1: Case Study for Chapter 7: Power law model for cherry
+  tree volumes](https://stats-uoa.github.io/s20x/articles/CS7_1.md):
+- [Case Study 7.2: STATS 201/8 Extra Case Study - Log-Log
+  Model](https://stats-uoa.github.io/s20x/articles/CS7_2.md):
+
+### Chapter 8 case studies
+
+- [Case Study 8.1: Exam vs attendance and test
+  mark](https://stats-uoa.github.io/s20x/articles/CS8_1.md):
+- [Case Study 8.2: Refractive Index
+  Calibration](https://stats-uoa.github.io/s20x/articles/CS8_2.md):
+- [Case Study 8.3: STATS 201/8 Extra Case Study - Non-parallel Lines
+  Model](https://stats-uoa.github.io/s20x/articles/CS8_3.md):
+
+### Chapter 9 case studies
+
+- [Case Study 9.1: Language score vs teaching method and student
+  IQ](https://stats-uoa.github.io/s20x/articles/CS9_1.md):
+- [Case Study 9.2: Thyroid drug
+  experiment](https://stats-uoa.github.io/s20x/articles/CS9_2.md):
+- [Case Study 9.3: Water Hardness and
+  Mortality](https://stats-uoa.github.io/s20x/articles/CS9_3.md):
+- [Case Study 9.4: Forced Expiratory
+  Volume](https://stats-uoa.github.io/s20x/articles/CS9_4.md):
+- [Case Study 9.5: Case study: CO2 Emissions Data from Mauna
+  Loa](https://stats-uoa.github.io/s20x/articles/CS9_5.md):
+- [Case Study 9.6: STATS 201/8 Extra Case Study - Parallel Lines
+  Model](https://stats-uoa.github.io/s20x/articles/CS9_6.md):
+
+### Chapter 10 case studies
+
+- [Case Study 10.1: Birthweight of
+  babies](https://stats-uoa.github.io/s20x/articles/CS10_1.md):
+- [Case Study 10.2: Gender differences in
+  salary](https://stats-uoa.github.io/s20x/articles/CS10_2.md):
+- [Case Study 10.3: STATS 201/8 Extra Case Study - Multiple Regression
+  Model](https://stats-uoa.github.io/s20x/articles/CS10_3.md):
+
+### Chapter 11 case studies
+
+- [Case Study 11.1: Fruit-flies, sex and
+  frustration](https://stats-uoa.github.io/s20x/articles/CS11_1.md):
+- [Case Study 11.2: Exam vs
+  Degree](https://stats-uoa.github.io/s20x/articles/CS11_2.md):
+- [Case Study 11.3: STATS 201/8 Extra Case Study - Oneway ANOVA
+  Model](https://stats-uoa.github.io/s20x/articles/CS11_3.md):
+
+### Chapter 12 case studies
+
+- [Case Study 12.1: Exam vs Test &
+  Attendance](https://stats-uoa.github.io/s20x/articles/CS12_1.md):
+- [Case Study 12.2: Impact of a cyclone on coral
+  reefs](https://stats-uoa.github.io/s20x/articles/CS12_2.md):
+- [Case Study 12.3: Extracting dietary supplements from
+  seaweed](https://stats-uoa.github.io/s20x/articles/CS12_3.md):
+- [Case Study 12.4: STATS 201/8 Extra Case Study - Twoway ANOVA Model,
+  Interaction](https://stats-uoa.github.io/s20x/articles/CS12_4.md):
+
+### Chapter 14 case studies
+
+- [Case Study 14.1: Decline in expected earthquake numbers with
+  magnitude](https://stats-uoa.github.io/s20x/articles/CS14_1.md):
+- [Case Study 14.2: Snapper counts in and around marine
+  reserves](https://stats-uoa.github.io/s20x/articles/CS14_2.md):
+- [Case Study 14.3: STATS 201/8 Extra Case Study - Poisson GLM. Oneway
+  ANOVA](https://stats-uoa.github.io/s20x/articles/CS14_3.md):
+- [Case Study 14.4: STATS 201/8 Extra Case Study - Poisson GLM. Parallel
+  Curves](https://stats-uoa.github.io/s20x/articles/CS14_4.md):
+
+### Chapter 15 case studies
+
+- [Case Study 15.1: Haddock retention in a
+  trawl](https://stats-uoa.github.io/s20x/articles/CS15_1.md):
+- [Case Study 15.2: Whio chick
+  survival](https://stats-uoa.github.io/s20x/articles/CS15_2.md):
+- [Case Study 15.3: STATS 201/8 Extra Case Study - Binomial GLM -
+  Grouped Data.](https://stats-uoa.github.io/s20x/articles/CS15_3.md):
+- [Case Study 15.4: STATS 201/8 Extra Case Study - Binomial GLM - Binary
+  Data.](https://stats-uoa.github.io/s20x/articles/CS15_4.md):
+
+### Chapter 17 case studies
+
+- [Case Study 17.1: Additional Time Series Case Study A: Public
+  Drunkenness
+  Data](https://stats-uoa.github.io/s20x/articles/CS17_1.md):
+- [Case Study 17.2: Additional Time Series Case Study B: Google
+  Influenza Searches
+  Data](https://stats-uoa.github.io/s20x/articles/CS17_2.md):
+- [Case Study 17.3: Additional Time Series Case Study C: Auckland Rental
+  Data](https://stats-uoa.github.io/s20x/articles/CS17_3.md):
+- [Case Study 17.4: Additional Time Series Case Study D: Milk Production
+  Data](https://stats-uoa.github.io/s20x/articles/CS17_4.md):
