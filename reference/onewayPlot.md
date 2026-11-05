@@ -110,7 +110,7 @@ onewayPlot(x, ..., ylabel = nms[1], flabel = nms[2])
 
 ## Note
 
-Deprecated in s20x 3.3.6.
+Deprecated in s20x 3.4.0.
 [`summary1way()`](https://stats-uoa.github.io/s20x/reference/summary1way.md)
 still draws this plot.
 

@@ -29,7 +29,7 @@ No return value.
 This is a legacy convenience wrapper retained for compatibility with
 older teaching material. New code can use `par(mfrow = ...)` directly.
 
-Deprecated in s20x 3.3.6. Use `par(mfrow = )` instead.
+Deprecated in s20x 3.4.0. Use `par(mfrow = )` instead.
 
 ## Examples
 

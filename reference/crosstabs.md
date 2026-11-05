@@ -60,7 +60,7 @@ course material. New code should usually prefer
 [`chisq.test()`](https://rdrr.io/r/stats/chisq.test.html) directly, or a
 purpose-built teaching wrapper.
 
-Deprecated in s20x 3.3.6. Use
+Deprecated in s20x 3.4.0. Use
 [`table()`](https://rdrr.io/r/base/table.html) and
 [`chisq.test()`](https://rdrr.io/r/stats/chisq.test.html) instead.
 

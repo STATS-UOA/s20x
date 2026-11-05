@@ -36,7 +36,7 @@ with older teaching material. New code should usually prefer the current
 diagnostic workflow used by
 [`modelcheck()`](https://stats-uoa.github.io/s20x/reference/modelcheck.md).
 
-Deprecated in s20x 3.3.6. Use
+Deprecated in s20x 3.4.0. Use
 [`modelcheck()`](https://stats-uoa.github.io/s20x/reference/modelcheck.md)
 instead.
 

@@ -53,7 +53,7 @@ of the given factors.
 This function actually returns a `factor` now instead of a character
 string, so coercion into a `factor` is no longer necessary.
 
-Deprecated in s20x 3.3.6. Use
+Deprecated in s20x 3.4.0. Use
 [`interaction()`](https://rdrr.io/r/base/interaction.html) instead.
 
 ## See also

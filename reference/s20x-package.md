@@ -17,6 +17,8 @@ arranging, or further customisation.
 
 Useful links:
 
+- <https://stats-uoa.github.io/s20x/>
+
 - <https://github.com/STATS-UOA/s20x>
 
 - Report bugs at <https://github.com/STATS-UOA/s20x/issues>

@@ -62,7 +62,7 @@ interface and is not a complete reproduction of
 
 ## Note
 
-Deprecated in s20x 3.3.9. Use
+Deprecated in s20x 3.4.0. Use
 [`predict20x`](https://stats-uoa.github.io/s20x/reference/predict20x.md)
 instead.
 

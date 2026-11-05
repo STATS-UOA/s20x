@@ -28,7 +28,7 @@ Returns the value of the skewness.
 
 ## Note
 
-Deprecated in s20x 3.3.6.
+Deprecated in s20x 3.4.0.
 [`summaryStats()`](https://stats-uoa.github.io/s20x/reference/summaryStats.md)
 still reports skewness.
 

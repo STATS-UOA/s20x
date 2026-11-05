@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.3.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,259 @@
       <small>Source: <a href="https://github.com/STATS-UOA/s20x/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.4.0" id="s20x-340">s20x 3.4.0<a class="anchor" aria-label="anchor" href="#s20x-340"></a></h2>
+<div class="section level3">
+<h3 id="new-features-3-4-0">New features<a class="anchor" aria-label="anchor" href="#new-features-3-4-0"></a></h3>
+<ul><li>predict20x() is now an S3 generic with methods for <code>lm</code>, <code>glm</code> and <code>tslm</code> fits, so one function covers them all. For a <code>glm</code> fit, <code>type</code> can be <code>"response"</code> (the default), <code>"link"</code> or <code>"odds"</code>. tslm fits with <code>ar(p)</code> errors are not supported yet.</li>
+<li>predict20x(), summary1way(), summary2way() and summaryStats() now return classed objects with print methods. What they print is unchanged, and printing a saved result shows the same table.</li>
+<li>predict20x() accepts <code>conf.level</code> and <code>digits</code>, and summary1way() and summary2way() accept <code>digits</code>. The older <code>cilevel</code> and <code>digit</code> still work.</li>
+<li>
+<code>LazyData: true</code> means <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> is now optional.</li>
+<li>The package now has a website, <a href="https://stats-uoa.github.io/s20x/" class="uri">https://stats-uoa.github.io/s20x/</a>, with the function reference and all the case studies as articles, and a logo.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-and-removed-3-4-0">Deprecated and removed<a class="anchor" aria-label="anchor" href="#deprecated-and-removed-3-4-0"></a></h3>
+<ul><li>Deprecated predictCount() and predictGLM() in favour of predict20x().</li>
+<li>Deprecated ciReg(), layout20x(), freq1way(), residPlot(), levene.test(), estimateContrasts(), crossFactors(), crosstabs(), onewayPlot(), twosampPlot(), autocorPlot() and skewness(), which the course no longer uses directly. summary1way() still draws its plot, and summaryStats() still reports skewness.</li>
+<li>Deprecated the <code>shapiro.wilk</code> argument of normcheck().</li>
+<li>Removed Levene’s test from eovcheck(). Passing <code>levene</code> now gives a warning and is ignored.</li>
+<li>Removed the demo scripts.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-3-4-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-4-0"></a></h3>
+<div class="section level4">
+<h4 id="results-that-changed-3-4-0">Results that changed<a class="anchor" aria-label="anchor" href="#results-that-changed-3-4-0"></a></h4>
+<ul><li>summary2way(): <code>page = "nointeraction"</code> applied <code>FUN</code> twice, so <code>FUN = exp</code> printed exp(exp(x)).</li>
+<li>tslm(): residual diagnostics followed row order rather than <code>time</code>, which gave misleading ACF and time plots. <code>ar(p)</code> models are now fitted in <code>time</code> order, so for data not already sorted, residuals() and fitted() come back in time order. Coefficients do not change.</li>
+<li>tslm(): <code><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset()</a></code> terms were dropped without warning. Using <code><a href="https://rdrr.io/r/stats/offset.html" class="external-link">offset()</a></code> with <code>ar(p)</code> now gives an error, because nlme::gls() does not support it.</li>
+<li>eovcheck(): <code>lm</code> objects were refitted from the call, which lost <code>subset</code> and <code>weights</code> and failed for models with no <code>data</code> argument or a stored formula.</li>
+<li>predict20x() and predictCount(): named columns in <code>newdata</code> are now matched by name. They were previously assigned by position, even when in a different order from the model.</li>
+<li>predict20x() on a <code>glm</code> fit now gives <code>glm</code> intervals rather than treating the model as an <code>lm</code> fit.</li>
+<li>onewayPlot() on an <code>lm</code> object, and summary1way(), ignored <code>conf.level</code>, <code>interval.type</code>, <code>pooled</code> and the other plotting options.</li>
+<li>rowdistr(): <code>comp = "within"</code> printed blank chi-square statistics and p-values.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="errors-on-valid-input-3-4-0">Errors on valid input<a class="anchor" aria-label="anchor" href="#errors-on-valid-input-3-4-0"></a></h4>
+<ul><li>predict20x(), predictCount() and predictGLM() now work with transformed terms such as <code>log(x)</code> and <code>factor(g)</code>.</li>
+<li>summary1way() now works with transformed terms such as <code>factor(x)</code>.</li>
+<li>summary2way(): <code>page = "interaction"</code> no longer fails when a factor level contains a hyphen, and its headings now name the first factor rather than printing <code>c("gender", "picture")</code>.</li>
+<li>onewayPlot(y, g) no longer fails when <code>ylabel</code> and <code>flabel</code> are not supplied.</li>
+<li>pairs20x(): <code>pch</code>, <code>col</code>, <code>cex</code> and <code>bg</code> now work with the base engine, and apply to the scatter plots.</li>
+<li>displayPairs() keeps all comparisons when two factors share a level name.</li>
+<li>summaryStats() now accepts <code>na.action</code>.</li>
+<li>cooks20x() now accepts <code>axisOpts</code> with only some options set.</li>
+<li>tslm() now finds variables local to a calling function when <code>data</code> or <code>time</code> is supplied.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="smaller-fixes-3-4-0">Smaller fixes<a class="anchor" aria-label="anchor" href="#smaller-fixes-3-4-0"></a></h4>
+<ul><li>summary2way(): <code>print.out = FALSE</code> now suppresses printing for the default output.</li>
+<li>eovcheck(): <code>col</code> now sets the smoother colour with the base engine.</li>
+<li>normcheck() labels a vector’s histogram from the call rather than always <code>x</code>, and accepts hex and palette-number colours.</li>
+<li>openCaseStudy() no longer opens an editor in non-interactive sessions.</li>
+</ul></div>
+</div>
+<div class="section level3">
+<h3 id="case-studies-3-4-0">Case studies<a class="anchor" aria-label="anchor" href="#case-studies-3-4-0"></a></h3>
+<ul><li>Case studies 5.2 and 10.3 now render. A damaged header stopped them working.</li>
+<li>Case study 5.2: corrected the R-squared (43.1%, not 36.7%), the dummy variable description, and a formula that referred to burn rather than price.</li>
+<li>Case study 9.1: corrected swapped intervals for method 3 against methods 1 and 2.</li>
+<li>Case study 10.1: removed a stray digit from an interval, and a decrease given as negative.</li>
+<li>Moved the case studies to predict20x(), replaced <code>T</code> and <code>F</code> with <code>TRUE</code> and <code>FALSE</code>, and styled the code with styler.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="documentation-and-development-3-4-0">Documentation and development<a class="anchor" aria-label="anchor" href="#documentation-and-development-3-4-0"></a></h3>
+<ul><li>Rewrote the README and moved the release history into this file.</li>
+<li>Corrected the documentation, which described ggplot2 and GGally as optional. Both are required dependencies.</li>
+<li>Strengthened the tests with independent checks of the ANOVA results, prediction intervals, tslm AR fits and plotting defaults.</li>
+<li>Added GitHub workflows for the website, case study styling and R-hub checks.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.3.0" id="s20x-330">s20x 3.3.0<a class="anchor" aria-label="anchor" href="#s20x-330"></a></h2><p class="text-muted">CRAN release: 2026-07-01</p>
+<ul><li>Prepared s20x 3.3.0 as a CRAN-facing release after optional plotting engine polish and the tslm() calling-environment compatibility fix.</li>
+<li>Removed obsolete deprecated diagnostics methods that triggered roxygen warnings during documentation regeneration.</li>
+<li>Updated diagnostic API tests so modcheck.lm removal is treated as deliberate while modelcheck remains the supported model diagnostic helper.</li>
+<li>Removed stale roxygen argument tags for deleted diagnostics methods so regenerated Rd usage sections pass CRAN checks.</li>
+<li>Replaced non-standard DESCRIPTION contributor roles with CRAN-standard ctb roles.</li>
+<li>Rendered casestudy() files in a fresh environment with globalenv() as the parent instead of passing .GlobalEnv directly.</li>
+<li>Validated with strict tests, local as-CRAN checks, and external CRAN preflight submissions.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.325" id="s20x-32325">s20x 3.2.325<a class="anchor" aria-label="anchor" href="#s20x-32325"></a></h2>
+<ul><li>Added regression tests comparing tslm() calling-environment fits with explicit data-frame fits.</li>
+<li>Covered both ordinary lm-backed fits and AR gls-backed fits using the existing beer.df and airpass.df teaching datasets.</li>
+<li>Preserved the Stage 21.1 tslm() implementation while locking in the new data-optional behaviour before CRAN submission.</li>
+<li>Kept tests offline, deterministic, and focused on user-visible teaching workflows.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.323" id="s20x-32323">s20x 3.2.323<a class="anchor" aria-label="anchor" href="#s20x-32323"></a></h2>
+<ul><li>Updated tslm() so formulas can be evaluated from the calling environment when data is omitted, matching the familiar lm() and glm() workflow.</li>
+<li>Preserved explicit data-frame use for tslm() while using model-frame-based data handling for safer internal evaluation.</li>
+<li>Added deterministic tests covering omitted data and explicit data for ordinary tslm() fits.</li>
+<li>Kept the change small and backward compatible for the Stage 21.1 CRAN-preparation workflow.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.320" id="s20x-32320">s20x 3.2.320<a class="anchor" aria-label="anchor" href="#s20x-32320"></a></h2>
+<ul><li>Added final release-polish wording for optional plotting engines, with base graphics remaining the default.</li>
+<li>Confirmed Stage 20.1 is limited to dependency-safety and release-note polish rather than new plotting functionality.</li>
+<li>Preserved compatibility by treating ggplot2 and GGally as optional engines rather than required plotting dependencies.</li>
+<li>Used the stage workflow’s validation-mode detection so only changed files trigger package checks.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.319" id="s20x-32319">s20x 3.2.319<a class="anchor" aria-label="anchor" href="#s20x-32319"></a></h2>
+<ul><li>Added final release-polish wording for optional plotting engines, with base graphics remaining the default.</li>
+<li>Confirmed Stage 20.1 is limited to dependency-safety and release-note polish rather than new plotting functionality.</li>
+<li>Preserved compatibility by treating ggplot2 and GGally as optional engines rather than required plotting dependencies.</li>
+<li>Used the stage workflow’s validation-mode detection so only changed files trigger package checks.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.318" id="s20x-32318">s20x 3.2.318<a class="anchor" aria-label="anchor" href="#s20x-32318"></a></h2>
+<ul><li>Adjusted pairs20x() ggplot2 diagonal histogram panels so the y-limits reserve base-like headroom for variable labels.</li>
+<li>Moved diagonal labels above the histogram bars rather than inside the plotted counts.</li>
+<li>Added a regression test for the ggplot2 histogram panel y-limit contract.</li>
+<li>Preserved the base graphics engine as the default and kept ggplot2/GGally optional.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.317" id="s20x-32317">s20x 3.2.317<a class="anchor" aria-label="anchor" href="#s20x-32317"></a></h2>
+<ul><li>Added the missing ggplot2 geom_segment() import used by the base-like modelcheck() Cook’s distance panel.</li>
+<li>Set the returned pairs20x() GGally matrix axisLabels field to document the outside-axis contract used by the optional ggplot2 engine.</li>
+<li>Preserved the Stage 19.7 pairs20x() visual-parity changes and the base graphics default.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.315" id="s20x-32315">s20x 3.2.315<a class="anchor" aria-label="anchor" href="#s20x-32315"></a></h2>
+<ul><li>Added the missing ggplot2 geom_text import used by the modelcheck() Cook’s distance labels.</li>
+<li>Kept the Stage 19.6.3 base-like ggplot2 modelcheck layout and Cook’s distance display unchanged.</li>
+<li>Preserved the base graphics engine as the default and kept ggplot2 optional.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.313" id="s20x-32313">s20x 3.2.313<a class="anchor" aria-label="anchor" href="#s20x-32313"></a></h2>
+<ul><li>Changed the optional eovcheck() ggplot2 smoother example to use the peru.fit regression model rather than the oyster one-way ANOVA-style fit.</li>
+<li>Kept the oyster example for the ggplot2 object-return and Levene/two-standard-deviation demonstrations where it remains appropriate.</li>
+<li>Avoided loess singularity warnings in the documented smoother example while preserving package behaviour.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.312" id="s20x-32312">s20x 3.2.312<a class="anchor" aria-label="anchor" href="#s20x-32312"></a></h2>
+<ul><li>Added an explicit loess formula to the optional modelcheck() ggplot2 smoother so printing the diagnostic plot object is silent.</li>
+<li>Preserved the Stage 19.6 base-like ggplot2 diagnostic styling and Cook’s distance vertical-line display.</li>
+<li>Kept the base graphics engine as the default and preserved the optional ggplot2 object-return paths.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.310" id="s20x-32310">s20x 3.2.310<a class="anchor" aria-label="anchor" href="#s20x-32310"></a></h2>
+<ul><li>Polished the optional ggplot2 eovcheck output so the two-standard-deviation reference lines remain visible.</li>
+<li>Included the plus/minus two-standard-deviation limits in the plotted y-range and matched the base plot line weight more closely.</li>
+<li>Removed the default grey ggplot2 panel styling from the optional eovcheck engine to keep the teaching plot closer to base graphics.</li>
+<li>Kept the base graphics engine as the default and preserved the optional ggplot2 object-return path.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.309" id="s20x-32309">s20x 3.2.309<a class="anchor" aria-label="anchor" href="#s20x-32309"></a></h2>
+<ul><li>Extended the optional normcheck() ggplot2 histogram density curve across the full displayed x-axis range.</li>
+<li>Kept the histogram as a native ggplot2 geom_histogram() layer while replacing stat_function() with explicit density data.</li>
+<li>Preserved base graphics defaults and existing normcheck() return behaviour.</li>
+<li>Documented the Stage 19.5 normcheck density-curve polish notes.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.308" id="s20x-32308">s20x 3.2.308<a class="anchor" aria-label="anchor" href="#s20x-32308"></a></h2>
+<ul><li>Polished the optional ggplot2/GGally engine for pairs20x() while preserving base graphics as the default.</li>
+<li>Renamed internal pairs20x ggplot2 helpers to use clearer *_ggplot2 names.</li>
+<li>Kept the existing ggplot2/GGally example and return-class tests for the optional plot matrix path.</li>
+<li>Documented the Stage 19.4 pairs20x plotting-engine review notes.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.307" id="s20x-32307">s20x 3.2.307<a class="anchor" aria-label="anchor" href="#s20x-32307"></a></h2>
+<ul><li>Polished the optional ggplot2 engine for modelcheck() while preserving base graphics as the default.</li>
+<li>Renamed internal modelcheck ggplot2 helpers and list classes to use clearer *_ggplot2 names.</li>
+<li>Reworked ggplot2 aesthetic mappings to use data-column pronouns and avoid external-vector warnings.</li>
+<li>Added a print method for multiple ggplot2 modelcheck plots and ggplot2-engine examples for individual diagnostics.</li>
+<li>Added offline regression tests for the renamed class and clean plot printing.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.306" id="s20x-32306">s20x 3.2.306<a class="anchor" aria-label="anchor" href="#s20x-32306"></a></h2>
+<ul><li>Polished the optional ggplot2 engine for eovcheck() while preserving base graphics as the default.</li>
+<li>Renamed internal eovcheck ggplot2 helpers to use clearer *_ggplot2 names.</li>
+<li>Reworked ggplot2 aesthetic mappings to use data-column pronouns and avoid external-vector warnings.</li>
+<li>Added ggplot2-engine examples and an offline regression test for clean plot printing.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.305" id="s20x-32305">s20x 3.2.305<a class="anchor" aria-label="anchor" href="#s20x-32305"></a></h2>
+<ul><li>Restored the documented s20xNormcheckGgplot2 return class while retaining the clearer internal s20xNormcheck_ggplot2 class alias.</li>
+<li>Preserved the Stage 19.1 ggplot2 normcheck plotting fixes, examples, and naming cleanup.</li>
+<li>Fixed compatibility with existing diagnostic plotting tests after the internal class-name cleanup.</li>
+<li>Preserved base graphics as the default plotting engine and kept ggplot2 optional.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.303" id="s20x-32303">s20x 3.2.303<a class="anchor" aria-label="anchor" href="#s20x-32303"></a></h2>
+<ul><li>Added regression tests that scan controlled R and test files for namespace operators in executable code.</li>
+<li>Added regression tests that scan controlled R and test files for dynamic namespace lookup helpers.</li>
+<li>Reworked the internal-test helper to avoid getFromNamespace() while preserving access to unexported helpers during tests.</li>
+<li>Preserved the Stage 18.6 import-based plotting cleanup and base graphics defaults.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.302" id="s20x-32302">s20x 3.2.302<a class="anchor" aria-label="anchor" href="#s20x-32302"></a></h2>
+<ul><li>Replaced dynamic ggplot2 and GGally plotting function lookups with direct calls backed by roxygen import declarations.</li>
+<li>Moved ggplot2 and GGally into Imports so their functions can be declared through NAMESPACE.</li>
+<li>Removed namespace operator usage from controlled package and test code by using imported functions and a shared internal-test helper.</li>
+<li>Preserved base graphics as the default plotting engine.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.301" id="s20x-32301">s20x 3.2.301<a class="anchor" aria-label="anchor" href="#s20x-32301"></a></h2>
+<ul><li>Refactored normcheck ggplot2 Q-Q and histogram builders to use grouped optional plotting function lookups.</li>
+<li>Refactored the eovcheck ggplot2 diagnostic builder to use grouped optional plotting function lookups.</li>
+<li>Preserved base graphics as the default engine and kept ggplot2 optional.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.300" id="s20x-32300">s20x 3.2.300<a class="anchor" aria-label="anchor" href="#s20x-32300"></a></h2>
+<ul><li>Added a grouped optional plotting function lookup helper for ggplot2 implementations.</li>
+<li>Refactored modelcheck ggplot2 residual and Cook distance builders to use grouped helper lookups.</li>
+<li>Preserved base graphics as the default engine and kept ggplot2 optional.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.299" id="s20x-32299">s20x 3.2.299<a class="anchor" aria-label="anchor" href="#s20x-32299"></a></h2>
+<ul><li>Centralised optional plotting function lookup behind the internal getPlottingFunction() helper.</li>
+<li>Replaced repeated direct getExportedValue() calls in the ggplot2 and GGally plotting implementations.</li>
+<li>Preserved base graphics as the default engine and kept ggplot2/GGally optional.</li>
+<li>Validated by the standard s20x stage workflow.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.298" id="s20x-32298">s20x 3.2.298<a class="anchor" aria-label="anchor" href="#s20x-32298"></a></h2>
+<ul><li>Added matchPlottingEngine() as a shared internal helper for plotting engine argument matching.</li>
+<li>Replaced repeated match.arg(engine) calls in normcheck(), eovcheck(), modelcheck(), and pairs20x().</li>
+<li>Added a Stage 18.2 plotting engine dispatch note for the cleanup and deferred candidates.</li>
+<li>Ignored the local .s20x_validation_mode file so R CMD check tarballs do not include validation state.</li>
+<li>Preserved base graphics defaults, optional ggplot2/GGally behavior, and teaching-oriented plotting output.</li>
+</ul><p>This file records user-facing and developer-facing changes for s20x. It is a release-note summary, not a commit-by-commit history.</p>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.297" id="s20x-32297">s20x 3.2.297<a class="anchor" aria-label="anchor" href="#s20x-32297"></a></h2>
+<ul><li>Added a shared internal helper for optional plotting package availability checks.</li>
+<li>Replaced duplicated ggplot2 and GGally engine checks in normcheck(), eovcheck(), modelcheck(), and pairs20x().</li>
+<li>Added a Stage 18.1 plotting audit note to record remaining cleanup candidates.</li>
+<li>Preserved base graphics defaults, optional ggplot2/GGally behavior, and teaching-oriented plotting output.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.296" id="s20x-32296">s20x 3.2.296<a class="anchor" aria-label="anchor" href="#s20x-32296"></a></h2>
+<ul><li>Clarified README guidance for ggplot2 diagnostic return values.</li>
+<li>Added tests that pin named-list return contracts for multi-plot ggplot2 diagnostics.</li>
+<li>Confirmed single selected diagnostics still return individual ggplot objects where appropriate.</li>
+<li>Preserved base graphics as the default plotting engine.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.2.295" id="s20x-32295">s20x 3.2.295<a class="anchor" aria-label="anchor" href="#s20x-32295"></a></h2>
 <div class="section level4">
@@ -60,6 +313,27 @@
 <li>No plotting behaviour or public API changed.</li>
 </ul></div>
 </div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.292" id="s20x-32292">s20x 3.2.292<a class="anchor" aria-label="anchor" href="#s20x-32292"></a></h2>
+<ul><li>Removed no-op examplesIf blocks from deprecated, unexported legacy helper documentation.</li>
+<li>Clarified the deprecated boxqq(), stripqq(), and modcheck() descriptions without restoring exported examples.</li>
+<li>Preserved legacy helper behavior while reducing CRAN-facing example clutter in generated Rd files.</li>
+<li>Regenerated documentation should be produced by devtools::document() during the stage runner.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.291" id="s20x-32291">s20x 3.2.291<a class="anchor" aria-label="anchor" href="#s20x-32291"></a></h2>
+<ul><li>Refreshed legacy helper documentation so deprecated, unexported functions no longer show direct internal-call examples.</li>
+<li>Replaced older case-study dontrun examples with interactive examples for CRAN-facing documentation hygiene.</li>
+<li>Preserved case-study and deprecated-helper behavior while making the examples clearer for current teaching material.</li>
+<li>Regenerated documentation should be produced by devtools::document() during the stage runner.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.290" id="s20x-32290">s20x 3.2.290<a class="anchor" aria-label="anchor" href="#s20x-32290"></a></h2>
+<ul><li>Clarified that the default base plotting engine preserves direct teaching graphics while optional ggplot2 engines return reusable plot objects.</li>
+<li>Added guarded examples for optional ggplot2 and GGally plotting engines in normcheck(), eovcheck(), modelcheck(), and pairs20x().</li>
+<li>Kept ggplot2 and GGally usage behind requireNamespace() guards so examples remain compatible when optional packages are unavailable.</li>
+<li>Regenerated documentation should be produced by devtools::document() during the stage runner.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.2.288" id="s20x-32288">s20x 3.2.288<a class="anchor" aria-label="anchor" href="#s20x-32288"></a></h2>
 <div class="section level4">
@@ -374,41 +648,18 @@
 <li>Added package infrastructure for automated R CMD check runs.</li>
 <li>Updated package build ignores for repository-only infrastructure files.</li>
 </ul></div>
-<div class="section level3">
-<h3 id="s20x-3-2-240">s20x 3.2.296<a class="anchor" aria-label="anchor" href="#s20x-3-2-240"></a></h3>
-<ul><li>Clarified README guidance for ggplot2 diagnostic return values.</li>
-<li>Added tests that pin named-list return contracts for multi-plot ggplot2 diagnostics.</li>
-<li>Confirmed single selected diagnostics still return individual ggplot objects where appropriate.</li>
-<li>Preserved base graphics as the default plotting engine.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="s20x-3-2-240-1">s20x 3.2.292<a class="anchor" aria-label="anchor" href="#s20x-3-2-240-1"></a></h3>
-<ul><li>Removed no-op examplesIf blocks from deprecated, unexported legacy helper documentation.</li>
-<li>Clarified the deprecated boxqq(), stripqq(), and modcheck() descriptions without restoring exported examples.</li>
-<li>Preserved legacy helper behavior while reducing CRAN-facing example clutter in generated Rd files.</li>
-<li>Regenerated documentation should be produced by devtools::document() during the stage runner.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="s20x-3-2-240-2">s20x 3.2.291<a class="anchor" aria-label="anchor" href="#s20x-3-2-240-2"></a></h3>
-<ul><li>Refreshed legacy helper documentation so deprecated, unexported functions no longer show direct internal-call examples.</li>
-<li>Replaced older case-study dontrun examples with interactive examples for CRAN-facing documentation hygiene.</li>
-<li>Preserved case-study and deprecated-helper behavior while making the examples clearer for current teaching material.</li>
-<li>Regenerated documentation should be produced by devtools::document() during the stage runner.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="s20x-3-2-240-3">s20x 3.2.290<a class="anchor" aria-label="anchor" href="#s20x-3-2-240-3"></a></h3>
-<ul><li>Clarified that the default base plotting engine preserves direct teaching graphics while optional ggplot2 engines return reusable plot objects.</li>
-<li>Added guarded examples for optional ggplot2 and GGally plotting engines in normcheck(), eovcheck(), modelcheck(), and pairs20x().</li>
-<li>Kept ggplot2 and GGally usage behind requireNamespace() guards so examples remain compatible when optional packages are unavailable.</li>
-<li>Regenerated documentation should be produced by devtools::document() during the stage runner.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="s20x-3-2-240-4">s20x 3.2.2<a class="anchor" aria-label="anchor" href="#s20x-3-2-240-4"></a></h3>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.2.2" id="s20x-322">s20x 3.2.2<a class="anchor" aria-label="anchor" href="#s20x-322"></a></h2><p class="text-muted">CRAN release: 2026-01-14</p>
 <p>A small number of the datasets have been slightly altered, and their associated documentation accordingly. The changes consist of adding some useful extra variables to the three time series datasets <code>airpass.df</code>, <code>beer.df</code> and <code>larain.df</code>. These variables are <code>t</code> which is just a time index to save the user creating it if they want to fit a lag response model, and either <code>month</code> and <code>year</code> or both. These are factor variables giving the year the observation recorded, and if relevant the month. These extra variables can be used for time series analysis or plots.</p>
 <p>In addition we have made an attempt to use SI units rather than imperial units where sensible. Some examples of where it is sensible: converting inches to millimetres, pounds to kilograms, and acre-feet/gallons to litres (or megalitres). Some examples of where it is not sensible are carats (industry standard) and converting blood pressue to kiloPascals instead of millimetres of mecury (mm Hg), which again is the health profession standard. If these conversions have been made, then they have been done as extra variables added to the dataset, rather than replacing the original measurements. The logic for this is to preserve the datasets as is to avoid lecture notes mismatches - at least for the time being.</p>
 </div>
-<div class="section level3">
-<h3 id="s20x-3-2-240-5">s20x 3.1-21<a class="anchor" aria-label="anchor" href="#s20x-3-2-240-5"></a></h3>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.1-24" id="s20x-31-24">s20x 3.1-24<a class="anchor" aria-label="anchor" href="#s20x-31-24"></a></h2>
+<p>A new function called <code>modcheck</code> has been added. This allows all four standard 20x model checking plots – residuals versus fitted values, a normal Q-Q plot, a histogram of residuals, and a Cook’s distance plot – to be drawn on the same plot at once. This function needed a much more flexible version of <code>normcheck</code>, and needed modifications to <code>eovcheck</code> and <code>cooks20x</code>. I have not put it on CRAN yet because of the chance that it will fail for our current students. We <em>really</em> need some unit testing in this package so that this process can be sped up.</p>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.1-21" id="s20x-31-21">s20x 3.1-21<a class="anchor" aria-label="anchor" href="#s20x-31-21"></a></h2>
 <p>Ben Stevenson added some code to summary2way so the attribute information from <code>TukeyHSD</code> is preserved. That is so you see this</p>
 <pre><code>&gt; summary2way(fit, page = "interaction")
   Tukey multiple comparisons of means
@@ -420,11 +671,6 @@ $`store:crust`</code></pre>
 <p>instead of this</p>
 <pre><code>&gt; summary2way(fit, page = "interaction")
 $`store:crust`</code></pre>
-</div>
-<div class="section level3">
-<h3 id="s20x-3-2-240-6">s20x 3.1-24<a class="anchor" aria-label="anchor" href="#s20x-3-2-240-6"></a></h3>
-<p>A new function called <code>modcheck</code> has been added. This allows all four standard 20x model checking plots – residuals versus fitted values, a normal Q-Q plot, a histogram of residuals, and a Cook’s distance plot – to be drawn on the same plot at once. This function needed a much more flexible version of <code>normcheck</code>, and needed modifications to <code>eovcheck</code> and <code>cooks20x</code>. I have not put it on CRAN yet because of the chance that it will fail for our current students. We <em>really</em> need some unit testing in this package so that this process can be sped up.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

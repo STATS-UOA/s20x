@@ -30,7 +30,7 @@ residuals about the value zero.
 
 ## Note
 
-Deprecated in s20x 3.3.6. Use `acf(residuals(fit))` instead.
+Deprecated in s20x 3.4.0. Use `acf(residuals(fit))` instead.
 
 `autocor.plot` is deprecated and no longer exported. Use `autocorPlot()`
 in new code.

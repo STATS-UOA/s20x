@@ -54,7 +54,7 @@ A list with the following elements:
 
 ## Note
 
-Deprecated in s20x 3.3.6. It will be removed in a later release.
+Deprecated in s20x 3.4.0. It will be removed in a later release.
 
 ## See also
 

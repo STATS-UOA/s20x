@@ -57,7 +57,7 @@ the unadjusted p-value, and the Tukey and Bonferroni p-values.
 
 ## Note
 
-Deprecated in s20x 3.3.6. Use the emmeans package instead.
+Deprecated in s20x 3.4.0. Use the emmeans package instead.
 
 ## See also
 

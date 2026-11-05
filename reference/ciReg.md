@@ -30,7 +30,7 @@ endpoints of the intervals.
 
 ## Note
 
-Deprecated in s20x 3.3.6. Use
+Deprecated in s20x 3.4.0. Use
 [`confint()`](https://rdrr.io/r/stats/confint.html) instead.
 
 ## See also
