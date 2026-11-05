@@ -28,7 +28,7 @@ Perform a Levene test for equal group variances in both one-way and two-way
 ANOVA. A table with the results is (normally) displayed.
 }
 \note{
-Deprecated in s20x 3.3.6. It will be removed in a later release.
+Deprecated in s20x 3.4.0. It will be removed in a later release.
 }
 \examples{
 

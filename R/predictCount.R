@@ -26,7 +26,7 @@
 #'   \item{Conf.upper}{the upper confidence limit on the response scale.}
 #' }
 #' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictGLM}}, \code{\link{as.data.frame}}.
-#' @note Deprecated in s20x 3.3.9. Use \code{\link{predict20x}} instead, with
+#' @note Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead, with
 #'   \code{type = "odds"} for the odds from a logit-link model.
 #' @keywords htest
 #' @export predictCount

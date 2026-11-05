@@ -42,7 +42,7 @@ model. This simplified requirement reflects the teaching-wrapper interface
 and is not a complete reproduction of \code{predict.glm()}.
 }
 \note{
-Deprecated in s20x 3.3.9. Use \code{\link{predict20x}} instead.
+Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead.
 }
 \seealso{
 \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.

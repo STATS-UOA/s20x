@@ -26,7 +26,7 @@
 #' data(body.df)
 #' crosstabs(~ ethnicity + married, body.df)
 #'
-#' @note Deprecated in s20x 3.3.6. Use \code{table()} and \code{chisq.test()} instead.
+#' @note Deprecated in s20x 3.4.0. Use \code{table()} and \code{chisq.test()} instead.
 #' @export crosstabs
 crosstabs = function(formula, data) {
   .Deprecated(msg = "crosstabs() is deprecated; use table() and chisq.test() instead. rowdistr() accepts a two-way table.")

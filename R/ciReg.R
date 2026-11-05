@@ -17,7 +17,7 @@
 #' fit = lm(BP ~ age + years + weight + height, data = peru.df)
 #' ciReg(fit)
 #'
-#' @note Deprecated in s20x 3.3.6. Use \code{confint()} instead.
+#' @note Deprecated in s20x 3.4.0. Use \code{confint()} instead.
 #' @export ciReg
 ciReg = function(fit, conf.level = 0.95, print.out = TRUE) {
   .Deprecated(msg = "ciReg() is deprecated; use confint() instead.")

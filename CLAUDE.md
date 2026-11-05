@@ -23,7 +23,7 @@ Rscript -e 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), 
 
 ## Versions and NEWS
 
-This overrides the workspace convention: versions here have three components, not a fourth build component. Edit `DESCRIPTION` by hand after checks pass, because `commitTools::bumpBuildNumber()` is built around the four-part scheme. Increase the last number from the current version for each change; the middle number moved for the CRAN-facing 3.3.0 release (`3.2.325` to `3.3.0`). Add a matching `## s20x x.y.z` section to the top of the entries in `NEWS.md`, which goes back to 3.2.290. `README.md` has partial notes for a few older versions.
+This overrides the workspace convention: versions here have three components, not a fourth build component. Edit `DESCRIPTION` by hand after checks pass, because `commitTools::bumpBuildNumber()` is built around the four-part scheme. Increase the last number from the current version for each change, and merge those entries into one before a CRAN release; the middle number moves for the release (`3.3.0` to `3.4.0`). Add a matching `# s20x x.y.z` heading to the top of `NEWS.md`. Every version must use a level-one heading, because pkgdown drops versions at any other level.
 
 ## Style rules enforced by tests
 

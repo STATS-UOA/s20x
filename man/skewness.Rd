@@ -21,7 +21,7 @@ correspond to reasonably symmetric data, positive values of this measure
 indicate right-skewed data whereas negative values indicate left-skewness.
 }
 \note{
-Deprecated in s20x 3.3.6. \code{summaryStats()} still reports skewness.
+Deprecated in s20x 3.4.0. \code{summaryStats()} still reports skewness.
 }
 \examples{
 

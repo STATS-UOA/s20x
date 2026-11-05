@@ -41,7 +41,7 @@ Computes a factor that has a level for each combination of the factors
 \note{
 This function actually returns a \code{factor} now instead of a character string, so coercion into a \code{factor} is no longer necessary.
 
-Deprecated in s20x 3.3.6. Use \code{interaction()} instead.
+Deprecated in s20x 3.4.0. Use \code{interaction()} instead.
 }
 \examples{
 

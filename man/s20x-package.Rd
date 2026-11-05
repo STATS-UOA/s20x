@@ -20,6 +20,7 @@ arranging, or further customisation.
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://stats-uoa.github.io/s20x/}
   \item \url{https://github.com/STATS-UOA/s20x}
   \item Report bugs at \url{https://github.com/STATS-UOA/s20x/issues}
 }

@@ -24,7 +24,7 @@
 #' fit = lm(BP ~ age + years + weight + height, data = peru.df)
 #' residPlot(fit)
 #'
-#' @note Deprecated in s20x 3.3.6. Use \code{modelcheck()} instead.
+#' @note Deprecated in s20x 3.4.0. Use \code{modelcheck()} instead.
 #' @export residPlot
 residPlot = function(lmfit, f = 0.5) {
     .Deprecated(msg = "residPlot() is deprecated; use modelcheck() or plot(fit, which = 1) instead.")

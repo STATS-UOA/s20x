@@ -21,7 +21,7 @@
 #'   contrast, the Tukey lower and upper limits of the confidence interval, the
 #'   unadjusted p-value, and the Tukey and Bonferroni p-values.
 #' @seealso [summary1way()], [summary2way()], [multipleComp()]
-#' @note Deprecated in s20x 3.3.6. Use the \pkg{emmeans} package instead.
+#' @note Deprecated in s20x 3.4.0. Use the \pkg{emmeans} package instead.
 #' @export
 #' @keywords models
 #'

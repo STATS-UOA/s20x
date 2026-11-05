@@ -15,7 +15,7 @@
 #' data(mergers.df)
 #' skewness(mergers.df$mergerdays)
 #'
-#' @note Deprecated in s20x 3.3.6. \code{summaryStats()} still reports skewness.
+#' @note Deprecated in s20x 3.4.0. \code{summaryStats()} still reports skewness.
 #' @export skewness
 skewness = function(x, ...) {
   .Deprecated(msg = "skewness() is deprecated; summaryStats() still reports skewness.")

@@ -86,7 +86,7 @@ levels. It is used as part of a one-way ANOVA analysis.
 
 }}
 \note{
-Deprecated in s20x 3.3.6. \code{summary1way()} still draws this plot.
+Deprecated in s20x 3.4.0. \code{summary1way()} still draws this plot.
 }
 \examples{
 

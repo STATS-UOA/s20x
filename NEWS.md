@@ -1,98 +1,69 @@
-# s20x news
+# s20x 3.4.0
 
-## s20x 3.3.11
+## New features
 
-- Added the package logo.
-- Added an R-hub workflow for checking on more platforms from GitHub Actions.
+- predict20x() is now an S3 generic with methods for `lm`, `glm` and `tslm` fits, so one function covers them all. For a `glm` fit, `type` can be `"response"` (the default), `"link"` or `"odds"`. tslm fits with `ar(p)` errors are not supported yet.
+- predict20x(), summary1way(), summary2way() and summaryStats() now return classed objects with print methods. What they print is unchanged, and printing a saved result shows the same table.
+- predict20x() accepts `conf.level` and `digits`, and summary1way() and summary2way() accept `digits`. The older `cilevel` and `digit` still work.
+- `LazyData: true` means `data()` is now optional.
+- The package now has a website, <https://stats-uoa.github.io/s20x/>, with the function reference and all the case studies as articles, and a logo.
 
-## s20x 3.3.10
-
-- Added the package website to `DESCRIPTION`: <https://stats-uoa.github.io/s20x/>.
-
-## s20x 3.3.9
+## Deprecated and removed
 
 - Deprecated predictCount() and predictGLM() in favour of predict20x().
-- Moved the case studies to predict20x().
-- Styled the case study code with styler, and added a GitHub check that fails if a case study needs styling.
-- Corrected the documentation, which described ggplot2 and GGally as optional. Both are required dependencies, so the engine checks and example guards are gone.
-
-## s20x 3.3.8
-
-- Made predict20x() an S3 generic with methods for lm, glm and tslm fits, so one function covers all of them. predictCount() and predictGLM() keep working as before.
-- predict20x() now accepts `conf.level` and `digits`, matching the rest of the package. `cilevel` and `digit` still work.
-- summary1way() and summary2way() now also accept `digits`. `digit` still works.
-- predict20x(), summary1way(), summary2way() and summaryStats() now return classed objects with print methods. Their printed output is unchanged, and a saved result prints the same table again.
-- Replaced `T` and `F` with `TRUE` and `FALSE` throughout, including the case studies.
-- Added `LazyData: true`, so `data()` is optional.
-- Rewrote the README and moved the release history into this file.
-- Added a pkgdown website with the case studies as articles.
-- Stopped tracking tests/testthat/Rplots.pdf.
-
-## s20x 3.3.7
-
-- Removed Levene's test from eovcheck(). Passing `levene` now gives a warning and the argument is ignored. levene.test() remains deprecated.
+- Deprecated ciReg(), layout20x(), freq1way(), residPlot(), levene.test(), estimateContrasts(), crossFactors(), crosstabs(), onewayPlot(), twosampPlot(), autocorPlot() and skewness(), which the course no longer uses directly. summary1way() still draws its plot, and summaryStats() still reports skewness.
 - Deprecated the `shapiro.wilk` argument of normcheck().
-- Removed the demo scripts, which were no longer used.
+- Removed Levene's test from eovcheck(). Passing `levene` now gives a warning and is ignored.
+- Removed the demo scripts.
 
-## s20x 3.3.6
+## Bug fixes
 
-- Deprecated functions with no direct use in the current course notes, the 2021-22 assignments and tests, or the case studies: ciReg(), layout20x(), freq1way(), residPlot(), levene.test(), estimateContrasts(), crossFactors(), crosstabs(), onewayPlot(), twosampPlot(), autocorPlot() and skewness().
-- Deprecated the `levene` argument of eovcheck().
-- summaryStats(), summary1way(), summary2way(), multipleComp() and eovcheck() use these internally and do not warn.
-- rowdistr() examples now use table() rather than crosstabs().
+### Results that changed
 
-## s20x 3.3.5
+- summary2way(): `page = "nointeraction"` applied `FUN` twice, so `FUN = exp` printed exp(exp(x)).
+- tslm(): residual diagnostics followed row order rather than `time`, which gave misleading ACF and time plots. `ar(p)` models are now fitted in `time` order, so for data not already sorted, residuals() and fitted() come back in time order. Coefficients do not change.
+- tslm(): `offset()` terms were dropped without warning. Using `offset()` with `ar(p)` now gives an error, because nlme::gls() does not support it.
+- eovcheck(): `lm` objects were refitted from the call, which lost `subset` and `weights` and failed for models with no `data` argument or a stored formula.
+- predict20x() and predictCount(): named columns in `newdata` are now matched by name. They were previously assigned by position, even when in a different order from the model.
+- predict20x() on a `glm` fit now gives `glm` intervals rather than treating the model as an `lm` fit.
+- onewayPlot() on an `lm` object, and summary1way(), ignored `conf.level`, `interval.type`, `pooled` and the other plotting options.
+- rowdistr(): `comp = "within"` printed blank chi-square statistics and p-values.
 
-- Fixed summaryStats() so `na.action` also applies to a single group. The 3.3.4 change only worked for grouped data.
-- Fixed openCaseStudy() so it no longer opens an editor in non-interactive sessions.
-- Repaired the headers of case studies 5.2 and 10.3, which stopped them rendering.
-- Corrected case study 5.2: the R-squared in the text was 36.7% but the model gives 43.1%, the dummy variable description was reversed, and a formula referred to burn rather than price.
-- Corrected case study 9.1: the intervals for method 3 against methods 1 and 2 were swapped.
-- Corrected case study 10.1: a stray digit followed an interval, and the decrease was given as negative.
-- Strengthened the tests with independent checks of the ANOVA results, prediction intervals, tslm AR fits, two sd lines and default plotting engine.
+### Errors on valid input
 
-## s20x 3.3.4
+- predict20x(), predictCount() and predictGLM() now work with transformed terms such as `log(x)` and `factor(g)`.
+- summary1way() now works with transformed terms such as `factor(x)`.
+- summary2way(): `page = "interaction"` no longer fails when a factor level contains a hyphen, and its headings now name the first factor rather than printing `c("gender", "picture")`.
+- onewayPlot(y, g) no longer fails when `ylabel` and `flabel` are not supplied.
+- pairs20x(): `pch`, `col`, `cex` and `bg` now work with the base engine, and apply to the scatter plots.
+- displayPairs() keeps all comparisons when two factors share a level name.
+- summaryStats() now accepts `na.action`.
+- cooks20x() now accepts `axisOpts` with only some options set.
+- tslm() now finds variables local to a calling function when `data` or `time` is supplied.
 
-- Fixed predict20x() and predictCount() for transformed terms such as `log(x)`. Columns in `newdata` are now matched by name when every model variable is present, and otherwise taken in order as before. Named columns in a different order are no longer silently assigned to the wrong variables.
-- Fixed predictGLM() so `newdata` supplies the variables behind terms such as `factor(g)` and `log(x)`.
-- Fixed pairs20x() so `pch`, `col`, `cex` and `bg` work with the base engine. They apply to the scatter plots only.
-- Fixed displayPairs() so comparisons are kept when the two factors share a level name.
-- Fixed summaryStats() so `na.action` works for grouped data.
-- Fixed cooks20x() so `axisOpts` may set only some of its options.
-- Fixed summary2way() so `print.out = FALSE` suppresses printing for the default `new = TRUE` output.
-- Fixed eovcheck() so `col` sets the smoother colour with the base engine.
-- Fixed normcheck() so a vector's histogram is labelled from the call rather than always `x`, and so hex and palette-number colours are accepted.
-- Fixed tslm() so variables local to a calling function are found when `data` or `time` is supplied.
-- Added regression tests for each fix.
+### Smaller fixes
 
-## s20x 3.3.3
+- summary2way(): `print.out = FALSE` now suppresses printing for the default output.
+- eovcheck(): `col` now sets the smoother colour with the base engine.
+- normcheck() labels a vector's histogram from the call rather than always `x`, and accepts hex and palette-number colours.
+- openCaseStudy() no longer opens an editor in non-interactive sessions.
 
-- Fixed rowdistr() with `comp = "within"` so the uniformity chi-square statistic and p-value are printed. They were previously blank.
-- Fixed summary1way() so transformed terms such as `factor(x)` work. Group effects are now taken from the fitted values. Results for factor variables are unchanged.
-- Fixed summary2way() so `page = "interaction"` works when a factor level contains a hyphen.
-- Corrected the summary2way() interaction headings, which printed `c("gender", "picture")` instead of naming the first factor.
-- Fixed the onewayPlot() vector interface, whose default axis labels always failed. Labels now come from the call, and character grouping variables are accepted.
-- Added regression tests for each fix.
+## Case studies
 
-## s20x 3.3.2
+- Case studies 5.2 and 10.3 now render. A damaged header stopped them working.
+- Case study 5.2: corrected the R-squared (43.1%, not 36.7%), the dummy variable description, and a formula that referred to burn rather than price.
+- Case study 9.1: corrected swapped intervals for method 3 against methods 1 and 2.
+- Case study 10.1: removed a stray digit from an interval, and a decrease given as negative.
+- Moved the case studies to predict20x(), replaced `T` and `F` with `TRUE` and `FALSE`, and styled the code with styler.
 
-- Fixed eovcheck() so `levene = TRUE` no longer changes the plotted residuals. Additive two-factor models previously plotted residuals from the interaction model when Levene's test was requested. The Levene P-value is unchanged.
-- Fixed onewayPlot() for lm objects so `conf.level`, `interval.type`, `pooled`, `strip`, `vert` and `verbose` are used rather than silently ignored.
-- Fixed summary1way() so `conf.level`, `inttype` and `pooled` reach the plot. The default plot is unchanged.
-- Added regression tests for each fix.
+## Documentation and development
 
-## s20x 3.3.1
+- Rewrote the README and moved the release history into this file.
+- Corrected the documentation, which described ggplot2 and GGally as optional. Both are required dependencies.
+- Strengthened the tests with independent checks of the ANOVA results, prediction intervals, tslm AR fits and plotting defaults.
+- Added GitHub workflows for the website, case study styling and R-hub checks.
 
-- Fixed summary2way() so `page = "nointeraction"` applies `FUN` once. Back-transformed comparisons were previously transformed twice, for example printing exp(exp(x)) with `FUN = exp`.
-- Fixed tslm() diagnostics so plot.tslm() sorts residuals by the `time` variable. Data not already in time order previously gave misleading ACF and residuals-over-time panels.
-- tslm() now fits ar(p) models in `time` order, because nlme::gls() computes normalised residuals in row order. Coefficients are unchanged, but for data not already in time order, residuals() and fitted() on these models now come back in time order.
-- Fixed tslm() so offset() terms stay in the mean model. They were previously dropped without warning. offset() with an ar(p) term now gives an error because nlme::gls() does not support it.
-- Fixed eovcheck() for lm objects so it uses the fitted model rather than refitting from the call. It now respects `subset`, and works when the model has no `data` argument or uses a stored formula.
-- Models fitted with `weights` now show the residuals of the weighted fit in eovcheck(), rather than those of an unweighted refit.
-- eovcheck() output is unchanged for models that already worked, and glm objects are still checked with least squares residuals.
-- Added regression tests for each fix.
-
-## s20x 3.3.0
+# s20x 3.3.0
 
 - Prepared s20x 3.3.0 as a CRAN-facing release after optional plotting engine polish and the tslm() calling-environment compatibility fix.
 - Removed obsolete deprecated diagnostics methods that triggered roxygen warnings during documentation regeneration.
@@ -102,7 +73,7 @@
 - Rendered casestudy() files in a fresh environment with globalenv() as the parent instead of passing .GlobalEnv directly.
 - Validated with strict tests, local as-CRAN checks, and external CRAN preflight submissions.
 
-## s20x 3.2.325
+# s20x 3.2.325
 
 - Added regression tests comparing tslm() calling-environment fits with explicit data-frame fits.
 - Covered both ordinary lm-backed fits and AR gls-backed fits using the existing beer.df and airpass.df teaching datasets.
@@ -110,7 +81,7 @@
 - Kept tests offline, deterministic, and focused on user-visible teaching workflows.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.323
+# s20x 3.2.323
 
 - Updated tslm() so formulas can be evaluated from the calling environment when data is omitted, matching the familiar lm() and glm() workflow.
 - Preserved explicit data-frame use for tslm() while using model-frame-based data handling for safer internal evaluation.
@@ -118,21 +89,21 @@
 - Kept the change small and backward compatible for the Stage 21.1 CRAN-preparation workflow.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.320
+# s20x 3.2.320
 
 - Added final release-polish wording for optional plotting engines, with base graphics remaining the default.
 - Confirmed Stage 20.1 is limited to dependency-safety and release-note polish rather than new plotting functionality.
 - Preserved compatibility by treating ggplot2 and GGally as optional engines rather than required plotting dependencies.
 - Used the stage workflow's validation-mode detection so only changed files trigger package checks.
 
-## s20x 3.2.319
+# s20x 3.2.319
 
 - Added final release-polish wording for optional plotting engines, with base graphics remaining the default.
 - Confirmed Stage 20.1 is limited to dependency-safety and release-note polish rather than new plotting functionality.
 - Preserved compatibility by treating ggplot2 and GGally as optional engines rather than required plotting dependencies.
 - Used the stage workflow's validation-mode detection so only changed files trigger package checks.
 
-## s20x 3.2.318
+# s20x 3.2.318
 
 - Adjusted pairs20x() ggplot2 diagonal histogram panels so the y-limits reserve base-like headroom for variable labels.
 - Moved diagonal labels above the histogram bars rather than inside the plotted counts.
@@ -140,35 +111,35 @@
 - Preserved the base graphics engine as the default and kept ggplot2/GGally optional.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.317
+# s20x 3.2.317
 
 - Added the missing ggplot2 geom_segment() import used by the base-like modelcheck() Cook's distance panel.
 - Set the returned pairs20x() GGally matrix axisLabels field to document the outside-axis contract used by the optional ggplot2 engine.
 - Preserved the Stage 19.7 pairs20x() visual-parity changes and the base graphics default.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.315
+# s20x 3.2.315
 
 - Added the missing ggplot2 geom_text import used by the modelcheck() Cook's distance labels.
 - Kept the Stage 19.6.3 base-like ggplot2 modelcheck layout and Cook's distance display unchanged.
 - Preserved the base graphics engine as the default and kept ggplot2 optional.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.313
+# s20x 3.2.313
 
 - Changed the optional eovcheck() ggplot2 smoother example to use the peru.fit regression model rather than the oyster one-way ANOVA-style fit.
 - Kept the oyster example for the ggplot2 object-return and Levene/two-standard-deviation demonstrations where it remains appropriate.
 - Avoided loess singularity warnings in the documented smoother example while preserving package behaviour.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.312
+# s20x 3.2.312
 
 - Added an explicit loess formula to the optional modelcheck() ggplot2 smoother so printing the diagnostic plot object is silent.
 - Preserved the Stage 19.6 base-like ggplot2 diagnostic styling and Cook's distance vertical-line display.
 - Kept the base graphics engine as the default and preserved the optional ggplot2 object-return paths.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.310
+# s20x 3.2.310
 
 - Polished the optional ggplot2 eovcheck output so the two-standard-deviation reference lines remain visible.
 - Included the plus/minus two-standard-deviation limits in the plotted y-range and matched the base plot line weight more closely.
@@ -176,7 +147,7 @@
 - Kept the base graphics engine as the default and preserved the optional ggplot2 object-return path.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.309
+# s20x 3.2.309
 
 - Extended the optional normcheck() ggplot2 histogram density curve across the full displayed x-axis range.
 - Kept the histogram as a native ggplot2 geom_histogram() layer while replacing stat_function() with explicit density data.
@@ -184,7 +155,7 @@
 - Documented the Stage 19.5 normcheck density-curve polish notes.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.308
+# s20x 3.2.308
 
 - Polished the optional ggplot2/GGally engine for pairs20x() while preserving base graphics as the default.
 - Renamed internal pairs20x ggplot2 helpers to use clearer *_ggplot2 names.
@@ -192,7 +163,7 @@
 - Documented the Stage 19.4 pairs20x plotting-engine review notes.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.307
+# s20x 3.2.307
 
 - Polished the optional ggplot2 engine for modelcheck() while preserving base graphics as the default.
 - Renamed internal modelcheck ggplot2 helpers and list classes to use clearer *_ggplot2 names.
@@ -201,7 +172,7 @@
 - Added offline regression tests for the renamed class and clean plot printing.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.306
+# s20x 3.2.306
 
 - Polished the optional ggplot2 engine for eovcheck() while preserving base graphics as the default.
 - Renamed internal eovcheck ggplot2 helpers to use clearer *_ggplot2 names.
@@ -209,7 +180,7 @@
 - Added ggplot2-engine examples and an offline regression test for clean plot printing.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.305
+# s20x 3.2.305
 
 - Restored the documented s20xNormcheckGgplot2 return class while retaining the clearer internal s20xNormcheck_ggplot2 class alias.
 - Preserved the Stage 19.1 ggplot2 normcheck plotting fixes, examples, and naming cleanup.
@@ -217,7 +188,7 @@
 - Preserved base graphics as the default plotting engine and kept ggplot2 optional.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.303
+# s20x 3.2.303
 
 - Added regression tests that scan controlled R and test files for namespace operators in executable code.
 - Added regression tests that scan controlled R and test files for dynamic namespace lookup helpers.
@@ -225,7 +196,7 @@
 - Preserved the Stage 18.6 import-based plotting cleanup and base graphics defaults.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.302
+# s20x 3.2.302
 
 - Replaced dynamic ggplot2 and GGally plotting function lookups with direct calls backed by roxygen import declarations.
 - Moved ggplot2 and GGally into Imports so their functions can be declared through NAMESPACE.
@@ -233,28 +204,28 @@
 - Preserved base graphics as the default plotting engine.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.301
+# s20x 3.2.301
 
 - Refactored normcheck ggplot2 Q-Q and histogram builders to use grouped optional plotting function lookups.
 - Refactored the eovcheck ggplot2 diagnostic builder to use grouped optional plotting function lookups.
 - Preserved base graphics as the default engine and kept ggplot2 optional.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.300
+# s20x 3.2.300
 
 - Added a grouped optional plotting function lookup helper for ggplot2 implementations.
 - Refactored modelcheck ggplot2 residual and Cook distance builders to use grouped helper lookups.
 - Preserved base graphics as the default engine and kept ggplot2 optional.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.299
+# s20x 3.2.299
 
 - Centralised optional plotting function lookup behind the internal getPlottingFunction() helper.
 - Replaced repeated direct getExportedValue() calls in the ggplot2 and GGally plotting implementations.
 - Preserved base graphics as the default engine and kept ggplot2/GGally optional.
 - Validated by the standard s20x stage workflow.
 
-## s20x 3.2.298
+# s20x 3.2.298
 
 - Added matchPlottingEngine() as a shared internal helper for plotting engine argument matching.
 - Replaced repeated match.arg(engine) calls in normcheck(), eovcheck(), modelcheck(), and pairs20x().
@@ -264,13 +235,19 @@
 
 This file records user-facing and developer-facing changes for s20x. It is a release-note summary, not a commit-by-commit history.
 
-## s20x 3.2.297
+# s20x 3.2.297
 
 - Added a shared internal helper for optional plotting package availability checks.
 - Replaced duplicated ggplot2 and GGally engine checks in normcheck(), eovcheck(), modelcheck(), and pairs20x().
 - Added a Stage 18.1 plotting audit note to record remaining cleanup candidates.
 - Preserved base graphics defaults, optional ggplot2/GGally behavior, and teaching-oriented plotting output.
 
+# s20x 3.2.296
+
+- Clarified README guidance for ggplot2 diagnostic return values.
+- Added tests that pin named-list return contracts for multi-plot ggplot2 diagnostics.
+- Confirmed single selected diagnostics still return individual ggplot objects where appropriate.
+- Preserved base graphics as the default plotting engine.
 
 # s20x 3.2.295
 
@@ -293,6 +270,27 @@ This file records user-facing and developer-facing changes for s20x. It is a rel
 - Added a README-level explanation of the optional diagnostic plotting engines while preserving base graphics as the default teaching workflow.
 - Added a Stage 17.4 developer note recording the documentation-only scope and optional-dependency guard pattern.
 - No plotting behaviour or public API changed.
+
+# s20x 3.2.292
+
+- Removed no-op examplesIf blocks from deprecated, unexported legacy helper documentation.
+- Clarified the deprecated boxqq(), stripqq(), and modcheck() descriptions without restoring exported examples.
+- Preserved legacy helper behavior while reducing CRAN-facing example clutter in generated Rd files.
+- Regenerated documentation should be produced by devtools::document() during the stage runner.
+
+# s20x 3.2.291
+
+- Refreshed legacy helper documentation so deprecated, unexported functions no longer show direct internal-call examples.
+- Replaced older case-study dontrun examples with interactive examples for CRAN-facing documentation hygiene.
+- Preserved case-study and deprecated-helper behavior while making the examples clearer for current teaching material.
+- Regenerated documentation should be produced by devtools::document() during the stage runner.
+
+# s20x 3.2.290
+
+- Clarified that the default base plotting engine preserves direct teaching graphics while optional ggplot2 engines return reusable plot objects.
+- Added guarded examples for optional ggplot2 and GGally plotting engines in normcheck(), eovcheck(), modelcheck(), and pairs20x().
+- Kept ggplot2 and GGally usage behind requireNamespace() guards so examples remain compatible when optional packages are unavailable.
+- Regenerated documentation should be produced by devtools::document() during the stage runner.
 
 # s20x 3.2.288
 
@@ -531,35 +529,7 @@ This file records user-facing and developer-facing changes for s20x. It is a rel
 - Added package infrastructure for automated R CMD check runs.
 - Updated package build ignores for repository-only infrastructure files.
 
-## s20x 3.2.296
-
-- Clarified README guidance for ggplot2 diagnostic return values.
-- Added tests that pin named-list return contracts for multi-plot ggplot2 diagnostics.
-- Confirmed single selected diagnostics still return individual ggplot objects where appropriate.
-- Preserved base graphics as the default plotting engine.
-
-## s20x 3.2.292
-
-- Removed no-op examplesIf blocks from deprecated, unexported legacy helper documentation.
-- Clarified the deprecated boxqq(), stripqq(), and modcheck() descriptions without restoring exported examples.
-- Preserved legacy helper behavior while reducing CRAN-facing example clutter in generated Rd files.
-- Regenerated documentation should be produced by devtools::document() during the stage runner.
-
-## s20x 3.2.291
-
-- Refreshed legacy helper documentation so deprecated, unexported functions no longer show direct internal-call examples.
-- Replaced older case-study dontrun examples with interactive examples for CRAN-facing documentation hygiene.
-- Preserved case-study and deprecated-helper behavior while making the examples clearer for current teaching material.
-- Regenerated documentation should be produced by devtools::document() during the stage runner.
-
-## s20x 3.2.290
-
-- Clarified that the default base plotting engine preserves direct teaching graphics while optional ggplot2 engines return reusable plot objects.
-- Added guarded examples for optional ggplot2 and GGally plotting engines in normcheck(), eovcheck(), modelcheck(), and pairs20x().
-- Kept ggplot2 and GGally usage behind requireNamespace() guards so examples remain compatible when optional packages are unavailable.
-- Regenerated documentation should be produced by devtools::document() during the stage runner.
-
-## s20x 3.2.2
+# s20x 3.2.2
 A small number of the datasets have been slightly altered, and their associated documentation accordingly. The changes 
 consist of adding some useful extra variables to the three time series datasets `airpass.df`, `beer.df` and `larain.df`.
 These variables are `t` which is just a time index to save the user creating it if they want to fit a lag response model,
@@ -573,7 +543,11 @@ instead of millimetres of mecury (mm Hg), which again is the health profession s
 then they have been done as extra variables added to the dataset, rather than replacing the original measurements. The
 logic for this is to preserve the datasets as is to avoid lecture notes mismatches - at least for the time being.
 
-## s20x 3.1-21
+# s20x 3.1-24
+
+A new function called `modcheck` has been added. This allows all four standard 20x model checking plots -- residuals versus fitted values, a normal Q-Q plot, a histogram of residuals, and a Cook's distance plot -- to be drawn on the same plot at once. This function needed a much more flexible version of `normcheck`, and needed modifications to `eovcheck` and `cooks20x`. I have not put it on CRAN yet because of the chance that it will fail for our current students. We *really* need some unit testing in this package so that this process can be sped up.
+
+# s20x 3.1-21
 
 Ben Stevenson added some code to summary2way so the attribute information from `TukeyHSD` is preserved. That is so you see this
 
@@ -593,7 +567,3 @@ instead of this
 > summary2way(fit, page = "interaction")
 $`store:crust`
 ```
-
-## s20x 3.1-24
-
-A new function called `modcheck` has been added. This allows all four standard 20x model checking plots -- residuals versus fitted values, a normal Q-Q plot, a histogram of residuals, and a Cook's distance plot -- to be drawn on the same plot at once. This function needed a much more flexible version of `normcheck`, and needed modifications to `eovcheck` and `cooks20x`. I have not put it on CRAN yet because of the chance that it will fail for our current students. We *really* need some unit testing in this package so that this process can be sped up.

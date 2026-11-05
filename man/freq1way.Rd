@@ -54,7 +54,7 @@ These confidence intervals have been Bonferroni adjusted for multiple
   comparisons. This is a legacy teaching helper retained for compatibility
   with older course material.
 
-Deprecated in s20x 3.3.6. It will be removed in a later release.
+Deprecated in s20x 3.4.0. It will be removed in a later release.
 }
 \examples{
 

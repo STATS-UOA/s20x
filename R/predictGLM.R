@@ -25,7 +25,7 @@
 #' @return A data frame with columns \code{fit}, \code{lwr}, and \code{upr} containing
 #'   fitted values and confidence limits on the requested scale.
 #' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.
-#' @note Deprecated in s20x 3.3.9. Use \code{\link{predict20x}} instead.
+#' @note Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead.
 #' @keywords htest
 #' @export predictGLM
 predictGLM = function(object,
