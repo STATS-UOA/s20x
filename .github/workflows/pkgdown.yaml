@@ -32,15 +32,20 @@ jobs:
           needs: website
 
       - name: Prepare case study articles
-        run: |
-          Rscript scripts/prepareSiteArticles.R
-          rm -f CLAUDE.md
+        run: Rscript scripts/prepareSiteArticles.R
 
       - name: Configure git identity
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      # pkgdown publishes every Markdown file at the top level. This commit stays
+      # on the runner, and keeps the file off the site.
+      - name: Remove files that should not be published
+        run: |
+          git rm -q CLAUDE.md
+          git commit -q -m "Remove files that should not be published"
+
       - name: Build and deploy pkgdown site
-        run: pkgdown::deploy_to_branch(new_process = FALSE)
+        run: pkgdown::deploy_to_branch(new_process = FALSE, clean = TRUE)
         shell: Rscript {0}

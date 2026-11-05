@@ -1,5 +1,9 @@
 # s20x news
 
+## s20x 3.3.10
+
+- Added the package website to `DESCRIPTION`: <https://stats-uoa.github.io/s20x/>.
+
 ## s20x 3.3.9
 
 - Deprecated predictCount() and predictGLM() in favour of predict20x().

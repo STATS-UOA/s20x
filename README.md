@@ -7,6 +7,8 @@
 
 s20x supports data analysis teaching at the University of Auckland, in STATS 201, STATS 208 and BIOSCI 209. It provides model-checking plots, teaching summaries, predictions with intervals, datasets and worked case studies.
 
+The [package website](https://stats-uoa.github.io/s20x/) has the function reference and all the case studies.
+
 ## Installation
 
 ```r
