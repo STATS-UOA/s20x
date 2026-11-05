@@ -12,7 +12,8 @@ getTslmDiagnosticData(object, residualType = "normalised")
 \item{residualType}{residual type requested for diagnostic plots.}
 }
 \value{
-A list with `fitted`, `residuals`, and `time` components.
+A list with `fitted`, `residuals`, and `time` components, each sorted
+  into time order so that autocorrelation is read in the correct sequence.
 }
 \description{
 Collect fitted values, residuals, and time values for `tslm` diagnostic plots.

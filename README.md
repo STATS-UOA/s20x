@@ -87,3 +87,12 @@ $`store:crust`
 ## 3.1-24
 
 A new function called `modcheck` has been added. This allows all four standard 20x model checking plots -- residuals versus fitted values, a normal Q-Q plot, a histogram of residuals, and a Cook's distance plot -- to be drawn on the same plot at once. This function needed a much more flexible version of `normcheck`, and needed modifications to `eovcheck` and `cooks20x`. I have not put it on CRAN yet because of the chance that it will fail for our current students. We *really* need some unit testing in this package so that this process can be sped up.
+
+## 3.3.1
+
+This release fixes bugs found in a code review. Output for models that already worked is unchanged.
+
+- `summary2way(fit, page = "nointeraction", FUN = exp)` now back-transforms the comparisons once. They were previously transformed twice, so results from a release before this one should be rechecked.
+- `plot()` on a `tslm` fit now puts residuals in order of the `time` variable, so the ACF and residuals-over-time panels are correct when the data are not already in time order. `tslm()` now fits `ar(p)` models in `time` order, so for such data `residuals()` and `fitted()` also come back in time order. Coefficients do not change.
+- `tslm()` now keeps `offset()` terms in the mean model. Using `offset()` together with `ar(p)` gives an error, because `nlme::gls()` does not support offsets.
+- `eovcheck()` now uses the fitted `lm` object directly. It respects `subset`, works for `lm(y ~ x)` with no `data` argument and for stored formulas, and uses the weighted fit when `weights` were supplied.

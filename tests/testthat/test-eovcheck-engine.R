@@ -94,3 +94,97 @@ test_that("eovcheck ggplot2 engine uses base-like theme and thin two sd lines", 
   expect_true(inherits(plotObject$theme$panel.background, "element_rect"))
   expect_true(any(lineWidths <= 0.5))
 })
+
+
+test_that("eovcheck lm method respects subset in the fitted model", {
+  data("peru.df", package = "s20x", envir = environment())
+  skip_if_not_installed("ggplot2")
+
+  fit = lm(BP ~ weight, data = peru.df, subset = age > 25)
+  plotObject = eovcheck(fit, engine = "ggplot2")
+
+  expect_lt(nobs(fit), nrow(peru.df))
+  expect_equal(nrow(plotObject$data), nobs(fit))
+  expect_equal(sort(plotObject$data[[2]]), sort(unname(residuals(fit))))
+})
+
+test_that("eovcheck lm method works without a data argument", {
+  data("peru.df", package = "s20x", envir = environment())
+  x = peru.df$weight
+  y = peru.df$BP
+  fit = lm(y ~ x)
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(eovcheck(fit))
+})
+
+test_that("eovcheck lm method works with a stored formula", {
+  data("peru.df", package = "s20x", envir = environment())
+  storedFormula = BP ~ weight
+  fit = lm(storedFormula, data = peru.df)
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(eovcheck(fit))
+})
+
+test_that("eovcheck lm and formula methods agree on Levene's test", {
+  data("butterfat.df", package = "s20x", envir = environment())
+  skip_if_not_installed("ggplot2")
+
+  fit = lm(Butterfat ~ Breed, data = butterfat.df)
+  lmPlot = eovcheck(fit, levene = TRUE, engine = "ggplot2")
+  formulaPlot = eovcheck(Butterfat ~ Breed, data = butterfat.df, levene = TRUE, engine = "ggplot2")
+
+  expect_equal(lmPlot$data, formulaPlot$data)
+  expect_equal(
+    length(lmPlot$layers),
+    length(formulaPlot$layers)
+  )
+})
+
+test_that("eovcheck does not treat lm weights as a covariate for Levene's test", {
+  data("butterfat.df", package = "s20x", envir = environment())
+  skip_if_not_installed("ggplot2")
+
+  unweightedFit = lm(Butterfat ~ Breed, data = butterfat.df)
+  weightedFit = lm(Butterfat ~ Breed, data = butterfat.df, weights = Butterfat)
+
+  expect_equal(
+    length(eovcheck(weightedFit, levene = TRUE, engine = "ggplot2")$layers),
+    length(eovcheck(unweightedFit, levene = TRUE, engine = "ggplot2")$layers)
+  )
+})
+
+test_that("eovcheck still checks glm fits with least squares residuals", {
+  data("peru.df", package = "s20x", envir = environment())
+  skip_if_not_installed("ggplot2")
+
+  glmFit = glm(BP ~ weight, data = peru.df, family = gaussian(link = "log"))
+  lmFit = lm(BP ~ weight, data = peru.df)
+  plotObject = eovcheck(glmFit, engine = "ggplot2")
+
+  expect_equal(unname(plotObject$data[[2]]), unname(residuals(lmFit)))
+})
+
+test_that("eovcheck draws two sd lines for aov fits", {
+  skip_if_not_installed("ggplot2")
+  data("butterfat.df", package = "s20x", envir = environment())
+
+  aovFit = aov(Butterfat ~ Breed, data = butterfat.df)
+  lmFit = lm(Butterfat ~ Breed, data = butterfat.df)
+
+  expect_equal(sigma(aovFit), summary(lmFit)$sigma)
+  expect_equal(
+    length(eovcheck(aovFit, twosd = TRUE, engine = "ggplot2")$layers),
+    length(eovcheck(lmFit, twosd = TRUE, engine = "ggplot2")$layers)
+  )
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(eovcheck(aovFit, twosd = TRUE))
+})

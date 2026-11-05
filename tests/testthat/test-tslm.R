@@ -387,3 +387,94 @@ test_that("documented tslm diagnostic residual choices run", {
   expect_silent(plot(fit, residualType = "response"))
   expect_silent(normcheck(fit))
 })
+
+shuffleTimeOrder = function(data) {
+  data[order((data$t * 61) %% 145), ]
+}
+
+test_that("tslm diagnostics follow time order when rows are shuffled", {
+  data(airpass.df)
+  shuffledData = shuffleTimeOrder(airpass.df)
+  expect_false(identical(shuffledData$t, airpass.df$t))
+
+  getData = getS20xInternal("getTslmDiagnosticData")
+  sortedDiagnostics = getData(
+    tslm(log(passengers) ~ t, data = airpass.df, time = t),
+    residualType = "response"
+  )
+  shuffledDiagnostics = getData(
+    tslm(log(passengers) ~ t, data = shuffledData, time = t),
+    residualType = "response"
+  )
+
+  expect_equal(shuffledDiagnostics$time, airpass.df$t)
+  expect_equal(unname(shuffledDiagnostics$residuals), unname(sortedDiagnostics$residuals))
+  expect_equal(unname(shuffledDiagnostics$fitted), unname(sortedDiagnostics$fitted))
+})
+
+test_that("tslm AR diagnostics follow time order when rows are shuffled", {
+  skip_if_not_installed("nlme")
+  data(airpass.df)
+
+  getData = getS20xInternal("getTslmDiagnosticData")
+  sortedDiagnostics = getData(tslm(log(passengers) ~ t + ar(1), data = airpass.df, time = t))
+  shuffledDiagnostics = getData(
+    tslm(log(passengers) ~ t + ar(1), data = shuffleTimeOrder(airpass.df), time = t)
+  )
+
+  expect_equal(shuffledDiagnostics$time, airpass.df$t)
+  expect_equal(
+    as.numeric(shuffledDiagnostics$residuals),
+    as.numeric(sortedDiagnostics$residuals),
+    tolerance = 1e-3
+  )
+})
+
+test_that("tslm AR coefficients do not depend on row order", {
+  skip_if_not_installed("nlme")
+  data(airpass.df)
+
+  sortedFit = tslm(log(passengers) ~ t + ar(1), data = airpass.df, time = t)
+  shuffledFit = tslm(log(passengers) ~ t + ar(1), data = shuffleTimeOrder(airpass.df), time = t)
+
+  expect_equal(coef(shuffledFit), coef(sortedFit), tolerance = 1e-4)
+})
+
+test_that("tslm diagnostics keep row order when no time variable is supplied", {
+  data(airpass.df)
+  fit = tslm(log(passengers) ~ t, data = airpass.df)
+  diagnosticData = getS20xInternal("getTslmDiagnosticData")(fit, residualType = "response")
+
+  expect_equal(diagnosticData$time, seq_len(nrow(airpass.df)))
+  expect_equal(
+    unname(diagnosticData$residuals),
+    unname(residuals(lm(log(passengers) ~ t, data = airpass.df)))
+  )
+})
+
+test_that("tslm keeps offset terms in the mean model", {
+  data(airpass.df)
+
+  fit = tslm(log(passengers) ~ t + offset(log(t)), data = airpass.df)
+  expect_equal(coef(fit), coef(lm(log(passengers) ~ t + offset(log(t)), data = airpass.df)))
+  expect_true("offset(log(t))" %in% rownames(attr(terms(fit$meanFormula), "factors")))
+
+  noInterceptFit = tslm(log(passengers) ~ t + offset(log(t)) - 1, data = airpass.df)
+  expect_equal(
+    coef(noInterceptFit),
+    coef(lm(log(passengers) ~ t + offset(log(t)) - 1, data = airpass.df))
+  )
+
+  offsetOnlyFit = tslm(log(passengers) ~ offset(log(t)), data = airpass.df)
+  expect_equal(coef(offsetOnlyFit), coef(lm(log(passengers) ~ offset(log(t)), data = airpass.df)))
+})
+
+test_that("tslm stops rather than dropping an offset from an AR model", {
+  skip_if_not_installed("nlme")
+  data(airpass.df)
+
+  expect_error(
+    tslm(log(passengers) ~ t + offset(log(t)) + ar(1), data = airpass.df, time = t),
+    "offset"
+  )
+})

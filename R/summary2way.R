@@ -137,7 +137,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       print(results$effects$tables)
     } else if (page == "nointeraction"){
       factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
-      out = lapply(results$comparisons[factorLabels],
+      out = lapply(resultsIdentity$comparisons[factorLabels],
                     function(x) cbind(FUN(x[, 1:3, drop = FALSE]), x[, 4, drop = FALSE]))
       mostattributes(out) = attributes(results$comparisons)
       names(out) = factorLabels

@@ -108,6 +108,9 @@ tslm = function(formula, data = parent.frame(), time, method = "REML", ...) {
         )
       }
       correlationForm = as.formula(paste("~", timeName))
+      ## gls() whitens residuals in row order, so normalised residuals are only
+      ## correct when the data are fitted in time order
+      modelData = modelData[order(modelData[[timeName]]), , drop = FALSE]
     }
 
     fit = gls(
@@ -555,6 +558,22 @@ removeTslmErrorTerms = function(formula, termsObject) {
     termLabels = setdiff(termLabels, errorTerms)
   }
 
+  ## offset() terms are not term labels, so they must be carried across separately
+  offsetIndices = attr(termsObject, "offset")
+  if (!is.null(offsetIndices)) {
+    formulaVariables = as.list(attr(termsObject, "variables"))[-1]
+    termLabels = c(
+      termLabels,
+      vapply(
+        formulaVariables[offsetIndices],
+        function(variable) {
+          paste(deparse(variable), collapse = "")
+        },
+        character(1)
+      )
+    )
+  }
+
   responseText = paste(deparse(formula[[2]]), collapse = "")
   intercept = attr(termsObject, "intercept")
 
@@ -764,7 +783,8 @@ formatTslmAnovaTable = function(rawTable) {
 #'
 #' @param object a fitted `tslm` object.
 #' @param residualType residual type requested for diagnostic plots.
-#' @return A list with `fitted`, `residuals`, and `time` components.
+#' @return A list with `fitted`, `residuals`, and `time` components, each sorted
+#'   into time order so that autocorrelation is read in the correct sequence.
 #' @keywords internal
 getTslmDiagnosticData = function(object, residualType = "normalised") {
   residualType = matchTslmResidualType(residualType)
@@ -784,10 +804,12 @@ getTslmDiagnosticData = function(object, residualType = "normalised") {
     )
   }
 
+  timeOrder = order(timeValues)
+
   list(
-    fitted = diagnosticData$fitted,
-    residuals = diagnosticData$residuals,
-    time = timeValues
+    fitted = diagnosticData$fitted[timeOrder],
+    residuals = diagnosticData$residuals[timeOrder],
+    time = timeValues[timeOrder]
   )
 }
 

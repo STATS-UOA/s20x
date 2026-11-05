@@ -63,3 +63,29 @@ test_that("summary2way can return legacy-format results when new is FALSE", {
   expect_true(is.null(result$`Interaction Effects`))
   expect_true(is.null(result$Comparisons))
 })
+
+test_that("summary2way back-transforms nointeraction comparisons exactly once", {
+  data("butterfat.df", package = "s20x", envir = environment())
+  fit = lm(log(Butterfat) ~ Breed + Age, data = butterfat.df)
+  tukey = TukeyHSD(aov(fit))$Breed
+  rowName = rownames(tukey)[1]
+
+  printed = capture.output(summary2way(fit, page = "nointeraction", FUN = exp))
+  rowLine = printed[startsWith(trimws(printed), rowName)][1]
+  values = as.numeric(strsplit(trimws(sub(rowName, "", rowLine, fixed = TRUE)), " +")[[1]])
+
+  expect_equal(values[1:3], unname(exp(tukey[1, 1:3])), tolerance = 1e-4)
+})
+
+test_that("summary2way nointeraction comparisons are unchanged without FUN", {
+  data("butterfat.df", package = "s20x", envir = environment())
+  fit = lm(log(Butterfat) ~ Breed + Age, data = butterfat.df)
+  tukey = TukeyHSD(aov(fit))$Breed
+  rowName = rownames(tukey)[1]
+
+  printed = capture.output(summary2way(fit, page = "nointeraction"))
+  rowLine = printed[startsWith(trimws(printed), rowName)][1]
+  values = as.numeric(strsplit(trimws(sub(rowName, "", rowLine, fixed = TRUE)), " +")[[1]])
+
+  expect_equal(values[1:3], unname(tukey[1, 1:3]), tolerance = 1e-4)
+})

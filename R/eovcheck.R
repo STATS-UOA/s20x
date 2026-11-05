@@ -124,6 +124,76 @@ eovcheck.formula = function(x, data = NULL,
   names(m)[[2]] = "formula"
   m = eval(m, parent.frame())
 
+  eovcheckFromFit(
+    fit = lm(form, data = data.f),
+    m = m,
+    terms.form = terms.form,
+    xlab = xlab,
+    ylab = ylab,
+    col = col,
+    smoother = smoother,
+    twosd = twosd,
+    levene = levene,
+    engine = engine,
+    ...
+  )
+}
+
+#' @rdname eovcheck
+#' @importFrom methods is
+#' @export
+eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
+                        engine = c("base", "ggplot2"), ...) {
+  if (missing(x) || !is(x, "lm")) {
+    stop("missing or incorrect lm object")
+  }
+
+  engine = matchPlottingEngine(engine)
+
+  ## Use the fitted model itself so subset, na.action and the caller's variables
+  ## are respected. Weights and offsets are model-frame columns, not covariates.
+  fullFrame = model.frame(x)
+  modelFrame = fullFrame[!grepl("^[(]", names(fullFrame))]
+  attr(modelFrame, "terms") = attr(fullFrame, "terms")
+
+  ## glm objects inherit from lm, and have always been checked with least squares
+  fit = if (inherits(x, "glm")) {
+    lm(model.response(modelFrame) ~ model.matrix(x) - 1)
+  } else {
+    x
+  }
+
+  eovcheckFromFit(
+    fit = fit,
+    m = modelFrame,
+    terms.form = terms(x),
+    smoother = smoother,
+    twosd = twosd,
+    levene = levene,
+    engine = engine,
+    ...
+  )
+}
+
+#' Build and draw an equality-of-variance diagnostic from a fitted model
+#'
+#' @param fit fitted model supplying residuals and fitted values.
+#' @param m model frame holding the response and explanatory variables.
+#' @param terms.form terms object for the model.
+#' @param xlab x-axis label.
+#' @param ylab y-axis label.
+#' @param col smoother line colour.
+#' @param smoother whether to draw a lowess smoother.
+#' @param twosd whether to draw +/- 2 sigma reference lines.
+#' @param levene whether to report Levene's test.
+#' @param engine matched plotting engine.
+#' @param \dots arguments passed to the base graphics engine.
+#' @return The value of the selected plotting engine.
+#' @noRd
+eovcheckFromFit = function(fit, m, terms.form,
+                           xlab = "Fitted values", ylab = "Residuals",
+                           col = NULL, smoother = FALSE, twosd = FALSE,
+                           levene = FALSE, engine = "base", ...) {
   num.factors = sum(sapply(m, is.factor))
   num.cts = ncol(m) - num.factors - 1
 
@@ -148,8 +218,6 @@ eovcheck.formula = function(x, data = NULL,
       bRegression = TRUE
     }
   }
-
-  fit = NULL
 
   if (levene && (bOneWay | bTwoWay)) {
     factors.form = attr(terms.form, "factors")
@@ -197,8 +265,6 @@ eovcheck.formula = function(x, data = NULL,
     } else {
       p.value = levene.test(fit, show.table = FALSE)$p.value
     }
-  } else {
-    fit = lm(form, data = data.f)
   }
 
   diagnosticData = getModelResidualFittedData(fit, context = "equality-of-variance model")
@@ -231,31 +297,6 @@ eovcheck.formula = function(x, data = NULL,
   )
 }
 
-#' @rdname eovcheck
-#' @importFrom methods is
-#' @export
-eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
-                        engine = c("base", "ggplot2"), ...) {
-  if (missing(x) || !is(x, "lm")) {
-    stop("missing or incorrect lm object")
-  }
-
-  engine = matchPlottingEngine(engine)
-
-  form = formula(x$call$formula)
-  data.f = data.frame(eval(x$call$data, parent.frame()))
-
-  eovcheck.formula(
-    x = form,
-    data = data.f,
-    smoother = smoother,
-    twosd = twosd,
-    levene = levene,
-    engine = engine,
-    ...
-  )
-}
-
 #' Draw an equality-of-variance diagnostic using base graphics
 #'
 #' @param diagnosticInfo diagnostic data and Levene display metadata.
@@ -282,7 +323,7 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
   }
 
   if (twosd) {
-    sigma = summary(diagnosticInfo$fit)$sigma
+    sigma = sigma(diagnosticInfo$fit)
     abline(h = c(-2, 2) * sigma, lty = 3, col = "grey", lwd = 2)
   }
 
@@ -319,7 +360,7 @@ eovcheck_ggplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
   yRange = range(plotData$residuals, finite = TRUE)
 
   if (twosd) {
-    sigma = summary(diagnosticInfo$fit)$sigma
+    sigma = sigma(diagnosticInfo$fit)
     twoSdValues = c(-2, 2) * sigma
     yRange = range(c(yRange, twoSdValues), finite = TRUE)
   } else {

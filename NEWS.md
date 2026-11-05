@@ -19,6 +19,17 @@
 
 
 
+## s20x 3.3.1
+
+- Fixed summary2way() so `page = "nointeraction"` applies `FUN` once. Back-transformed comparisons were previously transformed twice, for example printing exp(exp(x)) with `FUN = exp`.
+- Fixed tslm() diagnostics so plot.tslm() sorts residuals by the `time` variable. Data not already in time order previously gave misleading ACF and residuals-over-time panels.
+- tslm() now fits ar(p) models in `time` order, because nlme::gls() computes normalised residuals in row order. Coefficients are unchanged, but for data not already in time order, residuals() and fitted() on these models now come back in time order.
+- Fixed tslm() so offset() terms stay in the mean model. They were previously dropped without warning. offset() with an ar(p) term now gives an error because nlme::gls() does not support it.
+- Fixed eovcheck() for lm objects so it uses the fitted model rather than refitting from the call. It now respects `subset`, and works when the model has no `data` argument or uses a stored formula.
+- Models fitted with `weights` now show the residuals of the weighted fit in eovcheck(), rather than those of an unweighted refit.
+- eovcheck() output is unchanged for models that already worked, and glm objects are still checked with least squares residuals.
+- Added regression tests for each fix.
+
 ## s20x 3.3.0
 
 - Prepared s20x 3.3.0 as a CRAN-facing release after optional plotting engine polish and the tslm() calling-environment compatibility fix.
