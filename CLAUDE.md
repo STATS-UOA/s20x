@@ -6,6 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 s20x is a CRAN teaching package for University of Auckland STATS 201/208 and BIOSCI 209. Large classes of mostly non-statistics majors use it, and lecture notes, labs and case studies depend on its exact output. The rule that overrides most others: **student-facing defaults, function names and printed output stay stable**. New behaviour is opt-in, deprecated names get `.Deprecated()` rather than abrupt removal, and changes are small and incremental. Do not reformat or redesign the package wholesale.
 
+## Legacy and future code
+
+The current lecture notes define what is actually used, not the exports, but absence from the notes doesn't make something legacy.
+
+- Levene's test and formal normality tests are no longer taught. Levene's test was removed from `eovcheck()` in 3.4.0, and `levene.test()` and `normcheck(shapiro.wilk = )` are deprecated. Don't spend effort testing or polishing them, and finish removing them only when asked.
+- `tslm()` is not in the notes yet, but it will be used in future. Never treat it as legacy or a candidate for removal.
+
 ## Commands
 
 The standard `devtools` commands are in the workspace `CLAUDE.md` (the parent folder). These are the s20x specifics:
@@ -56,5 +63,6 @@ Not tested, but followed throughout: `=` for assignment, camelCase for new or to
 
 ## Repo-specific workflow
 
+- 3.4.0 has been submitted to CRAN (2026-11-05). When James confirms it is accepted, tag `v3.4.0` at the submitted commit (`9659e32`) and remove this note. If CRAN asks for changes, make them first and tag the commit that is accepted.
 - Modernisation has been done in numbered stages (`9`, `9.1`, `9.1.1` for fix iterations), driven by `scripts/runStage.sh`, which applies a run script and change-set zip from `~/Downloads`. Past design decisions and audits are in `inst/developer-notes/`, which is excluded from the build. Read these before reworking an area.
 - `build/`, `docs/`, `vignettes/articles/`, `Meta/`, `chatgpt-bundles/`, `*.zip`, `.s20x_built_pkg_path` and `.s20x_validation_mode` are generated and git-ignored, so don't edit them. `.s20x_stage*_validation_mode` files are also generated, but `.gitignore` doesn't cover them, so don't commit them.
