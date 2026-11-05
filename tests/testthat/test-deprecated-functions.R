@@ -34,10 +34,8 @@ test_that("deprecated functions warn when called directly", {
     "deprecated"
   )
   expect_warning(capture.output(freq1way(c(10, 20, 30))), "deprecated")
-  expect_warning(
-    eovcheck(fit, levene = TRUE),
-    "deprecated"
-  )
+  expect_warning(normcheck(fit, shapiro.wilk = TRUE), "deprecated")
+  expect_warning(normcheck(peru.df$BP, shapiro.wilk = TRUE), "deprecated")
 })
 
 test_that("functions still in use stay silent about deprecated helpers", {
@@ -60,14 +58,13 @@ test_that("functions still in use stay silent about deprecated helpers", {
   expect_no_warning(eovcheck(siteFit))
 })
 
-test_that("levene.test results are unchanged by the deprecation wrapper", {
-  data("oysters.df", package = "s20x", envir = environment())
+test_that("normcheck does not warn about shapiro.wilk by default", {
+  data("peru.df", package = "s20x", envir = environment())
 
-  fit = lm(log(Oysters) ~ Site, data = oysters.df)
-  direct = getS20xInternal("leveneTestInternal")(fit, show.table = FALSE)
-  wrapped = suppressWarnings(levene.test(fit, show.table = FALSE))
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
 
-  expect_equal(wrapped$p.value, direct$p.value)
+  expect_no_warning(normcheck(lm(BP ~ weight, data = peru.df)))
 })
 
 test_that("rowdistr accepts a two-way table", {

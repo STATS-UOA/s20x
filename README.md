@@ -132,3 +132,9 @@ This release fixes bugs found in a code review. Output for models that already w
 The following functions are deprecated. They still work, but they warn and will be removed in a later release, because the current course no longer uses them directly: `ciReg()`, `layout20x()`, `freq1way()`, `residPlot()`, `levene.test()`, `estimateContrasts()`, `crossFactors()`, `crosstabs()`, `onewayPlot()`, `twosampPlot()`, `autocorPlot()` and `skewness()`. The `levene` argument of `eovcheck()` is also deprecated.
 
 `summary1way()` still draws its plot, and `summaryStats()` still reports skewness.
+
+## 3.3.7
+
+- `eovcheck()` no longer offers Levene's test. Passing `levene` gives a warning and is otherwise ignored.
+- The `shapiro.wilk` argument of `normcheck()` is deprecated.
+- The demo scripts have been removed.

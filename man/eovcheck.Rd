@@ -16,7 +16,6 @@ eovcheck(x, ...)
   col = NULL,
   smoother = FALSE,
   twosd = FALSE,
-  levene = FALSE,
   engine = c("base", "ggplot2"),
   ...
 )
@@ -25,7 +24,6 @@ eovcheck(x, ...)
   x,
   smoother = FALSE,
   twosd = FALSE,
-  levene = FALSE,
   engine = c("base", "ggplot2"),
   ...
 )
@@ -50,9 +48,6 @@ plot}
 
 \item{twosd}{if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd}
 
-\item{levene}{deprecated. If \code{TRUE} then the P-value from Levene's test for equality of
-variance is displayed}
-
 \item{engine}{plotting engine to use. The default, \code{"base"}, preserves
 the original base graphics output. Use \code{"ggplot2"} for an optional
 ggplot2 object.}
@@ -69,11 +64,7 @@ drawn if smoother is set to TRUE. This can be useful in determining whether
 a trend still exists in the residuals. An optional pair of lines is drawn at
 +/- 2 times the standard deviation of the residuals - which is estimated
 from the Residual Mean Sqare (Within group mean square = WGMS). This can be
-useful in highlighting potential outliers. If the model has one or two
-factors and no continous variables, i.e. if it is a oneway or twoway ANOVA
-model, and \code{levene = TRUE} then the P-value from Levene's test for
-equality variance is displayed in the top left hand corner, as long as the
-number of observations per group exceeds two.
+useful in highlighting potential outliers.
 }
 \details{
 The default base graphics engine preserves the original teaching plot and
@@ -125,11 +116,8 @@ if (requireNamespace("ggplot2", quietly = TRUE)) {
   class(eovPlot)
 
   eovcheck(peru.fit, engine = "ggplot2", smoother = TRUE)
-  eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE, levene = TRUE)
+  eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE)
 }
 
-}
-\seealso{
-\code{\link{levene.test}}
 }
 \keyword{hplot}

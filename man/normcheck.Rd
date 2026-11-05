@@ -90,7 +90,7 @@ value for \code{pch} as defined in \code{\link{par}}.}
 \item{bcol}{the plotting colour used for the bootstrap samples. Legal values are the same as any legal
 value for \code{col} as defined in \code{\link{par}}.}
 
-\item{shapiro.wilk}{if \code{TRUE}, the P-value from the Shapiro-Wilk
+\item{shapiro.wilk}{deprecated. If \code{TRUE}, the P-value from the Shapiro-Wilk
 test for normality is displayed in the top-left corner of the Q-Q plot.}
 
 \item{whichPlot}{legal values are  \code{1}, \code{2}, and any pair of the two, i.e. \code{1:2}, \code{2:1},

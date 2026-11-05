@@ -19,6 +19,12 @@
 
 
 
+## s20x 3.3.7
+
+- Removed Levene's test from eovcheck(). Passing `levene` now gives a warning and the argument is ignored. levene.test() remains deprecated.
+- Deprecated the `shapiro.wilk` argument of normcheck().
+- Removed the demo scripts, which were no longer used.
+
 ## s20x 3.3.6
 
 - Deprecated functions with no direct use in the current course notes, the 2021-22 assignments and tests, or the case studies: ciReg(), layout20x(), freq1way(), residPlot(), levene.test(), estimateContrasts(), crossFactors(), crosstabs(), onewayPlot(), twosampPlot(), autocorPlot() and skewness().

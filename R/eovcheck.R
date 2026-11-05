@@ -7,11 +7,7 @@
 #' a trend still exists in the residuals. An optional pair of lines is drawn at
 #' +/- 2 times the standard deviation of the residuals - which is estimated
 #' from the Residual Mean Sqare (Within group mean square = WGMS). This can be
-#' useful in highlighting potential outliers. If the model has one or two
-#' factors and no continous variables, i.e. if it is a oneway or twoway ANOVA
-#' model, and \code{levene = TRUE} then the P-value from Levene's test for
-#' equality variance is displayed in the top left hand corner, as long as the
-#' number of observations per group exceeds two.
+#' useful in highlighting potential outliers.
 #'
 #' The default base graphics engine preserves the original teaching plot and
 #' draws directly on the active graphics device. The optional ggplot2 engine is
@@ -28,8 +24,6 @@
 #' @param smoother if TRUE then a smoothed lowess line will be added to the
 #' plot
 #' @param twosd if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd
-#' @param levene deprecated. If \code{TRUE} then the P-value from Levene's test for equality of
-#' variance is displayed
 #' @param engine plotting engine to use. The default, \code{"base"}, preserves
 #' the original base graphics output. Use \code{"ggplot2"} for an optional
 #' ggplot2 object.
@@ -37,7 +31,6 @@
 #' arguments are currently ignored by the ggplot2 engine.
 #' @return Draws the residual-versus-fitted diagnostic plot when using the base
 #' engine. With \code{engine = "ggplot2"}, returns a ggplot object.
-#' @seealso \code{\link{levene.test}}
 #' @keywords hplot
 #' @examples
 #'
@@ -82,7 +75,7 @@
 #'   class(eovPlot)
 #'
 #'   eovcheck(peru.fit, engine = "ggplot2", smoother = TRUE)
-#'   eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE, levene = TRUE)
+#'   eovcheck(oyster.fit, engine = "ggplot2", twosd = TRUE)
 #' }
 #'
 #' @importFrom methods is
@@ -98,7 +91,7 @@ eovcheck = function(x, ...) {
 eovcheck.formula = function(x, data = NULL,
                              xlab = "Fitted values", ylab = "Residuals",
                              col = NULL, smoother = FALSE, twosd = FALSE,
-                             levene = FALSE, engine = c("base", "ggplot2"), ...) {
+                             engine = c("base", "ggplot2"), ...) {
   if (missing(x) || !is(x, "formula")) {
     stop("missing or incorrect formula formula")
   }
@@ -127,13 +120,11 @@ eovcheck.formula = function(x, data = NULL,
   eovcheckFromFit(
     fit = lm(form, data = data.f),
     m = m,
-    terms.form = terms.form,
     xlab = xlab,
     ylab = ylab,
     col = col,
     smoother = smoother,
     twosd = twosd,
-    levene = levene,
     engine = engine,
     ...
   )
@@ -142,7 +133,7 @@ eovcheck.formula = function(x, data = NULL,
 #' @rdname eovcheck
 #' @importFrom methods is
 #' @export
-eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
+eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE,
                         engine = c("base", "ggplot2"), ...) {
   if (missing(x) || !is(x, "lm")) {
     stop("missing or incorrect lm object")
@@ -152,9 +143,7 @@ eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
 
   ## Use the fitted model itself so subset, na.action and the caller's variables
   ## are respected. Weights and offsets are model-frame columns, not covariates.
-  fullFrame = model.frame(x)
-  modelFrame = fullFrame[!grepl("^[(]", names(fullFrame))]
-  attr(modelFrame, "terms") = attr(fullFrame, "terms")
+  modelFrame = model.frame(x)
 
   ## glm objects inherit from lm, and have always been checked with least squares
   fit = if (inherits(x, "glm")) {
@@ -165,11 +154,9 @@ eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
 
   eovcheckFromFit(
     fit = fit,
-    m = modelFrame,
-    terms.form = terms(x),
+    m = modelFrame[!grepl("^[(]", names(modelFrame))],
     smoother = smoother,
     twosd = twosd,
-    levene = levene,
     engine = engine,
     ...
   )
@@ -179,98 +166,36 @@ eovcheck.lm = function(x, smoother = FALSE, twosd = FALSE, levene = FALSE,
 #'
 #' @param fit fitted model supplying residuals and fitted values.
 #' @param m model frame holding the response and explanatory variables.
-#' @param terms.form terms object for the model.
 #' @param xlab x-axis label.
 #' @param ylab y-axis label.
 #' @param col smoother line colour.
 #' @param smoother whether to draw a lowess smoother.
 #' @param twosd whether to draw +/- 2 sigma reference lines.
-#' @param levene whether to report Levene's test.
 #' @param engine matched plotting engine.
+#' @param levene removed argument, caught here so that old code gets a clear
+#'   warning instead of passing it on to the plotting functions.
 #' @param \dots arguments passed to the base graphics engine.
 #' @return The value of the selected plotting engine.
 #' @noRd
-eovcheckFromFit = function(fit, m, terms.form,
+eovcheckFromFit = function(fit, m,
                            xlab = "Fitted values", ylab = "Residuals",
                            col = NULL, smoother = FALSE, twosd = FALSE,
-                           levene = FALSE, engine = "base", ...) {
-  if (levene) {
-    .Deprecated(msg = "The levene argument of eovcheck() is deprecated and will be removed from s20x.")
+                           engine = "base", levene = NULL, ...) {
+  if (!is.null(levene)) {
+    warning(
+      "The levene argument of eovcheck() has been removed and is ignored.",
+      call. = FALSE
+    )
   }
 
-  num.factors = sum(sapply(m, is.factor))
-  num.cts = ncol(m) - num.factors - 1
-
-  bOneWay = FALSE
-  bTwoWay = FALSE
-  bRegression = FALSE
-  bInsuffRep = FALSE
-  p.value = NA
-
-  if (num.cts == 0 & num.factors > 0) {
-    if (levene & num.factors > 2) {
-      warning("This version Levene's test only works for up to two factors")
-      p.value = NA
-    } else {
-      bOneWay = num.factors == 1
-      bTwoWay = num.factors == 2
-    }
-  } else {
-    if (ncol(m) == 1) {
-      stop("You must have at least two variables for this function to work")
-    } else {
-      bRegression = TRUE
-    }
-  }
-
-  if (levene && (bOneWay | bTwoWay)) {
-    factors.form = attr(terms.form, "factors")
-    num.factors = sum(apply(factors.form, 1, sum) > 0)
-
-    if (num.factors < 1 || num.factors > 2) {
-      if (num.factors < 1) {
-        stop("There must be at least one explantory variable")
-      } else {
-        stop("This function only works for up to two factors")
-      }
-    }
-
-    if (ncol(m) < 2) {
-      stop("Incorrect formula")
-    }
-
-    Terms = attr(m, "terms")
-
-    x = model.extract(m, "response")
-    fac1 = as.factor(m[, 2])
-
-    if (num.factors == 2) {
-      fac2 = as.factor(m[, 3])
-      fac1 = factor(crossFactors.default(fac1, fac2))
-    }
-
-    ## Levene's test uses the cell means; the plot keeps the model that was asked for
-    leveneFit = lm(x ~ fac1)
-
-    num.obs.per.group.min = min(sapply(split(x, fac1), length))
-    p.value = 0
-
-    if (num.obs.per.group.min == 1) {
-      stop("There is a group with no replication")
-    } else if (num.obs.per.group.min == 2) {
-      warning("Smallest group size is 2.\n It may make no sense to check for equality of variance")
-      bInsuffRep = TRUE
-    } else {
-      p.value = leveneTestInternal(leveneFit, show.table = FALSE)$p.value
-    }
+  if (ncol(m) == 1) {
+    stop("You must have at least two variables for this function to work")
   }
 
   diagnosticData = getModelResidualFittedData(fit, context = "equality-of-variance model")
   diagnosticInfo = list(
     fit = fit,
-    diagnosticData = diagnosticData,
-    pValue = p.value,
-    showLevene = !is.na(p.value) && ((bOneWay | bTwoWay) & !bInsuffRep & levene)
+    diagnosticData = diagnosticData
   )
 
   if (engine == "ggplot2") {
@@ -297,7 +222,7 @@ eovcheckFromFit = function(fit, m, terms.form,
 
 #' Draw an equality-of-variance diagnostic using base graphics
 #'
-#' @param diagnosticInfo diagnostic data and Levene display metadata.
+#' @param diagnosticInfo fitted model and diagnostic data.
 #' @param xlab x-axis label.
 #' @param ylab y-axis label.
 #' @param col smoother line colour.
@@ -329,20 +254,11 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
     sigma = sigma(diagnosticInfo$fit)
     abline(h = c(-2, 2) * sigma, lty = 3, col = "grey", lwd = 2)
   }
-
-  if (diagnosticInfo$showLevene) {
-    usr.coords = par("usr")
-    xlims = usr.coords[1:2]
-    ylims = usr.coords[3:4]
-    ypos = ylims[2] - diff(ylims) * 0.02
-    xpos = xlims[1] + diff(xlims) * 0.02
-    text(xpos, ypos, paste("Levene Test P-value: ", round(diagnosticInfo$pValue, 4)), adj = c(0))
-  }
 }
 
 #' Build an equality-of-variance diagnostic using ggplot2
 #'
-#' @param diagnosticInfo diagnostic data and Levene display metadata.
+#' @param diagnosticInfo fitted model and diagnostic data.
 #' @param xlab x-axis label.
 #' @param ylab y-axis label.
 #' @param col smoother line colour.
@@ -401,18 +317,6 @@ eovcheck_ggplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
       linetype = 3,
       colour = "grey",
       linewidth = 0.5
-    )
-  }
-
-  if (diagnosticInfo$showLevene) {
-    xRange = range(plotData$fitted, finite = TRUE)
-    plotObject = plotObject + annotate(
-      "text",
-      x = xRange[1] + diff(xRange) * 0.02,
-      y = yRange[2] - diff(yRange) * 0.02,
-      label = paste("Levene Test P-value: ", round(diagnosticInfo$pValue, 4)),
-      hjust = 0,
-      vjust = 1
     )
   }
 

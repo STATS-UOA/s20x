@@ -43,7 +43,7 @@ test_that("eovcheck ggplot2 engine returns a ggplot object when available", {
 })
 
 
-test_that("eovcheck formula method passes engine and Levene arguments", {
+test_that("eovcheck formula method passes the engine argument", {
   skip_if_not_installed("ggplot2")
 
   sampleData = data.frame(
@@ -51,7 +51,7 @@ test_that("eovcheck formula method passes engine and Levene arguments", {
     group = factor(rep(c("a", "b"), each = 4))
   )
 
-  plotObject = suppressWarnings(eovcheck(response ~ group, data = sampleData, engine = "ggplot2", levene = TRUE))
+  plotObject = eovcheck(response ~ group, data = sampleData, engine = "ggplot2")
 
   expect_s3_class(plotObject, "ggplot")
 })
@@ -131,32 +131,26 @@ test_that("eovcheck lm method works with a stored formula", {
   expect_silent(eovcheck(fit))
 })
 
-test_that("eovcheck lm and formula methods agree on Levene's test", {
-  data("butterfat.df", package = "s20x", envir = environment())
+test_that("eovcheck lm and formula methods draw the same data", {
   skip_if_not_installed("ggplot2")
+  data("butterfat.df", package = "s20x", envir = environment())
 
   fit = lm(Butterfat ~ Breed, data = butterfat.df)
-  lmPlot = suppressWarnings(eovcheck(fit, levene = TRUE, engine = "ggplot2"))
-  formulaPlot = suppressWarnings(eovcheck(Butterfat ~ Breed, data = butterfat.df, levene = TRUE, engine = "ggplot2"))
 
-  expect_equal(lmPlot$data, formulaPlot$data)
   expect_equal(
-    length(lmPlot$layers),
-    length(formulaPlot$layers)
+    eovcheck(fit, engine = "ggplot2")$data,
+    eovcheck(Butterfat ~ Breed, data = butterfat.df, engine = "ggplot2")$data
   )
 })
 
-test_that("eovcheck does not treat lm weights as a covariate for Levene's test", {
-  data("butterfat.df", package = "s20x", envir = environment())
+test_that("eovcheck plots the residuals of a weighted fit", {
   skip_if_not_installed("ggplot2")
+  data("butterfat.df", package = "s20x", envir = environment())
 
-  unweightedFit = lm(Butterfat ~ Breed, data = butterfat.df)
-  weightedFit = lm(Butterfat ~ Breed, data = butterfat.df, weights = Butterfat)
+  fit = lm(Butterfat ~ Breed, data = butterfat.df, weights = Butterfat)
+  plotObject = eovcheck(fit, engine = "ggplot2")
 
-  expect_equal(
-    length(suppressWarnings(eovcheck(weightedFit, levene = TRUE, engine = "ggplot2"))$layers),
-    length(suppressWarnings(eovcheck(unweightedFit, levene = TRUE, engine = "ggplot2"))$layers)
-  )
+  expect_equal(unname(plotObject$data[[2]]), unname(residuals(fit)))
 })
 
 test_that("eovcheck still checks glm fits with least squares residuals", {
@@ -214,23 +208,36 @@ test_that("eovcheck base engine puts two sd lines at two residual standard error
   expect_equal(linePositions[[4]], expected)
 })
 
-test_that("eovcheck Levene option does not change the plotted residuals", {
+test_that("eovcheck ignores the removed levene argument with a clear warning", {
   skip_if_not_installed("ggplot2")
   data("soyabean.df", package = "s20x", envir = environment())
 
   fit = lm(yield ~ planttime + cultivar, data = soyabean.df)
-  plain = eovcheck(yield ~ planttime + cultivar, data = soyabean.df, engine = "ggplot2")
-  withLevene = suppressWarnings(eovcheck(
-    yield ~ planttime + cultivar,
-    data = soyabean.df,
-    levene = TRUE,
-    engine = "ggplot2"
-  ))
+  plain = eovcheck(fit, engine = "ggplot2")
+
+  expect_warning(
+    withLevene <- eovcheck(fit, levene = TRUE, engine = "ggplot2"),
+    "has been removed"
+  )
+  expect_warning(
+    eovcheck(yield ~ planttime + cultivar, data = soyabean.df, levene = TRUE, engine = "ggplot2"),
+    "has been removed"
+  )
 
   expect_equal(withLevene$data, plain$data)
-  expect_equal(unname(withLevene$data[[2]]), unname(residuals(fit)))
-  expect_gt(length(withLevene$layers), length(plain$layers))
-  expect_equal(suppressWarnings(eovcheck(fit, levene = TRUE, engine = "ggplot2"))$data, plain$data)
+  expect_length(withLevene$layers, length(plain$layers))
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_warning(eovcheck(fit, levene = TRUE), "has been removed")
+})
+
+test_that("eovcheck needs an explanatory variable", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  expect_error(eovcheck(lm(BP ~ 1, data = peru.df)), "at least two variables")
+  expect_error(eovcheck(BP ~ 1, data = peru.df), "at least two variables")
 })
 
 test_that("eovcheck base engine uses col for the smoother", {

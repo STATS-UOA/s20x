@@ -27,20 +27,6 @@
 levene.test = function(formula, data, digit = 5, show.table = TRUE) {
   .Deprecated(msg = "levene.test() is deprecated and will be removed from s20x.")
 
-  leveneCall = match.call()
-  leveneCall[[1]] = leveneTestInternal
-  eval(leveneCall, parent.frame())
-}
-
-#' Calculate Levene's test
-#'
-#' @param formula a model formula or fitted model.
-#' @param data an optional data frame.
-#' @param digit number of decimal places in the printed table.
-#' @param show.table whether to print the ANOVA table.
-#' @return The Levene test results.
-#' @noRd
-leveneTestInternal = function(formula, data, digit = 5, show.table = TRUE) {
   call = match.call()
   m = match.call()
   mn = match(c("formula", "data"), names(m), 0)

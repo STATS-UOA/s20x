@@ -32,7 +32,7 @@
 #' value for \code{pch} as defined in \code{\link{par}}.
 #' @param bcol the plotting colour used for the bootstrap samples. Legal values are the same as any legal
 #' value for \code{col} as defined in \code{\link{par}}.
-#' @param shapiro.wilk if \code{TRUE}, the P-value from the Shapiro-Wilk
+#' @param shapiro.wilk deprecated. If \code{TRUE}, the P-value from the Shapiro-Wilk
 #' test for normality is displayed in the top-left corner of the Q-Q plot.
 #' @param whichPlot legal values are  \code{1}, \code{2}, and any pair of the two, i.e. \code{1:2}, \code{2:1},
 #' \code{c(1,2)}, \code{c(2,1)}, or variants of \code{c(1,1)}.
@@ -109,6 +109,10 @@ normcheck.default = function(x,
                              whichPlot = 1:2, usePar = TRUE,
                              engine = c("base", "ggplot2"), ...) {
   engine = matchPlottingEngine(engine)
+
+  if (isTRUE(shapiro.wilk)) {
+    .Deprecated(msg = "The shapiro.wilk argument of normcheck() is deprecated and will be removed from s20x.")
+  }
 
   if (!all(whichPlot %in% 1:2)) {
     stop("whichPlot must be in 1:2")
