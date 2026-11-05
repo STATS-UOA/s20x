@@ -19,6 +19,7 @@ Rscript -e 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), 
 - `ggplot2` and `GGally` must be installed before `devtools::test()` or `devtools::load_all()` will run. They are hard `Imports`, deliberately, because the no-`::` rule rules out `Suggests`.
 - Tests use the built-in datasets. Do not create synthetic data to stand in for them. There is no `LazyData`, so load them explicitly: `data("peru.df", package = "s20x", envir = environment())`.
 - CI runs on ubuntu with R oldrel-1, release and devel, and fails on warnings as well as errors.
+- `.github/workflows/rhub.yaml` runs R-hub checks on more platforms. It only runs when started, with `rhub::rhub_check()`. Keep using win-builder as well before CRAN submissions.
 
 ## Versions and NEWS
 

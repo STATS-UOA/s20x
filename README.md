@@ -1,4 +1,4 @@
-# s20x
+# s20x <img src="man/figures/logo.png" align="right" height="139" alt="s20x hex logo" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/STATS-UOA/s20x/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/STATS-UOA/s20x/actions/workflows/R-CMD-check.yaml)

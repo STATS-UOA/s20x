@@ -1,5 +1,10 @@
 # s20x news
 
+## s20x 3.3.11
+
+- Added the package logo.
+- Added an R-hub workflow for checking on more platforms from GitHub Actions.
+
 ## s20x 3.3.10
 
 - Added the package website to `DESCRIPTION`: <https://stats-uoa.github.io/s20x/>.
