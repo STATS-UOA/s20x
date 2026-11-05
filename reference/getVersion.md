@@ -16,7 +16,7 @@ getVersion()
 
 getVersion()
 #> Package: s20x
-#> Version: 3.3.9
+#> Version: 3.3.10
 #> Title: Functions for University of Auckland Course STATS 201/208 Data
 #>         Analysis
 #> Authors@R: c( person("Brant", "Deppa", role = "aut", comment = "Wrote
@@ -46,14 +46,15 @@ getVersion()
 #> Imports: stats, graphics, grDevices, methods, GGally, ggplot2, nlme,
 #>         rlang, rmarkdown, rstudioapi, tools, utils
 #> License: GPL-2 | file LICENSE
-#> URL: https://github.com/STATS-UOA/s20x
+#> URL: https://stats-uoa.github.io/s20x/,
+#>         https://github.com/STATS-UOA/s20x
 #> BugReports: https://github.com/STATS-UOA/s20x/issues
 #> Config/testthat/edition: 3
 #> Config/roxygen2/version: 8.1.1
 #> RemotePkgRef: local::.
 #> RemoteType: local
 #> NeedsCompilation: no
-#> Packaged: 2026-11-05 03:24:35 UTC; runner
+#> Packaged: 2026-11-05 03:34:19 UTC; runner
 #> Author: Brant Deppa [aut] (Wrote the original R scripts this package is
 #>         derived from), James Curran [aut, cre] (Wrote the original R
 #>         package. Current maintainer.), Hannah Yun [ctb], Rachel Fewster
@@ -61,7 +62,7 @@ getVersion()
 #>         [ctb], Chris Wild [ctb], Sophie Jones [ctb], Dineika Chandra
 #>         [ctb], Brendan McArdle [ctb]
 #> Maintainer: James Curran <j.curran@auckland.ac.nz>
-#> Built: R 4.6.2; ; 2026-11-05 03:24:36 UTC; unix
+#> Built: R 4.6.2; ; 2026-11-05 03:34:20 UTC; unix
 #> 
 #> -- File: /home/runner/work/_temp/Library/s20x/Meta/package.rds 
 ```
