@@ -19,6 +19,13 @@
 
 
 
+## s20x 3.3.2
+
+- Fixed eovcheck() so `levene = TRUE` no longer changes the plotted residuals. Additive two-factor models previously plotted residuals from the interaction model when Levene's test was requested. The Levene P-value is unchanged.
+- Fixed onewayPlot() for lm objects so `conf.level`, `interval.type`, `pooled`, `strip`, `vert` and `verbose` are used rather than silently ignored.
+- Fixed summary1way() so `conf.level`, `inttype` and `pooled` reach the plot. The default plot is unchanged.
+- Added regression tests for each fix.
+
 ## s20x 3.3.1
 
 - Fixed summary2way() so `page = "nointeraction"` applies `FUN` once. Back-transformed comparisons were previously transformed twice, for example printing exp(exp(x)) with `FUN = exp`.

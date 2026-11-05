@@ -96,3 +96,8 @@ This release fixes bugs found in a code review. Output for models that already w
 - `plot()` on a `tslm` fit now puts residuals in order of the `time` variable, so the ACF and residuals-over-time panels are correct when the data are not already in time order. `tslm()` now fits `ar(p)` models in `time` order, so for such data `residuals()` and `fitted()` also come back in time order. Coefficients do not change.
 - `tslm()` now keeps `offset()` terms in the mean model. Using `offset()` together with `ar(p)` gives an error, because `nlme::gls()` does not support offsets.
 - `eovcheck()` now uses the fitted `lm` object directly. It respects `subset`, works for `lm(y ~ x)` with no `data` argument and for stored formulas, and uses the weighted fit when `weights` were supplied.
+
+## 3.3.2
+
+- `eovcheck(..., levene = TRUE)` now plots residuals from the model you asked for. Additive two-factor models previously showed interaction-model residuals. The Levene P-value is unchanged.
+- `onewayPlot()` on an `lm` object, and `summary1way()`, now use `conf.level`, `pooled` and the interval type. These settings were previously ignored, so plots drawn with non-default values should be redrawn. The default plot is unchanged.

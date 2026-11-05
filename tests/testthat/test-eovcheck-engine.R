@@ -188,3 +188,22 @@ test_that("eovcheck draws two sd lines for aov fits", {
 
   expect_silent(eovcheck(aovFit, twosd = TRUE))
 })
+
+test_that("eovcheck Levene option does not change the plotted residuals", {
+  skip_if_not_installed("ggplot2")
+  data("soyabean.df", package = "s20x", envir = environment())
+
+  fit = lm(yield ~ planttime + cultivar, data = soyabean.df)
+  plain = eovcheck(yield ~ planttime + cultivar, data = soyabean.df, engine = "ggplot2")
+  withLevene = eovcheck(
+    yield ~ planttime + cultivar,
+    data = soyabean.df,
+    levene = TRUE,
+    engine = "ggplot2"
+  )
+
+  expect_equal(withLevene$data, plain$data)
+  expect_equal(unname(withLevene$data[[2]]), unname(residuals(fit)))
+  expect_gt(length(withLevene$layers), length(plain$layers))
+  expect_equal(eovcheck(fit, levene = TRUE, engine = "ggplot2")$data, plain$data)
+})

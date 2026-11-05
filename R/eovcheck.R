@@ -231,13 +231,6 @@ eovcheckFromFit = function(fit, m, terms.form,
       }
     }
 
-    bInteraction = FALSE
-    if (num.factors == 2) {
-      if (any(grep(":", attr(terms.form, "term.labels")))) {
-        bInteraction = TRUE
-      }
-    }
-
     if (ncol(m) < 2) {
       stop("Incorrect formula")
     }
@@ -252,7 +245,8 @@ eovcheckFromFit = function(fit, m, terms.form,
       fac1 = factor(crossFactors(fac1, fac2))
     }
 
-    fit = lm(x ~ fac1)
+    ## Levene's test uses the cell means; the plot keeps the model that was asked for
+    leveneFit = lm(x ~ fac1)
 
     num.obs.per.group.min = min(sapply(split(x, fac1), length))
     p.value = 0
@@ -263,7 +257,7 @@ eovcheckFromFit = function(fit, m, terms.form,
       warning("Smallest group size is 2.\n It may make no sense to check for equality of variance")
       bInsuffRep = TRUE
     } else {
-      p.value = levene.test(fit, show.table = FALSE)$p.value
+      p.value = levene.test(leveneFit, show.table = FALSE)$p.value
     }
   }
 

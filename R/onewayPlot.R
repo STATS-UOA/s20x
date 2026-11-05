@@ -252,5 +252,5 @@ onewayPlot.lm = function(x, ..., ylabel = nms[1], flabel = nms[2]) {
     nms = names(data)
     if (dim(data)[2] != 2) 
         warning("only the first variable will be used")
-    onewayPlot.default(data[, 1], data[, 2], ylabel = ylabel, flabel = flabel)
+    onewayPlot.default(data[, 1], factor(data[, 2]), ..., ylabel = ylabel, flabel = flabel)
 }
