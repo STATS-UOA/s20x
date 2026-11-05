@@ -99,3 +99,17 @@ test_that("normcheck ggplot2 engine accepts hex and palette colours", {
   expect_no_error(print(normcheck(peru.df$BP, col = "#336699", engine = "ggplot2")))
   expect_no_error(print(normcheck(peru.df$BP, col = 2, engine = "ggplot2")))
 })
+
+test_that("normcheck uses the base engine unless asked otherwise", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  local_mocked_bindings(normcheck_ggplot2 = function(...) {
+    stop("the ggplot2 engine should not be used by default")
+  })
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_no_error(normcheck(peru.df$BP))
+  expect_no_error(normcheck(lm(BP ~ weight, data = peru.df)))
+})

@@ -108,3 +108,16 @@ test_that("pairs20x base engine accepts point options", {
   expect_silent(pairs20x(peru.df, col = "red"))
   expect_silent(pairs20x(peru.df, pch = 19, col = "blue", cex = 0.5))
 })
+
+test_that("pairs20x uses the base engine unless asked otherwise", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  local_mocked_bindings(pairs20x_ggplot2 = function(...) {
+    stop("the ggplot2 engine should not be used by default")
+  })
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_no_error(pairs20x(peru.df))
+})

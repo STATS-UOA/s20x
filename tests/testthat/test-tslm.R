@@ -510,3 +510,84 @@ test_that("tslm finds a local time variable alongside data", {
     coef(tslm(log(passengers) ~ t + ar(1), data = airpass.df, time = t))
   )
 })
+
+test_that("tslm AR(1) fits match a direct gls fit", {
+  data(airpass.df)
+
+  direct = gls(
+    log(passengers) ~ t + month,
+    data = airpass.df,
+    correlation = corARMA(p = 1, q = 0, form = ~ t),
+    method = "REML"
+  )
+  fit = tslm(log(passengers) ~ t + month + ar(1), data = airpass.df, time = t)
+
+  expect_equal(coef(fit), coef(direct), tolerance = 1e-5)
+  expect_equal(
+    unname(getS20xInternal("getTslmArParameters")(fit)),
+    unname(coef(direct$modelStruct$corStruct, unconstrained = FALSE)),
+    tolerance = 1e-4
+  )
+  expect_equal(as.numeric(logLik(fit)), as.numeric(logLik(direct)))
+  expect_equal(AIC(fit), AIC(direct))
+  expect_equal(BIC(fit), BIC(direct))
+  expect_equal(vcov(fit), vcov(direct), tolerance = 1e-4)
+  expect_equal(as.numeric(fitted(fit)), as.numeric(fitted(direct)), tolerance = 1e-5)
+})
+
+test_that("tslm AR(2) fits match a direct gls fit", {
+  data(airpass.df)
+
+  direct = gls(
+    log(passengers) ~ t + month,
+    data = airpass.df,
+    correlation = corARMA(p = 2, q = 0, form = ~ t),
+    method = "REML"
+  )
+  fit = tslm(log(passengers) ~ t + month + ar(2), data = airpass.df, time = t)
+
+  expect_equal(fit$errorSpec$p, 2L)
+  expect_equal(coef(fit), coef(direct), tolerance = 1e-5)
+  expect_length(getS20xInternal("getTslmArParameters")(fit), 2)
+  expect_equal(
+    unname(getS20xInternal("getTslmArParameters")(fit)),
+    unname(coef(direct$modelStruct$corStruct, unconstrained = FALSE)),
+    tolerance = 1e-4
+  )
+})
+
+test_that("tslm anova tables match the underlying fits", {
+  data(airpass.df)
+
+  lmFit = lm(log(passengers) ~ t + month, data = airpass.df)
+  expect_equal(
+    as.data.frame(anova(tslm(log(passengers) ~ t + month, data = airpass.df))),
+    as.data.frame(anova(lmFit))
+  )
+
+  direct = gls(
+    log(passengers) ~ t + month,
+    data = airpass.df,
+    correlation = corARMA(p = 1, q = 0, form = ~ t),
+    method = "REML"
+  )
+  arTable = anova(tslm(log(passengers) ~ t + month + ar(1), data = airpass.df, time = t))
+  directTable = anova(direct)
+  keptTerms = rownames(arTable)
+
+  expect_equal(
+    as.numeric(arTable[["F value"]]),
+    as.numeric(directTable[keptTerms, "F-value"]),
+    tolerance = 1e-3
+  )
+})
+
+test_that("tslm predict matches the underlying model", {
+  data(airpass.df)
+
+  lmFit = lm(log(passengers) ~ t, data = airpass.df)
+  fit = tslm(log(passengers) ~ t, data = airpass.df)
+  newdata = data.frame(t = c(145, 146))
+
+  expect_equal(predict(fit, newdata), predict(lmFit, newdata))
+})

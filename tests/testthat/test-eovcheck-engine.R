@@ -170,23 +170,48 @@ test_that("eovcheck still checks glm fits with least squares residuals", {
   expect_equal(unname(plotObject$data[[2]]), unname(residuals(lmFit)))
 })
 
-test_that("eovcheck draws two sd lines for aov fits", {
+test_that("eovcheck ggplot2 engine puts two sd lines at two residual standard errors", {
   skip_if_not_installed("ggplot2")
   data("butterfat.df", package = "s20x", envir = environment())
 
-  aovFit = aov(Butterfat ~ Breed, data = butterfat.df)
   lmFit = lm(Butterfat ~ Breed, data = butterfat.df)
+  aovFit = aov(Butterfat ~ Breed, data = butterfat.df)
+  expected = sort(c(0, -2, 2) * summary(lmFit)$sigma)
 
-  expect_equal(sigma(aovFit), summary(lmFit)$sigma)
-  expect_equal(
-    length(eovcheck(aovFit, twosd = TRUE, engine = "ggplot2")$layers),
-    length(eovcheck(lmFit, twosd = TRUE, engine = "ggplot2")$layers)
-  )
+  linePositions = function(plotObject) {
+    hlineLayers = plotObject$layers[vapply(plotObject$layers, function(layer) {
+      inherits(layer$geom, "GeomHline")
+    }, logical(1))]
+    sort(unlist(lapply(hlineLayers, function(layer) {
+      layer$data$yintercept
+    }), use.names = FALSE))
+  }
+
+  expect_equal(linePositions(eovcheck(lmFit, twosd = TRUE, engine = "ggplot2")), expected)
+  expect_equal(linePositions(eovcheck(aovFit, twosd = TRUE, engine = "ggplot2")), expected)
+})
+
+test_that("eovcheck base engine puts two sd lines at two residual standard errors", {
+  data("butterfat.df", package = "s20x", envir = environment())
+
+  lmFit = lm(Butterfat ~ Breed, data = butterfat.df)
+  aovFit = aov(Butterfat ~ Breed, data = butterfat.df)
+  expected = c(-2, 2) * summary(lmFit)$sigma
+
+  linePositions = list()
+  local_mocked_bindings(abline = function(h = NULL, ...) {
+    linePositions[[length(linePositions) + 1]] <<- h
+    invisible(NULL)
+  })
 
   pdf(NULL)
   on.exit(dev.off(), add = TRUE)
 
-  expect_silent(eovcheck(aovFit, twosd = TRUE))
+  eovcheck(lmFit, twosd = TRUE)
+  eovcheck(aovFit, twosd = TRUE)
+
+  expect_equal(linePositions[[2]], expected)
+  expect_equal(linePositions[[4]], expected)
 })
 
 test_that("eovcheck Levene option does not change the plotted residuals", {
@@ -225,4 +250,18 @@ test_that("eovcheck base engine uses col for the smoother", {
   eovcheck(fit, smoother = TRUE)
 
   expect_equal(smootherColours, c("red", "lightblue"))
+})
+
+test_that("eovcheck uses the base engine unless asked otherwise", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  local_mocked_bindings(eovcheck_ggplot2 = function(...) {
+    stop("the ggplot2 engine should not be used by default")
+  })
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_null(eovcheck(lm(BP ~ weight, data = peru.df)))
+  expect_null(eovcheck(BP ~ weight, data = peru.df))
 })

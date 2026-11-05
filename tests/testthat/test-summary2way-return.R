@@ -148,3 +148,34 @@ test_that("summary2way still stops for a missing interaction when not printing",
     "No interaction term in model"
   )
 })
+
+test_that("summary2way results match anova and the cell means", {
+  data("arousal.df", package = "s20x", envir = environment())
+
+  fit = lm(arousal ~ gender * picture, data = arousal.df)
+  capture.output(result <- summary2way(fit, page = "table"))
+  anovaTable = anova(fit)
+
+  expect_equal(result$Df, anovaTable$Df)
+  expect_equal(result$`Sum of Sq`, anovaTable$`Sum Sq`)
+  expect_equal(result$`Mean Sq`, anovaTable$`Mean Sq`)
+  expect_equal(result$`F value`, anovaTable$`F value`)
+  expect_equal(result$`Pr(F)`, anovaTable$`Pr(>F)`)
+
+  grandMean = mean(arousal.df$arousal)
+  genderMeans = tapply(arousal.df$arousal, arousal.df$gender, mean)
+  pictureMeans = tapply(arousal.df$arousal, arousal.df$picture, mean)
+  cellMeans = tapply(
+    arousal.df$arousal,
+    list(arousal.df$gender, arousal.df$picture),
+    mean
+  )
+
+  expect_equal(as.numeric(result$`Grand Mean`), grandMean)
+  expect_equal(as.numeric(result$`Row Effects`), as.numeric(genderMeans - grandMean))
+  expect_equal(as.numeric(result$`Col Effects`), as.numeric(pictureMeans - grandMean))
+  expect_equal(
+    as.numeric(result$`Interaction Effects`),
+    as.numeric(sweep(sweep(cellMeans, 1, genderMeans), 2, pictureMeans) + grandMean)
+  )
+})

@@ -87,3 +87,16 @@ test_that("modelcheck ggplot2 engine uses base-like theme and Cook vertical line
   expect_true("GeomSegment" %in% layerGeoms)
   expect_false("GeomLine" %in% layerGeoms)
 })
+
+test_that("modelcheck uses the base engine unless asked otherwise", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  local_mocked_bindings(modelcheck_ggplot2 = function(...) {
+    stop("the ggplot2 engine should not be used by default")
+  })
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_no_error(modelcheck(lm(BP ~ weight, data = peru.df)))
+})

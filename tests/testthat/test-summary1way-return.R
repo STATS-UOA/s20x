@@ -150,3 +150,23 @@ test_that("onewayPlot vector interface accepts a character grouping variable", {
 
     expect_true(any(startsWith(printed, "PS2: mean = ")))
 })
+
+test_that("summary1way results match anova and the group means", {
+    data("oysters.df", package = "s20x", envir = environment())
+
+    fit = lm(log(Oysters) ~ Site, data = oysters.df)
+    result = summary1way(fit, print.out = FALSE, draw.plot = FALSE)
+    anovaTable = anova(fit)
+    response = log(oysters.df$Oysters)
+
+    expect_equal(result$Df, c(anovaTable$Df, sum(anovaTable$Df)))
+    expect_equal(result$`Sum of Sq`, round(c(anovaTable$`Sum Sq`, sum(anovaTable$`Sum Sq`)), 5))
+    expect_equal(result$`Mean Sq`, round(anovaTable$`Mean Sq`, 5))
+    expect_equal(result$`F value`, anovaTable$`F value`[1])
+    expect_equal(result$`Pr(F)`, anovaTable$`Pr(>F)`[1])
+    expect_equal(result$`Main Effect`, mean(response))
+    expect_equal(
+        unname(result$`Group Effects`),
+        as.numeric(tapply(response, oysters.df$Site, mean) - mean(response))
+    )
+})
