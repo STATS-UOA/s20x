@@ -66,6 +66,35 @@ prepCrosstabList = function(crosstablist) {
     crosstablist
 }
 
+#' Calculate row uniformity tests
+#'
+#' Calculates the chi-square test of uniformity for each row of a prepared
+#' row-distribution table.
+#'
+#' @param crosstablist prepared row-distribution summaries.
+#' @return A list with one `chiValue` and one `pValue` per row.
+#' @keywords internal
+rowUniformityTests = function(crosstablist) {
+    rowCount = nrow(crosstablist$row.props)
+    columnCount = ncol(crosstablist$col.props)
+    rowTotals = crosstablist$Totals[, ncol(crosstablist$Totals)][1:rowCount]
+    observedCounts = crosstablist$Totals[1:rowCount, 1:columnCount]
+
+    chiValues = vapply(
+        1:rowCount,
+        function(rowIndex) {
+            expected = rowTotals[rowIndex] / columnCount
+            round(sum((observedCounts[rowIndex, ] - expected)^2 / expected), 3)
+        },
+        numeric(1)
+    )
+
+    list(
+        chiValue = chiValues,
+        pValue = round(1 - pchisq(chiValues, columnCount - 1), 5)
+    )
+}
+
 #' Draw row-distribution comparison plots
 #'
 #' Draws the plotting side effects used by `rowdistr()` for the selected
@@ -99,8 +128,7 @@ drawPlot = function(crosstablist, comp = c("basic", "within", "between"),
         on.exit(par(oldPar))
     }
 
-    chiUse = NULL
-    pvalUse = NULL
+    uniformityTests = rowUniformityTests(crosstablist)
 
     for (rowIndex in 1:rowCount) {
         maxPlot = 1.17 * max(propmat)
@@ -143,18 +171,7 @@ drawPlot = function(crosstablist, comp = c("basic", "within", "between"),
             )
         }
 
-        expected = crosstablist$Totals[, ncol(crosstablist$Totals)][
-            1:nrow(crosstablist$row.props)
-        ][rowIndex] / ncol(crosstablist$col.props)
-        dfs = ncol(crosstablist$col.props) - 1
-        observed = crosstablist$Totals[
-            1:nrow(crosstablist$whole.props),
-            1:ncol(crosstablist$whole.props)
-        ][rowIndex, ]
-        chiValue = round(sum((observed - expected)^2 / expected), 3)
-        chiUse = cbind(chiUse, chiValue)
-        pval = round(1 - pchisq(chiValue, dfs), 5)
-        pvalUse = cbind(pvalUse, pval)
+        pval = uniformityTests$pValue[rowIndex]
 
         if (comp == "within") {
             text(
@@ -234,8 +251,7 @@ printOutput = function(crosstablist, comp = c("basic", "within", "between"),
     )
     print(matprint)
 
-    chiUse = NULL
-    pvalUse = NULL
+    uniformityTests = rowUniformityTests(crosstablist)
 
     p = propmat
     ns = crosstablist$Totals[, ncol(crosstablist$Totals)][
@@ -314,13 +330,13 @@ printOutput = function(crosstablist, comp = c("basic", "within", "between"),
                 paste(
                     "Chisq test for uniformity:",
                     "chisq = ",
-                    chiUse[k],
+                    uniformityTests$chiValue[k],
                     ",",
                     "df =",
                     ncol(propmat) - 1,
                     ",",
                     "p-value =",
-                    pvalUse[k]
+                    uniformityTests$pValue[k]
                 ),
                 "\n"
             )

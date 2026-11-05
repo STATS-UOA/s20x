@@ -154,24 +154,20 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
           print(out)
       } else {
           out = out[[1]]
-          ## Extracting levels from each group being compared.
-          groupNames = matrix(c(strsplit(rownames(out), "-", fixed = TRUE),
-                                 recursive = TRUE), ncol = 2, byrow = TRUE)
-          ## Getting level of first variable in the first group.
-          group1Var1 = sapply(strsplit(groupNames[, 1], ":"), function(x) x[1])
-          ## Getting level of first variable in the second group.
-          group2Var1 = sapply(strsplit(groupNames[, 2], ":"), function(x) x[1])
-          ## Getting level of second variable in the first group.
-          group1Var2 = sapply(strsplit(groupNames[, 1], ":"), function(x) x[2])
-          ## Getting level of second variable in the second group.
-          group2Var2 = sapply(strsplit(groupNames[, 2], ":"), function(x) x[2])
+          factorNames = strsplit(interactionLabel, ":", fixed = TRUE)[[1]]
+          ## Levels of each variable in the two groups being compared.
+          groupLevels = matchTukeyInteractionLevels(
+            rownames(out),
+            fit$xlevels[[factorNames[1]]],
+            fit$xlevels[[factorNames[2]]]
+          )
           ## Matrix of 'within' comparisons.
-          outWithin = out[group1Var1 == group2Var1, ]
+          outWithin = out[groupLevels$group1Var1 == groupLevels$group2Var1, ]
           ## Matrix of 'between' comparisons.
-          outBetween = out[group1Var2 == group2Var2, ]
+          outBetween = out[groupLevels$group1Var2 == groupLevels$group2Var2, ]
           out = list(outWithin, outBetween)
           mostattributes(out) = attributes(results$comparisons)
-          factor1 = strsplit(interactionLabel, ":")[1]
+          factor1 = factorNames[1]
           names(out) = c(paste("Comparisons within", factor1),
                          paste("Comparisons between", factor1))
           print(out)
@@ -461,3 +457,36 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
   }
 }
 
+#' Match Tukey interaction comparisons to factor levels
+#'
+#' Finds the levels of each factor in the two groups compared by each row of an
+#' interaction `TukeyHSD()` table. Row names are matched against the known
+#' levels, because splitting them on `-` and `:` fails when a level contains
+#' either character.
+#'
+#' @param rowNames row names of the interaction Tukey table.
+#' @param levels1 levels of the first factor in the interaction.
+#' @param levels2 levels of the second factor in the interaction.
+#' @return A list with `group1Var1`, `group1Var2`, `group2Var1`, and `group2Var2`.
+#' @keywords internal
+matchTukeyInteractionLevels = function(rowNames, levels1, levels2) {
+  cells = expand.grid(var1 = levels1, var2 = levels2, stringsAsFactors = FALSE)
+  cellNames = paste(cells$var1, cells$var2, sep = ":")
+  cellPairs = expand.grid(group1 = seq_along(cellNames), group2 = seq_along(cellNames))
+  pairNames = paste(cellNames[cellPairs$group1], cellNames[cellPairs$group2], sep = "-")
+
+  matched = match(rowNames, pairNames)
+  if (anyNA(matched)) {
+    stop("Could not match the Tukey comparisons to the factor levels", call. = FALSE)
+  }
+
+  group1 = cells[cellPairs$group1[matched], ]
+  group2 = cells[cellPairs$group2[matched], ]
+
+  list(
+    group1Var1 = group1$var1,
+    group1Var2 = group1$var2,
+    group2Var1 = group2$var1,
+    group2Var2 = group2$var2
+  )
+}

@@ -49,3 +49,25 @@ test_that("rowdistr invisibly returns NULL when text is suppressed", {
   expect_false(result$visible)
   expect_null(result$value)
 })
+
+test_that("rowdistr within comparisons report the uniformity test results", {
+  data("body.df", package = "s20x", envir = environment())
+
+  printed = capture.output({
+    crosstabResult = suppressWarnings(crosstabs(~ ethnicity + married, data = body.df))
+    rowResult = rowdistr(crosstabResult, comp = "within", plot = FALSE)
+  })
+
+  counts = table(body.df$ethnicity, body.df$married)
+  for (rowIndex in seq_len(nrow(counts))) {
+    test = suppressWarnings(chisq.test(counts[rowIndex, ]))
+    chiValue = round(unname(test$statistic), 3)
+    pValue = round(1 - pchisq(chiValue, unname(test$parameter)), 5)
+    expected = paste(
+      "Chisq test for uniformity: chisq = ", chiValue, ", df =", test$parameter,
+      ", p-value =", pValue
+    )
+
+    expect_true(any(grepl(expected, printed, fixed = TRUE)), info = expected)
+  }
+})

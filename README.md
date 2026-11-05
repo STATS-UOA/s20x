@@ -101,3 +101,10 @@ This release fixes bugs found in a code review. Output for models that already w
 
 - `eovcheck(..., levene = TRUE)` now plots residuals from the model you asked for. Additive two-factor models previously showed interaction-model residuals. The Levene P-value is unchanged.
 - `onewayPlot()` on an `lm` object, and `summary1way()`, now use `conf.level`, `pooled` and the interval type. These settings were previously ignored, so plots drawn with non-default values should be redrawn. The default plot is unchanged.
+
+## 3.3.3
+
+- `rowdistr(z, comp = "within")` now prints the uniformity chi-square statistic and p-value, which were blank.
+- `summary1way()` now works with transformed terms such as `lm(score ~ factor(selfassess))`.
+- `summary2way(fit, page = "interaction")` now works when a factor level contains a hyphen. Its headings now read `Comparisons within gender` rather than `Comparisons within c("gender", "picture")`, so lecture notes showing the old headings will differ.
+- `onewayPlot(y, g)` now works for vectors without supplying `ylabel` and `flabel`.

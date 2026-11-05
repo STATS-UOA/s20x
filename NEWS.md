@@ -19,6 +19,15 @@
 
 
 
+## s20x 3.3.3
+
+- Fixed rowdistr() with `comp = "within"` so the uniformity chi-square statistic and p-value are printed. They were previously blank.
+- Fixed summary1way() so transformed terms such as `factor(x)` work. Group effects are now taken from the fitted values. Results for factor variables are unchanged.
+- Fixed summary2way() so `page = "interaction"` works when a factor level contains a hyphen.
+- Corrected the summary2way() interaction headings, which printed `c("gender", "picture")` instead of naming the first factor.
+- Fixed the onewayPlot() vector interface, whose default axis labels always failed. Labels now come from the call, and character grouping variables are accepted.
+- Added regression tests for each fix.
+
 ## s20x 3.3.2
 
 - Fixed eovcheck() so `levene = TRUE` no longer changes the plotted residuals. Additive two-factor models previously plotted residuals from the interaction model when Levene's test was requested. The Levene P-value is unchanged.

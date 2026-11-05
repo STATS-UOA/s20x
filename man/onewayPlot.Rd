@@ -19,8 +19,8 @@ onewayPlot(x, ...)
   strip = TRUE,
   vert = TRUE,
   verbose = FALSE,
-  ylabel = deparse(terms(formula)[[2]]),
-  flabel = deparse(terms(formula)[[3]]),
+  ylabel = deparse1(substitute(x)),
+  flabel = deparse1(substitute(f)),
   ...
 )
 

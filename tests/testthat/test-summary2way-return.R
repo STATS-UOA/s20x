@@ -89,3 +89,39 @@ test_that("summary2way nointeraction comparisons are unchanged without FUN", {
 
   expect_equal(values[1:3], unname(tukey[1, 1:3]), tolerance = 1e-4)
 })
+
+test_that("summary2way interaction page names the first factor in its headings", {
+  data("arousal.df", package = "s20x", envir = environment())
+
+  fit = lm(arousal ~ gender * picture, data = arousal.df)
+  printed = capture.output(summary2way(fit, page = "interaction"))
+
+  expect_true(any(grepl("Comparisons within gender", printed, fixed = TRUE)))
+  expect_true(any(grepl("Comparisons between gender", printed, fixed = TRUE)))
+  expect_false(any(grepl("c(", printed, fixed = TRUE)))
+})
+
+test_that("summary2way interaction page handles hyphens in factor levels", {
+  data("arousal.df", package = "s20x", envir = environment())
+
+  relabelled = arousal.df
+  levels(relabelled$gender)[levels(relabelled$gender) == "male"] = "m-le"
+
+  original = capture.output(
+    summary2way(lm(arousal ~ gender * picture, data = arousal.df), page = "interaction")
+  )
+  hyphenated = capture.output(
+    summary2way(lm(arousal ~ gender * picture, data = relabelled), page = "interaction")
+  )
+
+  expect_equal(gsub("m-le", "male", hyphenated, fixed = TRUE), original)
+})
+
+test_that("summary2way interaction page handles reversed factor order", {
+  data("arousal.df", package = "s20x", envir = environment())
+
+  fit = lm(arousal ~ picture * gender, data = arousal.df)
+  printed = capture.output(summary2way(fit, page = "interaction"))
+
+  expect_true(any(grepl("Comparisons within picture", printed, fixed = TRUE)))
+})

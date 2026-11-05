@@ -105,11 +105,16 @@ summary1way = function(fit, digit = 5, conf.level = 0.95,
 
     # calculate the effects
     grandMean = mean(y)
-    # Small 'hack' for R 4.0+ as we may not have factors and dummy.coef
-    # doesn't handle this.
-    groupEffectColumn = data.frame(names(group))
-    colnames(groupEffectColumn) = colnames(fit$model)[2]
-    groupEffects = predict(fit, newdata = groupEffectColumn) - grandMean
+    # Take these from the fitted values so that transformed terms such as
+    # factor(x) work, since predict() would need the original variable.
+    groupEffects = vapply(
+        split(fit$fitted.values, f1),
+        function(groupFitted) {
+            groupFitted[[1]]
+        },
+        numeric(1)
+    ) - grandMean
+    names(groupEffects) = seq_along(groupEffects)
     effectMatrix = c(grandMean, groupEffects)
     names(effectMatrix) = c("typ.val", names(split(y, f1)))
 
