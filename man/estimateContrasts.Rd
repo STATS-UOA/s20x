@@ -42,6 +42,9 @@ Returns a matrix whose rows correspond to the different contrasts
 Calculates and prints Tukey multiple confidence intervals for contrasts in
 one or two-way ANOVA.
 }
+\note{
+Deprecated in s20x 3.3.6. Use the \pkg{emmeans} package instead.
+}
 \examples{
 ## computer data:
 data(computer.df)

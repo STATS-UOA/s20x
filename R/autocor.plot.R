@@ -17,10 +17,13 @@
 #' airpass.fit = lm(passengers ~ time, data = airpass.df)
 #' autocorPlot(airpass.fit)
 #'
+#' @note Deprecated in s20x 3.3.6. Use \code{acf(residuals(fit))} instead.
 #' @export autocorPlot
 #' @note \code{autocor.plot} is deprecated and no longer exported.
 #'   Use \code{autocorPlot()} in new code.
 autocorPlot = function(fit, main = "Current vs Lagged residuals", ...) {
+  .Deprecated(msg = "autocorPlot() is deprecated; use acf(residuals(fit)) instead.")
+
   currentRes = fit$residuals[-1]
   residualCount = length(fit$residuals)
   laggedRes = fit$residuals[-residualCount]

@@ -31,6 +31,8 @@ independence or homogeneity.
 This is a legacy teaching helper retained for compatibility with
   older course material. New code should usually prefer \code{table()} and
   \code{chisq.test()} directly, or a purpose-built teaching wrapper.
+
+Deprecated in s20x 3.3.6. Use \code{table()} and \code{chisq.test()} instead.
 }
 \examples{
 

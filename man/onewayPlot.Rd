@@ -85,6 +85,9 @@ levels. It is used as part of a one-way ANOVA analysis.
 \item \code{onewayPlot(lm)}: One-way Analysis of Variance Plot
 
 }}
+\note{
+Deprecated in s20x 3.3.6. \code{summary1way()} still draws this plot.
+}
 \examples{
 
 ##see example in 'summary1way'

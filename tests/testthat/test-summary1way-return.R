@@ -44,10 +44,10 @@ test_that("onewayPlot lm method uses the plotting options it is given", {
     on.exit(dev.off(), add = TRUE)
 
     lmOutput = capture.output(
-        onewayPlot(fit, conf.level = 0.9, interval.type = "lsd", pooled = FALSE, verbose = TRUE)
+        onewayPlot.lm(fit, conf.level = 0.9, interval.type = "lsd", pooled = FALSE, verbose = TRUE)
     )
     formulaOutput = capture.output(
-        onewayPlot(
+        onewayPlot.formula(
             log(Oysters) ~ Site,
             data = oysters.df,
             conf.level = 0.9,
@@ -69,10 +69,10 @@ test_that("onewayPlot lm method keeps its default intervals", {
     pdf(NULL)
     on.exit(dev.off(), add = TRUE)
 
-    expect_silent(onewayPlot(fit))
+    expect_silent(onewayPlot.lm(fit))
     expect_true(any(grepl(
         "TUKEY intervals (95%, pooled SDs)",
-        capture.output(onewayPlot(fit, verbose = TRUE)),
+        capture.output(onewayPlot.lm(fit, verbose = TRUE)),
         fixed = TRUE
     )))
 })
@@ -83,7 +83,7 @@ test_that("summary1way passes its interval options to the plot", {
     fit = lm(log(Oysters) ~ Site, data = oysters.df)
 
     plotArguments = NULL
-    local_mocked_bindings(onewayPlot = function(x, ...) {
+    local_mocked_bindings(onewayPlot.lm = function(x, ...) {
         plotArguments <<- list(...)
         invisible(NULL)
     })
@@ -132,7 +132,7 @@ test_that("onewayPlot works on vectors and labels the plot from the call", {
     pdf(NULL)
     on.exit(dev.off(), add = TRUE)
 
-    printed = capture.output(onewayPlot(oysters.df$Oysters, oysters.df$Site, verbose = TRUE))
+    printed = capture.output(onewayPlot.default(oysters.df$Oysters, oysters.df$Site, verbose = TRUE))
 
     expect_true(any(grepl("`oysters.df$Oysters'", printed, fixed = TRUE)))
     expect_true(any(grepl("`oysters.df$Site'", printed, fixed = TRUE)))
@@ -146,7 +146,7 @@ test_that("onewayPlot vector interface accepts a character grouping variable", {
     on.exit(dev.off(), add = TRUE)
 
     siteLabels = as.character(oysters.df$Site)
-    printed = capture.output(onewayPlot(oysters.df$Oysters, siteLabels, verbose = TRUE))
+    printed = capture.output(onewayPlot.default(oysters.df$Oysters, siteLabels, verbose = TRUE))
 
     expect_true(any(startsWith(printed, "PS2: mean = ")))
 })

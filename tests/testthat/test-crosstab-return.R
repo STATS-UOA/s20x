@@ -8,10 +8,10 @@ test_that("crosstabs invisibly returns the current ct.20x object", {
   expandedData = testData[rep(seq_len(nrow(testData)), testData$count), ]
 
   result = expect_silent(capture.output(
-    crosstabs(~ group + response, data = expandedData)
+    suppressWarnings(crosstabs(~ group + response, data = expandedData))
   ))
 
-  result = withVisible(crosstabs(~ group + response, data = expandedData))
+  result = withVisible(suppressWarnings(crosstabs(~ group + response, data = expandedData)))
 
   expect_false(result$visible)
   expect_s3_class(result$value, "ct.20x")

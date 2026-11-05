@@ -126,3 +126,9 @@ This release fixes bugs found in a code review. Output for models that already w
 - Case study 5.2 now reports the correct R-squared (43.1%, not 36.7%) and describes the dummy variable correctly.
 - Case study 9.1 had the intervals for method 3 against methods 1 and 2 swapped. Method 3 is 9.7 to 24.3 marks lower than method 1, and 17.4 to 32 marks lower than method 2.
 - Case study 10.1 no longer has a stray digit in the interval for the change after 42 weeks.
+
+## 3.3.6
+
+The following functions are deprecated. They still work, but they warn and will be removed in a later release, because the current course no longer uses them directly: `ciReg()`, `layout20x()`, `freq1way()`, `residPlot()`, `levene.test()`, `estimateContrasts()`, `crossFactors()`, `crosstabs()`, `onewayPlot()`, `twosampPlot()`, `autocorPlot()` and `skewness()`. The `levene` argument of `eovcheck()` is also deprecated.
+
+`summary1way()` still draws its plot, and `summaryStats()` still reports skewness.

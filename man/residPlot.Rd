@@ -27,6 +27,8 @@ between the residuals and the fitted values is also computed.
 This is a legacy diagnostic plotting helper retained for compatibility
   with older teaching material. New code should usually prefer the current
   diagnostic workflow used by \code{modelcheck()}.
+
+Deprecated in s20x 3.3.6. Use \code{modelcheck()} instead.
 }
 \examples{
 

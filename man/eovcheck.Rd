@@ -50,7 +50,7 @@ plot}
 
 \item{twosd}{if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd}
 
-\item{levene}{if \code{TRUE} then the P-value from Levene's test for equality of
+\item{levene}{deprecated. If \code{TRUE} then the P-value from Levene's test for equality of
 variance is displayed}
 
 \item{engine}{plotting engine to use. The default, \code{"base"}, preserves

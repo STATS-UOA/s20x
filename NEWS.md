@@ -19,6 +19,13 @@
 
 
 
+## s20x 3.3.6
+
+- Deprecated functions with no direct use in the current course notes, the 2021-22 assignments and tests, or the case studies: ciReg(), layout20x(), freq1way(), residPlot(), levene.test(), estimateContrasts(), crossFactors(), crosstabs(), onewayPlot(), twosampPlot(), autocorPlot() and skewness().
+- Deprecated the `levene` argument of eovcheck().
+- summaryStats(), summary1way(), summary2way(), multipleComp() and eovcheck() use these internally and do not warn.
+- rowdistr() examples now use table() rather than crosstabs().
+
 ## s20x 3.3.5
 
 - Fixed summaryStats() so `na.action` also applies to a single group. The 3.3.4 change only worked for grouped data.

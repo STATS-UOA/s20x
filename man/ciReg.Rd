@@ -20,6 +20,9 @@ lower endpoints of the intervals.
 \description{
 Calculates and prints the confidence intervals for the fitted model.
 }
+\note{
+Deprecated in s20x 3.3.6. Use \code{confint()} instead.
+}
 \examples{
 
 ##Peruvian Indians data

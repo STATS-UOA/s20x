@@ -19,7 +19,10 @@
 #' stripchart(course.df$Exam)
 #' boxplot(course.df$Exam)
 #'
+#' @note Deprecated in s20x 3.3.6. Use \code{par(mfrow = )} instead.
 #' @export layout20x
 layout20x = function(numRows = 1, numCols = 1) {
+  .Deprecated(msg = "layout20x() is deprecated; use par(mfrow = c(numRows, numCols)) instead.")
+
   par(mfrow = c(numRows, numCols))
 }

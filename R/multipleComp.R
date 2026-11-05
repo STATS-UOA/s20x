@@ -54,5 +54,5 @@ multipleComp = function(fit, conf.level = 0.95, FUN = identity) {
 
   row.names(contrast.matrix) = contrastNames
   contrast.matrix = as.matrix(contrast.matrix)
-  estimateContrasts(contrast.matrix, fit, row = TRUE, alpha = 1 - conf.level, FUN = FUN)[, 1:4]
+  estimateContrastsInternal(contrast.matrix, fit, row = TRUE, alpha = 1 - conf.level, FUN = FUN)[, 1:4]
 }

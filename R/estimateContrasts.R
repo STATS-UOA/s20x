@@ -21,6 +21,7 @@
 #'   contrast, the Tukey lower and upper limits of the confidence interval, the
 #'   unadjusted p-value, and the Tukey and Bonferroni p-values.
 #' @seealso [summary1way()], [summary2way()], [multipleComp()]
+#' @note Deprecated in s20x 3.3.6. Use the \pkg{emmeans} package instead.
 #' @export
 #' @keywords models
 #'
@@ -33,6 +34,22 @@
 #' contrast.matrix
 #' estimateContrasts(contrast.matrix, computer.fit)
 estimateContrasts = function(contrast.matrix, fit, row = TRUE, alpha = 0.05, L = NULL, FUN = identity) {
+  .Deprecated(msg = "estimateContrasts() is deprecated; use the emmeans package instead.")
+
+  estimateContrastsInternal(contrast.matrix = contrast.matrix, fit = fit, row = row, alpha = alpha, L = L, FUN = FUN)
+}
+
+#' Estimate contrasts
+#'
+#' @param contrast.matrix matrix of contrasts.
+#' @param fit fitted model.
+#' @param row whether to compare rows.
+#' @param alpha significance level.
+#' @param L optional limits.
+#' @param FUN back-transforming function.
+#' @return The contrast estimates.
+#' @noRd
+estimateContrastsInternal = function(contrast.matrix, fit, row = TRUE, alpha = 0.05, L = NULL, FUN = identity) {
   FUN = match.fun(FUN)
 
   if (!inherits(fit, "lm")) {

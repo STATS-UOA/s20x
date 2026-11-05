@@ -27,8 +27,11 @@
 #' gender.picture
 #' 
 #' 
+#' @note Deprecated in s20x 3.3.6. Use \code{interaction()} instead.
 #' @export crossFactors
 crossFactors = function(x, fac2 = NULL, ...) {
+  .Deprecated(msg = "crossFactors() is deprecated; use interaction() instead.")
+
   UseMethod("crossFactors")
 }
 

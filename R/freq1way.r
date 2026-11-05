@@ -36,9 +36,12 @@
 #' freq1way(eth.table)
 #' freq1way(eth.table,hypothprob=c(0.2,0.4,0.3,0.1))
 #'
+#' @note Deprecated in s20x 3.3.6. It will be removed in a later release.
 #' @export freq1way
 freq1way = function(counts, hypothprob, conf.level = 0.95, addCIs = TRUE,
                     digits = 4, arrowwid = 0.1, estimated = 0) {
+  .Deprecated(msg = "freq1way() is deprecated and will be removed from s20x.")
+
   varname = deparse(substitute(counts))
   if (length(dim(counts)) > 1) {
     stop(paste("freq1way: Dimension of", varname, "greater than 1"))

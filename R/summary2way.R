@@ -229,7 +229,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     y = fit$model[, 1]
     f1 = factor(fit$model[, 2])
     f2 = factor(fit$model[, 3])
-    f1F2 = as.factor(crossFactors(f1, f2))
+    f1F2 = as.factor(crossFactors.default(f1, f2))
     nlevF1 = length(unique(f1))
     nlevF2 = length(unique(f2))
     
@@ -258,7 +258,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     n2 = length(group2)
     
     if (inter) {
-      f = factor(crossFactors(f1, f2))
+      f = factor(crossFactors.default(f1, f2))
       group3 = split(y, f)
       n3 = length(group3)
       group = c(group1, group2, group3)
@@ -385,7 +385,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       row.names(contrastMatrix1) = names
       fit1Way = lm(y ~ f1F2)
       L = (nlevF1 * nlevF2/2) * (1 + nlevF1)
-      contrasts1 = estimateContrasts(as.matrix(contrastMatrix1), fit1Way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
+      contrasts1 = estimateContrastsInternal(as.matrix(contrastMatrix1), fit1Way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
       print(contrasts1, quote = FALSE)
       comparisons$within = contrasts1
       
@@ -405,7 +405,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
         }
       }
       row.names(contrastMatrix2) = names
-      contrasts2 = estimateContrasts(as.matrix(contrastMatrix2), fit1Way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
+      contrasts2 = estimateContrastsInternal(as.matrix(contrastMatrix2), fit1Way, alpha = 1 - conf.level, row = TRUE, L, FUN = FUN)
       print(contrasts2, quote = FALSE)
       comparisons$between = contrasts2
       
@@ -425,7 +425,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       
       row.names(contrastMatrix1) = names
       contrastMatrix1 = as.matrix(contrastMatrix1)
-      contrasts1 = estimateContrasts(contrastMatrix1, fit, alpha = 1 - conf.level, row = TRUE, FUN = FUN)
+      contrasts1 = estimateContrastsInternal(contrastMatrix1, fit, alpha = 1 - conf.level, row = TRUE, FUN = FUN)
       print(contrasts1, quote = FALSE)
       eval(parse(text = paste0("comparisons$", f1Name, "= contrasts1")))
       
@@ -444,7 +444,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       
       row.names(contrastMatrix2) = names
       contrastMatrix2 = as.matrix(contrastMatrix2)
-      contrasts2 = estimateContrasts(contrastMatrix2, fit, alpha = 1 - conf.level, row = FALSE, FUN = FUN)
+      contrasts2 = estimateContrastsInternal(contrastMatrix2, fit, alpha = 1 - conf.level, row = FALSE, FUN = FUN)
       
       
       print(contrasts2, quote = FALSE)

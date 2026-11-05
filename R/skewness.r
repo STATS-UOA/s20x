@@ -15,8 +15,21 @@
 #' data(mergers.df)
 #' skewness(mergers.df$mergerdays)
 #'
+#' @note Deprecated in s20x 3.3.6. \code{summaryStats()} still reports skewness.
 #' @export skewness
 skewness = function(x, ...) {
+  .Deprecated(msg = "skewness() is deprecated; summaryStats() still reports skewness.")
+
+  skewnessStatistic(x, ...)
+}
+
+#' Calculate the skewness statistic
+#'
+#' @param x vector containing the data.
+#' @param \dots passed to \code{mean} and \code{sd}.
+#' @return The value of the skewness.
+#' @noRd
+skewnessStatistic = function(x, ...) {
   meanValue = mean(x, ...)
   sdValue = sd(x, ...)
 

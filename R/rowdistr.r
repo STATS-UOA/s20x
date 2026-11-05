@@ -402,7 +402,7 @@ printOutput = function(crosstablist, comp = c("basic", "within", "between"),
 #' @examples
 #'
 #' data(body.df)
-#' z = crosstabs(~ ethnicity + married, data = body.df)
+#' z = table(body.df$ethnicity, body.df$married)
 #' rowdistr(z)
 #' rowdistr(z, comp = "between")
 #' rowdistr(z, comp = "within")

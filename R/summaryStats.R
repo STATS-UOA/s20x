@@ -101,7 +101,7 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
             sd = sd(x, ...),
             n = length(x),
             iqr = IQR(x, ...),
-            skewness = skewness(x, ...),
+            skewness = skewnessStatistic(x, ...),
             lq = quantiles[1],
             median = quantiles[2],
             uq = quantiles[3]

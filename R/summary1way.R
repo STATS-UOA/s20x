@@ -128,7 +128,7 @@ summary1way = function(fit, digit = 5, conf.level = 0.95,
     }
 
     if (draw.plot) {
-        onewayPlot(fit, conf.level = conf.level, interval.type = inttype, pooled = pooled)
+        onewayPlot.lm(fit, conf.level = conf.level, interval.type = inttype, pooled = pooled)
     }
 
     invisible(list(

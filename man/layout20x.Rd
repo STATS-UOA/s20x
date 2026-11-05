@@ -23,6 +23,8 @@ layout will be reset to a single plot.
 This is a legacy convenience wrapper retained for compatibility with
   older teaching material. New code can use \code{par(mfrow = ...)}
   directly.
+
+Deprecated in s20x 3.3.6. Use \code{par(mfrow = )} instead.
 }
 \examples{
 data(course.df)

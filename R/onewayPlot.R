@@ -45,10 +45,13 @@
 #' oyster.fit = lm(log(Oysters)~Site, data = oysters.df)
 #' onewayPlot(oyster.fit)
 #' 
+#' @note Deprecated in s20x 3.3.6. \code{summary1way()} still draws this plot.
 #' @export onewayPlot
 #' @export twosampPlot
 #' @aliases onewayPlot twosampPlot
 onewayPlot = twosampPlot = function(x, ...) {
+    .Deprecated(msg = "onewayPlot() and twosampPlot() are deprecated; summary1way() still draws this plot.")
+
     UseMethod("onewayPlot")
 }
 

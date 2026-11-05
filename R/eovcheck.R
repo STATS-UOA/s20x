@@ -28,7 +28,7 @@
 #' @param smoother if TRUE then a smoothed lowess line will be added to the
 #' plot
 #' @param twosd if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd
-#' @param levene if \code{TRUE} then the P-value from Levene's test for equality of
+#' @param levene deprecated. If \code{TRUE} then the P-value from Levene's test for equality of
 #' variance is displayed
 #' @param engine plotting engine to use. The default, \code{"base"}, preserves
 #' the original base graphics output. Use \code{"ggplot2"} for an optional
@@ -194,6 +194,10 @@ eovcheckFromFit = function(fit, m, terms.form,
                            xlab = "Fitted values", ylab = "Residuals",
                            col = NULL, smoother = FALSE, twosd = FALSE,
                            levene = FALSE, engine = "base", ...) {
+  if (levene) {
+    .Deprecated(msg = "The levene argument of eovcheck() is deprecated and will be removed from s20x.")
+  }
+
   num.factors = sum(sapply(m, is.factor))
   num.cts = ncol(m) - num.factors - 1
 
@@ -242,7 +246,7 @@ eovcheckFromFit = function(fit, m, terms.form,
 
     if (num.factors == 2) {
       fac2 = as.factor(m[, 3])
-      fac1 = factor(crossFactors(fac1, fac2))
+      fac1 = factor(crossFactors.default(fac1, fac2))
     }
 
     ## Levene's test uses the cell means; the plot keeps the model that was asked for
@@ -257,7 +261,7 @@ eovcheckFromFit = function(fit, m, terms.form,
       warning("Smallest group size is 2.\n It may make no sense to check for equality of variance")
       bInsuffRep = TRUE
     } else {
-      p.value = levene.test(leveneFit, show.table = FALSE)$p.value
+      p.value = leveneTestInternal(leveneFit, show.table = FALSE)$p.value
     }
   }
 

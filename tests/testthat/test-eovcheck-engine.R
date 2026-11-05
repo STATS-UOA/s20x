@@ -51,7 +51,7 @@ test_that("eovcheck formula method passes engine and Levene arguments", {
     group = factor(rep(c("a", "b"), each = 4))
   )
 
-  plotObject = eovcheck(response ~ group, data = sampleData, engine = "ggplot2", levene = TRUE)
+  plotObject = suppressWarnings(eovcheck(response ~ group, data = sampleData, engine = "ggplot2", levene = TRUE))
 
   expect_s3_class(plotObject, "ggplot")
 })
@@ -136,8 +136,8 @@ test_that("eovcheck lm and formula methods agree on Levene's test", {
   skip_if_not_installed("ggplot2")
 
   fit = lm(Butterfat ~ Breed, data = butterfat.df)
-  lmPlot = eovcheck(fit, levene = TRUE, engine = "ggplot2")
-  formulaPlot = eovcheck(Butterfat ~ Breed, data = butterfat.df, levene = TRUE, engine = "ggplot2")
+  lmPlot = suppressWarnings(eovcheck(fit, levene = TRUE, engine = "ggplot2"))
+  formulaPlot = suppressWarnings(eovcheck(Butterfat ~ Breed, data = butterfat.df, levene = TRUE, engine = "ggplot2"))
 
   expect_equal(lmPlot$data, formulaPlot$data)
   expect_equal(
@@ -154,8 +154,8 @@ test_that("eovcheck does not treat lm weights as a covariate for Levene's test",
   weightedFit = lm(Butterfat ~ Breed, data = butterfat.df, weights = Butterfat)
 
   expect_equal(
-    length(eovcheck(weightedFit, levene = TRUE, engine = "ggplot2")$layers),
-    length(eovcheck(unweightedFit, levene = TRUE, engine = "ggplot2")$layers)
+    length(suppressWarnings(eovcheck(weightedFit, levene = TRUE, engine = "ggplot2"))$layers),
+    length(suppressWarnings(eovcheck(unweightedFit, levene = TRUE, engine = "ggplot2"))$layers)
   )
 })
 
@@ -220,17 +220,17 @@ test_that("eovcheck Levene option does not change the plotted residuals", {
 
   fit = lm(yield ~ planttime + cultivar, data = soyabean.df)
   plain = eovcheck(yield ~ planttime + cultivar, data = soyabean.df, engine = "ggplot2")
-  withLevene = eovcheck(
+  withLevene = suppressWarnings(eovcheck(
     yield ~ planttime + cultivar,
     data = soyabean.df,
     levene = TRUE,
     engine = "ggplot2"
-  )
+  ))
 
   expect_equal(withLevene$data, plain$data)
   expect_equal(unname(withLevene$data[[2]]), unname(residuals(fit)))
   expect_gt(length(withLevene$layers), length(plain$layers))
-  expect_equal(eovcheck(fit, levene = TRUE, engine = "ggplot2")$data, plain$data)
+  expect_equal(suppressWarnings(eovcheck(fit, levene = TRUE, engine = "ggplot2"))$data, plain$data)
 })
 
 test_that("eovcheck base engine uses col for the smoother", {
