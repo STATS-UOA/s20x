@@ -127,53 +127,56 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     }
     
     
-    if (page == "table") {
-      print(results$table) ## note this doesn't print the totals - do we care?
-    } else if (page == "means"){
-      cat("Table of means:\n")
-      print(results$means$tables)
-    } else if (page == "effects"){
-      cat("Table of effects:\n")
-      print(results$effects$tables)
-    } else if (page == "nointeraction"){
-      factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
-      out = lapply(resultsIdentity$comparisons[factorLabels],
-                    function(x) cbind(FUN(x[, 1:3, drop = FALSE]), x[, 4, drop = FALSE]))
-      mostattributes(out) = attributes(results$comparisons)
-      names(out) = factorLabels
-      print(out)
-    } else {# page == "interaction")
-      if (!inter) {
-        stop("No interaction term in model")
-      }
-      interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
-      out = results$comparisons[interactionLabel]
-      if (all) {
-          mostattributes(out) = attributes(results$comparisons)
-          names(out) = interactionLabel
-          print(out)
-      } else {
-          out = out[[1]]
-          factorNames = strsplit(interactionLabel, ":", fixed = TRUE)[[1]]
-          ## Levels of each variable in the two groups being compared.
-          groupLevels = matchTukeyInteractionLevels(
-            rownames(out),
-            fit$xlevels[[factorNames[1]]],
-            fit$xlevels[[factorNames[2]]]
-          )
-          ## Matrix of 'within' comparisons.
-          outWithin = out[groupLevels$group1Var1 == groupLevels$group2Var1, ]
-          ## Matrix of 'between' comparisons.
-          outBetween = out[groupLevels$group1Var2 == groupLevels$group2Var2, ]
-          out = list(outWithin, outBetween)
-          mostattributes(out) = attributes(results$comparisons)
-          factor1 = factorNames[1]
-          names(out) = c(paste("Comparisons within", factor1),
-                         paste("Comparisons between", factor1))
-          print(out)
+    if (page == "interaction" && !inter) {
+      stop("No interaction term in model")
+    }
+
+    if (print.out) {
+      if (page == "table") {
+        print(results$table) ## note this doesn't print the totals - do we care?
+      } else if (page == "means"){
+        cat("Table of means:\n")
+        print(results$means$tables)
+      } else if (page == "effects"){
+        cat("Table of effects:\n")
+        print(results$effects$tables)
+      } else if (page == "nointeraction"){
+        factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
+        out = lapply(resultsIdentity$comparisons[factorLabels],
+                      function(x) cbind(FUN(x[, 1:3, drop = FALSE]), x[, 4, drop = FALSE]))
+        mostattributes(out) = attributes(results$comparisons)
+        names(out) = factorLabels
+        print(out)
+      } else {# page == "interaction")
+        interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
+        out = results$comparisons[interactionLabel]
+        if (all) {
+            mostattributes(out) = attributes(results$comparisons)
+            names(out) = interactionLabel
+            print(out)
+        } else {
+            out = out[[1]]
+            factorNames = strsplit(interactionLabel, ":", fixed = TRUE)[[1]]
+            ## Levels of each variable in the two groups being compared.
+            groupLevels = matchTukeyInteractionLevels(
+              rownames(out),
+              fit$xlevels[[factorNames[1]]],
+              fit$xlevels[[factorNames[2]]]
+            )
+            ## Matrix of 'within' comparisons.
+            outWithin = out[groupLevels$group1Var1 == groupLevels$group2Var1, ]
+            ## Matrix of 'between' comparisons.
+            outBetween = out[groupLevels$group1Var2 == groupLevels$group2Var2, ]
+            out = list(outWithin, outBetween)
+            mostattributes(out) = attributes(results$comparisons)
+            factor1 = factorNames[1]
+            names(out) = c(paste("Comparisons within", factor1),
+                           paste("Comparisons between", factor1))
+            print(out)
+        }
       }
     }
-    
+
     invisible(list(Df = results$table$Df, 
                    `Sum of Sq` = results$table$`Sum Squares`, 
                    `Mean Sq` = results$table$`Mean Square`,

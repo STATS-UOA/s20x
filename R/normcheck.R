@@ -114,13 +114,13 @@ normcheck.default = function(x,
     stop("whichPlot must be in 1:2")
   }
 
-  labels = prepareNormcheckLabels(x, xlab, ylab, main, whichPlot)
+  labels = prepareNormcheckLabels(deparse1(substitute(x)), xlab, ylab, main, whichPlot)
   xlab = labels$xlab
   ylab = labels$ylab
   main = labels$main
 
-  col = match.arg(col, c("light blue", colors()))
-  bcol = match.arg(bcol, colors())
+  col = resolvePlotColour(col, c("light blue", colors()), "col")
+  bcol = resolvePlotColour(bcol, colors(), "bcol")
 
   if (engine == "ggplot2") {
     return(normcheck_ggplot2(
@@ -241,14 +241,14 @@ normcheck.tslm = function(x, xlab = c("Theoretical Quantiles", ""),
 
 #' Prepare normcheck labels in selected plot order
 #'
-#' @param x residual vector.
+#' @param xName text describing the data, used as the default histogram label.
 #' @param xlab x-axis labels.
 #' @param ylab y-axis labels.
 #' @param main plot titles.
 #' @param whichPlot selected plot identifiers.
 #' @return A list of ordered labels.
 #' @noRd
-prepareNormcheckLabels = function(x, xlab, ylab, main, whichPlot) {
+prepareNormcheckLabels = function(xName, xlab, ylab, main, whichPlot) {
   if (length(xlab) == length(whichPlot)) {
     if (length(whichPlot) == 2) {
       xlab = xlab[whichPlot]
@@ -266,7 +266,7 @@ prepareNormcheckLabels = function(x, xlab, ylab, main, whichPlot) {
   if (2 %in% whichPlot) {
     idx = which(whichPlot == 2)
     if (!is.na(xlab[idx]) && xlab[idx] == "") {
-      xlab[idx] = deparse(substitute(x))
+      xlab[idx] = xName
     }
   }
 

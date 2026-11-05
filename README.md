@@ -108,3 +108,13 @@ This release fixes bugs found in a code review. Output for models that already w
 - `summary1way()` now works with transformed terms such as `lm(score ~ factor(selfassess))`.
 - `summary2way(fit, page = "interaction")` now works when a factor level contains a hyphen. Its headings now read `Comparisons within gender` rather than `Comparisons within c("gender", "picture")`, so lecture notes showing the old headings will differ.
 - `onewayPlot(y, g)` now works for vectors without supplying `ylabel` and `flabel`.
+
+## 3.3.4
+
+- `predict20x()`, `predictCount()` and `predictGLM()` now work with transformed terms such as `log(x)` and `factor(g)`. Supply the original variable in `newdata`. `predict20x()` and `predictCount()` match columns by name when they can, and otherwise take them in order as before.
+- `pairs20x(df, pch = 19)` and `pairs20x(df, col = "red")` now work, and apply to the scatter plots only.
+- `displayPairs()` keeps all comparisons when the two factors share a level name.
+- `summaryStats()` accepts `na.action`, and `cooks20x()` accepts `axisOpts = list(xAxis = FALSE)`.
+- `summary2way(print.out = FALSE)` no longer prints, and `eovcheck(col = )` now sets the smoother colour with base graphics.
+- `normcheck()` on a vector labels the histogram from the call rather than with `x`, and accepts hex and palette-number colours.
+- `tslm()` now finds variables local to a calling function when `data` or `time` is supplied.

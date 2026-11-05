@@ -313,7 +313,12 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
   yhat = diagnosticData$fitted
 
   if (smoother) {
-    lines(lowess(yhat, resids), col = "lightblue")
+    smootherColour = if (is.null(col)) {
+      "lightblue"
+    } else {
+      col
+    }
+    lines(lowess(yhat, resids), col = smootherColour)
   }
 
   if (twosd) {

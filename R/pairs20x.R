@@ -54,7 +54,9 @@ pairs20x = function(x, na.rm = TRUE, engine = c("base", "ggplot2"), ...) {
 #' @return Returns the base graphics plot.
 #' @noRd
 pairs20xBase = function(x, ...) {
-    panel.hist = function(x, ...) {
+    ## pairs() sends its point options to every panel, but they only apply to the
+    ## scatter plots, so the histogram and correlation panels ignore them.
+    panel.hist = function(x, ..., col, pch, cex, bg) {
         usr = par("usr")
         on.exit(par(usr = usr))
 
@@ -67,7 +69,7 @@ pairs20xBase = function(x, ...) {
         rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
     }
 
-    panel.cor = function(x, y, digits = 2, prefix = "", cex.cor) {
+    panel.cor = function(x, y, digits = 2, prefix = "", cex.cor, ...) {
         usr = par("usr")
         on.exit(par(usr = usr))
         par(usr = c(0, 1, 0, 1))

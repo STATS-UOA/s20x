@@ -48,10 +48,8 @@ predictGLM = function(object,
 
   modelTerms = terms(object)
   termsNoResponse = delete.response(modelTerms)
-  termLabels = attr(termsNoResponse, "term.labels")
-  firstOrderTerms = termLabels[attr(termsNoResponse, "order") == 1]
 
-  if (!all(match(firstOrderTerms, colnames(newdata), nomatch = FALSE))) {
+  if (!all(all.vars(termsNoResponse) %in% colnames(newdata))) {
     stop("newdata must be provided for all first-order terms")
   }
 

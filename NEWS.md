@@ -19,6 +19,20 @@
 
 
 
+## s20x 3.3.4
+
+- Fixed predict20x() and predictCount() for transformed terms such as `log(x)`. Columns in `newdata` are now matched by name when every model variable is present, and otherwise taken in order as before. Named columns in a different order are no longer silently assigned to the wrong variables.
+- Fixed predictGLM() so `newdata` supplies the variables behind terms such as `factor(g)` and `log(x)`.
+- Fixed pairs20x() so `pch`, `col`, `cex` and `bg` work with the base engine. They apply to the scatter plots only.
+- Fixed displayPairs() so comparisons are kept when the two factors share a level name.
+- Fixed summaryStats() so `na.action` works, for grouped data and a single group.
+- Fixed cooks20x() so `axisOpts` may set only some of its options.
+- Fixed summary2way() so `print.out = FALSE` suppresses printing for the default `new = TRUE` output.
+- Fixed eovcheck() so `col` sets the smoother colour with the base engine.
+- Fixed normcheck() so a vector's histogram is labelled from the call rather than always `x`, and so hex and palette-number colours are accepted.
+- Fixed tslm() so variables local to a calling function are found when `data` or `time` is supplied.
+- Added regression tests for each fix.
+
 ## s20x 3.3.3
 
 - Fixed rowdistr() with `comp = "within"` so the uniformity chi-square statistic and p-value are printed. They were previously blank.

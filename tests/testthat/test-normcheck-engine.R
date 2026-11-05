@@ -59,3 +59,43 @@ test_that("normcheck ggplot2 engine uses a base-like theme", {
   expect_true(inherits(bothPlots$qq$theme$panel.grid.major, "element_blank"))
   expect_true(inherits(bothPlots$histogram$theme$panel.grid.major, "element_blank"))
 })
+
+
+test_that("normcheck labels a vector histogram from the call", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  plotLabels = NULL
+  local_mocked_bindings(normcheckBase = function(x, xlab, ...) {
+    plotLabels <<- xlab
+    invisible(NULL)
+  })
+
+  normcheck(peru.df$BP)
+
+  expect_equal(plotLabels[2], "peru.df$BP")
+})
+
+test_that("normcheck accepts any colour R can draw with", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(normcheck(peru.df$BP, col = "#336699"))
+  expect_silent(normcheck(peru.df$BP, col = 2))
+  expect_silent(normcheck(peru.df$BP, bootstrap = TRUE, bcol = "#336699"))
+  expect_silent(normcheck(peru.df$BP, col = "light blue"))
+  expect_silent(normcheck(peru.df$BP, col = "lightgreen"))
+  expect_error(normcheck(peru.df$BP, col = "notAColour"), "not a valid colour")
+})
+
+test_that("normcheck ggplot2 engine accepts hex and palette colours", {
+  skip_if_not_installed("ggplot2")
+  data("peru.df", package = "s20x", envir = environment())
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_no_error(print(normcheck(peru.df$BP, col = "#336699", engine = "ggplot2")))
+  expect_no_error(print(normcheck(peru.df$BP, col = 2, engine = "ggplot2")))
+})

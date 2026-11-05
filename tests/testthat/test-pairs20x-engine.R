@@ -97,3 +97,14 @@ test_that("pairs20x ggplot2 histogram panel reserves diagonal label space", {
   expect_equal(labelLayer$data$y, 1.3 * max(hist(values$first, plot = FALSE)$counts))
   expect_equal(panel$coordinates$limits$y, c(0, 1.5 * max(hist(values$first, plot = FALSE)$counts)))
 })
+
+test_that("pairs20x base engine accepts point options", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  expect_silent(pairs20x(peru.df, pch = 19))
+  expect_silent(pairs20x(peru.df, col = "red"))
+  expect_silent(pairs20x(peru.df, pch = 19, col = "blue", cex = 0.5))
+})

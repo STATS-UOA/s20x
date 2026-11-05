@@ -60,19 +60,7 @@ predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TR
 
   validatePredictionNewdata(newdata)
 
-  name.row = paste("pred", 1:nrow(newdata), sep = ".")
-  name.row = 1:nrow(newdata)
-  x = attr(object$terms, "term.labels")
-
-  y = unlist(strsplit(x, "factor\\("))
-  z = unlist(strsplit(y, "\\)"))
-  name.col = z
-
-  if (ncol(newdata) != length(name.col)) {
-    stop("Incorrectly input the new data!")
-  }
-
-  dimnames(newdata) = list(name.row, name.col)
+  newdata = alignPredictionNewdata(object, newdata)
 
   pred = predictLmWithSe(object, newdata, ...)
   intervals = lmTeachingPredictionIntervals(

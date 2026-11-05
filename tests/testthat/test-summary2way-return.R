@@ -125,3 +125,26 @@ test_that("summary2way interaction page handles reversed factor order", {
 
   expect_true(any(grepl("Comparisons within picture", printed, fixed = TRUE)))
 })
+
+test_that("summary2way print.out = FALSE prints nothing but still returns", {
+  data("arousal.df", package = "s20x", envir = environment())
+
+  fit = lm(arousal ~ gender * picture, data = arousal.df)
+
+  for (page in c("table", "means", "effects", "interaction", "nointeraction")) {
+    printed = capture.output(result <- summary2way(fit, page = page, print.out = FALSE))
+    expect_length(printed, 0)
+    expect_equal(result$Df, anova(fit)$Df)
+  }
+})
+
+test_that("summary2way still stops for a missing interaction when not printing", {
+  data("butterfat.df", package = "s20x", envir = environment())
+
+  fit = lm(Butterfat ~ Breed + Age, data = butterfat.df)
+
+  expect_error(
+    summary2way(fit, page = "interaction", print.out = FALSE),
+    "No interaction term in model"
+  )
+})

@@ -35,18 +35,7 @@ predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = 
 
   validatePredictionNewdata(newdata)
 
-  rowNames = paste("pred", 1:nrow(newdata), sep = ".")
-  rowNames = 1:nrow(newdata)
-  termNames = attr(object$terms, "term.labels")
-  splitFactorNames = unlist(strsplit(termNames, "factor\\("))
-  splitTermNames = unlist(strsplit(splitFactorNames, "\\)"))
-  columnNames = splitTermNames
-
-  if (ncol(newdata) != length(columnNames)) {
-    stop("Incorrectly input the new data!")
-  }
-
-  dimnames(newdata) = list(rowNames, columnNames)
+  newdata = alignPredictionNewdata(object, newdata)
   predictions = predictGlmWithSe(object, newdata, ...)
   intervalQuantile = glmTeachingIntervalQuantile(cilevel)
   intervals = glmTeachingConfidenceIntervals(

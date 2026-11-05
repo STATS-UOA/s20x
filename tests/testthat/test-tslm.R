@@ -478,3 +478,35 @@ test_that("tslm stops rather than dropping an offset from an AR model", {
     "offset"
   )
 })
+
+test_that("tslm finds variables local to a calling function alongside data", {
+  data(airpass.df)
+
+  fitInsideFunction = function(data) {
+    localTrend = sqrt(data$t)
+    tslm(log(passengers) ~ t + localTrend, data = data)
+  }
+  localTrend = sqrt(airpass.df$t)
+
+  expect_equal(
+    coef(fitInsideFunction(airpass.df)),
+    coef(lm(log(passengers) ~ t + localTrend, data = airpass.df))
+  )
+})
+
+test_that("tslm finds a local time variable alongside data", {
+  skip_if_not_installed("nlme")
+  data(airpass.df)
+
+  fitInsideFunction = function(data) {
+    timeIndex = data$t
+    tslm(log(passengers) ~ t + ar(1), data = data, time = timeIndex)
+  }
+
+  fit = fitInsideFunction(airpass.df)
+
+  expect_equal(
+    coef(fit),
+    coef(tslm(log(passengers) ~ t + ar(1), data = airpass.df, time = t))
+  )
+})

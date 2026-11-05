@@ -88,7 +88,8 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
         })
     }
 
-    getStats = function(x, ...) {
+    ## na.action is for aggregate() and must not reach the summary functions
+    getStats = function(x, ..., na.action = NULL) {
         quantiles = quantile(x, probs = c(0.25, 0.5, 0.75), ...)
         names(quantiles) = NULL ## strip off the percentages
 
@@ -146,7 +147,12 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
         } else {
             na.pass
         }
-        stats = aggregate(x ~ group, data = temp.df, FUN = getStats, na.action = na.action, ... = ...)
+        statArgs = list(...)
+        statArgs$na.action = NULL
+        stats = do.call(
+            aggregate,
+            c(list(x ~ group, data = temp.df, FUN = getStats, na.action = na.action), statArgs)
+        )
 
         ## resTable = aggregate(x ~ group, data = temp.df, FUN = getStats)
         resTable = stats

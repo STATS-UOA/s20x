@@ -28,3 +28,43 @@ test_that("summaryStats invisibly returns a grouped summary data frame", {
   )
   expect_equal(result$mean, c(A = 1.5, B = 15), ignore_attr = TRUE)
 })
+
+test_that("summaryStats accepts na.action for grouped data", {
+  data("butterfat.df", package = "s20x", envir = environment())
+
+  withMissing = butterfat.df
+  withMissing$Butterfat[1] = NA
+  printed = capture.output(
+    result <- summaryStats(Butterfat ~ Breed, data = withMissing, na.action = na.omit)
+  )
+
+  firstBreed = as.character(butterfat.df$Breed[1])
+  remaining = withMissing$Butterfat[withMissing$Breed == firstBreed]
+
+  expect_equal(result[firstBreed, "mean"], mean(remaining, na.rm = TRUE))
+  expect_equal(result[firstBreed, "n"], sum(!is.na(remaining)))
+})
+
+test_that("summaryStats still passes na.rm to the summaries for grouped data", {
+  data("butterfat.df", package = "s20x", envir = environment())
+
+  withMissing = butterfat.df
+  withMissing$Butterfat[1] = NA
+  printed = capture.output(
+    result <- summaryStats(Butterfat ~ Breed, data = withMissing, na.rm = TRUE)
+  )
+
+  firstBreed = as.character(butterfat.df$Breed[1])
+  remaining = withMissing$Butterfat[withMissing$Breed == firstBreed]
+
+  expect_equal(result[firstBreed, "mean"], mean(remaining, na.rm = TRUE))
+  expect_equal(result[firstBreed, "nMissing"], 1)
+})
+
+test_that("summaryStats accepts na.action for a single group", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  printed = capture.output(result <- summaryStats(peru.df$BP, na.action = na.omit))
+
+  expect_equal(result$mean, mean(peru.df$BP))
+})

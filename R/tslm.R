@@ -164,14 +164,23 @@ makeTslmModelData = function(meanFormula, data, timeName = NULL) {
     return(data.frame(.tslmIntercept = seq_len(nrow(model.frame(meanFormula, data = data)))))
   }
 
-  modelFrameFormula = as.formula(paste("~", paste(modelVars, collapse = " + ")))
+  modelFrameFormula = as.formula(
+    paste("~", paste(modelVars, collapse = " + ")),
+    env = environment(meanFormula)
+  )
 
   modelData = tryCatch(
     model.frame(modelFrameFormula, data = data),
     error = function(e) {
       if (!is.null(timeName)) {
         meanModelData = tryCatch(
-          model.frame(as.formula(paste("~", paste(all.vars(meanFormula), collapse = " + "))), data = data),
+          model.frame(
+            as.formula(
+              paste("~", paste(all.vars(meanFormula), collapse = " + ")),
+              env = environment(meanFormula)
+            ),
+            data = data
+          ),
           error = function(e2) NULL
         )
 

@@ -26,3 +26,32 @@ saveGraphicsParameters = function(..., noReadonly = FALSE) {
 
   restoreGraphicsParameters
 }
+
+#' Resolve a plotting colour argument
+#'
+#' Accepts anything R can draw with, such as a colour name, a hex string or a
+#' palette number. Abbreviated colour names are completed against `choices`.
+#'
+#' @param colour colour supplied by the user.
+#' @param choices colour names available for completion.
+#' @param argumentName argument name used in the error message.
+#' @return The completed colour name, or `colour` unchanged.
+#' @keywords internal
+#' @importFrom grDevices col2rgb
+resolvePlotColour = function(colour, choices, argumentName) {
+  if (is.character(colour) && length(colour) == 1) {
+    matchedColour = pmatch(colour, choices)
+    if (!is.na(matchedColour)) {
+      return(choices[matchedColour])
+    }
+  }
+
+  tryCatch(
+    col2rgb(colour),
+    error = function(e) {
+      stop("'", argumentName, "' is not a valid colour", call. = FALSE)
+    }
+  )
+
+  colour
+}

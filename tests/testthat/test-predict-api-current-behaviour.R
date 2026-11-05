@@ -133,3 +133,82 @@ test_that("predictGLM quasi interval multiplier behaviour is covered at wrapper 
   expect_equal(as.list(normalResult), as.list(normalExpected))
   expect_equal(as.list(quasiResult), as.list(quasiExpected))
 })
+
+test_that("predict20x handles transformed terms", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  fit = lm(BP ~ log(weight) + age, data = peru.df)
+  newdata = data.frame(weight = 70, age = 30)
+  result = predict20x(fit, newdata, print.out = FALSE)
+
+  expect_equal(unname(result$fit), unname(predict(fit, newdata)))
+})
+
+test_that("predict20x matches named columns in any order", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  fit = lm(BP ~ weight + age, data = peru.df)
+  reversed = data.frame(age = 30, weight = 70)
+  result = predict20x(fit, reversed, print.out = FALSE)
+
+  expect_equal(unname(result$fit), unname(predict(fit, reversed)))
+})
+
+test_that("predict20x still takes columns in order and one per term", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  fit = lm(BP ~ weight + age, data = peru.df)
+  renamed = data.frame(first = 70, second = 30)
+  expected = predict(fit, data.frame(weight = 70, age = 30))
+  expect_equal(unname(predict20x(fit, renamed, print.out = FALSE)$fit), unname(expected))
+
+  quadraticFit = lm(BP ~ age + years + I(years^2) + weight + height, data = peru.df)
+  documented = data.frame(
+    age = 21, years = 2, `I(years^2)` = 2, weight = 71, height = 1629
+  )
+  expect_equal(
+    unname(predict20x(quadraticFit, documented, print.out = FALSE)$fit),
+    unname(predict(quadraticFit, documented))
+  )
+
+  expect_error(
+    predict20x(fit, data.frame(first = 70), print.out = FALSE),
+    "Incorrectly input the new data!"
+  )
+})
+
+test_that("predictCount handles transformed terms", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  fit = glm(BP ~ log(weight), data = peru.df, family = poisson)
+  newdata = data.frame(weight = 70)
+  result = predictCount(fit, newdata, print.out = FALSE)
+
+  expect_equal(
+    result$Predicted,
+    round(unname(predict(fit, newdata, type = "response")), 3)
+  )
+})
+
+test_that("predictGLM accepts the variables behind transformed terms", {
+  data("computer.df", package = "s20x", envir = environment())
+  data("peru.df", package = "s20x", envir = environment())
+
+  factorFit = glm(score ~ factor(selfassess), data = computer.df, family = poisson)
+  factorNewdata = data.frame(selfassess = 2)
+  logFit = glm(BP ~ log(weight), data = peru.df, family = poisson)
+  logNewdata = data.frame(weight = 70)
+
+  expect_equal(
+    suppressMessages(predictGLM(factorFit, factorNewdata))[[1]],
+    unname(predict(factorFit, factorNewdata))
+  )
+  expect_equal(
+    suppressMessages(predictGLM(logFit, logNewdata))[[1]],
+    unname(predict(logFit, logNewdata))
+  )
+  expect_error(
+    suppressMessages(predictGLM(logFit, data.frame(height = 170))),
+    "newdata must be provided"
+  )
+})

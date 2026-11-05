@@ -207,3 +207,22 @@ test_that("eovcheck Levene option does not change the plotted residuals", {
   expect_gt(length(withLevene$layers), length(plain$layers))
   expect_equal(eovcheck(fit, levene = TRUE, engine = "ggplot2")$data, plain$data)
 })
+
+test_that("eovcheck base engine uses col for the smoother", {
+  data("peru.df", package = "s20x", envir = environment())
+
+  smootherColours = character()
+  local_mocked_bindings(lines = function(x, ..., col) {
+    smootherColours <<- c(smootherColours, col)
+    invisible(NULL)
+  })
+
+  pdf(NULL)
+  on.exit(dev.off(), add = TRUE)
+
+  fit = lm(BP ~ weight, data = peru.df)
+  eovcheck(fit, smoother = TRUE, col = "red")
+  eovcheck(fit, smoother = TRUE)
+
+  expect_equal(smootherColours, c("red", "lightblue"))
+})

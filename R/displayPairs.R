@@ -98,13 +98,14 @@ displayPairs = function(allpairs, levels1, levels2, brief = TRUE, asDF = FALSE) 
     dimnames(comboMat) = list(levels1, levels2)
 
     ## For comparisons within levels of factor 1 we want the combos of each row of comboMat with itself:
-    for (lev in levels1) {
-        outText[[lev]] = as.vector(outer(comboMat[lev, ], comboMat[lev, ], FUN = "paste", sep = " - "))
+    ## Positions are used throughout because the two factors may share a level name.
+    for (levelIndex in seq_along(levels1)) {
+        outText[[levelIndex]] = as.vector(outer(comboMat[levelIndex, ], comboMat[levelIndex, ], FUN = "paste", sep = " - "))
     }
     
     ## For comparisons within levels of factor 2 we want the combos of each column of comboMat with itself:
-    for (lev in levels2) {
-        outText[[lev]] = as.vector(outer(comboMat[, lev], comboMat[, lev], FUN = "paste", sep = " - "))
+    for (levelIndex in seq_along(levels2)) {
+        outText[[length(levels1) + levelIndex]] = as.vector(outer(comboMat[, levelIndex], comboMat[, levelIndex], FUN = "paste", sep = " - "))
     }
     
     ## Return the output from pairsdf that matches each of the within-level factor comparisons:
