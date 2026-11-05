@@ -28,3 +28,16 @@ test_that("openCaseStudy destination argument resolver rejects ambiguous or unsu
     fixed = TRUE
   )
 })
+
+test_that("openCaseStudy copies the case study without opening an editor", {
+  local_mocked_bindings(isAvailable = function(...) FALSE)
+  destination = tempfile("s20x_case_study_")
+  dir.create(destination)
+  on.exit(unlink(destination, recursive = TRUE), add = TRUE)
+
+  copied = openCaseStudy("CS2_1", dest_dir = destination)
+
+  expect_true(file.exists(copied))
+  expect_equal(basename(copied), "CS2_1.Rmd")
+  expect_error(openCaseStudy("CS2_1", dest_dir = destination), "already exists")
+})

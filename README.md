@@ -118,3 +118,11 @@ This release fixes bugs found in a code review. Output for models that already w
 - `summary2way(print.out = FALSE)` no longer prints, and `eovcheck(col = )` now sets the smoother colour with base graphics.
 - `normcheck()` on a vector labels the histogram from the call rather than with `x`, and accepts hex and palette-number colours.
 - `tslm()` now finds variables local to a calling function when `data` or `time` is supplied.
+
+## 3.3.5
+
+- `summaryStats()` now applies `na.action` to a single group as well as to grouped data.
+- Case studies 5.2 and 10.3 now open. They failed to render because of a damaged header.
+- Case study 5.2 now reports the correct R-squared (43.1%, not 36.7%) and describes the dummy variable correctly.
+- Case study 9.1 had the intervals for method 3 against methods 1 and 2 swapped. Method 3 is 9.7 to 24.3 marks lower than method 1, and 17.4 to 32 marks lower than method 2.
+- Case study 10.1 no longer has a stray digit in the interval for the change after 42 weeks.

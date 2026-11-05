@@ -120,6 +120,11 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
     stats = NULL
 
     if (length(unique(group)) == 1) {
+        if (hasArg("na.action")) {
+            args = list(...)
+            x = as.vector(match.fun(args$na.action)(x))
+        }
+
         stats = as.list(getStats(x, ...))
 
         with(stats, {

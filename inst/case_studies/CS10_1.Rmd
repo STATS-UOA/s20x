@@ -120,7 +120,7 @@ confint(bwt.fit8)
 conf1 = as.data.frame(t(abs(confint(bwt.fit8)[2,])))
 resultStr1 = paste0(sprintf("%.2f", conf1$`2.5 %`), " to ", sprintf("%.2f", conf1$`97.5 %`))
 
-conf2 = as.data.frame(t(confint(bwt.fit8)[8,]))
+conf2 = as.data.frame(t(abs(confint(bwt.fit8)[8,])))
 resultStr2 = paste0(sprintf("%.2f", conf2$`97.5 %`), " to ", sprintf("%.2f", conf2$`2.5 %`))
 
 conf3 = as.data.frame(t(abs(confint(bwt.fit8)[4,])))
@@ -157,7 +157,7 @@ We wanted to build a model to explain the birth weight of babies.
 
 Keeping all other varaiables constant:
 
-* A child has a higher expected birth-weight the longer its gestation time --- up to a 42 weeks --- then it starts decreasing in size the longer it stays unborn. We estimated an expected increase of `r resultStr1[1]` ounces per gestation day. After 42 weeks this will decrease by about `r resultStr2[1]`3 ounces per gestational day [NOTE: it might have been better had we changed the OD baseline].
+* A child has a higher expected birth-weight the longer its gestation time --- up to a 42 weeks --- then it starts decreasing in size the longer it stays unborn. We estimated an expected increase of `r resultStr1[1]` ounces per gestation day. After 42 weeks this will decrease by about `r resultStr2[1]` ounces per gestational day [NOTE: it might have been better had we changed the OD baseline].
 * We estimated that for each additional inch of mother's height the baby's birthweight increases by `r resultStr3[1]` ounces, on average.
 * We estimated that for each unit change in a mothers BMI the baby'sb irthweight increases by `r resultStr4[1]` ounces, on average.
 * If the mother smokes this reduces the baby's birthweight by `r resultStr5[1]` ounces, on average.

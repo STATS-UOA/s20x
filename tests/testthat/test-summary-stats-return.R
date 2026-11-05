@@ -64,7 +64,10 @@ test_that("summaryStats still passes na.rm to the summaries for grouped data", {
 test_that("summaryStats accepts na.action for a single group", {
   data("peru.df", package = "s20x", envir = environment())
 
-  printed = capture.output(result <- summaryStats(peru.df$BP, na.action = na.omit))
+  withMissing = peru.df$BP
+  withMissing[1] = NA
+  printed = capture.output(result <- summaryStats(withMissing, na.action = na.omit))
 
-  expect_equal(result$mean, mean(peru.df$BP))
+  expect_equal(result$mean, mean(withMissing, na.rm = TRUE))
+  expect_equal(result$n, sum(!is.na(withMissing)))
 })

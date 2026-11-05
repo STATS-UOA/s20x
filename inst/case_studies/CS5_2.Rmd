@@ -1,10 +1,8 @@
 ---
-title: "Case Study 5.2: STATS 201/8 Extra Case Study - Two sample, log respnse"
+title: "Case Study 5.2: STATS 201/8 Extra Case Study - Two sample, log response"
 output:
   rmarkdown::html_document:
     self_contained: true
-NA
-title: "Case Study 5.2: STATS 201/8 Extra Case Study - Two sample, log respnse"
 ---
 
 ```{r global_options, include=FALSE}
@@ -143,13 +141,13 @@ After logging price, the residuals looked much better. Normality looks good and 
 
 Our model is: $log(price_i) = \beta_0 + \beta_1 \times LivingSpaceSmall_i + \epsilon_i,$ 
 
-where $LivingSpaceSmall_i = 1$ if the $i$th house has a large living area and is 0 otherwise, and $\epsilon_i \sim iid ~N(0,\sigma^2)$
+where $LivingSpaceSmall_i = 1$ if the $i$th house has a small living area and is 0 otherwise, and $\epsilon_i \sim iid ~N(0,\sigma^2)$
 
 Alternatively, our model is:
-$log(burn_{ij}) =\mu_i + \epsilon_{ij}$ 
+$log(price_{ij}) =\mu_i + \epsilon_{ij}$ 
 where $\mu_1$ is the mean log price if the house has a small living space and  $\mu_2$ is the mean log price if the house has a large living space.,  $\epsilon_{ij} \sim iid ~N(0,\sigma^2)$ 
 
-Our model explained 36.7% of the variation in the data.
+Our model explained `r round(100 * summary(houses.fit1)$r.squared, 1)`% of the variation in the data.
 
 
 ## Executive Summary. 

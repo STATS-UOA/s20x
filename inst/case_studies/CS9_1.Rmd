@@ -138,9 +138,9 @@ r2 = round(100*summary(teach.fit5)$r.squared)
 
 With 95% confidence :
 
-* For students taught using method 2 is between `r round(ci[2,1], 1)` and `r round(ci[2,2], 1)` marks higher than those taught using method 1, 
-* For students taught using method 3 is between `r round(-ci2[3,2], 1)` and `r round(-ci2[3,1], 1)` marks lower than those taught using method 1, 
-* For students taught using method 3 is between `r round(-ci[3,2], 1)` and `r round(-ci[3,1], 1)` marks lower than those taught using method 2.
+* The expected language test score for students taught using method 2 is between `r round(ci[2,1], 1)` and `r round(ci[2,2], 1)` marks higher than for those taught using method 1, 
+* The expected language test score for students taught using method 3 is between `r round(-ci[3,2], 1)` and `r round(-ci[3,1], 1)` marks lower than for those taught using method 1, 
+* The expected language test score for students taught using method 3 is between `r round(-ci2[3,2], 1)` and `r round(-ci2[3,1], 1)` marks lower than for those taught using method 2.
 
 Our model explains almost `r r2`% of the variation in language score. You should be able to see that every one of these intervals is wider than before.
 

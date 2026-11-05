@@ -73,7 +73,7 @@ openCaseStudy = function(id, dest_dir = getwd(), overwrite = FALSE, ...) {
 
   if (requireNamespace("rstudioapi", quietly = TRUE) && isAvailable()) {
     navigateToFile(destinationPath)
-  } else {
+  } else if (interactive()) {
     file.edit(destinationPath)
   }
 

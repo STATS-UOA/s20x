@@ -19,13 +19,23 @@
 
 
 
+## s20x 3.3.5
+
+- Fixed summaryStats() so `na.action` also applies to a single group. The 3.3.4 change only worked for grouped data.
+- Fixed openCaseStudy() so it no longer opens an editor in non-interactive sessions.
+- Repaired the headers of case studies 5.2 and 10.3, which stopped them rendering.
+- Corrected case study 5.2: the R-squared in the text was 36.7% but the model gives 43.1%, the dummy variable description was reversed, and a formula referred to burn rather than price.
+- Corrected case study 9.1: the intervals for method 3 against methods 1 and 2 were swapped.
+- Corrected case study 10.1: a stray digit followed an interval, and the decrease was given as negative.
+- Strengthened the tests with independent checks of the ANOVA results, prediction intervals, tslm AR fits, two sd lines and default plotting engine.
+
 ## s20x 3.3.4
 
 - Fixed predict20x() and predictCount() for transformed terms such as `log(x)`. Columns in `newdata` are now matched by name when every model variable is present, and otherwise taken in order as before. Named columns in a different order are no longer silently assigned to the wrong variables.
 - Fixed predictGLM() so `newdata` supplies the variables behind terms such as `factor(g)` and `log(x)`.
 - Fixed pairs20x() so `pch`, `col`, `cex` and `bg` work with the base engine. They apply to the scatter plots only.
 - Fixed displayPairs() so comparisons are kept when the two factors share a level name.
-- Fixed summaryStats() so `na.action` works, for grouped data and a single group.
+- Fixed summaryStats() so `na.action` works for grouped data.
 - Fixed cooks20x() so `axisOpts` may set only some of its options.
 - Fixed summary2way() so `print.out = FALSE` suppresses printing for the default `new = TRUE` output.
 - Fixed eovcheck() so `col` sets the smoother colour with the base engine.
