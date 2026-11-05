@@ -24,3 +24,8 @@
 ^inst/developer-notes($|/)
 
 ^data-raw$
+^tests/testthat/Rplots\.pdf$
+^docs$
+^pkgdown$
+^_pkgdown\.yml$
+^vignettes$

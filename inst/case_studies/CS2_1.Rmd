@@ -35,7 +35,7 @@ load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ## Read in and Inspect the Data
 
 ```{r, out.width = "75%", fig.align = 'center',fig.height=4, eval=FALSE}
-Stats20x.df = read.table("STATS20x.txt", header = T)
+Stats20x.df = read.table("STATS20x.txt", header = TRUE)
 plot(Exam ~ Test, data = Stats20x.df)
 ```
 

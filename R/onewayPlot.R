@@ -13,8 +13,8 @@
 #' 'hsd','lsd' or 'ci'.
 #' @param pooled two options: pooled or unpooled standard deviation used for
 #' plotted intervals.
-#' @param strip if strip=F, boxplots are displayed instead.
-#' @param vert if vert=F, horizontal stripplots are displayed instead (boxplots
+#' @param strip if strip=FALSE, boxplots are displayed instead.
+#' @param vert if vert=FALSE, horizontal stripplots are displayed instead (boxplots
 #' can only be displayed vertically).
 #' @param verbose if true, print intervals on console.
 #' @param ylabel can be used to replace variable name of y by another string.

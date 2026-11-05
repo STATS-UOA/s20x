@@ -33,7 +33,7 @@ load(system.file("extdata", "ML.df.rda", package = "s20x"))
 
 
 ```{r, fig.height=5.75, eval=FALSE}
-ML.df=read.table("ML.txt",header=T)
+ML.df=read.table("ML.txt",header=TRUE)
 ```
 
 ```{r, fig.height=5.75}

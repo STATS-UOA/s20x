@@ -32,10 +32,10 @@ returns fitted values with confidence limits on either the link scale or the
 response scale.
 }
 \details{
-This is not an S3 \code{predict()} method and is not intended to be a
-drop-in replacement for base R prediction methods. It is the more general GLM
-teaching helper in this package; \code{\link{predictCount}} remains a
-specialised count-focused wrapper with rounded response-scale output.
+New work should use \code{\link{predict20x}}, which handles \code{lm} and
+\code{glm} fits with one function and gives results on the response scale by
+default. \code{predictGLM()} keeps its own defaults and column names for
+existing teaching material.
 
 Note: \code{newdata} must include all first-order terms used in the fitted
 model. This simplified requirement reflects the teaching-wrapper interface

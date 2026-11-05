@@ -59,7 +59,7 @@ Snapper.df <- Snapper1.df
 ```
 
 ```{r,fig.height=4.8,fig.width=8, eval = FALSE}
-Snapper.df=read.csv("Snapper.csv",header=T,stringsAsFactors=TRUE)
+Snapper.df=read.csv("Snapper.csv",header=TRUE,stringsAsFactors=TRUE)
 ```
 
 ```{r,fig.height=4.8,fig.width=8}

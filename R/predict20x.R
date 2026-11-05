@@ -1,39 +1,44 @@
-#' Deprecated Teaching Predictions for a Linear Model
+#' Teaching Predictions with Confidence and Prediction Intervals
 #'
-#' Teaching helper for linear-model predictions. It wraps
-#' \code{\link{predict.lm}} and prints a compact table containing fitted values,
-#' confidence intervals for the mean response, and prediction intervals for new
-#' observations.
+#' \code{predict20x()} gives predictions and intervals for a fitted model. It is
+#' an S3 generic, so the same function works for linear models, generalised
+#' linear models and \code{\link{tslm}} fits.
 #'
-#' This is not an S3 \code{predict()} method and is not intended to be a
-#' drop-in replacement for base R prediction methods. It is a compatibility
-#' helper for older teaching material that expects confidence and prediction
-#' intervals to be printed together. The standard \code{\link{predict}}
-#' interface is preferred for new work.
+#' For an \code{lm} fit the table holds fitted values, confidence intervals for
+#' the mean response, and prediction intervals for new observations. For a
+#' \code{glm} fit the intervals are confidence intervals, calculated on the link
+#' scale and then transformed according to \code{type}.
 #'
-#' Note: \code{newdata} must be a data frame with the same column order and
-#' data types as those used in fitting the model. This is stricter than the usual
-#' \code{predict.lm()} interface and is kept for compatibility with the original
-#' teaching wrapper.
+#' The columns of \code{newdata} are matched to the model variables by name when
+#' every variable is present. Otherwise they are taken in order, either one
+#' column per variable or one column per model term.
 #'
-#' @param object an \code{lm} object, i.e. the output from \code{lm}.
+#' This is not a method for \code{\link{predict}}, so it does not change what
+#' \code{predict()} does for these models.
+#'
+#' @param object a fitted model, such as the output from \code{lm} or \code{glm}.
 #' @param newdata prediction data frame.
-#' @param cilevel confidence level for the intervals.
-#' @param digit number of decimal places to print.
+#' @param conf.level confidence level for the intervals.
+#' @param digits number of decimal places to print.
 #' @param print.out if \code{TRUE}, print the prediction table.
-#' @param \dots optional arguments that are passed to \code{\link{predict.lm}}.
-#' @return Invisibly returns a list with components \describe{
-#'   \item{frame}{printed data frame containing predictions, confidence intervals,
-#'   and prediction intervals.}
-#'   \item{fit}{prediction values.}
+#' @param cilevel the older name for \code{conf.level}.
+#' @param type for a \code{glm} fit, the scale of the results: \code{"response"}
+#'   (the default), \code{"link"}, or \code{"odds"} for a logit-link model.
+#' @param quasit if \code{TRUE}, use a t multiplier rather than a normal
+#'   multiplier when \code{object} is a quasi model.
+#' @param \dots optional arguments that are passed to the model's prediction
+#'   method, or for other methods to \code{predict20x()}.
+#' @return Invisibly returns an object of class \code{s20xPrediction}, which
+#'   prints as the prediction table. It is a list with components \describe{
+#'   \item{frame}{data frame containing the predictions and intervals.}
+#'   \item{fit}{prediction values, on the link scale for a \code{glm} fit.}
 #'   \item{se.fit}{standard errors of predictions.}
-#'   \item{residual.scale}{residual standard deviation.}
-#'   \item{df}{residual degrees of freedom.}
+#'   \item{residual.scale}{residual standard deviation, for an \code{lm} fit.}
+#'   \item{df}{residual degrees of freedom, for an \code{lm} fit.}
+#'   \item{type}{the scale of the results, for a \code{glm} fit.}
 #'   \item{cilevel}{confidence level of the interval.}
 #' }
-#' @seealso \code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
-#' @note This function is deprecated because it is no longer used in class.
-#'   Prefer the standard \code{\link{predict}} method for new work.
+#' @seealso \code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{predict.glm}}.
 #' @keywords htest
 #' @examples
 #'
@@ -52,12 +57,26 @@
 #' pred.peru = data.frame(age = 21, years = 2, `I(years^2)` = 2, weight = 71, height = 1629)
 #' predict20x(peru.fit, pred.peru)
 #'
+#' # A generalised linear model: predictions on the response scale
+#' peru.glm = glm(BP ~ log(weight), data = peru.df, family = poisson)
+#' predict20x(peru.glm, data.frame(weight = c(60, 70)))
+#' predict20x(peru.glm, data.frame(weight = c(60, 70)), type = "link")
+#'
 #' @export predict20x
-predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...) {
-  if (!inherits(object, "lm")) {
-    stop("First input is not an \"lm\" object")
-  }
+predict20x = function(object, ...) {
+  UseMethod("predict20x")
+}
 
+#' @rdname predict20x
+#' @export
+predict20x.default = function(object, ...) {
+  stop("First input is not an \"lm\" object")
+}
+
+#' @rdname predict20x
+#' @export
+predict20x.lm = function(object, newdata, conf.level = 0.95, digits = 3, print.out = TRUE,
+                         cilevel = conf.level, ...) {
   validatePredictionNewdata(newdata)
 
   newdata = alignPredictionNewdata(object, newdata)
@@ -79,21 +98,92 @@ predict20x = function(object, newdata, cilevel = 0.95, digit = 3, print.out = TR
   )
   predictionFrame = formatTeachingPredictionFrame(
     values = predictionValues,
-    rowNames = dimnames(newdata)[[1]],
+    rowNames = rownames(newdata),
     columnNames = c("Predicted", " Conf.lower", "Conf.upper", " Pred.lower", " Pred.upper"),
-    digit = digit
+    digit = digits
+  )
+
+  result = structure(
+    list(
+      frame = predictionFrame,
+      fit = pred$fit,
+      se.fit = pred$se.fit,
+      residual.scale = pred$residual.scale,
+      df = pred$df,
+      cilevel = cilevel
+    ),
+    class = "s20xPrediction"
   )
 
   if (print.out) {
-    print(predictionFrame)
+    print(result)
   }
 
-  invisible(list(
-    frame = predictionFrame,
-    fit = pred$fit,
-    se.fit = pred$se.fit,
-    residual.scale = pred$residual.scale,
-    df = pred$df,
-    cilevel = cilevel
-  ))
+  invisible(result)
+}
+
+#' @rdname predict20x
+#' @export
+predict20x.glm = function(object, newdata, conf.level = 0.95, digits = 3, print.out = TRUE,
+                          cilevel = conf.level, type = c("response", "link", "odds"),
+                          quasit = FALSE, ...) {
+  type = match.arg(type)
+  validatePredictionNewdata(newdata)
+
+  if (type == "odds" && family(object)$link != "logit") {
+    stop("Odds are only available for a logit-link model")
+  }
+
+  newdata = alignPredictionNewdata(object, newdata)
+  prediction = glmTeachingPrediction(object, newdata, cilevel, quasit, ...)
+
+  scaleFunction = switch(
+    type,
+    response = family(object)$linkinv,
+    link = identity,
+    odds = exp
+  )
+  predictionFrame = formatTeachingPredictionFrame(
+    values = scaleFunction(cbind(
+      Predicted = prediction$fit,
+      Conf.lower = prediction$confLower,
+      Conf.upper = prediction$confUpper
+    )),
+    rowNames = rownames(newdata),
+    columnNames = c("Predicted", " Conf.lower", "Conf.upper"),
+    digit = digits
+  )
+
+  result = structure(
+    list(
+      frame = predictionFrame,
+      fit = prediction$fit,
+      se.fit = prediction$seFit,
+      type = type,
+      cilevel = cilevel
+    ),
+    class = "s20xPrediction"
+  )
+
+  if (print.out) {
+    print(result)
+  }
+
+  invisible(result)
+}
+
+#' @rdname predict20x
+#' @export
+predict20x.tslm = function(object, newdata, ...) {
+  if (!is.null(object$errorSpec)) {
+    stop("predict20x() does not yet support tslm models with ar(p) errors", call. = FALSE)
+  }
+
+  predict20x(object$fit, newdata, ...)
+}
+
+#' @export
+print.s20xPrediction = function(x, ...) {
+  print(x$frame, ...)
+  invisible(x)
 }

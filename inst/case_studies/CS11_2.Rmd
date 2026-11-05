@@ -37,7 +37,7 @@ load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "85%", fig.align = 'center', eval=FALSE}
-Stats20x.df = read.table("STATS20x.txt", header = T)
+Stats20x.df = read.table("STATS20x.txt", header = TRUE)
 ```
 
 ```{r, out.width = "85%", fig.align = 'center'}
@@ -62,11 +62,11 @@ summary(degree.fit)
 ## Multiple Comparisons Output
 ```{r, out.width = "90%", fig.align = 'center',echo=-1}
 options(digits=4)
-pairs(emmeans(degree.fit, ~Degree), infer=T)
+pairs(emmeans(degree.fit, ~Degree), infer=TRUE)
 ```
 ```{r, echo = FALSE}
 options(digits=4)
-stats.pair=as.data.frame(pairs(emmeans(degree.fit, ~Degree), infer=T))
+stats.pair=as.data.frame(pairs(emmeans(degree.fit, ~Degree), infer=TRUE))
 conf1=subset(stats.pair, p.value<0.05)
 resultStr1 = paste0(sprintf("%.0f", conf1$lower.CL), " and ", sprintf("%.0f", conf1$upper.CL))
 resultStr2 = paste0(sprintf("%.0f", abs(conf1$upper.CL)), " and ", sprintf("%.0f", abs(conf1$lower.CL)))

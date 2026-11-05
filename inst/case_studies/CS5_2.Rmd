@@ -52,7 +52,7 @@ load(system.file("extdata", "houses.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=3.8,fig.width=6, eval= FALSE}
-houses.df=read.csv("Houses.csv",header=T, stringsAsFactors = TRUE)
+houses.df=read.csv("Houses.csv",header=TRUE, stringsAsFactors = TRUE)
 plot(price~livingSpace, houses.df, main="Price versus Living Area",horizontal=TRUE)
 summaryStats(price~livingSpace, houses.df)
 

@@ -16,7 +16,7 @@
 #' @param page options for output: \code{"table"}, \code{"means"},
 #'     \code{"effects"}, \code{"interaction"}, or
 #'     \code{"nointeraction"}.
-#' @param digit the number of decimal places in the display.
+#' @param digits the number of decimal places in the display.
 #' @param conf.level confidence level of the intervals.
 #' @param print.out if \code{TRUE}, print the output on the screen.
 #' @param new if \code{TRUE} then this will run the new version of
@@ -70,7 +70,7 @@
 #'
 #' @export summary2way
 summary2way = function(fit, page = c("table", "means", "effects", "interaction", "nointeraction"), 
-                       digit = 5, conf.level = 0.95, print.out = TRUE, 
+                       digits = 5, conf.level = 0.95, print.out = TRUE, 
                        new = TRUE, all = FALSE, FUN = "identity", ...) {
   backtransform = if (is.character(FUN) && FUN == "identity") {
     FALSE
@@ -131,53 +131,8 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       stop("No interaction term in model")
     }
 
-    if (print.out) {
-      if (page == "table") {
-        print(results$table) ## note this doesn't print the totals - do we care?
-      } else if (page == "means"){
-        cat("Table of means:\n")
-        print(results$means$tables)
-      } else if (page == "effects"){
-        cat("Table of effects:\n")
-        print(results$effects$tables)
-      } else if (page == "nointeraction"){
-        factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
-        out = lapply(resultsIdentity$comparisons[factorLabels],
-                      function(x) cbind(FUN(x[, 1:3, drop = FALSE]), x[, 4, drop = FALSE]))
-        mostattributes(out) = attributes(results$comparisons)
-        names(out) = factorLabels
-        print(out)
-      } else {# page == "interaction")
-        interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
-        out = results$comparisons[interactionLabel]
-        if (all) {
-            mostattributes(out) = attributes(results$comparisons)
-            names(out) = interactionLabel
-            print(out)
-        } else {
-            out = out[[1]]
-            factorNames = strsplit(interactionLabel, ":", fixed = TRUE)[[1]]
-            ## Levels of each variable in the two groups being compared.
-            groupLevels = matchTukeyInteractionLevels(
-              rownames(out),
-              fit$xlevels[[factorNames[1]]],
-              fit$xlevels[[factorNames[2]]]
-            )
-            ## Matrix of 'within' comparisons.
-            outWithin = out[groupLevels$group1Var1 == groupLevels$group2Var1, ]
-            ## Matrix of 'between' comparisons.
-            outBetween = out[groupLevels$group1Var2 == groupLevels$group2Var2, ]
-            out = list(outWithin, outBetween)
-            mostattributes(out) = attributes(results$comparisons)
-            factor1 = factorNames[1]
-            names(out) = c(paste("Comparisons within", factor1),
-                           paste("Comparisons between", factor1))
-            print(out)
-        }
-      }
-    }
-
-    invisible(list(Df = results$table$Df, 
+    result = structure(
+      list(Df = results$table$Df, 
                    `Sum of Sq` = results$table$`Sum Squares`, 
                    `Mean Sq` = results$table$`Mean Square`,
                    `F value` = results$table$`F-statistic`, 
@@ -191,7 +146,16 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
                      NULL
                    },
                    results = results,
-                   results.identity = resultsIdentity))
+                   results.identity = resultsIdentity),
+      display = list(fit = fit, page = page, all = all, FUN = FUN, inter = inter),
+      class = "s20xSummary2way"
+    )
+
+    if (print.out) {
+      print(result)
+    }
+
+    invisible(result)
     
   } else {
     alist = anova(fit)
@@ -240,10 +204,10 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     }
     
     aDf = c(alist$Df, sum(alist$Df))
-    aSs = round(c(alist$"Sum Sq", sum(alist$"Sum Sq")), digit)
-    aMs = round(alist$"Mean Sq", digit)
-    fvalue = round(alist$"F value"[1:m], digit)
-    pvalue = round(alist$"Pr(>F)"[1:m], digit)
+    aSs = round(c(alist$"Sum Sq", sum(alist$"Sum Sq")), digits)
+    aMs = round(alist$"Mean Sq", digits)
+    fvalue = round(alist$"F value"[1:m], digits)
+    pvalue = round(alist$"Pr(>F)"[1:m], digits)
     aTable = cbind(aDf, aSs, c(paste(aMs), ""), c(paste(fvalue), "", ""), c(paste(pvalue), "", ""))
     
     if (inter) {
@@ -282,11 +246,11 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
       std[i] = sd(g)
       mid[i] = quantile(g, 0.75) - quantile(g, 0.25)
     }
-    size = round(size, digit)
-    mea = round(mea, digit)
-    med = round(med, digit)
-    std = round(std, digit)
-    mid = round(mid, digit)
+    size = round(size, digits)
+    mea = round(mea, digits)
+    med = round(med, digits)
+    std = round(std, digits)
+    mid = round(mid, digits)
     
     if (inter) {
       numericSummary = cbind(c(size[1], "", size[2:(n1 + 1)], "", size[(2 + n1):(n1 + n2 + 1)], "", size[(2 + n1 + n2):(n + 1)]), c(mea[1], "", mea[2:(n1 + 1)], "", mea[(2 + n1):(n1 + n2 + 1)], "", mea[(2 + 
@@ -330,7 +294,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     matc = c(matc, "")
     C = c(levels(f1), as.character(attributes(fit$terms)$variables[[4]]))
     R = c("", "", levels(f2), as.character(attributes(fit$terms)$variables[[3]]))
-    M1 = cbind(matc, C, format(round(cellMeans, digit), digit = 5))
+    M1 = cbind(matc, C, format(round(cellMeans, digits), digits = 5))
     M2 = rbind(matr, R, M1)
     rowEffect = apply(effmat, 1, mean) - mean(apply(effmat, 1, mean))
     colEffect = apply(effmat, 2, mean) - mean(apply(effmat, 2, mean))
@@ -346,7 +310,7 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     matc = c(matc, "")
     C = c(levels(f1), paste(as.character(attributes(fit$terms)$variables[[4]]), "effect"))
     R = c("", "", levels(f2), paste(as.character(attributes(fit$terms)$variables[[3]]), "effect"))
-    M3 = cbind(matc, C, format(round(effmat2, digit), digit = 5))
+    M3 = cbind(matc, C, format(round(effmat2, digits), digits = 5))
     M4 = rbind(matr, R, M3)
     f1Name = row.names(alist)[1]
     f2Name = row.names(alist)[2]
@@ -458,6 +422,64 @@ summary2way = function(fit, page = c("table", "means", "effects", "interaction",
     invisible(list(Df = aDf, `Sum of Sq` = aSs, `Mean Sq` = aMs, `F value` = alist$"F value"[1:m], `Pr(F)` = alist$"Pr(>F)"[1:m], `Grand Mean` = modelMean, `Row Effects` = rowEffect, `Col Effects` = colEffect, `Interaction Effects` = interact, 
                    Comparisons = comparisons))
   }
+}
+
+#' @export
+print.s20xSummary2way = function(x, ...) {
+  display = attr(x, "display")
+  fit = display$fit
+  page = display$page
+  all = display$all
+  FUN = display$FUN
+  inter = display$inter
+  results = x$results
+  resultsIdentity = x$results.identity
+
+  if (page == "table") {
+    print(results$table) ## note this doesn't print the totals - do we care?
+  } else if (page == "means"){
+    cat("Table of means:\n")
+    print(results$means$tables)
+  } else if (page == "effects"){
+    cat("Table of effects:\n")
+    print(results$effects$tables)
+  } else if (page == "nointeraction"){
+    factorLabels = attr(fit$terms, "term.labels")[attr(fit$terms, "order") != 2]
+    out = lapply(resultsIdentity$comparisons[factorLabels],
+                  function(x) cbind(FUN(x[, 1:3, drop = FALSE]), x[, 4, drop = FALSE]))
+    mostattributes(out) = attributes(results$comparisons)
+    names(out) = factorLabels
+    print(out)
+  } else {# page == "interaction")
+    interactionLabel = attr(fit$terms, "term.labels")[attr(fit$terms, "order") == 2]
+    out = results$comparisons[interactionLabel]
+    if (all) {
+        mostattributes(out) = attributes(results$comparisons)
+        names(out) = interactionLabel
+        print(out)
+    } else {
+        out = out[[1]]
+        factorNames = strsplit(interactionLabel, ":", fixed = TRUE)[[1]]
+        ## Levels of each variable in the two groups being compared.
+        groupLevels = matchTukeyInteractionLevels(
+          rownames(out),
+          fit$xlevels[[factorNames[1]]],
+          fit$xlevels[[factorNames[2]]]
+        )
+        ## Matrix of 'within' comparisons.
+        outWithin = out[groupLevels$group1Var1 == groupLevels$group2Var1, ]
+        ## Matrix of 'between' comparisons.
+        outBetween = out[groupLevels$group1Var2 == groupLevels$group2Var2, ]
+        out = list(outWithin, outBetween)
+        mostattributes(out) = attributes(results$comparisons)
+        factor1 = factorNames[1]
+        names(out) = c(paste("Comparisons within", factor1),
+                       paste("Comparisons between", factor1))
+        print(out)
+    }
+  }
+
+  invisible(x)
 }
 
 #' Match Tukey interaction comparisons to factor levels

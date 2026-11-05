@@ -1,0 +1,154 @@
+url: https://stats-uoa.github.io/s20x/
+
+template:
+  bootstrap: 5
+
+home:
+  title: s20x
+  description: Functions and case studies for STATS 201, STATS 208 and BIOSCI 209 at the University of Auckland.
+
+navbar:
+  structure:
+    left: [reference, articles, news]
+    right: [search, github]
+
+reference:
+- title: Exploring data
+  contents:
+  - pairs20x
+  - trendscatter
+  - interactionPlots
+  - summaryStats
+- title: Checking models
+  contents:
+  - modelcheck
+  - normcheck
+  - eovcheck
+  - cooks20x
+  - print.s20xModelcheck_ggplot2
+  - print.s20xNormcheck_ggplot2
+- title: Summarising analyses
+  contents:
+  - summary1way
+  - summary2way
+  - multipleComp
+  - displayPairs
+  - rowdistr
+- title: Predicting
+  contents:
+  - predict20x
+  - predictCount
+  - predictGLM
+- title: Time series
+  contents:
+  - tslm
+  - anova.tslm
+- title: Case studies
+  contents:
+  - listCaseStudies
+  - casestudy
+  - openCaseStudy
+- title: Datasets
+  contents:
+  - ends_with(".df")
+- title: Other functions
+  contents:
+  - rr
+  - getVersion
+- title: Deprecated
+  desc: These still work, but will be removed in a later release.
+  contents:
+  - autocorPlot
+  - ciReg
+  - crossFactors
+  - crosstabs
+  - estimateContrasts
+  - freq1way
+  - layout20x
+  - levene.test
+  - onewayPlot
+  - residPlot
+  - skewness
+- title: internal
+  contents:
+  - boxqq
+  - modcheck
+  - propslsd.new
+  - stripqq
+
+articles:
+- title: Chapter 2 case studies
+  contents:
+  - articles/CS2_1
+  - articles/CS2_2
+  - articles/CS2_3
+- title: Chapter 3 case studies
+  contents:
+  - articles/CS3_1
+  - articles/CS3_2
+- title: Chapter 4 case studies
+  contents:
+  - articles/CS4_1
+  - articles/CS4_2
+- title: Chapter 5 case studies
+  contents:
+  - articles/CS5_1
+  - articles/CS5_2
+- title: Chapter 6 case studies
+  contents:
+  - articles/CS6_1
+  - articles/CS6_2
+  - articles/CS6_3
+  - articles/CS6_4
+  - articles/CS6_5
+- title: Chapter 7 case studies
+  contents:
+  - articles/CS7_1
+  - articles/CS7_2
+- title: Chapter 8 case studies
+  contents:
+  - articles/CS8_1
+  - articles/CS8_2
+  - articles/CS8_3
+- title: Chapter 9 case studies
+  contents:
+  - articles/CS9_1
+  - articles/CS9_2
+  - articles/CS9_3
+  - articles/CS9_4
+  - articles/CS9_5
+  - articles/CS9_6
+- title: Chapter 10 case studies
+  contents:
+  - articles/CS10_1
+  - articles/CS10_2
+  - articles/CS10_3
+- title: Chapter 11 case studies
+  contents:
+  - articles/CS11_1
+  - articles/CS11_2
+  - articles/CS11_3
+- title: Chapter 12 case studies
+  contents:
+  - articles/CS12_1
+  - articles/CS12_2
+  - articles/CS12_3
+  - articles/CS12_4
+- title: Chapter 14 case studies
+  contents:
+  - articles/CS14_1
+  - articles/CS14_2
+  - articles/CS14_3
+  - articles/CS14_4
+- title: Chapter 15 case studies
+  contents:
+  - articles/CS15_1
+  - articles/CS15_2
+  - articles/CS15_3
+  - articles/CS15_4
+- title: Chapter 17 case studies
+  contents:
+  - articles/CS17_1
+  - articles/CS17_2
+  - articles/CS17_3
+  - articles/CS17_4

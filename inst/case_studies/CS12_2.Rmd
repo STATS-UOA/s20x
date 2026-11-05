@@ -71,7 +71,7 @@ summary(Cover.fit)
 
 ## Pairwise comparisons using emmeans
 ```{r}
-Cover.pairs <- pairs(emmeans(Cover.fit, ~ Time*Reef), infer=T)
+Cover.pairs <- pairs(emmeans(Cover.fit, ~ Time*Reef), infer=TRUE)
 # Simplify the display:
 displayPairs(Cover.pairs, c("Before", "After"), c("Control", "Impact"))
 ```

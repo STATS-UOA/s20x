@@ -7,7 +7,7 @@
 summary2way(
   fit,
   page = c("table", "means", "effects", "interaction", "nointeraction"),
-  digit = 5,
+  digits = 5,
   conf.level = 0.95,
   print.out = TRUE,
   new = TRUE,
@@ -23,7 +23,7 @@ summary2way(
 \code{"effects"}, \code{"interaction"}, or
 \code{"nointeraction"}.}
 
-\item{digit}{the number of decimal places in the display.}
+\item{digits}{the number of decimal places in the display.}
 
 \item{conf.level}{confidence level of the intervals.}
 

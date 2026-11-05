@@ -48,7 +48,7 @@ load(system.file("extdata", "Galton.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=4.2,fig.width=6, eval=FALSE}
-Galton.df=read.csv("Galton3.csv", header=T)
+Galton.df=read.csv("Galton3.csv", header=TRUE)
 hist(Galton.df$Height)
 summary(Galton.df$Height)
 ```

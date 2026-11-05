@@ -35,7 +35,7 @@ load(system.file("extdata", "survey.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval=FALSE}
-survey.df = read.table("survey.txt", header = TRUE, stringsAsFactors = T)
+survey.df = read.table("survey.txt", header = TRUE, stringsAsFactors = TRUE)
 # To make things a little less cluttered we put the data in its own dataframe
 hair.df = with(survey.df, data.frame(hair = hair, sex = sex))
 plot(hair ~ sex, data = hair.df)

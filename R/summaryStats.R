@@ -127,23 +127,8 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
 
         stats = as.list(getStats(x, ...))
 
-        with(stats, {
-            cat(paste("Minimum value:          ", round(min, digits), "\n"))
-            cat(paste("Maximum value:          ", round(max, digits), "\n"))
-            cat(paste("Mean value:             ", round(mean, digits), "\n"))
-            cat(paste("Median:                 ", round(median, digits), "\n"))
-            cat(paste("Upper quartile:         ", round(uq, digits), "\n"))
-            cat(paste("Lower quartile:         ", round(lq, digits), "\n"))
-            cat(paste("Variance:               ", round(var, digits), "\n"))
-            cat(paste("Standard deviation:     ", round(sd, digits), "\n"))
-            cat(paste("Midspread (IQR):        ", round(iqr, digits), "\n"))
-            cat(paste("Skewness:               ", round(skewness, digits), "\n"))
-            cat(paste("Number of data values:  ", n, "\n"))
-        })
-
-        if ("nMissing" %in% names(stats)) {
-            cat(paste("Number of missing values:  ", stats$nMissing, "\n"))
-        }
+        attr(stats, "digits") = digits
+        class(stats) = "s20xSummaryStats"
     } else {
         temp.df = data.frame(x = x, group = group)
         na.action = if (hasArg("na.action")) {
@@ -159,26 +144,60 @@ summaryStats.default = function(x, group = rep("Data", length(x)), data.order = 
             c(list(x ~ group, data = temp.df, FUN = getStats, na.action = na.action), statArgs)
         )
 
-        ## resTable = aggregate(x ~ group, data = temp.df, FUN = getStats)
-        resTable = stats
-        rownames(resTable$x) = resTable$group
+        rownames(stats$x) = stats$group
+        stats = as.data.frame(stats$x)
+        class(stats) = c("s20xSummaryStats", "data.frame")
+    }
 
-        if ("nMissing" %in% colnames(stats$x)) {
-            resTable = as.data.frame(resTable$x[, c("n", "nMissing", "mean", "median", "sd", "iqr")])
+    print(stats)
+
+    invisible(stats)
+}
+
+#' @export
+print.s20xSummaryStats = function(x, ...) {
+    if (is.data.frame(x)) {
+        groupColumns = c("n", "mean", "median", "sd", "iqr")
+
+        if (!all(groupColumns %in% names(x))) {
+            return(NextMethod())
+        }
+
+        stats = as.data.frame(unclass(x), row.names = rownames(x))
+
+        if ("nMissing" %in% names(stats)) {
+            resTable = stats[, c("n", "nMissing", "mean", "median", "sd", "iqr"), drop = FALSE]
             resTable$n = resTable$n - resTable$nMissing
             names(resTable) = c("Sample Size", "No. Miss.", "Mean", "Median", "Std Dev", "Midspread")
         } else {
-            resTable = as.data.frame(resTable$x[, c("n", "mean", "median", "sd", "iqr")])
-            colnames(resTable) = c("Sample Size", "Mean", "Median", "Std Dev", "Midspread")
+            resTable = stats[, groupColumns, drop = FALSE]
+            names(resTable) = c("Sample Size", "Mean", "Median", "Std Dev", "Midspread")
         }
 
         print(resTable)
-
-        rownames(stats$x) = stats$group
-        stats = as.data.frame(stats$x)
+        return(invisible(x))
     }
 
-    invisible(stats)
+    stats = unclass(x)
+    digits = attr(x, "digits")
+
+    cat(paste("Minimum value:          ", round(stats$min, digits), "\n"))
+    cat(paste("Maximum value:          ", round(stats$max, digits), "\n"))
+    cat(paste("Mean value:             ", round(stats$mean, digits), "\n"))
+    cat(paste("Median:                 ", round(stats$median, digits), "\n"))
+    cat(paste("Upper quartile:         ", round(stats$uq, digits), "\n"))
+    cat(paste("Lower quartile:         ", round(stats$lq, digits), "\n"))
+    cat(paste("Variance:               ", round(stats$var, digits), "\n"))
+    cat(paste("Standard deviation:     ", round(stats$sd, digits), "\n"))
+    cat(paste("Midspread (IQR):        ", round(stats$iqr, digits), "\n"))
+    cat(paste("Skewness:               ", round(stats$skewness, digits), "\n"))
+    cat(paste("Number of data values:  ", stats$n, "\n"))
+
+    if ("nMissing" %in% names(stats)) {
+        cat(paste("Number of missing values:  ", stats$nMissing, "\n"))
+    }
+
+    invisible(x)
 }
 
 #' @export

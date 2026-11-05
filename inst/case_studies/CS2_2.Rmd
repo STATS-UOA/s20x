@@ -32,7 +32,7 @@ data(fire.df)
 # Read in and inspect the data:
 ```{r fig.height=3.5, eval=FALSE}
 # import the data
-fire.df=read.table("fire.txt", header=T)
+fire.df=read.table("fire.txt", header=TRUE)
 plot(damage~distance,main="Cost of damage versus distance", data=fire.df)
 ```
 

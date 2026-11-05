@@ -84,7 +84,7 @@ Fruitfly.emm = emmeans(ff.fit, ~group)
 # View all pairwise comparisons:
 pairs(Fruitfly.emm, infer=TRUE)
 # View only the comparisons that are significant at the 5% level:
-Fruitfly.pairs = data.frame(pairs(Fruitfly.emm, infer=T))
+Fruitfly.pairs = data.frame(pairs(Fruitfly.emm, infer=TRUE))
 subset(Fruitfly.pairs, p.value<0.05)
 ```
 ```{r, echo=FALSE}

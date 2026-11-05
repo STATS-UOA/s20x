@@ -76,7 +76,7 @@ modelcheck(battery.fit)
 anova(battery.fit)
 summary(battery.fit)
 
-battery.pairs <- pairs(emmeans(battery.fit, ~temp*material), infer=T)
+battery.pairs <- pairs(emmeans(battery.fit, ~temp*material), infer=TRUE)
 displayPairs(battery.pairs, c("low", "med","high"), c("A", "B","C"))
 ```
 

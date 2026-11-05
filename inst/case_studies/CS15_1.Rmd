@@ -36,7 +36,7 @@ load(system.file("extdata", "Haddock.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', eval = FALSE}
-Haddock.df = read.table("Haddock.txt", head = T)
+Haddock.df = read.table("Haddock.txt", header = TRUE)
 Haddock.df$n = with(Haddock.df, codend + cover)
 Haddock.df$propn = with(Haddock.df, codend/n)
 plot(propn ~ forklen, data = Haddock.df, xlab = "Fork length (cm)", las = 1)

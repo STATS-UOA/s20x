@@ -18,7 +18,6 @@ Rscript -e 'rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), 
 
 - `ggplot2` and `GGally` must be installed before `devtools::test()` or `devtools::load_all()` will run. The docs call them optional, but they are hard `Imports` in `DESCRIPTION`, and `load_imports()` stops if they are missing.
 - Tests use the built-in datasets. Do not create synthetic data to stand in for them. There is no `LazyData`, so load them explicitly: `data("peru.df", package = "s20x", envir = environment())`.
-- Running the tests rewrites the tracked file `tests/testthat/Rplots.pdf`. Restore it with `git checkout` rather than committing the change.
 - CI runs on ubuntu with R oldrel-1, release and devel, and fails on warnings as well as errors.
 
 ## Versions and NEWS
@@ -56,4 +55,4 @@ Not tested, but followed throughout: `=` for assignment, camelCase for new or to
 ## Repo-specific workflow
 
 - Modernisation has been done in numbered stages (`9`, `9.1`, `9.1.1` for fix iterations), driven by `scripts/runStage.sh`, which applies a run script and change-set zip from `~/Downloads`. Past design decisions and audits are in `inst/developer-notes/`, which is excluded from the build. Read these before reworking an area.
-- `build/`, `Meta/`, `chatgpt-bundles/`, `*.zip`, `.s20x_built_pkg_path` and `.s20x_validation_mode` are generated and git-ignored, so don't edit them. `.s20x_stage*_validation_mode` files are also generated, but `.gitignore` doesn't cover them, so don't commit them.
+- `build/`, `docs/`, `vignettes/articles/`, `Meta/`, `chatgpt-bundles/`, `*.zip`, `.s20x_built_pkg_path` and `.s20x_validation_mode` are generated and git-ignored, so don't edit them. `.s20x_stage*_validation_mode` files are also generated, but `.gitignore` doesn't cover them, so don't commit them.

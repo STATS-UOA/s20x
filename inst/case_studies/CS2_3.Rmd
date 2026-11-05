@@ -35,7 +35,7 @@ data(diamonds.df)
 # Read in and inspect the data:
 ```{r fig.height=3.5,eval=FALSE}
 # import the data
-diamonds.df=read.table("diamonds.txt", header=T)
+diamonds.df=read.table("diamonds.txt", header=TRUE)
 head(diamonds.df)
 plot(price~weight,main="Price versus weight of diamonds",data=diamonds.df)
 ```

@@ -42,7 +42,7 @@ load(system.file("extdata", "whio.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "100%", fig.align = 'center', eval = FALSE}
-whio.df <- read.csv("WhioChicks.csv", stringsAsFactors=T)
+whio.df <- read.csv("WhioChicks.csv", stringsAsFactors=TRUE)
 head(whio.df)
 par(mar=c(8, 4, 3, 2), mgp=c(7, 1, 0))
 with(whio.df, boxplot(Survived/Chicks ~ Flood*Region, data = whio.df, las=2))
@@ -82,7 +82,7 @@ plot(whio.fit4, which=1)
 ```{r}
 predictGLM(whio.fit4, type="response", newdata=data.frame(Region=c("Fiordland", "Oparara", "TeUrewera")))
 # Use emmeans for pairwise comparisons:
-whio.pairs <- pairs( emmeans(whio.fit4, "Region"), infer=T)
+whio.pairs <- pairs( emmeans(whio.fit4, "Region"), infer=TRUE)
 # Convert to data-frame and remove unwanted columns for display:
 whio.pairs <- data.frame(whio.pairs)[,-c(3,4,7)]
 whio.pairs

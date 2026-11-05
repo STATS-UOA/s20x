@@ -6,7 +6,7 @@
 \usage{
 summary1way(
   fit,
-  digit = 5,
+  digits = 5,
   conf.level = 0.95,
   inttype = "tukey",
   pooled = TRUE,
@@ -18,7 +18,7 @@ summary1way(
 \arguments{
 \item{fit}{an lm object, i.e. the output from \code{\link{lm}}.}
 
-\item{digit}{decimal numbers after the point.}
+\item{digits}{decimal numbers after the point.}
 
 \item{conf.level}{confidence level of the intervals.}
 

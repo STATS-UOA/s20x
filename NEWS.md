@@ -1,23 +1,16 @@
-# s20x development news
+# s20x news
 
-## Purpose
+## s20x 3.3.8
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Made predict20x() an S3 generic with methods for lm, glm and tslm fits, so one function covers all of them. predictCount() and predictGLM() keep working as before.
+- predict20x() now accepts `conf.level` and `digits`, matching the rest of the package. `cilevel` and `digit` still work.
+- summary1way() and summary2way() now also accept `digits`. `digit` still works.
+- predict20x(), summary1way(), summary2way() and summaryStats() now return classed objects with print methods. Their printed output is unchanged, and a saved result prints the same table again.
+- Replaced `T` and `F` with `TRUE` and `FALSE` throughout, including the case studies.
+- Added `LazyData: true`, so `data()` is optional.
+- Rewrote the README and moved the release history into this file.
+- Added a pkgdown website with the case studies as articles.
+- Stopped tracking tests/testthat/Rplots.pdf.
 
 ## s20x 3.3.7
 
@@ -549,3 +542,42 @@ This file records user-facing and developer-facing changes for s20x. It is a rel
 - Added guarded examples for optional ggplot2 and GGally plotting engines in normcheck(), eovcheck(), modelcheck(), and pairs20x().
 - Kept ggplot2 and GGally usage behind requireNamespace() guards so examples remain compatible when optional packages are unavailable.
 - Regenerated documentation should be produced by devtools::document() during the stage runner.
+
+## s20x 3.2.2
+A small number of the datasets have been slightly altered, and their associated documentation accordingly. The changes 
+consist of adding some useful extra variables to the three time series datasets `airpass.df`, `beer.df` and `larain.df`.
+These variables are `t` which is just a time index to save the user creating it if they want to fit a lag response model,
+and either `month` and `year` or both. These are factor variables giving the year the observation recorded, and if relevant
+the month. These extra variables can be used for time series analysis or plots. 
+
+In addition we have made an attempt to use SI units rather than imperial units where sensible. Some examples of where 
+it is sensible: converting inches to millimetres, pounds to kilograms, and acre-feet/gallons to litres (or megalitres).
+Some examples of where it is not sensible are carats (industry standard) and converting blood pressue to kiloPascals 
+instead of millimetres of mecury (mm Hg), which again is the health profession standard. If these conversions have been made,
+then they have been done as extra variables added to the dataset, rather than replacing the original measurements. The
+logic for this is to preserve the datasets as is to avoid lecture notes mismatches - at least for the time being.
+
+## s20x 3.1-21
+
+Ben Stevenson added some code to summary2way so the attribute information from `TukeyHSD` is preserved. That is so you see this
+
+```
+> summary2way(fit, page = "interaction")
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = fit)
+
+$`store:crust`
+```
+
+instead of this
+
+```
+> summary2way(fit, page = "interaction")
+$`store:crust`
+```
+
+## s20x 3.1-24
+
+A new function called `modcheck` has been added. This allows all four standard 20x model checking plots -- residuals versus fitted values, a normal Q-Q plot, a histogram of residuals, and a Cook's distance plot -- to be drawn on the same plot at once. This function needed a much more flexible version of `normcheck`, and needed modifications to `eovcheck` and `cooks20x`. I have not put it on CRAN yet because of the chance that it will fail for our current students. We *really* need some unit testing in this package so that this process can be sped up.

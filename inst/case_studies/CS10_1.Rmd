@@ -43,7 +43,7 @@ load(system.file("extdata", "Babies.df.rda", package = "s20x"))
 
 ```{r, out.width = "80%", fig.align = 'center',fig.height=4.25,echo=-1, eval = FALSE}
 par(mar=c(0,0,0,0))
-Babies.df = read.table("babies_data.txt", header = T)
+Babies.df = read.table("babies_data.txt", header = TRUE)
 pairs20x(Babies.df[, c(1, 2, 4, 5, 6)])
 ```
 

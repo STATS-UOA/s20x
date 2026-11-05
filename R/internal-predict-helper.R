@@ -253,3 +253,31 @@ alignPredictionNewdata = function(object, newdata) {
 
   newdata
 }
+
+#' Calculate glm predictions with confidence limits on the link scale
+#'
+#' @param object Fitted `glm` model.
+#' @param newdata Prediction data frame.
+#' @param cilevel Numeric confidence level.
+#' @param quasit Whether quasi models should use a t multiplier.
+#' @param ... Additional arguments passed to `predict.glm()`.
+#'
+#' @return A list with `fit`, `seFit`, `confLower`, and `confUpper`.
+#' @keywords internal
+#' @noRd
+glmTeachingPrediction = function(object, newdata, cilevel, quasit = FALSE, ...) {
+  pred = predictGlmWithSe(object, newdata, ...)
+  intervals = glmTeachingConfidenceIntervals(
+    fit = pred$fit,
+    seFit = pred$se.fit,
+    cilevel = cilevel,
+    quantile = glmTeachingIntervalQuantile(cilevel, object, quasit)
+  )
+
+  list(
+    fit = pred$fit,
+    seFit = pred$se.fit,
+    confLower = intervals$confLower,
+    confUpper = intervals$confUpper
+  )
+}

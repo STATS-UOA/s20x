@@ -57,9 +57,9 @@ observation of x belongs to.}
 \item{pooled}{two options: pooled or unpooled standard deviation used for
 plotted intervals.}
 
-\item{strip}{if strip=F, boxplots are displayed instead.}
+\item{strip}{if strip=FALSE, boxplots are displayed instead.}
 
-\item{vert}{if vert=F, horizontal stripplots are displayed instead (boxplots
+\item{vert}{if vert=FALSE, horizontal stripplots are displayed instead (boxplots
 can only be displayed vertically).}
 
 \item{verbose}{if true, print intervals on console.}

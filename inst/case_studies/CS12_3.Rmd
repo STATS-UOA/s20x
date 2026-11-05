@@ -77,7 +77,7 @@ summary(Kda.lm)
 
 ## Pairwise comparisons
 ```{r}
-Kda.pairs = pairs(emmeans(Kda.lm, ~ fTime*fTemp), infer=T)
+Kda.pairs = pairs(emmeans(Kda.lm, ~ fTime*fTemp), infer=TRUE)
 # Simplify the display of pairwise comparisons.
 # Because factor levels are numbers, need to enter as "fTime2", "fTime3", etc:
 displayPairs(Kda.pairs, c("fTime2", "fTime3", "fTime4"), c("fTemp60", "fTemp70", "fTemp80"))
@@ -121,6 +121,6 @@ Had there been no interaction then the multi-comparison adjustment would have pr
 
 ```{r}
 Kda.Wrong.lm = lm(HiKda ~ fTime + fTemp, data = KdaDf)
-pairs(emmeans(Kda.Wrong.lm, ~fTime), infer=T)
-pairs(emmeans(Kda.Wrong.lm, ~fTemp), infer=T)
+pairs(emmeans(Kda.Wrong.lm, ~fTime), infer=TRUE)
+pairs(emmeans(Kda.Wrong.lm, ~fTemp), infer=TRUE)
 ```

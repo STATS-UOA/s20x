@@ -35,7 +35,7 @@ load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', eval=FALSE}
-Stats20x.df = read.table("STATS20x.txt", header = T)
+Stats20x.df = read.table("STATS20x.txt", header = TRUE)
 # Could of also used plot(Exam ~ Attend, data = Stats20x.df)
 boxplot(Exam ~ Attend, data = Stats20x.df)
 ```

@@ -53,7 +53,7 @@ load(system.file("extdata", "Cherry.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "70%", fig.align = 'center', eval=FALSE}
-Cherry.df = read.table("Cherry.txt", header = T)
+Cherry.df = read.table("Cherry.txt", header = TRUE)
 pairs20x(Cherry.df[, c("volume", "height", "diameter")])
 ```
 

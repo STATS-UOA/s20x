@@ -56,7 +56,7 @@ load(system.file("extdata", "Dental.df.rda", package = "s20x"))
 ```
 
 ```{r,fig.height=5,fig.width=7, eval = FALSE}
-Dental.df=read.csv("Dental.csv",header=T, stringsAsFactors = TRUE)
+Dental.df=read.csv("Dental.csv",header=TRUE, stringsAsFactors = TRUE)
 plot(DMF~Age, data = Dental.df, pch  = ifelse(Treatment == 'Fluoride', 'F', 'W'),
      col = ifelse(Treatment == 'Fluoride', 'blue', 'red'), main="DMF versus Age")
 legend("topleft", pch=c("F", "W"), col=c('blue', 'red'), legend=c("Fluoride", "Water"))

@@ -56,14 +56,14 @@ trombone.df <- read.csv("trombone.csv", header=TRUE, stringsAsFactors = TRUE)
 
 trombone.df$method <- factor(trombone.df$method,levels=c("NP","MP","MPS","PP","CP"))
 
-stripchart(diff~method,data=trombone.df,vertical=T,pch=16,cex=1.5,method="stack",ylab="Difference in scores",main="Score change vs Training method")
+stripchart(diff~method,data=trombone.df,vertical=TRUE,pch=16,cex=1.5,method="stack",ylab="Difference in scores",main="Score change vs Training method")
 
 summaryStats(diff~method,data=trombone.df)
 ```
 
 ```{r,fig.height=5.2,fig.width=8, echo = FALSE}
 trombone.df$method <- factor(trombone.df$method,levels=c("NP","MP","MPS","PP","CP"))
-stripchart(diff~method,data=trombone.df,vertical=T,pch=16,cex=1.5,method="stack",ylab="Difference in scores",main="Score change vs Training method")
+stripchart(diff~method,data=trombone.df,vertical=TRUE,pch=16,cex=1.5,method="stack",ylab="Difference in scores",main="Score change vs Training method")
 summaryStats(diff~method,data=trombone.df)
 ```
 
@@ -82,10 +82,10 @@ modelcheck(trombone.fit)
 anova(trombone.fit)
 summary(trombone.fit)
 
-pairs(emmeans(trombone.fit, "method"), infer=T)
+pairs(emmeans(trombone.fit, "method"), infer=TRUE)
 
 # Extra code just to extract significant pairs
-trom.pairs=pairs(emmeans(trombone.fit, "method"), infer=T)
+trom.pairs=pairs(emmeans(trombone.fit, "method"), infer=TRUE)
 sig.pairs=subset(data.frame(trom.pairs),p.value<0.05)
 sig.pairs
 

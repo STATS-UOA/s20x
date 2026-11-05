@@ -36,7 +36,7 @@ load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "80%", fig.align = 'center', eval = FALSE}
-Stats20x.df = read.table("STATS20x.txt", header = T)
+Stats20x.df = read.table("STATS20x.txt", header = TRUE)
 ```
 
 ```{r, out.width = "80%", fig.align = 'center'}
@@ -66,7 +66,7 @@ summary(Exam.fit)
 ## Paiwise comparisons
 ```{r, out.width = "150%"}
 library(emmeans)
-Exam.pairs = pairs(emmeans(Exam.fit, ~Attend*Pass.test), infer=T)
+Exam.pairs = pairs(emmeans(Exam.fit, ~Attend*Pass.test), infer=TRUE)
 Exam.pairs
 # Get a simpler display using displayPairs:
 displayPairs(Exam.pairs, c("Yes", "No"), c("pass", "nopass"))

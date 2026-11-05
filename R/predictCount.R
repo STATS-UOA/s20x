@@ -5,10 +5,10 @@
 #' the link scale, exponentiates the fitted values and limits, rounds the result,
 #' and optionally prints the returned table.
 #'
-#' This is not an S3 \code{predict()} method and is not intended to be a
-#' drop-in replacement for base R prediction methods. It is a specialised
-#' count-focused teaching wrapper. For a more general log-link or logit-link GLM
-#' helper, see \code{\link{predictGLM}}.
+#' New work should use \code{\link{predict20x}}, which handles \code{lm} and
+#' \code{glm} fits with one function. \code{predictCount()} always exponentiates,
+#' so for a logit-link model it returns odds, as
+#' \code{predict20x(type = "odds")} does.
 #'
 #' Note: \code{newdata} must be a data frame with the same column order and
 #' data types as those used in fitting the model. This stricter interface is kept
@@ -36,18 +36,11 @@ predictCount = function(object, newdata, cilevel = 0.95, digit = 3, print.out = 
   validatePredictionNewdata(newdata)
 
   newdata = alignPredictionNewdata(object, newdata)
-  predictions = predictGlmWithSe(object, newdata, ...)
-  intervalQuantile = glmTeachingIntervalQuantile(cilevel)
-  intervals = glmTeachingConfidenceIntervals(
-    fit = predictions$fit,
-    seFit = predictions$se.fit,
-    cilevel = cilevel,
-    quantile = intervalQuantile
-  )
+  predictions = glmTeachingPrediction(object, newdata, cilevel)
   predictionValues = exp(cbind(
     predicted = predictions$fit,
-    confLower = intervals$confLower,
-    confUpper = intervals$confUpper
+    confLower = predictions$confLower,
+    confUpper = predictions$confUpper
   ))
   predictionFrame = formatTeachingPredictionFrame(
     values = predictionValues,

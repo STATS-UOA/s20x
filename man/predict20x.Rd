@@ -2,55 +2,91 @@
 % Please edit documentation in R/predict20x.R
 \name{predict20x}
 \alias{predict20x}
-\title{Deprecated Teaching Predictions for a Linear Model}
+\alias{predict20x.default}
+\alias{predict20x.lm}
+\alias{predict20x.glm}
+\alias{predict20x.tslm}
+\title{Teaching Predictions with Confidence and Prediction Intervals}
 \usage{
-predict20x(object, newdata, cilevel = 0.95, digit = 3, print.out = TRUE, ...)
+predict20x(object, ...)
+
+\method{predict20x}{default}(object, ...)
+
+\method{predict20x}{lm}(
+  object,
+  newdata,
+  conf.level = 0.95,
+  digits = 3,
+  print.out = TRUE,
+  cilevel = conf.level,
+  ...
+)
+
+\method{predict20x}{glm}(
+  object,
+  newdata,
+  conf.level = 0.95,
+  digits = 3,
+  print.out = TRUE,
+  cilevel = conf.level,
+  type = c("response", "link", "odds"),
+  quasit = FALSE,
+  ...
+)
+
+\method{predict20x}{tslm}(object, newdata, ...)
 }
 \arguments{
-\item{object}{an \code{lm} object, i.e. the output from \code{lm}.}
+\item{object}{a fitted model, such as the output from \code{lm} or \code{glm}.}
+
+\item{\dots}{optional arguments that are passed to the model's prediction
+method, or for other methods to \code{predict20x()}.}
 
 \item{newdata}{prediction data frame.}
 
-\item{cilevel}{confidence level for the intervals.}
+\item{conf.level}{confidence level for the intervals.}
 
-\item{digit}{number of decimal places to print.}
+\item{digits}{number of decimal places to print.}
 
 \item{print.out}{if \code{TRUE}, print the prediction table.}
 
-\item{\dots}{optional arguments that are passed to \code{\link{predict.lm}}.}
+\item{cilevel}{the older name for \code{conf.level}.}
+
+\item{type}{for a \code{glm} fit, the scale of the results: \code{"response"}
+(the default), \code{"link"}, or \code{"odds"} for a logit-link model.}
+
+\item{quasit}{if \code{TRUE}, use a t multiplier rather than a normal
+multiplier when \code{object} is a quasi model.}
 }
 \value{
-Invisibly returns a list with components \describe{
-  \item{frame}{printed data frame containing predictions, confidence intervals,
-  and prediction intervals.}
-  \item{fit}{prediction values.}
+Invisibly returns an object of class \code{s20xPrediction}, which
+  prints as the prediction table. It is a list with components \describe{
+  \item{frame}{data frame containing the predictions and intervals.}
+  \item{fit}{prediction values, on the link scale for a \code{glm} fit.}
   \item{se.fit}{standard errors of predictions.}
-  \item{residual.scale}{residual standard deviation.}
-  \item{df}{residual degrees of freedom.}
+  \item{residual.scale}{residual standard deviation, for an \code{lm} fit.}
+  \item{df}{residual degrees of freedom, for an \code{lm} fit.}
+  \item{type}{the scale of the results, for a \code{glm} fit.}
   \item{cilevel}{confidence level of the interval.}
 }
 }
 \description{
-Teaching helper for linear-model predictions. It wraps
-\code{\link{predict.lm}} and prints a compact table containing fitted values,
-confidence intervals for the mean response, and prediction intervals for new
-observations.
+\code{predict20x()} gives predictions and intervals for a fitted model. It is
+an S3 generic, so the same function works for linear models, generalised
+linear models and \code{\link{tslm}} fits.
 }
 \details{
-This is not an S3 \code{predict()} method and is not intended to be a
-drop-in replacement for base R prediction methods. It is a compatibility
-helper for older teaching material that expects confidence and prediction
-intervals to be printed together. The standard \code{\link{predict}}
-interface is preferred for new work.
+For an \code{lm} fit the table holds fitted values, confidence intervals for
+the mean response, and prediction intervals for new observations. For a
+\code{glm} fit the intervals are confidence intervals, calculated on the link
+scale and then transformed according to \code{type}.
 
-Note: \code{newdata} must be a data frame with the same column order and
-data types as those used in fitting the model. This is stricter than the usual
-\code{predict.lm()} interface and is kept for compatibility with the original
-teaching wrapper.
-}
-\note{
-This function is deprecated because it is no longer used in class.
-  Prefer the standard \code{\link{predict}} method for new work.
+The columns of \code{newdata} are matched to the model variables by name when
+every variable is present. Otherwise they are taken in order, either one
+column per variable or one column per model term.
+
+This is not a method for \code{\link{predict}}, so it does not change what
+\code{predict()} does for these models.
 }
 \examples{
 
@@ -69,8 +105,13 @@ peru.fit = lm(BP ~ age + years + I(years^2) + weight + height, data = peru.df)
 pred.peru = data.frame(age = 21, years = 2, `I(years^2)` = 2, weight = 71, height = 1629)
 predict20x(peru.fit, pred.peru)
 
+# A generalised linear model: predictions on the response scale
+peru.glm = glm(BP ~ log(weight), data = peru.df, family = poisson)
+predict20x(peru.glm, data.frame(weight = c(60, 70)))
+predict20x(peru.glm, data.frame(weight = c(60, 70)), type = "link")
+
 }
 \seealso{
-\code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{as.data.frame}}.
+\code{\link{predict}}, \code{\link{predict.lm}}, \code{\link{predict.glm}}.
 }
 \keyword{htest}

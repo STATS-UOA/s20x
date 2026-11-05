@@ -36,7 +36,7 @@ Mazda.df <- mazda.df
 ```
 
 ```{r, out.width = "70%", fig.align = 'center', eval = FALSE}
-Mazda.df = read.table("mazda.txt", header = T)
+Mazda.df = read.table("mazda.txt", header = TRUE)
 head(Mazda.df)
 # We need to creates a new variable called age ourselves
 Mazda.df$age = 91 - Mazda.df$year

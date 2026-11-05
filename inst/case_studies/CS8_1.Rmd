@@ -29,7 +29,7 @@ load(system.file("extdata", "Stats20x.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "90%", fig.align = 'center', eval = FALSE}
-Stats20x.df = read.table("STATS20x.txt", header = T)
+Stats20x.df = read.table("STATS20x.txt", header = TRUE)
 plot(Exam ~ Test, data = Stats20x.df, pch = substr(Attend, 1, 1), cex = 0.7,
     col = ifelse(Attend == "Yes", "blue", "red"))
 ```

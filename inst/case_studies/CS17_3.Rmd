@@ -96,7 +96,7 @@ anova(logRentfit2.lm)
 
 
 
-```{r,fig.height=4,include=F}
+```{r,fig.height=4,include=FALSE}
 fit.lm2q=lm(logRent[-1]~time.pt[-1]+I(time.pt[-1]^2)+logRent[-n]+months[-1])
 summary(fit.lm2q)
 plot(fit.lm2q,which=1)
@@ -106,7 +106,7 @@ acf(resid(fit.lm2q))
 
 
 
-```{r,include=F}
+```{r,include=FALSE}
 #For purpose of predicting Dec 2015 rent
 c(time.pt[n],logRent[n])
 pred=exp(-28.604938+0.0076+time.pt[n]*0.01551+logRent[n]*0.571065)

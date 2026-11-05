@@ -149,10 +149,10 @@ Our model explains almost `r r2`% of the variation in language score. You should
 
 This will only make sense after Chapter 11:
 
-```{r, warning=F, message=F, echo=-1}
+```{r, warning=FALSE, message=FALSE, echo=-1}
 options(digits=4)
 require(emmeans)
-emmeans(teach.fit2, specs = pairwise ~ method, infer=T)$contrasts
+emmeans(teach.fit2, specs = pairwise ~ method, infer=TRUE)$contrasts
 
 #Compare to
 cbind(coef(summary(teach.fit2)),confint(teach.fit2))

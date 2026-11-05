@@ -42,7 +42,7 @@ load(system.file("extdata", "salary.df.rda", package = "s20x"))
 ```
 
 ```{r, out.width = "75%", fig.align = 'center', eval = FALSE}
-salary.df = read.table("salary.txt", header = T)
+salary.df = read.table("salary.txt", header = TRUE)
 salary.df$sx=factor(salary.df$sx)
 salary.df$dg=factor(salary.df$dg)
 salary.df$rk=factor(salary.df$rk)
