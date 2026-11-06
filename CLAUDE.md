@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this package is
 
-s20x is a CRAN teaching package for University of Auckland STATS 201/208 and BIOSCI 209. Large classes of mostly non-statistics majors use it, and lecture notes, labs and case studies depend on its exact output. The rule that overrides most others: **student-facing defaults, function names and printed output stay stable**. New behaviour is opt-in, deprecated names get `.Deprecated()` rather than abrupt removal, and changes are small and incremental. Do not reformat or redesign the package wholesale.
+s20x is a CRAN teaching package for University of Auckland STATS 201/208. Large classes of mostly non-statistics majors use it, and lecture notes, labs and case studies depend on its exact output. The rule that overrides most others: **student-facing defaults, function names and printed output stay stable**. New behaviour is opt-in, deprecated names get `.Deprecated()` rather than abrupt removal, and changes are small and incremental. Do not reformat or redesign the package wholesale.
 
 ## Legacy and future code
 

@@ -5,7 +5,7 @@ template:
 
 home:
   title: s20x
-  description: Functions and case studies for STATS 201, STATS 208 and BIOSCI 209 at the University of Auckland.
+  description: Functions and case studies for STATS 201 and STATS 208 at the University of Auckland.
 
 navbar:
   structure:
