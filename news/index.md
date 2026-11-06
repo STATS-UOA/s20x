@@ -2,6 +2,8 @@
 
 ## s20x 3.4.0
 
+CRAN release: 2026-11-05
+
 ### New features
 
 - predict20x() is now an S3 generic with methods for `lm`, `glm` and
