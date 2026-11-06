@@ -1,5 +1,5 @@
 ---
-title: "Case Study 14.3: STATS 201/8 Extra Case Study - Poisson GLM. Oneway ANOVA"
+title: "Case Study 14.3: STATS 201/8 Extra Case Study - Poisson GLM. One-way ANOVA"
 output:
   rmarkdown::html_document:
     self_contained: true
@@ -113,7 +113,7 @@ Residuals looked fine. The Residual deviance is much bigger than the residual de
 
 The final model is approximately
 \[ \log(\mu_i) = \beta_0 + \beta_1 \times maritalmarried_i + \beta_2 \times maritalnever_i  \]
-where $\mu_i$ is the mean number of e-mail sent by person $i$, $maritalmarried_i$ is 1 if person $i$ is married and 0 otherwise, similarly for $maritalnever_i$.  $Email_i$ has has an overdispersed distribution with underlying mean $\mu_i$. 
+where $\mu_i$ is the mean number of e-mail sent by person $i$, $maritalmarried_i$ is 1 if person $i$ is married and 0 otherwise, similarly for $maritalnever_i$.  $Email_i$ has an overdispersed distribution with underlying mean $\mu_i$. 
 
 **Note 1:** this is not a Poisson distribution in this case as we used a QuasiPoisson model.)
 

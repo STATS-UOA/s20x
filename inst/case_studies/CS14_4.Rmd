@@ -123,7 +123,7 @@ where $Count_i$ is the count of geoduck of age $i$ geoduck and has an overdisper
 
 We want to model the population of geoducks from the west coast of the North Island taking into account their age and an extreme storm event 10 years prior to the sample being taken.
 
-Both age and the storm event have a significant effect on expected count of geoduck. However, there was no evidence that the the relationship between age and the expected count of geoducks differed for geoducks born before and after the storm.
+Both age and the storm event have a significant effect on expected count of geoduck. However, there was no evidence that the relationship between age and the expected count of geoducks differed for geoducks born before and after the storm.
 
 For every year increase in age (notwithstanding the storm event), the expected count of geoduck decreases by between `r resultStr1[1]`.
 

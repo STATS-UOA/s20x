@@ -71,7 +71,7 @@ cf = 55 + confint(examNull.fit55)
 resultConf = paste0(sprintf("%.1f", cf[1]), " to ", sprintf("%.1f", cf[2]))
 ```
 
-### Finaly, with the t.test function
+### Finally, with the t.test function
 ```{r}
 t.test(Stats20x.df$Exam, mu = 55)
 ```

@@ -74,7 +74,7 @@ resultStr1 = paste0(sprintf("%.1f", abs(conf1$lower)), " and ", sprintf("%.1f", 
 
 
 ## Methods and Assumption Checks
-As the response variable, `Freq`, is a count, we have fitted a generalised linear model with a Poisson response distribution. We have two expanatory factors: `Locn` and `Reserve`. We initially fitted an interaction between reserve and location. The interaction term was not significant ($P$-value = 0.65) so the model was refitted with main effects only. Both factors were significant so were retained for the final model.
+As the response variable, `Freq`, is a count, we have fitted a generalised linear model with a Poisson response distribution. We have two explanatory factors: `Locn` and `Reserve`. We initially fitted an interaction between reserve and location. The interaction term was not significant ($P$-value = 0.65) so the model was refitted with main effects only. Both factors were significant so were retained for the final model.
 
 All assumptions were satisfied. There was no evidence of overdispersion, so we can trust the results from the Poisson model ($P$-value = 0.40).
 

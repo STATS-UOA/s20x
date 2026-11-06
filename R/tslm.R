@@ -36,7 +36,10 @@
 #'   of the model data is used.
 #' @param method fitting method passed to [nlme::gls()] for AR models. Defaults
 #'   to `"REML"`.
-#' @param ... additional arguments passed to [stats::lm()] or [nlme::gls()].
+#' @param subset optional expression choosing the observations to use, as for
+#'   [stats::lm()]. It is applied before the model is fitted.
+#' @param ... additional arguments passed to [stats::lm()] or [nlme::gls()], such
+#'   as `weights` for a model with independent errors.
 #'
 #' @return An object of class `tslm`, containing the original formula, the mean
 #'   formula fitted internally, the AR order, the time variable if supplied, and
@@ -59,7 +62,8 @@
 #' plot(fitAr, residualType = "response")
 #'
 #' @export
-#' @importFrom stats AIC BIC anova lm as.formula formula terms coef residuals fitted predict
+#' @importFrom stats AIC BIC anova confint lm as.formula formula terms coef residuals fitted predict qt
+#' @importFrom stats sigma
 #' @importFrom stats update
 #' @importFrom stats logLik model.frame nobs vcov
 #' @importFrom graphics abline par plot
@@ -68,7 +72,7 @@
 #' @importFrom utils packageVersion
 #' @importFrom methods is
 #' @seealso [stats::lm()], [nlme::gls()], [nlme::corARMA()]
-tslm = function(formula, data = parent.frame(), time, method = "REML", ...) {
+tslm = function(formula, data = parent.frame(), time, method = "REML", subset, ...) {
   if (missing(formula)) {
     stop("'formula' must be supplied", call. = FALSE)
   }
@@ -84,10 +88,27 @@ tslm = function(formula, data = parent.frame(), time, method = "REML", ...) {
   } else {
     captureOptionalName(substitute(time))
   }
-  modelData = makeTslmModelData(parsedFormula$meanFormula, data, timeName)
+  extraArguments = match.call(expand.dots = FALSE)$`...`
+  modelData = makeTslmModelData(
+    parsedFormula$meanFormula,
+    data,
+    timeName,
+    extraVars = unique(unlist(lapply(extraArguments, all.vars))),
+    subsetExpression = if (missing(subset)) {
+      NULL
+    } else {
+      substitute(subset)
+    }
+  )
 
   if (is.null(parsedFormula$errorSpec)) {
-    fit = lm(parsedFormula$meanFormula, data = modelData, ...)
+    ## lm() evaluates arguments such as weights by name, so they have to reach it
+    ## as they were written rather than through ...
+    lmCall = as.call(c(
+      list(quote(lm), formula = parsedFormula$meanFormula, data = quote(modelData)),
+      extraArguments
+    ))
+    fit = eval(lmCall, list(modelData = modelData), parent.frame())
     fit$call$formula = parsedFormula$meanFormula
     fit$call$data = dataCall
   } else {
@@ -150,15 +171,37 @@ tslm = function(formula, data = parent.frame(), time, method = "REML", ...) {
 #' @param meanFormula formula used for the mean model after removing `ar()`.
 #' @param data data frame or environment used to evaluate the model formula.
 #' @param timeName optional name of the time variable.
+#' @param extraVars optional names used by other arguments, such as `weights`.
+#'   Those that are not data variables are left out.
+#' @param subsetExpression optional unevaluated `subset` expression.
 #' @return A model frame containing the mean-model variables and, when supplied,
 #'   the time variable.
 #' @keywords internal
-makeTslmModelData = function(meanFormula, data, timeName = NULL) {
-  modelVars = all.vars(meanFormula)
+makeTslmModelData = function(meanFormula, data, timeName = NULL, extraVars = NULL,
+                             subsetExpression = NULL) {
+  formulaEnvironment = environment(meanFormula)
+
+  ## Constants such as pi can appear in a formula but are not columns of data.
+  modelVars = Filter(
+    function(name) {
+      !isTslmConstant(name, data, formulaEnvironment)
+    },
+    all.vars(meanFormula)
+  )
 
   if (!is.null(timeName) && !timeName %in% modelVars) {
     modelVars = c(modelVars, timeName)
   }
+
+  modelVars = union(
+    modelVars,
+    Filter(
+      function(name) {
+        isTslmDataVariable(name, data, formulaEnvironment)
+      },
+      extraVars
+    )
+  )
 
   if (length(modelVars) == 0L) {
     return(data.frame(.tslmIntercept = seq_len(nrow(model.frame(meanFormula, data = data)))))
@@ -169,8 +212,13 @@ makeTslmModelData = function(meanFormula, data, timeName = NULL) {
     env = environment(meanFormula)
   )
 
+  frameCall = call("model.frame", modelFrameFormula, data = quote(data))
+  if (!is.null(subsetExpression)) {
+    frameCall$subset = subsetExpression
+  }
+
   modelData = tryCatch(
-    model.frame(modelFrameFormula, data = data),
+    eval(frameCall),
     error = function(e) {
       if (!is.null(timeName)) {
         meanModelData = tryCatch(
@@ -197,6 +245,54 @@ makeTslmModelData = function(meanFormula, data, timeName = NULL) {
   )
 
   modelData
+}
+
+#' Look up a name used by a tslm formula
+#'
+#' @param name variable name.
+#' @param data data frame or environment used to evaluate the model formula.
+#' @param envir environment of the model formula.
+#' @return The value of `name`, or `NULL` if it cannot be found.
+#' @keywords internal
+getTslmVariableValue = function(name, data, envir) {
+  tryCatch(
+    eval(as.name(name), data, envir),
+    error = function(e) NULL
+  )
+}
+
+#' Check whether a formula name is a constant
+#'
+#' @param name variable name.
+#' @param data data frame or environment used to evaluate the model formula.
+#' @param envir environment of the model formula.
+#' @return `TRUE` when `name` is a single value that is not a column of `data`.
+#' @keywords internal
+isTslmConstant = function(name, data, envir) {
+  if (is.list(data) && name %in% names(data)) {
+    return(FALSE)
+  }
+
+  value = getTslmVariableValue(name, data, envir)
+
+  is.atomic(value) && length(value) == 1L
+}
+
+#' Check whether a name refers to data
+#'
+#' @param name variable name.
+#' @param data data frame or environment used to evaluate the model formula.
+#' @param envir environment of the model formula.
+#' @return `TRUE` when `name` is a column of `data` or a vector of values.
+#' @keywords internal
+isTslmDataVariable = function(name, data, envir) {
+  if (is.list(data) && name %in% names(data)) {
+    return(TRUE)
+  }
+
+  value = getTslmVariableValue(name, data, envir)
+
+  is.atomic(value) && length(value) > 1L
 }
 
 #' @export
@@ -455,6 +551,40 @@ model.frame.tslm = function(formula, ...) {
 #' @export
 vcov.tslm = function(object, ...) {
   vcov(object$fit, ...)
+}
+
+#' @export
+sigma.tslm = function(object, ...) {
+  sigma(object$fit, ...)
+}
+
+#' @export
+confint.tslm = function(object, parm, level = 0.95, ...) {
+  if (is.null(object$errorSpec)) {
+    return(confint(object$fit, parm, level = level, ...))
+  }
+
+  estimates = coef(object$fit)
+  standardErrors = sqrt(diag(vcov(object$fit)))
+
+  if (missing(parm)) {
+    parm = names(estimates)
+  } else if (is.numeric(parm)) {
+    parm = names(estimates)[parm]
+  }
+
+  tailProbability = (1 - level) / 2
+  multiplier = qt(1 - tailProbability, object$fit$dims$N - object$fit$dims$p)
+  limits = cbind(
+    estimates[parm] - multiplier * standardErrors[parm],
+    estimates[parm] + multiplier * standardErrors[parm]
+  )
+  dimnames(limits) = list(
+    parm,
+    paste(format(100 * c(tailProbability, 1 - tailProbability), trim = TRUE, digits = 3), "%")
+  )
+
+  limits
 }
 
 #' @export

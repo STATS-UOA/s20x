@@ -1,5 +1,5 @@
 ---
-title: "Case Study 12.4: STATS 201/8 Extra Case Study - Twoway ANOVA Model, Interaction"
+title: "Case Study 12.4: STATS 201/8 Extra Case Study - Two-way ANOVA Model, Interaction"
 output:
   rmarkdown::html_document:
     self_contained: true

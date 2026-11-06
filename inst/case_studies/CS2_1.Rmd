@@ -86,5 +86,5 @@ We were interested in building a model to predict exam mark from test mark.
 
 There was a significant linear relationship between test mark and exam mark (_P-value_ $\approx$ 0). We estimate that each additional test mark (out of 20) obtained by the student would increase their exam mark by between `r resultConf[1]` (out of 100) on average.
 
-For test marks of 0, 10 and 20, we predict exam marks (for individual students) between `r resultStr[1]`, `r resultStr[2]`, and `r resultStr[3]`, respectively. These intervals are very wide\footnote{Due to considerable variabilty remaining even after taking into account the test mark.} and some of these intervals have bounds that are outside of the feasible values of exam mark (0-100). The  model is not reliable for prediction.
+For test marks of 0, 10 and 20, we predict exam marks (for individual students) between `r resultStr[1]`, `r resultStr[2]`, and `r resultStr[3]`, respectively. These intervals are very wide\footnote{Due to considerable variability remaining even after taking into account the test mark.} and some of these intervals have bounds that are outside of the feasible values of exam mark (0-100). The  model is not reliable for prediction.
 

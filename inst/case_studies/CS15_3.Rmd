@@ -41,7 +41,7 @@ It was of interest to see how increasing APACHE II scores related to the mortali
 * Get intervals to predict the probability of a patient admitted to ICU dying with 30 days with APACHE II scores of 10, 20, 30 or 40.
 * Write appropriate **Methods and Assumption Checks**.
 *	Write sentences, as if for an **Executive Summary**, interpreting your four prediction intervals. 
-* Write sentences, as if for an **Executive Summary**, quantifying the effect of a 1 point and 5 point increase in APPACHE II scores.
+* Write sentences, as if for an **Executive Summary**, quantifying the effect of a 1 point and 5 point increase in APACHE II scores.
 * Superimpose the model onto the original plot of the data, including confidence interval limits.
 
 
@@ -152,7 +152,7 @@ We estimate that the probability that a patient who was admitted to ICU with sep
 
 - between `r resultStr1[4]` if their APACHE II score was 40.
 
-## Write sentences, as if for an Executive Summary, quantifying the effect of a 1 point and 5 point increase in APPACHE II scores.
+## Write sentences, as if for an Executive Summary, quantifying the effect of a 1 point and 5 point increase in APACHE II scores.
 
 We estimate an increase in a typical patients APACHE II score  by 1 point is associated  with increasing the odds of the patient dying in the next 30 days by between `r resultStr3[1]`. 
 

@@ -11,7 +11,8 @@
 #' customisation, and returns ggplot
 #' objects instead of drawing base graphics side effects.
 #'
-#' @param x The fitted model.
+#' @param x The fitted model. A \code{\link{tslm}} fit is accepted when it has
+#' independent errors; for AR errors use \code{plot()} on the fit instead.
 #' @param which The plot(s) to be drawn. Residuals versus fitted values
 #' (\code{which = 1}), histogram and Q-Q plot of residuals
 #' (\code{which = 2}), and Cook's distance plot (\code{which = 3}).
@@ -51,6 +52,19 @@
 #' @export
 modelcheck = function(x, ...) {
   UseMethod("modelcheck")
+}
+
+#' @rdname modelcheck
+#' @export
+modelcheck.tslm = function(x, ...) {
+  if (!is.null(x$errorSpec)) {
+    stop(
+      "modelcheck() needs a model with independent errors. Use plot() on a tslm fit with ar(p) errors.",
+      call. = FALSE
+    )
+  }
+
+  modelcheck(x$fit, ...)
 }
 
 #' @rdname modelcheck

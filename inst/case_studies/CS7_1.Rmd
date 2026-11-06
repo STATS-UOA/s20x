@@ -37,7 +37,7 @@ For a cylinder the volume is $V=\pi h r^{2}$ where $r$ is radius and $h$ is heig
 
 For a cone it is  $V=\frac{\pi}{3} h r^{2}$.
 
-In general, this correponds to the power law $V\propto h d^{2}$, where $d$ is diameter.
+In general, this corresponds to the power law $V\propto h d^{2}$, where $d$ is diameter.
 
 That is, $\log(V)=\beta_0+\log(h)+2*\log(d)$.
 
@@ -118,7 +118,7 @@ Our power law model explained 97.8% of the total variability in (log) volume.
 # Executive Summary
 The objective is to be able to estimate the volume of the tree from the measurement of its height and diameter. The postulated model was that cherry tree volume would follow a power law relationship with height and diameter. In particular, that volume would increase linearly with height, and with the square of diameter.
 
-Cherry tree volume was seen to follow a power law model with respect to both height and weight, and there was no evidence that these powers differ from the hypothesized values of 1 (_P-value = 0.57_) and 2 (_P-value = 0.82_), respectively. It would appear that our geometrical arguments were valid.
+Cherry tree volume was seen to follow a power law model with respect to both height and weight, and there was no evidence that these powers differ from the hypothesised values of 1 (_P-value = 0.57_) and 2 (_P-value = 0.82_), respectively. It would appear that our geometrical arguments were valid.
 
 We estimate that a 1% increase in height corresponds to an increase in median volume of between `r resultStr1[2]`, and a 1% increase in diameter corresponds to an increase in median volume of between `r resultStr1[3]`.
 

@@ -90,7 +90,7 @@ thyroid.fit2 = lm(thyroid ~ body + trt, data = thyroid.df)
 summary(thyroid.fit2)
 ```
 
-## Is `trt` really insignifcant?
+## Is `trt` really insignificant?
 ```{r RC-CS92-005, out.width = "75%", fig.align = 'center', eval=requireNamespace("ggplot2", quietly = TRUE)}
 b = coef(thyroid.fit2)
 # Note this won't work unless you have ggplot2 installed
@@ -109,7 +109,7 @@ thyroid.fit3 = lm(thyroid ~ body, data = thyroid.df)
 summary(thyroid.fit3)
 ```
 
-## Why was `trt` insignficant?
+## Why was `trt` insignificant?
 ```{r RC-CS92-007, out.width = "70%", fig.align = 'center'}
 plot(body ~ trt, data = thyroid.df, main = "", xlab = "Treatment", ylab = "Mouse weight")
 ```
@@ -117,7 +117,7 @@ plot(body ~ trt, data = thyroid.df, main = "", xlab = "Treatment", ylab = "Mouse
 We can see that heavier mice have heavier thyroids, and the mice in the drug group are heavier. 
 
 # Methods and Assumption Checks 
-The exploratory plots suggested to explain thyroid weight in mice, we first fitted the linear model with explanatory variables drug treatment and body weight, and their interaction. But, the interaction term was not significant (_P-value_ = 0.11). The model was refitted with the interaction term removed. However, treatment was not signficant (_P-value_ = 0.37), and was removed.
+The exploratory plots suggested to explain thyroid weight in mice, we first fitted the linear model with explanatory variables drug treatment and body weight, and their interaction. But, the interaction term was not significant (_P-value_ = 0.11). The model was refitted with the interaction term removed. However, treatment was not significant (_P-value_ = 0.37), and was removed.
 
 Mice were randomly allocated to groups and the measurements were done independently of each other. All other model assumptions were satisfied. (One potentially influential observation was investigated, however given its location and the stupidly small size of this data set (16 obs.) we will overlook it.)
 
@@ -141,8 +141,8 @@ In the future it may be best to put 2 mice into each of 8 weight classes and ran
 
 ## Bootstrapping
 
-We can bootstrap to avoid the normality assumption. The vertical line is where the coeffcient is zero. If it's towards the middle of the plot then that is evidence for the null---i.e. that there is no treatment effect. 
-```{r RC-CS92-008, out.width = "85%", fig.align = 'center', fig.width = 8, fig.height = 6}
+We can bootstrap to avoid the normality assumption. The vertical line is where the coefficient is zero. If it's towards the middle of the plot then that is evidence for the null---i.e. that there is no treatment effect. 
+```{r RC-CS92-008, out.width = "85%", fig.align = 'center', fig.width = 8, fig.height = 6, eval=requireNamespace("bootstrap", quietly = TRUE)}
 set.seed(234)
 library(bootstrap)
 theta = function(rows, data = thyroid.df) {

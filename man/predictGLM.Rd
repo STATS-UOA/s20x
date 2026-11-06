@@ -42,7 +42,11 @@ model. This simplified requirement reflects the teaching-wrapper interface
 and is not a complete reproduction of \code{predict.glm()}.
 }
 \note{
-Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead.
+Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead. Its
+  default scale is \code{"response"}, so use \code{type = "link"} to keep the
+  default here. It rounds to \code{digits} places, returns a list whose
+  \code{frame} component is the table of results, and prints that table unless
+  \code{print.out = FALSE}.
 }
 \seealso{
 \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.

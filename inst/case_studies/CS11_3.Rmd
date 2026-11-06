@@ -1,5 +1,5 @@
 ---
-title: "Case Study 11.3: STATS 201/8 Extra Case Study - Oneway ANOVA Model"
+title: "Case Study 11.3: STATS 201/8 Extra Case Study - One-way ANOVA Model"
 output:
   rmarkdown::html_document:
     self_contained: true
@@ -98,7 +98,7 @@ resultStr1 = paste0(sprintf("%.1f", abs(conf1$upper.CL)), " and ", sprintf("%.0f
 
 ## Methods and assumption checks
 
-As we have one explanatory variable which is a factor with five levels we have fitted a oneway ANOVA model to the data.
+As we have one explanatory variable which is a factor with five levels we have fitted a one-way ANOVA model to the data.
 
 One student's performance should not affect the performance of another, and the students are assigned randomly. There are differences in the within-group variability, but we have very small individual sample sizes. As we have equal sample sizes and there is no consistent pattern in the residuals (the variability does not increase with the average), the EOV assumptions should be valid. The residuals look approximately normal. There are no obvious influential points. We can therefore rely on the results from fitting this linear model.
 

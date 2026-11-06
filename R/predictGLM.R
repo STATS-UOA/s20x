@@ -25,7 +25,11 @@
 #' @return A data frame with columns \code{fit}, \code{lwr}, and \code{upr} containing
 #'   fitted values and confidence limits on the requested scale.
 #' @seealso \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictCount}}.
-#' @note Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead.
+#' @note Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead. Its
+#'   default scale is \code{"response"}, so use \code{type = "link"} to keep the
+#'   default here. It rounds to \code{digits} places, returns a list whose
+#'   \code{frame} component is the table of results, and prints that table unless
+#'   \code{print.out = FALSE}.
 #' @keywords htest
 #' @export predictGLM
 predictGLM = function(object,
@@ -34,7 +38,11 @@ predictGLM = function(object,
                       cilevel = 0.95,
                       quasit = FALSE,
                       ...) {
-  .Deprecated(msg = "predictGLM() is deprecated; use predict20x() instead.")
+  .Deprecated(msg = paste(
+    "predictGLM() is deprecated; use predict20x() instead.",
+    "Its default scale is \"response\", so add type = \"link\" to keep the default here.",
+    "It rounds to 3 places and returns a list, so use digits and $frame."
+  ))
 
   if (!inherits(object, "glm")) {
     stop("First input is not a \"glm\" object")

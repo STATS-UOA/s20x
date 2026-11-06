@@ -5,6 +5,7 @@
 \alias{predict20x.default}
 \alias{predict20x.lm}
 \alias{predict20x.glm}
+\alias{predict20x.gls}
 \alias{predict20x.tslm}
 \title{Teaching Predictions with Confidence and Prediction Intervals}
 \usage{
@@ -31,6 +32,16 @@ predict20x(object, ...)
   cilevel = conf.level,
   type = c("response", "link", "odds"),
   quasit = FALSE,
+  ...
+)
+
+\method{predict20x}{gls}(
+  object,
+  newdata,
+  conf.level = 0.95,
+  digits = 3,
+  print.out = TRUE,
+  cilevel = conf.level,
   ...
 )
 
@@ -64,8 +75,9 @@ Invisibly returns an object of class \code{s20xPrediction}, which
   \item{frame}{data frame containing the predictions and intervals.}
   \item{fit}{prediction values, on the link scale for a \code{glm} fit.}
   \item{se.fit}{standard errors of predictions.}
-  \item{residual.scale}{residual standard deviation, for an \code{lm} fit.}
-  \item{df}{residual degrees of freedom, for an \code{lm} fit.}
+  \item{residual.scale}{residual standard deviation, for an \code{lm} or
+    \code{gls} fit.}
+  \item{df}{residual degrees of freedom, for an \code{lm} or \code{gls} fit.}
   \item{type}{the scale of the results, for a \code{glm} fit.}
   \item{cilevel}{confidence level of the interval.}
 }
@@ -73,13 +85,20 @@ Invisibly returns an object of class \code{s20xPrediction}, which
 \description{
 \code{predict20x()} gives predictions and intervals for a fitted model. It is
 an S3 generic, so the same function works for linear models, generalised
-linear models and \code{\link{tslm}} fits.
+linear models, \code{\link[nlme]{gls}} models and \code{\link{tslm}} fits.
 }
 \details{
 For an \code{lm} fit the table holds fitted values, confidence intervals for
 the mean response, and prediction intervals for new observations. For a
 \code{glm} fit the intervals are confidence intervals, calculated on the link
 scale and then transformed according to \code{type}.
+
+For a \code{gls} fit the table has the same columns as for an \code{lm} fit.
+Standard errors come from the estimated covariance matrix of the coefficients,
+and the prediction intervals add the residual variance. They do not use the
+most recent residuals, so forecasts from a model with correlated errors follow
+the fitted mean. A variance model given through \code{weights} is ignored, and
+a warning says so.
 
 The columns of \code{newdata} are matched to the model variables by name when
 every variable is present. Otherwise they are taken in order, either one
@@ -109,6 +128,12 @@ predict20x(peru.fit, pred.peru)
 peru.glm = glm(BP ~ log(weight), data = peru.df, family = poisson)
 predict20x(peru.glm, data.frame(weight = c(60, 70)))
 predict20x(peru.glm, data.frame(weight = c(60, 70)), type = "link")
+
+# A regression with autocorrelated errors
+data(airpass.df)
+pass.gls = nlme::gls(log(passengers) ~ t + month + I(t^2),
+                     correlation = nlme::corAR1(), data = airpass.df)
+predict20x(pass.gls, data.frame(t = 145, month = "Jan"))
 
 }
 \seealso{

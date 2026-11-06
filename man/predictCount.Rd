@@ -44,7 +44,8 @@ for compatibility with the original teaching wrapper.
 }
 \note{
 Deprecated in s20x 3.4.0. Use \code{\link{predict20x}} instead, with
-  \code{type = "odds"} for the odds from a logit-link model.
+  \code{type = "odds"} to keep this scale for a logit model. It returns a list,
+  and the table of results is its \code{frame} component.
 }
 \seealso{
 \code{\link{predict}}, \code{\link{predict.glm}}, \code{\link{predictGLM}}, \code{\link{as.data.frame}}.

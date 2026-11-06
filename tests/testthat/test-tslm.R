@@ -565,3 +565,120 @@ test_that("tslm predict matches the underlying model", {
 
   expect_equal(predict(fit, newdata), predict(lmFit, newdata))
 })
+
+test_that("confint matches lm for tslm fits with independent errors", {
+  data("beer.df", package = "s20x", envir = environment())
+  shortBeer = beer.df[1:12, ]
+  fit = tslm(beer ~ t, data = shortBeer)
+  lmFit = lm(beer ~ t, data = shortBeer)
+
+  expect_equal(confint(fit), confint(lmFit))
+  expect_equal(confint(fit, "t", level = 0.9), confint(lmFit, "t", level = 0.9))
+})
+
+test_that("confint uses t multipliers for tslm fits with AR errors", {
+  data("beer.df", package = "s20x", envir = environment())
+  fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
+  intervalTable = intervals(fit$fit, which = "coef")$coef
+
+  limits = confint(fit)
+
+  expect_equal(unname(limits[, 1]), unname(intervalTable[, "lower"]), tolerance = 1e-6)
+  expect_equal(unname(limits[, 2]), unname(intervalTable[, "upper"]), tolerance = 1e-6)
+  expect_identical(colnames(limits), c("2.5 %", "97.5 %"))
+  expect_identical(rownames(confint(fit, 2)), "t")
+  expect_identical(rownames(confint(fit, "t")), "t")
+})
+
+test_that("sigma forwards to the underlying tslm fit", {
+  data("beer.df", package = "s20x", envir = environment())
+
+  expect_equal(sigma(tslm(beer ~ t, data = beer.df)), sigma(lm(beer ~ t, data = beer.df)))
+  arFit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
+  expect_equal(sigma(arFit), arFit$fit$sigma)
+})
+
+test_that("tslm accepts constants in formulas", {
+  data("beer.df", package = "s20x", envir = environment())
+
+  harmonic = tslm(beer ~ t + sin(2 * pi * t / 12), data = beer.df)
+  expect_equal(coef(harmonic), coef(lm(beer ~ t + sin(2 * pi * t / 12), data = beer.df)))
+
+  arHarmonic = tslm(beer ~ t + sin(2 * pi * t / 12) + ar(1), data = beer.df, time = t)
+  expect_length(coef(arHarmonic), 3)
+
+  breakPoint = 10
+  stepFit = tslm(beer ~ I(t > breakPoint), data = beer.df)
+  expect_equal(coef(stepFit), coef(lm(beer ~ I(t > breakPoint), data = beer.df)))
+})
+
+test_that("tslm uses a data column that shares a name with a constant", {
+  data("beer.df", package = "s20x", envir = environment())
+  shifted.df = beer.df
+  shifted.df$pi = shifted.df$t + 1
+
+  expect_equal(
+    coef(tslm(beer ~ pi, data = shifted.df)),
+    coef(lm(beer ~ pi, data = shifted.df))
+  )
+})
+
+test_that("tslm passes weights to lm", {
+  data("beer.df", package = "s20x", envir = environment())
+  weighted.df = beer.df
+  weighted.df$w = weighted.df$t
+
+  fromColumn = tslm(beer ~ t, data = weighted.df, weights = w)
+  fromExpression = tslm(beer ~ t, data = weighted.df, weights = 1 / t)
+
+  expect_equal(coef(fromColumn), coef(lm(beer ~ t, data = weighted.df, weights = w)))
+  expect_equal(coef(fromExpression), coef(lm(beer ~ t, data = weighted.df, weights = 1 / t)))
+})
+
+test_that("tslm applies subset as lm does", {
+  data("beer.df", package = "s20x", envir = environment())
+
+  logicalSubset = tslm(beer ~ t, data = beer.df, subset = t > 10)
+  dropRows = tslm(beer ~ t, data = beer.df, subset = -c(1, 2))
+
+  expect_equal(coef(logicalSubset), coef(lm(beer ~ t, data = beer.df, subset = t > 10)))
+  expect_equal(coef(dropRows), coef(lm(beer ~ t, data = beer.df, subset = -c(1, 2))))
+  expect_equal(nobs(dropRows), nrow(beer.df) - 2)
+})
+
+test_that("tslm applies subset to AR models and keeps diagnostics aligned", {
+  data("beer.df", package = "s20x", envir = environment())
+  fit = tslm(beer ~ t + ar(1), data = beer.df, time = t, subset = t > 10)
+  direct = tslm(beer ~ t + ar(1), data = beer.df[beer.df$t > 10, ], time = t)
+
+  expect_equal(coef(fit), coef(direct))
+  expect_equal(nobs(fit), sum(beer.df$t > 10))
+
+  pdf(NULL)
+  on.exit(dev.off())
+  expect_silent(plot(fit))
+})
+
+test_that("normcheck labels tslm histograms with the model", {
+  data("beer.df", package = "s20x", envir = environment())
+  fit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
+
+  expect_identical(
+    normcheck(fit, engine = "ggplot2")$histogram$labels$x,
+    "Residuals from tslm(beer ~ t)"
+  )
+})
+
+test_that("eovcheck and modelcheck accept tslm fits", {
+  data("beer.df", package = "s20x", envir = environment())
+  plainFit = tslm(beer ~ t, data = beer.df)
+  arFit = tslm(beer ~ t + ar(1), data = beer.df, time = t)
+
+  expect_s3_class(eovcheck(plainFit, engine = "ggplot2"), "ggplot")
+  expect_equal(
+    eovcheck(arFit, engine = "ggplot2")$data$residuals,
+    as.numeric(residuals(arFit, type = "normalised"))
+  )
+  expect_s3_class(modelcheck(plainFit, engine = "ggplot2"), "s20xModelcheck_ggplot2")
+  expect_error(modelcheck(arFit), "independent errors")
+})

@@ -22,7 +22,7 @@ The question of interest is "How much money do students spend on clothing on ave
 
 The variables of interest are:
 
-* `clothes`: The student's estimated estimated monthly expenditure on clothing.
+* `clothes`: The student's estimated monthly expenditure on clothing.
 
 ## Question of Interest
 How much money do students spend on clothing on average?
@@ -87,7 +87,7 @@ quantile(m, c(0.025, 0.975))
 
 Well that's better, but is it? This is our distribution of bootstrapped medians.
 
-```{r, out.width = "70%", fig.align = 'center'}
+```{r, out.width = "70%", fig.align = 'center', eval=requireNamespace("bootstrap", quietly = TRUE)}
 hist(m)
 ```
 
@@ -124,4 +124,4 @@ abline(v = geomean(clothes.df$clothes), col = "green")
 abline(v = median(clothes.df$clothes), col = "purple", lwd = 2)
 ```
 
-The geometric mean seems more appropriate here. So this example emphasizes that we really need the data to be *normal* on the log-scale for this approximate inference to work. Note that it works for the geometric mean regardless, but this is not examinable in this course.
+The geometric mean seems more appropriate here. So this example emphasises that we really need the data to be *normal* on the log-scale for this approximate inference to work. Note that it works for the geometric mean regardless, but this is not examinable in this course.

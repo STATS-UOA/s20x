@@ -56,7 +56,7 @@ load(system.file("extdata", "dallas.df.rda", package = "s20x"))
 dallas.df = read.csv("Dallas.csv", header = TRUE, stringsAsFactors = TRUE)
 
 plot(cholestrol ~ age,
-  data = dallas.df, main = "Cholestrol by Age",
+  data = dallas.df, main = "Cholesterol by Age",
   col = ifelse(genotype == "aa", "red", "blue"),
   pch = ifelse(genotype == "aa", 1, 2)
 )
@@ -65,7 +65,7 @@ legend('topleft', c("aa", "Aa"), col = c("red", "blue"), pch = c(1, 2))
 
 ```{r,fig.height=4.5,fig.width=7, echo=FALSE}
 plot(cholestrol ~ age,
-  data = dallas.df, main = "Cholestrol by Age",
+  data = dallas.df, main = "Cholesterol by Age",
   col = ifelse(genotype == "aa", "red", "blue"),
   pch = ifelse(genotype == "aa", 1, 2)
 )
@@ -104,7 +104,7 @@ resultStr2 = paste0(sprintf("%.1f", conf2$`97.5 %`), " and ", sprintf("%.1f", co
 ## Plot the data with your appropriate model superimposed over it
 ```{r,fig.height=4.5,fig.width=6}
 plot(cholestrol ~ age,
-  data = dallas.df, main = "Cholestrol by Age",
+  data = dallas.df, main = "Cholesterol by Age",
   col = ifelse(genotype == "aa", "red", "blue"),
   pch = ifelse(genotype == "aa", 1, 2)
 )

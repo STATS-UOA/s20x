@@ -91,7 +91,7 @@ cooks20x(salary.fit4)
 exp(confint(salary.fit4))
 ```
 
-## Get `log.yr` Effect for Doubling of Time at Current Rrank
+## Get `log.yr` Effect for Doubling of Time at Current Rank
 ```{r}
 2^confint(salary.fit4)[4, ]
 ```

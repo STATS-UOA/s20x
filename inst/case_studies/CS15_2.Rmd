@@ -101,7 +101,7 @@ resultStr3 = paste0(sprintf("%.0f%%", abs(conf3$asymp.LCL)), " and ", sprintf("%
 ```
 # Methods and Assumption Checks
 
-We fitted a logistic regression using a Binomial GLM to investigate the relationship between whio chick survival and two categorical predicators: Region, specifying which of three regions each record corresponded to; and Flood, specifying whether or not the region was affected by floods for each record.
+We fitted a logistic regression using a Binomial GLM to investigate the relationship between whio chick survival and two categorical predictors: Region, specifying which of three regions each record corresponded to; and Flood, specifying whether or not the region was affected by floods for each record.
 
 We initially fitted the model with an interaction between the two categorical predictors. The test for overdispersion was significant so we refitted the model using the quasibinomial family. Having corrected for overdispersion, the interaction term was non-significant so it was dropped from the model. Refitting the model with main effects only, the Flood variable was non-significant so it was also dropped. The final model involved just the single predictor, Region.
 

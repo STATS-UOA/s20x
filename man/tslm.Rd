@@ -4,7 +4,7 @@
 \alias{tslm}
 \title{Fit a linear model with optional autoregressive errors}
 \usage{
-tslm(formula, data = parent.frame(), time, method = "REML", ...)
+tslm(formula, data = parent.frame(), time, method = "REML", subset, ...)
 }
 \arguments{
 \item{formula}{a model formula. Use `ar(p)` in the right hand side to specify
@@ -20,7 +20,11 @@ of the model data is used.}
 \item{method}{fitting method passed to [nlme::gls()] for AR models. Defaults
 to `"REML"`.}
 
-\item{...}{additional arguments passed to [stats::lm()] or [nlme::gls()].}
+\item{subset}{optional expression choosing the observations to use, as for
+[stats::lm()]. It is applied before the model is fitted.}
+
+\item{...}{additional arguments passed to [stats::lm()] or [nlme::gls()], such
+as `weights` for a model with independent errors.}
 }
 \value{
 An object of class `tslm`, containing the original formula, the mean

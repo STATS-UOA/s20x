@@ -2,10 +2,13 @@
 % Please edit documentation in R/modelcheck.R
 \name{modelcheck}
 \alias{modelcheck}
+\alias{modelcheck.tslm}
 \alias{modelcheck.lm}
 \title{Model checking plots}
 \usage{
 modelcheck(x, ...)
+
+\method{modelcheck}{tslm}(x, ...)
 
 \method{modelcheck}{lm}(
   x,
@@ -16,7 +19,8 @@ modelcheck(x, ...)
 )
 }
 \arguments{
-\item{x}{The fitted model.}
+\item{x}{The fitted model. A \code{\link{tslm}} fit is accepted when it has
+independent errors; for AR errors use \code{plot()} on the fit instead.}
 
 \item{which}{The plot(s) to be drawn. Residuals versus fitted values
 (\code{which = 1}), histogram and Q-Q plot of residuals

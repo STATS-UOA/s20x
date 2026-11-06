@@ -141,9 +141,9 @@ resultStr6 = paste0(sprintf("%.2f", conf6$`97.5 %`), " to ", sprintf("%.2f", con
 # Method and Assumption Checks 
 Looking at the pairs plot, we saw that birthweight was related to a number of our explanatory variables. We will construct a multiple linear regression model with a suitable selection of the explanatory variables.
 
-Observations 239 and 820 were found to be highly influential. They were deemed to be anomolous and were removed from the dataset. 
+Observations 239 and 820 were found to be highly influential. They were deemed to be anomalous and were removed from the dataset. 
 
-The hockey stick relationship between gestational age and birthweight required allowing the age effect to differ depending on whether the baby was overdue, and was fitted by including an interaction term between age and overdue status. Moreover, we also decided to include body mass weight as an explanatory variable, but had to remore weight as an explanatory due to multicollinearity. All model assumptions were satisfied by our final model.
+The hockey stick relationship between gestational age and birthweight required allowing the age effect to differ depending on whether the baby was overdue, and was fitted by including an interaction term between age and overdue status. Moreover, we also decided to include body mass weight as an explanatory variable, but had to remove weight as an explanatory due to multicollinearity. All model assumptions were satisfied by our final model.
 
 Using forward model selection (i.e., adding the most promising explanatory variables in turn), our final model is
 \begin{align*}
@@ -157,11 +157,11 @@ Our model only explains about 31% of the variability in a baby's birthweight.
 # Executive Summary.
 We wanted to build a model to explain the birth weight of babies.
 
-Keeping all other varaiables constant:
+Keeping all other variables constant:
 
 * A child has a higher expected birth-weight the longer its gestation time --- up to a 42 weeks --- then it starts decreasing in size the longer it stays unborn. We estimated an expected increase of `r resultStr1[1]` ounces per gestation day. After 42 weeks this will decrease by about `r resultStr2[1]` ounces per gestational day [NOTE: it might have been better had we changed the OD baseline].
 * We estimated that for each additional inch of mother's height the baby's birthweight increases by `r resultStr3[1]` ounces, on average.
-* We estimated that for each unit change in a mothers BMI the baby'sb irthweight increases by `r resultStr4[1]` ounces, on average.
+* We estimated that for each unit change in a mother's BMI the baby's birthweight increases by `r resultStr4[1]` ounces, on average.
 * If the mother smokes this reduces the baby's birthweight by `r resultStr5[1]` ounces, on average.
 * Not being first born seems to reduce the baby's birthweight by `r resultStr6[1]` ounces, on average.
 

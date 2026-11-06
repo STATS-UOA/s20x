@@ -122,6 +122,6 @@ Using our model, we predict that the 0.3-carat diamond ring will be priced betwe
 Our data only has diamond rings weighing up to 0.35 carats, so we cannot rely on the predictions for the 1.2-carat ring.
 \bigskip
 
-[Note: the range of the orignal data was around 900 dollars, this has been reduced to around 130 dollars which is roughly 15% of this and much more useful for prediction.]
+[Note: the range of the original data was around 900 dollars, this has been reduced to around 130 dollars which is roughly 15% of this and much more useful for prediction.]
 
 

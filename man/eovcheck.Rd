@@ -2,11 +2,27 @@
 % Please edit documentation in R/eovcheck.R
 \name{eovcheck}
 \alias{eovcheck}
+\alias{eovcheck.gls}
+\alias{eovcheck.tslm}
 \alias{eovcheck.formula}
 \alias{eovcheck.lm}
 \title{Testing for equality of variance plot}
 \usage{
 eovcheck(x, ...)
+
+\method{eovcheck}{gls}(
+  x,
+  smoother = FALSE,
+  twosd = FALSE,
+  residualType = "normalised",
+  engine = c("base", "ggplot2"),
+  xlab = "Fitted values",
+  ylab = NULL,
+  col = NULL,
+  ...
+)
+
+\method{eovcheck}{tslm}(x, ...)
 
 \method{eovcheck}{formula}(
   x,
@@ -30,12 +46,22 @@ eovcheck(x, ...)
 }
 \arguments{
 \item{x}{A linear model formula. Alternatively, a fitted lm object from
-a linear model.}
+a linear model, a \code{\link[nlme]{gls}} fit, or a \code{\link{tslm}} fit.}
 
 \item{\dots}{Optional arguments passed to the base plotting engine. Extra
 arguments are currently ignored by the ggplot2 engine.}
 
-\item{data}{A data frame in which to evaluate the formula.}
+\item{smoother}{if TRUE then a smoothed lowess line will be added to the
+plot}
+
+\item{twosd}{if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd}
+
+\item{residualType}{for \code{gls} and \code{tslm} fits, the residuals to plot:
+\code{"normalised"} (the default), \code{"response"} or \code{"pearson"}.}
+
+\item{engine}{plotting engine to use. The default, \code{"base"}, preserves
+the original base graphics output. Use \code{"ggplot2"} for a
+ggplot2 object.}
 
 \item{xlab}{a title for the x axis: see \code{\link{title}}.}
 
@@ -43,14 +69,7 @@ arguments are currently ignored by the ggplot2 engine.}
 
 \item{col}{a colour for the lowess smoother line.}
 
-\item{smoother}{if TRUE then a smoothed lowess line will be added to the
-plot}
-
-\item{twosd}{if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd}
-
-\item{engine}{plotting engine to use. The default, \code{"base"}, preserves
-the original base graphics output. Use \code{"ggplot2"} for a
-ggplot2 object.}
+\item{data}{A data frame in which to evaluate the formula.}
 }
 \value{
 Draws the residual-versus-fitted diagnostic plot when using the base
@@ -72,6 +91,11 @@ draws directly on the active graphics device. The ggplot2 engine is
 intended for users who want a reusable plot object for reports or further
 customisation, and returns a ggplot
 object instead of drawing a base graphics side effect.
+
+For \code{gls} and \code{tslm} models with correlated errors, the default
+residuals are the normalised residuals, because these account for the fitted
+correlation structure. Their standard deviation is about 1, so the
+\code{twosd} lines are then drawn at +/-2.
 }
 \examples{
 

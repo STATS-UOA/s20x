@@ -15,8 +15,13 @@
 #' customisation, and returns a ggplot
 #' object instead of drawing a base graphics side effect.
 #'
+#' For \code{gls} and \code{tslm} models with correlated errors, the default
+#' residuals are the normalised residuals, because these account for the fitted
+#' correlation structure. Their standard deviation is about 1, so the
+#' \code{twosd} lines are then drawn at +/-2.
+#'
 #' @param x A linear model formula. Alternatively, a fitted lm object from
-#' a linear model.
+#' a linear model, a \code{\link[nlme]{gls}} fit, or a \code{\link{tslm}} fit.
 #' @param data A data frame in which to evaluate the formula.
 #' @param xlab a title for the x axis: see \code{\link{title}}.
 #' @param ylab a title for the y axis: see \code{\link{title}}.
@@ -24,6 +29,8 @@
 #' @param smoother if TRUE then a smoothed lowess line will be added to the
 #' plot
 #' @param twosd if \code{TRUE} then horizontal dotted lines will be drawn at +/-2sd
+#' @param residualType for \code{gls} and \code{tslm} fits, the residuals to plot:
+#' \code{"normalised"} (the default), \code{"response"} or \code{"pearson"}.
 #' @param engine plotting engine to use. The default, \code{"base"}, preserves
 #' the original base graphics output. Use \code{"ggplot2"} for a
 #' ggplot2 object.
@@ -81,6 +88,52 @@
 #' @export eovcheck
 eovcheck = function(x, ...) {
   UseMethod("eovcheck")
+}
+
+#' @rdname eovcheck
+#' @export
+eovcheck.gls = function(x, smoother = FALSE, twosd = FALSE, residualType = "normalised",
+                        engine = c("base", "ggplot2"), xlab = "Fitted values", ylab = NULL,
+                        col = NULL, ...) {
+  engine = matchPlottingEngine(engine)
+  residualType = matchTslmResidualType(residualType)
+
+  diagnosticData = getModelResidualFittedData(
+    x,
+    residualType = residualType,
+    context = "gls model"
+  )
+
+  drawEovcheck(
+    diagnosticInfo = list(
+      twoSdScale = if (residualType == "response") {
+        sigma(x)
+      } else {
+        1
+      },
+      diagnosticData = list(
+        fitted = as.numeric(diagnosticData$fitted),
+        residuals = as.numeric(diagnosticData$residuals)
+      )
+    ),
+    xlab = xlab,
+    ylab = if (is.null(ylab)) {
+      paste(formatTslmResidualTypeLabel(residualType), "residuals")
+    } else {
+      ylab
+    },
+    col = col,
+    smoother = smoother,
+    twosd = twosd,
+    engine = engine,
+    ...
+  )
+}
+
+#' @rdname eovcheck
+#' @export
+eovcheck.tslm = function(x, ...) {
+  eovcheck(x$fit, ...)
 }
 
 #' @rdname eovcheck
@@ -192,10 +245,35 @@ eovcheckFromFit = function(fit, m,
 
   diagnosticData = getModelResidualFittedData(fit, context = "equality-of-variance model")
   diagnosticInfo = list(
-    fit = fit,
+    twoSdScale = sigma(fit),
     diagnosticData = diagnosticData
   )
 
+  drawEovcheck(
+    diagnosticInfo = diagnosticInfo,
+    xlab = xlab,
+    ylab = ylab,
+    col = col,
+    smoother = smoother,
+    twosd = twosd,
+    engine = engine,
+    ...
+  )
+}
+
+#' Draw an equality-of-variance diagnostic with the selected engine
+#'
+#' @param diagnosticInfo reference-line scale and diagnostic data.
+#' @param xlab x-axis label.
+#' @param ylab y-axis label.
+#' @param col smoother line colour.
+#' @param smoother whether to draw a lowess smoother.
+#' @param twosd whether to draw +/- 2 sigma reference lines.
+#' @param engine matched plotting engine.
+#' @param \dots arguments passed to the base graphics engine.
+#' @return The value of the selected plotting engine.
+#' @noRd
+drawEovcheck = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, engine, ...) {
   if (engine == "ggplot2") {
     return(eovcheck_ggplot2(
       diagnosticInfo = diagnosticInfo,
@@ -220,7 +298,7 @@ eovcheckFromFit = function(fit, m,
 
 #' Draw an equality-of-variance diagnostic using base graphics
 #'
-#' @param diagnosticInfo fitted model and diagnostic data.
+#' @param diagnosticInfo reference-line scale and diagnostic data.
 #' @param xlab x-axis label.
 #' @param ylab y-axis label.
 #' @param col smoother line colour.
@@ -249,14 +327,13 @@ eovcheckBase = function(diagnosticInfo, xlab, ylab, col, smoother, twosd, ...) {
   }
 
   if (twosd) {
-    sigma = sigma(diagnosticInfo$fit)
-    abline(h = c(-2, 2) * sigma, lty = 3, col = "grey", lwd = 2)
+    abline(h = c(-2, 2) * diagnosticInfo$twoSdScale, lty = 3, col = "grey", lwd = 2)
   }
 }
 
 #' Build an equality-of-variance diagnostic using ggplot2
 #'
-#' @param diagnosticInfo fitted model and diagnostic data.
+#' @param diagnosticInfo reference-line scale and diagnostic data.
 #' @param xlab x-axis label.
 #' @param ylab y-axis label.
 #' @param col smoother line colour.
@@ -275,11 +352,9 @@ eovcheck_ggplot2 = function(diagnosticInfo, xlab, ylab, col, smoother, twosd) {
   yRange = range(plotData$residuals, finite = TRUE)
 
   if (twosd) {
-    sigma = sigma(diagnosticInfo$fit)
-    twoSdValues = c(-2, 2) * sigma
+    twoSdValues = c(-2, 2) * diagnosticInfo$twoSdScale
     yRange = range(c(yRange, twoSdValues), finite = TRUE)
   } else {
-    sigma = NULL
     twoSdValues = NULL
   }
 

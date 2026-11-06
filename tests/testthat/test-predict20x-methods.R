@@ -155,3 +155,104 @@ test_that("summary functions accept both digit and digits", {
   expect_equal(oldName, newName)
   expect_equal(oldName$`Mean Sq`, round(anova(fit)$`Mean Sq`, 2))
 })
+
+test_that("predict20x gives gls fits the lm table and interval formulas", {
+  data("airpass.df", package = "s20x", envir = environment())
+  fit = gls(
+    log(passengers) ~ t + month + I(t^2),
+    correlation = corARMA(p = 1, q = 0),
+    data = airpass.df
+  )
+  newdata = data.frame(
+    t = 145:146,
+    month = factor(c("Jan", "Feb"), levels = levels(airpass.df$month))
+  )
+
+  result = predict20x(fit, newdata, print.out = FALSE, digits = 8)
+
+  expect_s3_class(result, "s20xPrediction")
+  expect_named(
+    result$frame,
+    c("Predicted", " Conf.lower", "Conf.upper", " Pred.lower", " Pred.upper")
+  )
+  expect_equal(unname(result$fit), as.numeric(predict(fit, newdata)))
+
+  designMatrix = cbind(1, newdata$t, sapply(levels(newdata$month)[-1], function(level) {
+    as.numeric(newdata$month == level)
+  }), newdata$t^2)
+  expectedSe = sqrt(rowSums((designMatrix %*% vcov(fit)) * designMatrix))
+  expect_equal(unname(result$se.fit), expectedSe)
+
+  multiplier = qt(0.975, nrow(airpass.df) - length(coef(fit)))
+  predictionSe = sqrt(expectedSe^2 + fit$sigma^2)
+  expect_equal(
+    result$frame[[" Pred.upper"]],
+    unname(result$fit) + multiplier * predictionSe,
+    tolerance = 1e-6
+  )
+  expect_equal(
+    result$frame[[" Conf.lower"]],
+    unname(result$fit) - multiplier * expectedSe,
+    tolerance = 1e-6
+  )
+})
+
+test_that("predict20x accepts character factor levels for gls fits", {
+  data("airpass.df", package = "s20x", envir = environment())
+  fit = gls(log(passengers) ~ t + month, correlation = corARMA(p = 1, q = 0), data = airpass.df)
+
+  fromCharacter = predict20x(fit, data.frame(t = 145, month = "Mar"), print.out = FALSE)
+  fromFactor = predict20x(
+    fit,
+    data.frame(t = 145, month = factor("Mar", levels = levels(airpass.df$month))),
+    print.out = FALSE
+  )
+
+  expect_equal(fromCharacter$frame, fromFactor$frame)
+})
+
+test_that("predict20x handles poly() and fits from a character variable in gls", {
+  data("airpass.df", package = "s20x", envir = environment())
+  passengers.df = airpass.df
+  passengers.df$monthName = as.character(passengers.df$month)
+  lmFit = lm(log(passengers) ~ poly(t, 2) + monthName, data = passengers.df)
+  glsFit = gls(log(passengers) ~ poly(t, 2) + monthName, data = passengers.df)
+  newdata = data.frame(t = 145, monthName = "Jan")
+
+  expect_equal(
+    predict20x(glsFit, newdata, print.out = FALSE)$frame,
+    predict20x(lmFit, newdata, print.out = FALSE)$frame
+  )
+})
+
+test_that("predict20x warns that a gls variance model is ignored", {
+  library(nlme)
+  data("airpass.df", package = "s20x", envir = environment())
+  fit = gls(log(passengers) ~ t, weights = varPower(), data = airpass.df)
+
+  expect_warning(
+    predict20x(fit, data.frame(t = 145), print.out = FALSE),
+    "ignores the variance model"
+  )
+})
+
+test_that("predict20x results convert to the prediction table", {
+  data("peru.df", package = "s20x", envir = environment())
+  newdata = data.frame(weight = c(60, 70))
+  result = predict20x(lm(BP ~ weight, data = peru.df), newdata, print.out = FALSE)
+
+  expect_identical(as.data.frame(result), result$frame)
+  expect_identical(rownames(as.data.frame(result, row.names = c("a", "b"))), c("a", "b"))
+  expect_equal(dim(cbind(newdata, result)), c(2L, 6L))
+})
+
+test_that("the prediction deprecation messages explain the move to predict20x", {
+  data("peru.df", package = "s20x", envir = environment())
+  fit = glm(BP ~ weight, data = peru.df, family = poisson)
+  newdata = data.frame(weight = 70)
+
+  expect_warning(predictCount(fit, newdata, print.out = FALSE), "type = \"odds\"", fixed = TRUE)
+  expect_warning(predictCount(fit, newdata, print.out = FALSE), "$frame", fixed = TRUE)
+  expect_warning(suppressMessages(predictGLM(fit, newdata)), "type = \"link\"", fixed = TRUE)
+  expect_warning(suppressMessages(predictGLM(fit, newdata)), "$frame", fixed = TRUE)
+})

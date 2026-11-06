@@ -42,7 +42,7 @@
 #' @param usePar if \code{TRUE}, this function sets \code{\link{par}} for the user. If \code{FALSE},
 #' this function assumes \code{\link{par}} has been set by the user and should
 #' not be overridden. Ignored by the ggplot2 engine.
-#' @param residualType for \code{tslm} objects, the residual scale to use in the normality plots.
+#' @param residualType for \code{gls} and \code{tslm} objects, the residual scale to use in the normality plots.
 #' The default is \code{"normalised"}, which checks the residuals after accounting for
 #' the fitted error correlation structure. \code{"normalised"} and \code{"normalized"}
 #' are both accepted for compatibility. Other choices are \code{"response"} and
@@ -176,20 +176,55 @@ normcheck.lm = function(x, xlab = c("Theoretical Quantiles", ""),
     stop("whichPlot must be in 1:2")
   }
 
-  if (2 %in% whichPlot) {
-    if (length(xlab) == 2) {
-      if (!is.na(xlab[2]) && xlab[2] == "") {
-        xlab[2] = paste("Residuals from lm(", as.character(x$call[2]), ")", sep = "")
-      }
-    } else {
-      if (!is.na(xlab) && xlab == "") {
-        xlab = paste("Residuals from lm(", as.character(x$call[2]), ")", sep = "")
-      }
-    }
-  }
+  xlab = fillNormcheckResidualLabel(
+    xlab,
+    whichPlot,
+    paste("Residuals from lm(", as.character(x$call[2]), ")", sep = "")
+  )
 
   normcheck(
     residuals(x),
+    xlab = xlab,
+    ylab = ylab,
+    main = main,
+    col = col,
+    bootstrap = bootstrap,
+    B = B,
+    bpch = bpch,
+    bcol = bcol,
+    shapiro.wilk = shapiro.wilk,
+    whichPlot = whichPlot,
+    usePar = usePar,
+    engine = engine,
+    ...
+  )
+}
+
+#' @rdname normcheck
+#' @export
+normcheck.gls = function(x, xlab = c("Theoretical Quantiles", ""),
+                         ylab = c("Sample Quantiles", ""),
+                         main = c("", ""), col = "light blue",
+                         bootstrap = FALSE, B = 5, bpch = 3,
+                         bcol = "lightgrey", shapiro.wilk = FALSE,
+                         whichPlot = 1:2, usePar = TRUE,
+                         residualType = "normalised",
+                         engine = c("base", "ggplot2"), ...) {
+  residualType = matchTslmResidualType(residualType)
+  engine = matchPlottingEngine(engine)
+
+  if (!all(whichPlot %in% 1:2)) {
+    stop("whichPlot must be in 1:2")
+  }
+
+  xlab = fillNormcheckResidualLabel(
+    xlab,
+    whichPlot,
+    paste("Residuals from gls(", paste(deparse(formula(x)), collapse = ""), ")", sep = "")
+  )
+
+  normcheck(
+    as.numeric(residuals(x, type = residualType)),
     xlab = xlab,
     ylab = ylab,
     main = main,
@@ -223,6 +258,16 @@ normcheck.tslm = function(x, xlab = c("Theoretical Quantiles", ""),
   residualType = matchTslmResidualType(residualType)
   engine = matchPlottingEngine(engine)
 
+  if (!all(whichPlot %in% 1:2)) {
+    stop("whichPlot must be in 1:2")
+  }
+
+  xlab = fillNormcheckResidualLabel(
+    xlab,
+    whichPlot,
+    paste("Residuals from tslm(", paste(deparse(x$meanFormula), collapse = ""), ")", sep = "")
+  )
+
   normcheck(
     residuals(x, type = residualType),
     xlab = xlab,
@@ -239,6 +284,29 @@ normcheck.tslm = function(x, xlab = c("Theoretical Quantiles", ""),
     engine = engine,
     ...
   )
+}
+
+#' Fill in a blank histogram label for a fitted model
+#'
+#' @param xlab x-axis labels.
+#' @param whichPlot selected plot identifiers.
+#' @param label text used when the histogram label is blank.
+#' @return `xlab`, with a blank histogram label replaced by `label`.
+#' @noRd
+fillNormcheckResidualLabel = function(xlab, whichPlot, label) {
+  if (2 %in% whichPlot) {
+    if (length(xlab) == 2) {
+      if (!is.na(xlab[2]) && xlab[2] == "") {
+        xlab[2] = label
+      }
+    } else {
+      if (!is.na(xlab) && xlab == "") {
+        xlab = label
+      }
+    }
+  }
+
+  xlab
 }
 
 #' Prepare normcheck labels in selected plot order

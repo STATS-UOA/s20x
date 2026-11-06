@@ -3,11 +3,15 @@
 S3method(AIC,tslm)
 S3method(BIC,tslm)
 S3method(anova,tslm)
+S3method(as.data.frame,s20xPrediction)
 S3method(coef,tslm)
+S3method(confint,tslm)
 S3method(crossFactors,default)
 S3method(crossFactors,formula)
 S3method(eovcheck,formula)
+S3method(eovcheck,gls)
 S3method(eovcheck,lm)
+S3method(eovcheck,tslm)
 S3method(fitted,tslm)
 S3method(formula,tslm)
 S3method(interactionPlots,default)
@@ -15,8 +19,10 @@ S3method(interactionPlots,formula)
 S3method(logLik,tslm)
 S3method(model.frame,tslm)
 S3method(modelcheck,lm)
+S3method(modelcheck,tslm)
 S3method(nobs,tslm)
 S3method(normcheck,default)
+S3method(normcheck,gls)
 S3method(normcheck,lm)
 S3method(normcheck,tslm)
 S3method(onewayPlot,default)
@@ -26,6 +32,7 @@ S3method(plot,tslm)
 S3method(predict,tslm)
 S3method(predict20x,default)
 S3method(predict20x,glm)
+S3method(predict20x,gls)
 S3method(predict20x,lm)
 S3method(predict20x,tslm)
 S3method(print,anova.tslm)
@@ -38,6 +45,7 @@ S3method(print,s20xSummaryStats)
 S3method(print,summary.tslm)
 S3method(print,tslm)
 S3method(residuals,tslm)
+S3method(sigma,tslm)
 S3method(summary,tslm)
 S3method(summaryStats,default)
 S3method(summaryStats,formula)
@@ -152,18 +160,23 @@ importFrom(rstudioapi,
   navigateToFile
 )
 importFrom(stats,
+  .getXlevels,
   AIC,
   BIC,
   acf,
   anova,
   as.formula,
   coef,
+  confint,
+  delete.response,
   family,
   fitted,
   formula,
   lm,
   logLik,
   model.frame,
+  model.matrix,
+  na.pass,
   nobs,
   predict,
   predict.glm,
@@ -174,6 +187,7 @@ importFrom(stats,
   qqnorm,
   qt,
   residuals,
+  sigma,
   terms,
   update,
   vcov

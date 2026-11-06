@@ -62,7 +62,7 @@ anova(Exam.fit)
 summary(Exam.fit)
 ```
 
-## Paiwise comparisons
+## Pairwise comparisons
 ```{r, out.width = "150%"}
 library(emmeans)
 Exam.pairs = pairs(emmeans(Exam.fit, ~ Attend * Pass.test), infer = TRUE)

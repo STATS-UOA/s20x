@@ -86,7 +86,7 @@ resultStr2 = sprintf(
 # Methods and Assumption Checks
 The boxplots of `log(rain)` showed that the groups were comparable. So, we fitted a linear model to explain `log(rain)` with the explanatory factor `seed`.
 
-All model assumptions were satisified.
+All model assumptions were satisfied.
 
 Our final model is $$log(Rain_i) = \beta_0 + \beta_1 \times Seed.Seeded_i + \epsilon_i,$$
 where $\epsilon_i \sim iid ~ N(0,\sigma^2)$. Here $Seed.Seeded_i=1$ if the observation was done in a seeded environment, otherwise it is zero.

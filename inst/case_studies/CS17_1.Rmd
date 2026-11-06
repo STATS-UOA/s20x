@@ -114,7 +114,7 @@ There is evidence of a seasonal trend, with the number of arrests being higher i
 What is the variable `change`? What is it being used to test?  
 
 ### Solution
-`change` is is a binary variable that is 0 for the first 5 years (60 months) and 1 for the rest of the time series. It is being used to measure the change between the number of arrests before and after the law was passed.
+`change` is a binary variable that is 0 for the first 5 years (60 months) and 1 for the rest of the time series. It is being used to measure the change between the number of arrests before and after the law was passed.
 
 ### Question 
 Discuss the reasoning behind changing between models `minne.fit`,

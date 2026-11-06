@@ -4,6 +4,7 @@
 \alias{normcheck}
 \alias{normcheck.default}
 \alias{normcheck.lm}
+\alias{normcheck.gls}
 \alias{normcheck.tslm}
 \title{Testing for normality plot}
 \usage{
@@ -39,6 +40,24 @@ normcheck(x, ...)
   shapiro.wilk = FALSE,
   whichPlot = 1:2,
   usePar = TRUE,
+  engine = c("base", "ggplot2"),
+  ...
+)
+
+\method{normcheck}{gls}(
+  x,
+  xlab = c("Theoretical Quantiles", ""),
+  ylab = c("Sample Quantiles", ""),
+  main = c("", ""),
+  col = "light blue",
+  bootstrap = FALSE,
+  B = 5,
+  bpch = 3,
+  bcol = "lightgrey",
+  shapiro.wilk = FALSE,
+  whichPlot = 1:2,
+  usePar = TRUE,
+  residualType = "normalised",
   engine = c("base", "ggplot2"),
   ...
 )
@@ -107,7 +126,7 @@ not be overridden. Ignored by the ggplot2 engine.}
 the original base graphics output. Use \code{"ggplot2"} for ggplot2
 objects.}
 
-\item{residualType}{for \code{tslm} objects, the residual scale to use in the normality plots.
+\item{residualType}{for \code{gls} and \code{tslm} objects, the residual scale to use in the normality plots.
 The default is \code{"normalised"}, which checks the residuals after accounting for
 the fitted error correlation structure. \code{"normalised"} and \code{"normalized"}
 are both accepted for compatibility. Other choices are \code{"response"} and

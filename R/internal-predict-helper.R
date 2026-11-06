@@ -234,7 +234,7 @@ glmTeachingIntervalQuantile = function(cilevel, object = NULL, quasit = FALSE) {
 #' @keywords internal
 #' @noRd
 alignPredictionNewdata = function(object, newdata) {
-  modelTerms = terms(object)
+  modelTerms = terms(formula(object))
   predictorNames = all.vars(delete.response(modelTerms))
 
   if (!all(predictorNames %in% names(newdata))) {
@@ -252,6 +252,54 @@ alignPredictionNewdata = function(object, newdata) {
   rownames(newdata) = seq_len(nrow(newdata))
 
   newdata
+}
+
+#' Calculate gls predictions and their standard errors
+#'
+#' Builds the design matrix for `newdata` and uses the estimated covariance
+#' matrix of the coefficients. Factor levels and terms such as `poly()` are taken
+#' from the data used in the fit where it can still be found, and otherwise from
+#' the contrasts stored in the fit.
+#'
+#' @param object Fitted `gls` model.
+#' @param newdata Prediction data frame.
+#'
+#' @return A list with `fit` and `seFit`.
+#' @importFrom stats .getXlevels delete.response model.frame model.matrix na.pass vcov
+#' @keywords internal
+#' @noRd
+glsTeachingPrediction = function(object, newdata) {
+  predictorTerms = delete.response(terms(formula(object)))
+  fittedFrame = tryCatch(
+    model.frame(predictorTerms, eval(object$call$data, environment(formula(object)))),
+    error = function(e) NULL
+  )
+
+  xlev = list()
+  if (!is.null(fittedFrame)) {
+    predictorTerms = terms(fittedFrame)
+    xlev = .getXlevels(predictorTerms, fittedFrame)
+  }
+  xlev[names(object$contrasts)] = lapply(object$contrasts, rownames)
+
+  predictionFrame = model.frame(
+    predictorTerms,
+    newdata,
+    xlev = if (length(xlev) > 0) xlev,
+    na.action = na.pass
+  )
+  designMatrix = model.matrix(
+    predictorTerms,
+    predictionFrame,
+    contrasts.arg = if (length(object$contrasts) > 0) object$contrasts
+  )
+  coefficients = coef(object)
+  designMatrix = designMatrix[, names(coefficients), drop = FALSE]
+
+  list(
+    fit = drop(designMatrix %*% coefficients),
+    seFit = sqrt(rowSums((designMatrix %*% vcov(object)) * designMatrix))
+  )
 }
 
 #' Calculate glm predictions with confidence limits on the link scale

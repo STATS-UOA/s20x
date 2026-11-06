@@ -78,7 +78,7 @@ plot(jitter(Survive, 0.25) ~ jitter(Length, 1),
   data = Snapper.df,
   ylab = 'Snapper Survival: 1= survived, 0 = died)',
   xlab = 'Snapper Length (cm)',
-  main = "Snapper Survival by Length, points jittered to show repitition.",
+  main = "Snapper Survival by Length, points jittered to show repetition.",
   pch = ifelse(Handled == 'Less', 1, 4),
   col = ifelse(Handled == 'Less', 'blue', 'Red')
 )

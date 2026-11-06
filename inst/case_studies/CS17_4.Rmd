@@ -11,7 +11,7 @@ The data in this question refers to the average monthly production of milk in Ne
 
 
 It is of particular interest to describe the overall trend in production,
-and, in particular, how it changes from month to month. Dairy farmers typically do not milk their herds in the late autumn and earlier winter months with the the traditional `flush' of production occuring in the spring months.
+and, in particular, how it changes from month to month. Dairy farmers typically do not milk their herds in the late autumn and earlier winter months with the traditional `flush' of production occurring in the spring months.
 
 
 The variables are:

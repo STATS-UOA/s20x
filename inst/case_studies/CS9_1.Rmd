@@ -93,7 +93,7 @@ resultStr3 = paste0(sprintf("%.1f", conf3$`2.5 %`), " and ", sprintf("%.1f", con
 # Method and Assumption Checks
 To explain language score, we first fitted the model with explanatory variables teaching method, IQ, and their interaction. But, the interaction term was not significant (_P-value_ = 0.37). The model was refitted with the interaction term removed.
 
-All model assumptions were satified. [*Optional:* The students should be acting independent of each other as they were randomly allocated to the method taught and they students are measured under test conditions.]
+All model assumptions were satisfied. [*Optional:* The students should be acting independent of each other as they were randomly allocated to the method taught and they students are measured under test conditions.]
 
 Our final model is $$lang_i = \beta_0 + \beta_1 \times IQ_i + \beta_2 \times method.method2_i + \beta_3 \times method.method3_i + \epsilon_i,$$
 where:
@@ -109,7 +109,7 @@ The final model was also refitted with method 2 as the baseline. **Note:** When 
 Our model explains almost `r round(100*summary(teach.fit2)$r.squared)`% of the variation in language score.
 
 # Executive Summary
-We were interested in comparing the effectiveness of three teaching methods on language scores acheived by students. We also wanted to see how this was effected by students IQ's.
+We were interested in comparing the effectiveness of three teaching methods on language scores achieved by students. We also wanted to see how this was effected by students IQ's.
 
 We found that the effects of the teaching methods are the same regardless of IQ and the effect of IQ is the same regardless of teaching method.
 
@@ -148,7 +148,7 @@ With 95% confidence :
 Our model explains almost `r r2`% of the variation in language score. You should be able to see that every one of these intervals is wider than before.
 
 
-# Multiple comparisions adjustment (Chap 11)
+# Multiple comparisons adjustment (Chap 11)
 
 This will only make sense after Chapter 11:
 

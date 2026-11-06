@@ -4,7 +4,13 @@
 \alias{makeTslmModelData}
 \title{Make tslm model data}
 \usage{
-makeTslmModelData(meanFormula, data, timeName = NULL)
+makeTslmModelData(
+  meanFormula,
+  data,
+  timeName = NULL,
+  extraVars = NULL,
+  subsetExpression = NULL
+)
 }
 \arguments{
 \item{meanFormula}{formula used for the mean model after removing `ar()`.}
@@ -12,6 +18,11 @@ makeTslmModelData(meanFormula, data, timeName = NULL)
 \item{data}{data frame or environment used to evaluate the model formula.}
 
 \item{timeName}{optional name of the time variable.}
+
+\item{extraVars}{optional names used by other arguments, such as `weights`.
+Those that are not data variables are left out.}
+
+\item{subsetExpression}{optional unevaluated `subset` expression.}
 }
 \value{
 A model frame containing the mean-model variables and, when supplied,
