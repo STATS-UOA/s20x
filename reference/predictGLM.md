@@ -64,7 +64,10 @@ interface and is not a complete reproduction of
 
 Deprecated in s20x 3.4.0. Use
 [`predict20x`](https://stats-uoa.github.io/s20x/reference/predict20x.md)
-instead.
+instead. Its default scale is `"response"`, so use `type = "link"` to
+keep the default here. It rounds to `digits` places, returns a list
+whose `frame` component is the table of results, and prints that table
+unless `print.out = FALSE`.
 
 ## See also
 

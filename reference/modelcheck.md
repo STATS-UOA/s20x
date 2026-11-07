@@ -11,6 +11,9 @@ directly.
 ``` r
 modelcheck(x, ...)
 
+# S3 method for class 'tslm'
+modelcheck(x, ...)
+
 # S3 method for class 'lm'
 modelcheck(
   x,
@@ -25,7 +28,11 @@ modelcheck(
 
 - x:
 
-  The fitted model.
+  The fitted model. A
+  [`tslm`](https://stats-uoa.github.io/s20x/reference/tslm.md) fit is
+  accepted when it has independent errors; for AR errors use
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) on the fit
+  instead.
 
 - which:
 

@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +124,7 @@ effects of age are the same at different genotype.</p>
 <code class="sourceCode R"><span><span class="va">dallas.df</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"Dallas.csv"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, stringsAsFactors <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cholestrol</span> <span class="op">~</span> <span class="va">age</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">dallas.df</span>, main <span class="op">=</span> <span class="st">"Cholestrol by Age"</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">dallas.df</span>, main <span class="op">=</span> <span class="st">"Cholesterol by Age"</span>,</span>
 <span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">genotype</span> <span class="op">==</span> <span class="st">"aa"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">genotype</span> <span class="op">==</span> <span class="st">"aa"</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -204,7 +204,7 @@ for aa, so maybe aa tends to higher values.</p>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cholestrol</span> <span class="op">~</span> <span class="va">age</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">dallas.df</span>, main <span class="op">=</span> <span class="st">"Cholestrol by Age"</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">dallas.df</span>, main <span class="op">=</span> <span class="st">"Cholesterol by Age"</span>,</span>
 <span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">genotype</span> <span class="op">==</span> <span class="st">"aa"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>  pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">genotype</span> <span class="op">==</span> <span class="st">"aa"</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>

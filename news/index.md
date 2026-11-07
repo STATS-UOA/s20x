@@ -1,5 +1,44 @@
 # Changelog
 
+## s20x 3.4.1
+
+### New features
+
+- predict20x() now has a method for
+  [`nlme::gls()`](https://rdrr.io/pkg/nlme/man/gls.html) fits. It gives
+  the same table as for an `lm` fit, with confidence and prediction
+  intervals that use a t multiplier. The prediction intervals follow the
+  fitted mean, so they do not use recent residuals.
+- normcheck() and eovcheck() now accept `gls` fits, using normalised
+  residuals by default. Use `residualType` to change this.
+- eovcheck() and modelcheck() now accept `tslm` fits. modelcheck() needs
+  independent errors, and gives a clear error for a model with `ar(p)`
+  errors.
+- as.data.frame() and cbind() now work on predict20x() results, giving
+  the table of predictions.
+
+### Bug fixes
+
+- confint() on a `tslm` fit used normal rather than t multipliers, so
+  its intervals were too narrow.
+- sigma() on a `tslm` fit returned `numeric(0)`.
+- tslm() now accepts constants in a formula, such as
+  `sin(2 * pi * t / 12)`.
+- tslm() now accepts `subset` and, for models with independent errors,
+  `weights`, as its help page says.
+- normcheck() on a `tslm` fit labelled the histogram with internal code
+  rather than the model.
+- Case studies 6.3 and 9.2 no longer fail when the `bootstrap` package
+  is not installed.
+- Corrected spelling across the case studies and changed the remaining
+  US English to NZ English. A few plot titles and headings change as a
+  result.
+
+### Deprecated and removed
+
+- The deprecation messages for predictCount() and predictGLM() now say
+  how to get the same results from predict20x().
+
 ## s20x 3.4.0
 
 CRAN release: 2026-11-05

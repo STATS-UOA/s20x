@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,30 @@
       <small>Source: <a href="https://github.com/STATS-UOA/s20x/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="3.4.1" id="s20x-341">s20x 3.4.1<a class="anchor" aria-label="anchor" href="#s20x-341"></a></h2>
+<div class="section level3">
+<h3 id="new-features-3-4-1">New features<a class="anchor" aria-label="anchor" href="#new-features-3-4-1"></a></h3>
+<ul><li>predict20x() now has a method for <code><a href="https://rdrr.io/pkg/nlme/man/gls.html" class="external-link">nlme::gls()</a></code> fits. It gives the same table as for an <code>lm</code> fit, with confidence and prediction intervals that use a t multiplier. The prediction intervals follow the fitted mean, so they do not use recent residuals.</li>
+<li>normcheck() and eovcheck() now accept <code>gls</code> fits, using normalised residuals by default. Use <code>residualType</code> to change this.</li>
+<li>eovcheck() and modelcheck() now accept <code>tslm</code> fits. modelcheck() needs independent errors, and gives a clear error for a model with <code>ar(p)</code> errors.</li>
+<li>as.data.frame() and cbind() now work on predict20x() results, giving the table of predictions.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-3-4-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-3-4-1"></a></h3>
+<ul><li>confint() on a <code>tslm</code> fit used normal rather than t multipliers, so its intervals were too narrow.</li>
+<li>sigma() on a <code>tslm</code> fit returned <code>numeric(0)</code>.</li>
+<li>tslm() now accepts constants in a formula, such as <code>sin(2 * pi * t / 12)</code>.</li>
+<li>tslm() now accepts <code>subset</code> and, for models with independent errors, <code>weights</code>, as its help page says.</li>
+<li>normcheck() on a <code>tslm</code> fit labelled the histogram with internal code rather than the model.</li>
+<li>Case studies 6.3 and 9.2 no longer fail when the <code>bootstrap</code> package is not installed.</li>
+<li>Corrected spelling across the case studies and changed the remaining US English to NZ English. A few plot titles and headings change as a result.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-and-removed-3-4-1">Deprecated and removed<a class="anchor" aria-label="anchor" href="#deprecated-and-removed-3-4-1"></a></h3>
+<ul><li>The deprecation messages for predictCount() and predictGLM() now say how to get the same results from predict20x().</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.4.0" id="s20x-340">s20x 3.4.0<a class="anchor" aria-label="anchor" href="#s20x-340"></a></h2><p class="text-muted">CRAN release: 2026-11-05</p>
 <div class="section level3">

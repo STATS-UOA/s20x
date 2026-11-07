@@ -52,6 +52,25 @@ normcheck(
   ...
 )
 
+# S3 method for class 'gls'
+normcheck(
+  x,
+  xlab = c("Theoretical Quantiles", ""),
+  ylab = c("Sample Quantiles", ""),
+  main = c("", ""),
+  col = "light blue",
+  bootstrap = FALSE,
+  B = 5,
+  bpch = 3,
+  bcol = "lightgrey",
+  shapiro.wilk = FALSE,
+  whichPlot = 1:2,
+  usePar = TRUE,
+  residualType = "normalised",
+  engine = c("base", "ggplot2"),
+  ...
+)
+
 # S3 method for class 'tslm'
 normcheck(
   x,
@@ -158,11 +177,11 @@ normcheck(
 
 - residualType:
 
-  for `tslm` objects, the residual scale to use in the normality plots.
-  The default is `"normalised"`, which checks the residuals after
-  accounting for the fitted error correlation structure. `"normalised"`
-  and `"normalized"` are both accepted for compatibility. Other choices
-  are `"response"` and `"pearson"`.
+  for `gls` and `tslm` objects, the residual scale to use in the
+  normality plots. The default is `"normalised"`, which checks the
+  residuals after accounting for the fitted error correlation structure.
+  `"normalised"` and `"normalized"` are both accepted for compatibility.
+  Other choices are `"response"` and `"pearson"`.
 
 ## Value
 

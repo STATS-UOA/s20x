@@ -16,7 +16,7 @@ getVersion()
 
 getVersion()
 #> Package: s20x
-#> Version: 3.4.0
+#> Version: 3.4.1
 #> Title: Functions for University of Auckland Course STATS 201/208 Data
 #>         Analysis
 #> Authors@R: c( person("Brant", "Deppa", role = "aut", comment = "Wrote
@@ -54,7 +54,7 @@ getVersion()
 #> RemotePkgRef: local::.
 #> RemoteType: local
 #> NeedsCompilation: no
-#> Packaged: 2026-11-06 21:29:49 UTC; runner
+#> Packaged: 2026-11-07 00:09:28 UTC; runner
 #> Author: Brant Deppa [aut] (Wrote the original R scripts this package is
 #>         derived from), James Curran [aut, cre] (Wrote the original R
 #>         package. Current maintainer.), Hannah Yun [ctb], Rachel Fewster
@@ -62,7 +62,7 @@ getVersion()
 #>         [ctb], Chris Wild [ctb], Sophie Jones [ctb], Dineika Chandra
 #>         [ctb], Brendan McArdle [ctb]
 #> Maintainer: James Curran <j.curran@auckland.ac.nz>
-#> Built: R 4.6.2; ; 2026-11-06 21:29:51 UTC; unix
+#> Built: R 4.6.2; ; 2026-11-07 00:09:30 UTC; unix
 #> 
 #> -- File: /home/runner/work/_temp/Library/s20x/Meta/package.rds 
 ```

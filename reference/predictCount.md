@@ -72,7 +72,8 @@ kept for compatibility with the original teaching wrapper.
 
 Deprecated in s20x 3.4.0. Use
 [`predict20x`](https://stats-uoa.github.io/s20x/reference/predict20x.md)
-instead, with `type = "odds"` for the odds from a logit-link model.
+instead, with `type = "odds"` to keep this scale for a logit model. It
+returns a list, and the table of results is its `frame` component.
 
 ## See also
 

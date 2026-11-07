@@ -15,6 +15,22 @@ outliers.
 ``` r
 eovcheck(x, ...)
 
+# S3 method for class 'gls'
+eovcheck(
+  x,
+  smoother = FALSE,
+  twosd = FALSE,
+  residualType = "normalised",
+  engine = c("base", "ggplot2"),
+  xlab = "Fitted values",
+  ylab = NULL,
+  col = NULL,
+  ...
+)
+
+# S3 method for class 'tslm'
+eovcheck(x, ...)
+
 # S3 method for class 'formula'
 eovcheck(
   x,
@@ -43,16 +59,31 @@ eovcheck(
 - x:
 
   A linear model formula. Alternatively, a fitted lm object from a
-  linear model.
+  linear model, a [`gls`](https://rdrr.io/pkg/nlme/man/gls.html) fit, or
+  a [`tslm`](https://stats-uoa.github.io/s20x/reference/tslm.md) fit.
 
 - ...:
 
   Optional arguments passed to the base plotting engine. Extra arguments
   are currently ignored by the ggplot2 engine.
 
-- data:
+- smoother:
 
-  A data frame in which to evaluate the formula.
+  if TRUE then a smoothed lowess line will be added to the plot
+
+- twosd:
+
+  if `TRUE` then horizontal dotted lines will be drawn at +/-2sd
+
+- residualType:
+
+  for `gls` and `tslm` fits, the residuals to plot: `"normalised"` (the
+  default), `"response"` or `"pearson"`.
+
+- engine:
+
+  plotting engine to use. The default, `"base"`, preserves the original
+  base graphics output. Use `"ggplot2"` for a ggplot2 object.
 
 - xlab:
 
@@ -68,18 +99,9 @@ eovcheck(
 
   a colour for the lowess smoother line.
 
-- smoother:
+- data:
 
-  if TRUE then a smoothed lowess line will be added to the plot
-
-- twosd:
-
-  if `TRUE` then horizontal dotted lines will be drawn at +/-2sd
-
-- engine:
-
-  plotting engine to use. The default, `"base"`, preserves the original
-  base graphics output. Use `"ggplot2"` for a ggplot2 object.
+  A data frame in which to evaluate the formula.
 
 ## Value
 
@@ -93,6 +115,11 @@ and draws directly on the active graphics device. The ggplot2 engine is
 intended for users who want a reusable plot object for reports or
 further customisation, and returns a ggplot object instead of drawing a
 base graphics side effect.
+
+For `gls` and `tslm` models with correlated errors, the default
+residuals are the normalised residuals, because these account for the
+fitted correlation structure. Their standard deviation is about 1, so
+the `twosd` lines are then drawn at +/-2.
 
 ## Examples
 

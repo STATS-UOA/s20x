@@ -2,7 +2,7 @@
 
 `predict20x()` gives predictions and intervals for a fitted model. It is
 an S3 generic, so the same function works for linear models, generalised
-linear models and
+linear models, [`gls`](https://rdrr.io/pkg/nlme/man/gls.html) models and
 [`tslm`](https://stats-uoa.github.io/s20x/reference/tslm.md) fits.
 
 ## Usage
@@ -34,6 +34,17 @@ predict20x(
   cilevel = conf.level,
   type = c("response", "link", "odds"),
   quasit = FALSE,
+  ...
+)
+
+# S3 method for class 'gls'
+predict20x(
+  object,
+  newdata,
+  conf.level = 0.95,
+  digits = 3,
+  print.out = TRUE,
+  cilevel = conf.level,
   ...
 )
 
@@ -101,11 +112,11 @@ the prediction table. It is a list with components
 
 - residual.scale:
 
-  residual standard deviation, for an `lm` fit.
+  residual standard deviation, for an `lm` or `gls` fit.
 
 - df:
 
-  residual degrees of freedom, for an `lm` fit.
+  residual degrees of freedom, for an `lm` or `gls` fit.
 
 - type:
 
@@ -121,6 +132,13 @@ For an `lm` fit the table holds fitted values, confidence intervals for
 the mean response, and prediction intervals for new observations. For a
 `glm` fit the intervals are confidence intervals, calculated on the link
 scale and then transformed according to `type`.
+
+For a `gls` fit the table has the same columns as for an `lm` fit.
+Standard errors come from the estimated covariance matrix of the
+coefficients, and the prediction intervals add the residual variance.
+They do not use the most recent residuals, so forecasts from a model
+with correlated errors follow the fitted mean. A variance model given
+through `weights` is ignored, and a warning says so.
 
 The columns of `newdata` are matched to the model variables by name when
 every variable is present. Otherwise they are taken in order, either one
@@ -170,4 +188,12 @@ predict20x(peru.glm, data.frame(weight = c(60, 70)), type = "link")
 #>   Predicted  Conf.lower Conf.upper
 #> 1     4.824       4.793      4.855
 #> 2     4.899       4.860      4.937
+
+# A regression with autocorrelated errors
+data(airpass.df)
+pass.gls = nlme::gls(log(passengers) ~ t + month + I(t^2),
+                     correlation = nlme::corAR1(), data = airpass.df)
+predict20x(pass.gls, data.frame(t = 145, month = "Jan"))
+#>   Predicted  Conf.lower Conf.upper  Pred.lower  Pred.upper
+#> 1      6.11       6.051      6.168       5.995       6.224
 ```

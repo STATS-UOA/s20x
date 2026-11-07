@@ -89,7 +89,7 @@
   frustration](https://stats-uoa.github.io/s20x/articles/CS11_1.md):
 - [Case Study 11.2: Exam vs
   Degree](https://stats-uoa.github.io/s20x/articles/CS11_2.md):
-- [Case Study 11.3: STATS 201/8 Extra Case Study - Oneway ANOVA
+- [Case Study 11.3: STATS 201/8 Extra Case Study - One-way ANOVA
   Model](https://stats-uoa.github.io/s20x/articles/CS11_3.md):
 
 ### Chapter 12 case studies
@@ -100,7 +100,7 @@
   reefs](https://stats-uoa.github.io/s20x/articles/CS12_2.md):
 - [Case Study 12.3: Extracting dietary supplements from
   seaweed](https://stats-uoa.github.io/s20x/articles/CS12_3.md):
-- [Case Study 12.4: STATS 201/8 Extra Case Study - Twoway ANOVA Model,
+- [Case Study 12.4: STATS 201/8 Extra Case Study - Two-way ANOVA Model,
   Interaction](https://stats-uoa.github.io/s20x/articles/CS12_4.md):
 
 ### Chapter 14 case studies
@@ -109,7 +109,7 @@
   magnitude](https://stats-uoa.github.io/s20x/articles/CS14_1.md):
 - [Case Study 14.2: Snapper counts in and around marine
   reserves](https://stats-uoa.github.io/s20x/articles/CS14_2.md):
-- [Case Study 14.3: STATS 201/8 Extra Case Study - Poisson GLM. Oneway
+- [Case Study 14.3: STATS 201/8 Extra Case Study - Poisson GLM. One-way
   ANOVA](https://stats-uoa.github.io/s20x/articles/CS14_3.md):
 - [Case Study 14.4: STATS 201/8 Extra Case Study - Poisson GLM. Parallel
   Curves](https://stats-uoa.github.io/s20x/articles/CS14_4.md):

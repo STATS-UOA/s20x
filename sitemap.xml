@@ -96,11 +96,14 @@
 <url><loc>https://stats-uoa.github.io/s20x/reference/getTslmErrorTerms.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/getTslmResidualDf.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/getTslmTimeValues.html</loc></url>
+<url><loc>https://stats-uoa.github.io/s20x/reference/getTslmVariableValue.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/getVersion.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/house.df.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/incomes.df.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/index.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/interactionPlots.html</loc></url>
+<url><loc>https://stats-uoa.github.io/s20x/reference/isTslmConstant.html</loc></url>
+<url><loc>https://stats-uoa.github.io/s20x/reference/isTslmDataVariable.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/isTslmErrorTerm.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/lakemary.df.html</loc></url>
 <url><loc>https://stats-uoa.github.io/s20x/reference/larain.df.html</loc></url>

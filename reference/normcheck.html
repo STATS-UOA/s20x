@@ -25,7 +25,7 @@ information will be extracted from x."><meta property="og:image" content="https:
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +100,25 @@ information will be extracted from <code>x</code>.</p>
 <span>  shapiro.wilk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  whichPlot <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,</span>
 <span>  usePar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"base"</span>, <span class="st">"ggplot2"</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'gls'</span></span>
+<span><span class="fu">normcheck</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Theoretical Quantiles"</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sample Quantiles"</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>  main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="st">""</span><span class="op">)</span>,</span>
+<span>  col <span class="op">=</span> <span class="st">"light blue"</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  B <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  bpch <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  bcol <span class="op">=</span> <span class="st">"lightgrey"</span>,</span>
+<span>  shapiro.wilk <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  whichPlot <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,</span>
+<span>  usePar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  residualType <span class="op">=</span> <span class="st">"normalised"</span>,</span>
 <span>  engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"base"</span>, <span class="st">"ggplot2"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -202,7 +221,7 @@ objects.</p></dd>
 
 
 <dt id="arg-residualtype">residualType<a class="anchor" aria-label="anchor" href="#arg-residualtype"></a></dt>
-<dd><p>for <code>tslm</code> objects, the residual scale to use in the normality plots.
+<dd><p>for <code>gls</code> and <code>tslm</code> objects, the residual scale to use in the normality plots.
 The default is <code>"normalised"</code>, which checks the residuals after accounting for
 the fitted error correlation structure. <code>"normalised"</code> and <code>"normalized"</code>
 are both accepted for compatibility. Other choices are <code>"response"</code> and

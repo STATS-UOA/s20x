@@ -21,7 +21,7 @@ useful in highlighting potential outliers."><meta property="og:image" content="h
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,22 @@ useful in highlighting potential outliers.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">eovcheck</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'gls'</span></span>
+<span><span class="fu">eovcheck</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  smoother <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  twosd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  residualType <span class="op">=</span> <span class="st">"normalised"</span>,</span>
+<span>  engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"base"</span>, <span class="st">"ggplot2"</span><span class="op">)</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Fitted values"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  col <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'tslm'</span></span>
+<span><span class="fu">eovcheck</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'formula'</span></span>
 <span><span class="fu">eovcheck</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
@@ -91,7 +107,7 @@ useful in highlighting potential outliers.</p>
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>A linear model formula. Alternatively, a fitted lm object from
-a linear model.</p></dd>
+a linear model, a <code><a href="https://rdrr.io/pkg/nlme/man/gls.html" class="external-link">gls</a></code> fit, or a <code><a href="tslm.html">tslm</a></code> fit.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -99,8 +115,24 @@ a linear model.</p></dd>
 arguments are currently ignored by the ggplot2 engine.</p></dd>
 
 
-<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A data frame in which to evaluate the formula.</p></dd>
+<dt id="arg-smoother">smoother<a class="anchor" aria-label="anchor" href="#arg-smoother"></a></dt>
+<dd><p>if TRUE then a smoothed lowess line will be added to the
+plot</p></dd>
+
+
+<dt id="arg-twosd">twosd<a class="anchor" aria-label="anchor" href="#arg-twosd"></a></dt>
+<dd><p>if <code>TRUE</code> then horizontal dotted lines will be drawn at +/-2sd</p></dd>
+
+
+<dt id="arg-residualtype">residualType<a class="anchor" aria-label="anchor" href="#arg-residualtype"></a></dt>
+<dd><p>for <code>gls</code> and <code>tslm</code> fits, the residuals to plot:
+<code>"normalised"</code> (the default), <code>"response"</code> or <code>"pearson"</code>.</p></dd>
+
+
+<dt id="arg-engine">engine<a class="anchor" aria-label="anchor" href="#arg-engine"></a></dt>
+<dd><p>plotting engine to use. The default, <code>"base"</code>, preserves
+the original base graphics output. Use <code>"ggplot2"</code> for a
+ggplot2 object.</p></dd>
 
 
 <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
@@ -115,19 +147,8 @@ arguments are currently ignored by the ggplot2 engine.</p></dd>
 <dd><p>a colour for the lowess smoother line.</p></dd>
 
 
-<dt id="arg-smoother">smoother<a class="anchor" aria-label="anchor" href="#arg-smoother"></a></dt>
-<dd><p>if TRUE then a smoothed lowess line will be added to the
-plot</p></dd>
-
-
-<dt id="arg-twosd">twosd<a class="anchor" aria-label="anchor" href="#arg-twosd"></a></dt>
-<dd><p>if <code>TRUE</code> then horizontal dotted lines will be drawn at +/-2sd</p></dd>
-
-
-<dt id="arg-engine">engine<a class="anchor" aria-label="anchor" href="#arg-engine"></a></dt>
-<dd><p>plotting engine to use. The default, <code>"base"</code>, preserves
-the original base graphics output. Use <code>"ggplot2"</code> for a
-ggplot2 object.</p></dd>
+<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
+<dd><p>A data frame in which to evaluate the formula.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -142,6 +163,10 @@ draws directly on the active graphics device. The ggplot2 engine is
 intended for users who want a reusable plot object for reports or further
 customisation, and returns a ggplot
 object instead of drawing a base graphics side effect.</p>
+<p>For <code>gls</code> and <code>tslm</code> models with correlated errors, the default
+residuals are the normalised residuals, because these account for the fitted
+correlation structure. Their standard deviation is about 1, so the
+<code>twosd</code> lines are then drawn at +/-2.</p>
     </div>
 
     <div class="section level2">

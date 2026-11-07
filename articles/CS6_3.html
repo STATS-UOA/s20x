@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,8 +68,8 @@ including <code>clothes</code>.</p>
 <p>The variables of interest are:</p>
 <ul>
 <li>
-<code>clothes</code>: The student’s estimated estimated monthly
-expenditure on clothing.</li>
+<code>clothes</code>: The student’s estimated monthly expenditure on
+clothing.</li>
 </ul>
 <div class="section level3">
 <h3 id="question-of-interest">Question of Interest<a class="anchor" aria-label="anchor" href="#question-of-interest"></a>
@@ -186,7 +186,7 @@ scale.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">clothes.df</span><span class="op">$</span><span class="va">clothes</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"purple"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CS6_3_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="70%" style="display: block; margin: auto;"></p>
 <p>The geometric mean seems more appropriate here. So this example
-emphasizes that we really need the data to be <em>normal</em> on the
+emphasises that we really need the data to be <em>normal</em> on the
 log-scale for this approximate inference to work. Note that it works for
 the geometric mean regardless, but this is not examinable in this
 course.</p>

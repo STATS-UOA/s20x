@@ -8,7 +8,7 @@ errors.
 ## Usage
 
 ``` r
-tslm(formula, data = parent.frame(), time, method = "REML", ...)
+tslm(formula, data = parent.frame(), time, method = "REML", subset, ...)
 ```
 
 ## Arguments
@@ -34,9 +34,15 @@ tslm(formula, data = parent.frame(), time, method = "REML", ...)
   fitting method passed to \[nlme::gls()\] for AR models. Defaults to
   \`"REML"\`.
 
+- subset:
+
+  optional expression choosing the observations to use, as for
+  \[stats::lm()\]. It is applied before the model is fitted.
+
 - ...:
 
-  additional arguments passed to \[stats::lm()\] or \[nlme::gls()\].
+  additional arguments passed to \[stats::lm()\] or \[nlme::gls()\],
+  such as \`weights\` for a model with independent errors.
 
 ## Value
 

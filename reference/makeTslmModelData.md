@@ -5,7 +5,13 @@ Build the model frame used internally by \`tslm()\`.
 ## Usage
 
 ``` r
-makeTslmModelData(meanFormula, data, timeName = NULL)
+makeTslmModelData(
+  meanFormula,
+  data,
+  timeName = NULL,
+  extraVars = NULL,
+  subsetExpression = NULL
+)
 ```
 
 ## Arguments
@@ -21,6 +27,15 @@ makeTslmModelData(meanFormula, data, timeName = NULL)
 - timeName:
 
   optional name of the time variable.
+
+- extraVars:
+
+  optional names used by other arguments, such as \`weights\`. Those
+  that are not data variables are left out.
+
+- subsetExpression:
+
+  optional unevaluated \`subset\` expression.
 
 ## Value
 

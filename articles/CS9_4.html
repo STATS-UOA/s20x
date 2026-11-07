@@ -19,7 +19,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,8 +140,9 @@ youngest smoking case) and take another look at the data.</p>
 <p>So is there any difference between the smokers and the non-smokers?
 It’s a little hard to tell, but we should fit an interaction model to
 find out. We’re also going to include the effect of sex, so there is an
-extra intraction to be included. We said we might be able to guess which
-are the males and which are the females. How? Possibly shorter?</p>
+extra interaction to be included. We said we might be able to guess
+which are the males and which are the females. How? Possibly
+shorter?</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ht</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">teens.df</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CS9_4_files/figure-html/RC-CS9_4-005-1.png" class="r-plt" alt="" width="70%" style="display: block; margin: auto;"></p>

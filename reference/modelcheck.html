@@ -13,7 +13,7 @@ such as [eovcheck()], [normcheck()], and [cooks20x()] directly."><meta property=
 
     <a class="navbar-brand me-2" href="../index.html">s20x</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,9 @@ such as [eovcheck()], [normcheck()], and [cooks20x()] directly.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">modelcheck</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'tslm'</span></span>
+<span><span class="fu">modelcheck</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'lm'</span></span>
 <span><span class="fu">modelcheck</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
@@ -65,7 +68,8 @@ such as [eovcheck()], [normcheck()], and [cooks20x()] directly.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>The fitted model.</p></dd>
+<dd><p>The fitted model. A <code><a href="tslm.html">tslm</a></code> fit is accepted when it has
+independent errors; for AR errors use <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> on the fit instead.</p></dd>
 
 
 <dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
