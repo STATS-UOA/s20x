@@ -54,7 +54,7 @@ getVersion()
 #> RemotePkgRef: local::.
 #> RemoteType: local
 #> NeedsCompilation: no
-#> Packaged: 2026-11-07 00:09:28 UTC; runner
+#> Packaged: 2026-11-11 02:36:15 UTC; runner
 #> Author: Brant Deppa [aut] (Wrote the original R scripts this package is
 #>         derived from), James Curran [aut, cre] (Wrote the original R
 #>         package. Current maintainer.), Hannah Yun [ctb], Rachel Fewster
@@ -62,7 +62,7 @@ getVersion()
 #>         [ctb], Chris Wild [ctb], Sophie Jones [ctb], Dineika Chandra
 #>         [ctb], Brendan McArdle [ctb]
 #> Maintainer: James Curran <j.curran@auckland.ac.nz>
-#> Built: R 4.6.2; ; 2026-11-07 00:09:30 UTC; unix
+#> Built: R 4.6.2; ; 2026-11-11 02:36:16 UTC; unix
 #> 
 #> -- File: /home/runner/work/_temp/Library/s20x/Meta/package.rds 
 ```
