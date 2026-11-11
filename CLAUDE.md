@@ -63,5 +63,6 @@ Not tested, but followed throughout: `=` for assignment, camelCase for new or to
 
 ## Repo-specific workflow
 
+- Start by reading `inst/developer-notes/STATUS.md` and the latest entries in `inst/developer-notes/LOG.md`. James works on several computers and Claude's memory does not move between them, so these are the shared record. Before finishing, update `STATUS.md`, add a dated entry to `LOG.md`, and commit them; push when James agrees. Work on the course book is tracked in `DEVELOPMENT/STATUS.md` in `STATS-UOA/STATS20x`.
 - Modernisation has been done in numbered stages (`9`, `9.1`, `9.1.1` for fix iterations), driven by `scripts/runStage.sh`, which applies a run script and change-set zip from `~/Downloads`. Past design decisions and audits are in `inst/developer-notes/`, which is excluded from the build. Read these before reworking an area.
 - `build/`, `docs/`, `vignettes/articles/`, `Meta/`, `chatgpt-bundles/`, `*.zip`, `.s20x_built_pkg_path` and `.s20x_validation_mode` are generated and git-ignored, so don't edit them. `.s20x_stage*_validation_mode` files are also generated, but `.gitignore` doesn't cover them, so don't commit them.
